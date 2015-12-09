@@ -14,10 +14,21 @@
     <div class="block" id="block-title">
         <h1 id="text-title">Routine Maker</h1>
     </div>
+    <div class="block">
+        <div class="subject-element" data-startTime="500" data-endTime="600">
+            <p class="se-time">10:30 to 12:00</p>
+            <p class="se-subject-name">Chaos Theory</p>
+            <p class="se-extra">other extra info</p>
+            <div class="se-btn-group">
+                <button class="se-btn"><i class="fa fa-edit"></i></button>
+                <button class="se-btn"><i class="fa fa-trash"></i></button>
+            </div>
+        </div>
+    </div>
     <div class="block" id="block-content">
         <div class="row">
             <div class="col-md-2 " id="col-l">
-                <div class="row row-day">
+                <div class="row row-day" id = "row-title-day-time">
                     Day / Time
                 </div>
                 <div class="row row-day">
@@ -34,7 +45,7 @@
                 </div>
             </div>
             <div class="col-md-10" id="col-r">
-                <div class="row row-day">
+                <div class="row row-day" id="row-title-subjects">
                     <button class="btn"><i class="fa fa-plus"></i> Add Period</button>
                 </div>
                 <div class="row row-day">

@@ -2,6 +2,10 @@
     font-family: "Open Sans", "Ubuntu";
 }
 
+body{
+    background-color: #eee !important;
+}
+
 
 .block{
     min-height: 100px;
@@ -29,5 +33,40 @@
 }
 
 #col-r{
-    padding-left: 40px;
+
+}
+
+.subject-element{
+    position: relative;
+    width: 200px;
+    min-height: 150px;
+    padding:20px;
+    background-color:#fff;
+    color:#544;
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.se-btn-group{
+    position: absolute;
+    right:10px;
+    bottom:10px;
+}
+
+.se-btn{
+    background-color: transparent;
+    border: none;
+}
+
+.se-time{
+    color: #c62828;
+    font-size:0.9em;
+}
+
+.se-subject-name{
+    font-size: 1.1em;
+}
+
+.se-extra{
+    color:#988;
+    font-size: 0.9em;
 }
