@@ -29,6 +29,12 @@ body{
     padding:20px;
 }
 
+*[class^='row-day-n'], *[class*='row-day-n']{
+    min-height: 80px;
+    line-height: 1.5em;
+    padding-left:20px;
+}
+
 #col-l{
     border-right: solid 1px #aaa;
 }
@@ -38,10 +44,9 @@ body{
 }
 
 .subject-element{
-    position: relative;
-    width: 200px;
     min-height: 150px;
     padding:20px;
+    margin-left:20px;
     background-color:#fff;
     color:#544;
     box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
