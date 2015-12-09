@@ -6,6 +6,8 @@
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <script src="js/jquery.min.js"></script>
+    <script src="js/period-positioning.js"></script>
     <script src="js/default.js"></script>
     <title>Notifica: Routine Creator</title>
 </head>
@@ -14,8 +16,8 @@
     <div class="block" id="block-title">
         <h1 id="text-title">Routine Maker</h1>
     </div>
-    <div class="block">
-        <div class="subject-element" data-startTime="500" data-endTime="600">
+    <!--div class="block">
+        <div class="subject-element" data-starttime="500" data-endtime="600">
             <p class="se-time">10:30 to 12:00</p>
             <p class="se-subject-name">Chaos Theory</p>
             <p class="se-extra">other extra info</p>
@@ -24,7 +26,7 @@
                 <button class="se-btn"><i class="fa fa-trash"></i></button>
             </div>
         </div>
-    </div>
+    </div-->
     <div class="block" id="block-content">
         <div class="row">
             <div class="col-md-2 " id="col-l">
@@ -44,7 +46,7 @@
                     Wednesday
                 </div>
             </div>
-            <div class="col-md-10" id="col-r">
+            <div class="col-md-10" id="col-r" data-starttime="500" data-endtime="960">
                 <div class="row row-day" id="row-title-subjects">
                     <button class="btn"><i class="fa fa-plus"></i> Add Period</button>
                 </div>
@@ -52,6 +54,33 @@
                     <button class="btn"><i class="fa fa-plus"></i> Add Subject</button>
                 </div>
                 <div class="row row-day">
+                    <div class="subject-element" data-starttime="500" data-endtime="600">
+                        <p class="se-time">10:30 to 12:00</p>
+                        <p class="se-subject-name">Chaos Theory</p>
+                        <p class="se-extra">other extra info</p>
+                        <div class="se-btn-group">
+                            <button class="se-btn"><i class="fa fa-edit"></i></button>
+                            <button class="se-btn"><i class="fa fa-trash"></i></button>
+                        </div>
+                    </div>
+                    <div class="subject-element" data-starttime="500" data-endtime="600">
+                        <p class="se-time">10:30 to 12:00</p>
+                        <p class="se-subject-name">Chaos Theory</p>
+                        <p class="se-extra">other extra info</p>
+                        <div class="se-btn-group">
+                            <button class="se-btn"><i class="fa fa-edit"></i></button>
+                            <button class="se-btn"><i class="fa fa-trash"></i></button>
+                        </div>
+                    </div>
+                    <div class="subject-element" data-starttime="600" data-endtime="700">
+                        <p class="se-time">10:30 to 12:00</p>
+                        <p class="se-subject-name">Chaos Theory</p>
+                        <p class="se-extra">other extra info</p>
+                        <div class="se-btn-group">
+                            <button class="se-btn"><i class="fa fa-edit"></i></button>
+                            <button class="se-btn"><i class="fa fa-trash"></i></button>
+                        </div>
+                    </div>
                     <button class="btn"><i class="fa fa-plus"></i> Add Subject</button>
                 </div>
                 <div class="row row-day">
