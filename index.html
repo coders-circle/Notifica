@@ -4,11 +4,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="css/default.css">
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/ripple.css">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <script src="js/jquery.min.js"></script>
     <script src="js/period-positioning.js"></script>
     <script src="js/default.js"></script>
+    <script src="js/ripple.js"></script>
     <title>Notifica: Routine Creator</title>
 </head>
 
@@ -48,46 +50,28 @@
             </div>
             <div class="col-md-10" id="col-r" data-starttime="500" data-endtime="960">
                 <div class="row row-day" id="row-title-subjects">
-                    <button class="btn"><i class="fa fa-plus"></i> Add Period</button>
+                    <button class=" btn ripple-effect"><i class="fa fa-plus"></i> Add Period</button>
                 </div>
                 <div class="row row-day">
-                    <button class="btn"><i class="fa fa-plus"></i> Add Subject</button>
+                    <button class=" ripple-effect btn-add-subject"><i class="fa fa-plus"></i> Add Subject</button>
                 </div>
                 <div class="row row-day">
-                    <div class="subject-element" data-starttime="500" data-endtime="600">
-                        <p class="se-time">10:30 to 12:00</p>
-                        <p class="se-subject-name">Chaos Theory</p>
-                        <p class="se-extra">other extra info</p>
-                        <div class="se-btn-group">
-                            <button class="se-btn"><i class="fa fa-edit"></i></button>
-                            <button class="se-btn"><i class="fa fa-trash"></i></button>
-                        </div>
+                    <div class="subject-element ripple-effect" data-starttime="500" data-endtime="600">
+                        Chaos Theory
                     </div>
-                    <div class="subject-element" data-starttime="500" data-endtime="600">
-                        <p class="se-time">10:30 to 12:00</p>
-                        <p class="se-subject-name">Chaos Theory</p>
-                        <p class="se-extra">other extra info</p>
-                        <div class="se-btn-group">
-                            <button class="se-btn"><i class="fa fa-edit"></i></button>
-                            <button class="se-btn"><i class="fa fa-trash"></i></button>
-                        </div>
+                    <div class="subject-element ripple-effect" data-starttime="600" data-endtime="700">
+                        The Butterfly Effect
                     </div>
-                    <div class="subject-element" data-starttime="600" data-endtime="700">
-                        <p class="se-time">10:30 to 12:00</p>
-                        <p class="se-subject-name">Chaos Theory</p>
-                        <p class="se-extra">other extra info</p>
-                        <div class="se-btn-group">
-                            <button class="se-btn"><i class="fa fa-edit"></i></button>
-                            <button class="se-btn"><i class="fa fa-trash"></i></button>
-                        </div>
+                    <div class="subject-element ripple-effect" data-starttime="500" data-endtime="650">
+                        Arts of Murder
                     </div>
-                    <button class="btn"><i class="fa fa-plus"></i> Add Subject</button>
+                    <button class="btn-add-subject ripple-effect"><i class="fa fa-plus"></i> Add Subject</button>
                 </div>
                 <div class="row row-day">
-                    <button class="btn"><i class="fa fa-plus"></i> Add Subject</button>
+                    <button class="btn-add-subject ripple-effect"><i class="fa fa-plus"></i> Add Subject</button>
                 </div>
                 <div class="row row-day">
-                    <button class="btn"><i class="fa fa-plus"></i> Add Subject</button>
+                    <button class="btn-add-subject ripple-effect"><i class="fa fa-plus"></i> Add Subject</button>
                 </div>
             </div>
 

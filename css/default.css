@@ -25,7 +25,6 @@ body{
 
 .row-day{
     min-height: 80px;
-    line-height: 1.5em;
     padding:20px;
 }
 
@@ -44,38 +43,32 @@ body{
 }
 
 .subject-element{
-    min-height: 150px;
-    padding:20px;
-    margin-left:20px;
+    padding:8px;
+    margin:3px;
     background-color:#fff;
     color:#544;
-    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    text-align: center;
 }
 
-.se-btn-group{
-    position: absolute;
-    right:10px;
-    bottom:10px;
+.btn-add-subject{
+    margin:3px;
+    margin-left: 20px;
+    background-color: #27ae60;
+    color:#fff;
+    padding:8px 20px 8px 20px;
+    box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2);
+    outline: none;
+    border:none;
+    border-radius: 4px;
 }
 
-.se-btn{
-    background-color: transparent;
-    border: none;
+
+.btn-add-subject:hover{
+    background-color: #2ecc71;
 }
 
-.se-time{
-    color: #c62828;
-    font-size:0.9em;
-}
-
-.se-subject-name{
-    font-size: 1.1em;
-}
-
-.se-extra{
-    color:#988;
-    font-size: 0.9em;
-}
-.se-btn-delete{
-    color: #b71c1c;
+.btn-add-subject:active{
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1);
 }
