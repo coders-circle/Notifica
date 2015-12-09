@@ -1,3 +1,19 @@
-h1{
-    font-family: "Ubuntu";
+*{
+    font-family: "Open Sans", "Ubuntu";
+}
+
+
+.block{
+    min-height: 100px;
+    margin-top:0px;
+    margin-bottom: 50px;
+    padding:25px;
+}
+
+#block-title{
+    background-color:#27ae60;
+}
+
+#text-title{
+    color:#fff;
 }
