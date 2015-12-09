@@ -17,3 +17,17 @@
 #text-title{
     color:#fff;
 }
+
+.row-day{
+    min-height: 80px;
+    line-height: 1.5em;
+    padding:20px;
+}
+
+#col-l{
+    border-right: solid 1px #aaa;
+}
+
+#col-r{
+    padding-left: 40px;
+}
