@@ -1,90 +1,43 @@
 jQuery(document).ready(function($) {
 	$('body').on( 'click', '.ripple-effect', function(e){
-		e.preventDefault();
-		var the_dom = $(this);
-		var limit = the_dom.attr( 'data-ripple-limit' );
-		var color = the_dom.attr( 'data-ripple-color' );
-		if( typeof color == 'undefined' ){
-			var color = 'rgba( 0, 0, 0, 0.1 )';
-		}
-		var radius = the_dom.attr( 'data-ripple-wrap-radius' );
-		if( typeof radius == 'undefined' ){
-			var radius = 0;
-		}
-		if( typeof limit == 'undefined' ){
-			var the_dom_limit = the_dom;
-		} else {
-			var the_dom_limit = the_dom.closest( limit );
-		}
-
-		var the_dom_offset = the_dom_limit.offset();
-		var click_x = e.pageX;
-		var click_y = e.pageY;
-
-		var the_dom_width = the_dom_limit.outerWidth();
-		var the_dom_height = the_dom_limit.outerHeight();
-
 		var ripple_effect_wrap = $('<span class="ripple-effect-wrap"></span>');
 		ripple_effect_wrap.css({
-			'width' 			: the_dom_width,
-			'height'			: the_dom_height,
-			'position' 			: 'absolute',
-			'top'			 	: the_dom_offset.top,
-			'left'	 			: the_dom_offset.left,
-			'z-index' 			: 100,
-			'overflow' 			: 'hidden',
-			'background-clip'	: 'padding-box',
-			'-webkit-border-radius' : radius,
-			'border-radius'		: radius
+			'width' : $(this).outerWidth(),
+			'height' : $(this).outerHeight(),
+			'position' : 'absolute',
+			'top' : $(this).offset().top,
+			'left' : $(this).offset().left,
+			'z-index' : 98,
+			'overflow' : 'hidden',
+			'background-clip' : 'padding-box',
+			'border-radius'	: 0
 		});
-		var ripple_effect_wrap_class = the_dom.attr( 'data-ripple-wrap-class' );
-		if( typeof ripple_effect_wrap_class != 'undefined' ){
-			ripple_effect_wrap.addClass( ripple_effect_wrap_class );
-		}
 		ripple_effect_wrap.appendTo('body');
-		var click_x_ripple = click_x - the_dom_offset.left;
-		var click_y_ripple = click_y - the_dom_offset.top;
+		var click_x_ripple = e.pageX - $(this).offset().left;
+		var click_y_ripple = e.pageY - $(this).offset().top;
 		var circular_width = 1000;
 
 		var ripple = $('<span class="ripple"></span>');
 		ripple.css({
-			'width' 						: circular_width,
-			'height'						: circular_width,
-			'background'					: color,
-			'position'						: 'absolute',
-			'top'							: click_y_ripple - ( circular_width / 2 ),
-			'left'							: click_x_ripple - ( circular_width / 2 ),
-			'content'						: '',
-		    'background-clip' 				: 'padding-box',
-		    '-webkit-border-radius'     	: '50%',
-		    'border-radius'             	: '50%',
-		    '-webkit-animation-name'		: 'ripple-animation',
-		    'animation-name'              	: 'ripple-animation',
-		    '-webkit-animation-duration'  	: '2s',
-		    'animation-duration'          	: '2s',
-		    '-webkit-animation-fill-mode' 	: 'both',
-		    'animation-fill-mode'         	: 'both'
+			'width' : circular_width,
+			'height' : circular_width,
+			'background' : 'rgba( 0, 0, 0, 0.1 )',
+			'position' : 'absolute',
+			'top' : click_y_ripple - ( circular_width / 2 ),
+			'left' : click_x_ripple - ( circular_width / 2 ),
+			'content' : '',
+		    'background-clip' : 'padding-box',
+		    'border-radius' : '50%',
+		    'animation-name' : 'ripple-animation',
+		    'animation-duration' : '1s',
+		    'animation-fill-mode' : 'both',
+			'cursor' : 'pointer'
 		});
 		$('.ripple-effect-wrap:last').append( ripple );
-
 		setTimeout( function(){
 			ripple_effect_wrap.fadeOut(function(){
 				$(this).remove();
 			});
-		}, 200 );
-
-		var href = the_dom.attr('href');
-		if( typeof href != 'undefined' && href.substring(0, 1) != '#' ){
-			setTimeout( function(){
-				window.location = href;
-			}, 100 );
-		}
-		if( the_dom.is('input') || the_dom.is('button') ){
-			setTimeout( function(){
-				the_dom.removeClass('ripple-effect');
-				the_dom.trigger('click');
-				the_dom.addClass('ripple-effect');
-			}, 100 );
-		}
+		}, 100 );
 	});
 });
