@@ -7,6 +7,10 @@ body{
 }
 
 a{
+    color: #2980b9;
+}
+a:hover{
+    color:#3498db;
 }
 a:link {
     text-decoration: none;

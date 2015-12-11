@@ -1,0 +1,78 @@
+#title-block{
+    font-family: "Open Sans";
+    background-color:#ecf0f1;
+    color:#27ae60;
+}
+
+#title-block h1{
+    font-family: "Open Sans Light";
+    font-size: 56px;
+    font-weight: lighter;
+    color: #201612;
+}
+
+#title-block p{
+    font-size: 1.23em;
+    color: #2980b9;
+}
+
+#title-block a{
+    font-family: "Dosis";
+    text-transform:uppercase;
+    font-weight: bold;
+    font-size: 1.23em;
+    float:right;
+}
+
+#signin-block{
+    font-family: "Open Sans Light";
+    background: linear-gradient(#ecf0f1 0%, #fff 160px, #fff 100%);
+}
+
+form > input[type="text"],
+form > input[type="password"]{
+    width: calc(100% - 20px);
+    margin:20px;
+    padding: 0px 20px 10px 20px;
+    border: none;
+    border-bottom: solid 1px #dcd;
+    background-color: transparent;
+    outline: none;
+    font-size: 2em;
+}
+
+form > input[type="submit"]{
+    float: right;
+    font-family: "Dosis";
+    text-transform: uppercase;
+    margin-top: 30px;
+    margin-right: 0px;
+    font-size: 1.6em;
+    font-weight: bold;
+    border: none;
+    background-color: transparent;
+    color: #2980b9;
+    outline: none;
+}
+
+form > input[type="submit"]:hover{
+    color:#3498db;
+}
+
+#register-link{
+    text-align: center;
+    margin-top: 150px;
+}
+
+#footer-block{
+    background: linear-gradient(#fff, #ecf0f1);
+}
+#footer-block p{
+    font-family: "Open Sans Light";
+    font-size: 1.333em;
+    color: #877;
+}
+#footer-block hr{
+    border-color: #ccc;
+    border-bottom-color: transparent;
+}

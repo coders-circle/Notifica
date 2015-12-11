@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+Notifica: Register
+{% endblock %}
+
+{% block head %}
+<link href="{% static 'css/register.css' %}" type="text/css" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+<div class="block" id="title-block">
+    <a href="/home">Home</a>
+    <h1>Notifica</h1>
+    <p>Register for your Notifica account</p>
+</div>
+<div class="block" id="signin-block">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <form>
+                    <input type="text" placeholder="Email Address">
+                    <input type="text" placeholder="Username">
+                    <input type="password" placeholder="Password">
+                    <label id="agreement-input">
+                        <input type="checkbox">
+                        I accept <a href="#">terms and conditions</a>
+                    </label>
+                    <input type="submit" value="Register">
+                </form>
+                <div id="signin-link">
+                    Already have a Notifica account? <a href="/signin">Sign in</a> to your Notifica account.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="block" id="footer-block">
+    <hr>
+    <p>Copyright (c) 2015, All rights reserved</p>
+</div>
+
+
+{% endblock %}
