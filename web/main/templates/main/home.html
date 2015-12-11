@@ -1,13 +1,67 @@
 {% extends 'base.html' %}
+{% load staticfiles %}
 
 {% block title %}
-Notifica - Home
+Notifica: Home
+{% endblock %}
+
+{% block head %}
+<link href="{% static 'css/home.css' %}" type="text/css" rel="stylesheet">
 {% endblock %}
 
 {% block body %}
-
-<h1>
-Hello World
-</h1>
-
+<div class="block" id="title-block">
+    <a href="#">Sign In</a>
+    <h1>Notifica</h1>
+    <p>A must have routine app</p>
+</div>
+<div class="block" id="feature-block">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-6 feature">
+                <h2>Always get notified, never miss a thing</h2>
+                <p>
+                    This app will not only keep you informed about your upcoming classes,
+                    but also reminds you of exams and unfinished homework.
+                    Through the help of this app teachers can notify their students about
+                    what topics will be covered in the upcoming lectures and henceforth
+                    student can prepare on those topics prior to attending the lecture
+                    as a result of which student can get a complete understanding of
+                    what is being taught and the real time classes can be much more
+                    exciting and interactive.
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 feature">
+                <h2>Easily get and submit your Assignments</h2>
+                <p>
+                    Notifica is designed to help teachers create and collect assignments paperlessly,
+                    including other time-saving features such as the ability to directly notify the
+                    class about the projects and assignments directly through the app without have to
+                    involve a third person like CR. It also incorporate interaction amongst the
+                    students about their project documentation and sharing ideas about the assignments
+                    and whereabouts of resources to find. Students can keep track of what's due on the
+                    Assignments area. Teachers can quickly see who has or hasn't completed the work,
+                    and provide direct, real-time feedback and suggestions and tutorials.
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 feature">
+                <h2>Time is important, save it</h2>
+                <p>
+                    No time is wasted, you get instantly notified of what the next class and who is
+                    going to take the class, and if by any reasons the class is delayed or the class
+                    is off then you will be simply notified and you no more require to call your
+                    class representative for such information.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="block" id="footer-block">
+    <hr>
+    <p>Copyright (c) 2015, All rights reserved</p>
+</div>
 {% endblock %}
