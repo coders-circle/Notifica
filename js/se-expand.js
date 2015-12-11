@@ -37,7 +37,7 @@ $(document).mouseup(function (e)
 		setTimeout(function(){
 			container.removeClass('se-hidden');
 			container.hide();
-		}, 900);
+		}, 400);
 		$('.se-backdrop').fadeOut();
     }
 });
