@@ -18,5 +18,5 @@ urlpatterns = [
     
     url(r'^user/$', views.UserView.as_view(), name='user'),
     
-    url(r'^rest/', include(router.urls)),
+    url(r'^api/v1/', include(router.urls)),
 ]

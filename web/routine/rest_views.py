@@ -6,13 +6,11 @@ from routine.serializers import *
 from classroom.permissions import *
 
 
-class RoutineViewSet(viewsets.ModelViewSet):
+class RoutineViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Routine.objects.all()
     serializer_class = RoutineSerializer
-    perimission_classes = (IsAdminOrReadOnly,)
 
 
-class PeriodViewSet(viewsets.ModelViewSet):
+class PeriodViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Period.objects.all()
     serializer_class = PeriodSerializer
-    perimission_classes = (IsAdminOrReadOnly,)

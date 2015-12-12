@@ -6,8 +6,8 @@ class IsAdminOrReadOnly(permissions.BasePermission):
         if request.method in permissions.SAFE_METHODS or request.user.is_superuser:
             return True
 
-        # teacher and student can be modified by themselves
-        if hasattr(obj, 'user') and request.user == obj.user:
+        # users can modify themselves
+        if obj == request.user:
             return True
 
         # organization and class are maintained by their admins
