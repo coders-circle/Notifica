@@ -1,3 +1,6 @@
 from django.contrib import admin
+from routine.models import *
 
-# Register your models here.
+
+admin.site.register(Routine)
+admin.site.register(Period)

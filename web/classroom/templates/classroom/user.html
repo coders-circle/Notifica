@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+I am user {{ user.first_name }} {{ user.last_name }}.
+
+<form method="post">
+{% csrf_token %}
+<input type="submit" value="Log Out">
+</form>
+{% endblock body %}

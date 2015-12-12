@@ -17,16 +17,15 @@ class Department(models.Model):
         return self.name + ", " + str(self.organization)
 
 
-class Teacher(User):
+class Teacher(models.Model):
+    user = models.OneToOneField(User)
     department = models.ForeignKey(Department)
-
-    objects = UserManager()
 
     class Meta:
         verbose_name = "teacher"
 
     def __str__(self):
-        return self.get_username();
+        return self.user.username
 
 
 class Subject(models.Model):
@@ -34,32 +33,31 @@ class Subject(models.Model):
     department = models.ForeignKey(Department)
 
     def __str__(self):
-        return name
+        return self.name
 
 
 class Class(models.Model):
-    classId = models.CharField(max_length=30)
+    class_id = models.CharField(max_length=30)
     department = models.ForeignKey(Department)
 
     def __str__(self):
-        return self.classId + ", " + str(self.department)
+        return self.class_id + ", " + str(self.department)
 
 
 class Group(models.Model):
-    groupId = models.CharField(max_length=10)
-    pClass = models.ForeignKey(Class)
+    group_id = models.CharField(max_length=10)
+    p_class = models.ForeignKey(Class, verbose_name="class")
 
     def __str__(self):
-        return self.pClass.classId + "(" + self.groupId + "), " + str(self.pClass.department)
+        return self.p_class.class_id + "(" + self.group_id + "), " + str(self.p_class.department)
 
 
-class Student(User):
+class Student(models.Model):
+    user = models.OneToOneField(User)
     group = models.ForeignKey(Group)
-
-    objects = UserManager()
 
     class Meta:
         verbose_name = "student"
 
     def __str__(self):
-        return self.get_username()
+        return self.user.username
