@@ -20,6 +20,6 @@ a:visited {
 }
 
 .block{
-    min-height: 100;
-    padding: 40px;
+    min-height: 60;
+    padding: 30px;
 }

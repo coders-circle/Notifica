@@ -1,0 +1,63 @@
+#title-block{
+    font-family: "Open Sans";
+    background-color:#ecf0f1;
+    color:#27ae60;
+}
+
+#title-block h1{
+    font-family: "Open Sans Light";
+    font-size: 56px;
+    font-weight: lighter;
+    color: #201612;
+}
+
+#title-block p{
+    font-size: 1.23em;
+    color: #d35400;
+}
+
+#title-block input[type="submit"]{
+    font-family: "Dosis";
+    text-transform:uppercase;
+    font-weight: bold;
+    font-size: 1.23em;
+    float:right;
+    background-color: transparent;
+    color: #2980b9;
+    border: none;
+    outline: none;
+}
+#title-block input[type="submit"]:hover{
+    color:#3498db;
+}
+
+#userdetail-block form{
+    font-family: "Open Sans";
+    font-size: 1.6em;
+}
+
+#userdetail-block form label{
+    font-family: "Open Sans Light";
+    font-weight: normal;
+    color: #889;
+    margin-right: 10px;
+
+}
+#userdetail-block form input[type="text"]{
+    font-family: "Open Sans"
+    width:60%;
+    border: none;
+    border-bottom: 1px dashed #ccc;
+    color: #454;
+    padding: 5px 50px 5px 10px;
+    outline: none;
+}
+
+#userdetail-block form button{
+    border: none;
+    background-color: transparent;
+    color: #e67e22;
+    outline: none;
+    margin-left: -30px;
+    font-size: 1em;
+}

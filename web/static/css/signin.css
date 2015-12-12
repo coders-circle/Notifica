@@ -38,7 +38,7 @@ form > input[type="password"]{
     border-bottom: solid 1px #dcd;
     background-color: transparent;
     outline: none;
-    font-size: 2em;
+    font-size: 1.6em;
 }
 
 form > input[type="submit"]{
@@ -60,6 +60,9 @@ form > input[type="submit"]:hover{
 }
 
 #register-link{
+    font-family: "Open Sans";
+    font-weight: bold;
+    color: #776;
     text-align: center;
     margin-top: 150px;
 }
@@ -69,7 +72,6 @@ form > input[type="submit"]:hover{
 }
 #footer-block p{
     font-family: "Open Sans Light";
-    font-size: 1.333em;
     color: #877;
 }
 #footer-block hr{
