@@ -66,6 +66,9 @@ form > input[type="submit"]:hover{
 }
 
 #signin-link{
+    font-family: "Open Sans";
+    font-weight: bold;
+    color: #776;
     text-align: center;
     margin-top: 50px;
 }
@@ -75,7 +78,6 @@ form > input[type="submit"]:hover{
 }
 #footer-block p{
     font-family: "Open Sans Light";
-    font-size: 1.333em;
     color: #877;
 }
 #footer-block hr{

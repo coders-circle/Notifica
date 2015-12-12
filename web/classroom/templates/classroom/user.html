@@ -1,8 +1,48 @@
 {% extends 'base.html' %}
 {% load classroom_tags %}
+    
+{% load staticfiles %}
+
+{% block title %}
+Notifica: User info
+{% endblock %}
+
+
+{% block head %}
+<link href="{% static 'css/user.css' %}" type="text/css" rel="stylesheet">
+{% endblock %}
 
 {% block body %}
-<div class="main" >
+<div class="block" id="title-block">
+    <form method="post">
+        {% csrf_token %}
+        <input type="submit" value="Log Out">
+    </form>
+    <h1>Welcome!</h1>
+    <p>{{ user.first_name }} {{ user.last_name }}</p>
+</div>
+<div class="block" id="userdetail-block">
+    <div class="container">
+        <form>
+            <div class="row">
+                <div class="col-md-6">
+                    <label>first name:</label>
+                    <input type="text" value="{{ user.first_name }}">
+                    <button><i class="fa fa-pencil"></i></button>
+                </div>
+                <div class="col-md-6">
+                    <label>last name:</label>
+                    <input type="text" value="{{ user.last_name }}">
+                    <button><i class="fa fa-pencil"></i></button>
+                </div>
+            </div>
+            <div class="row">
+            </div>
+        </form>
+    </div>
+</div>
+
+
 
     {% with usertype=user|user_type %}
     
@@ -16,13 +56,8 @@
         {% endif %}
     
     {% endwith %}
-    
-    <form method="post">
-        {% csrf_token %}
-        <input type="submit" value="Log Out">
-    </form>
+    <br>
+    <a href="{% url 'routine:routine' %}">View Routine</a>
 
-    <a href='{% url 'routine:routine' %}'>View Routine</a>
 
-</div>
-{% endblock body %}
+{% endblock %}
