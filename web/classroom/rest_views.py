@@ -18,9 +18,10 @@ class DepartmentViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAdminOrReadOnly,)
 
 
-class TeacherViewSet(viewsets.ReadOnlyModelViewSet):
+class TeacherViewSet(viewsets.ModelViewSet):
     queryset = Teacher.objects.all()
     serializer_class = TeacherSerializer
+    permission_classes = (IsAdminOrReadOnly,)
 
 
 class SubjectViewSet(viewsets.ModelViewSet):
@@ -41,7 +42,7 @@ class GroupViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAdminOrReadOnly,)
 
 
-class StudentViewSet(viewsets.ReadOnlyModelViewSet):
+class StudentViewSet(viewsets.ModelViewSet):
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
     permission_classes = (IsAdminOrReadOnly,)

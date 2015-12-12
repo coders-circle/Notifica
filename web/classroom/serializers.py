@@ -17,7 +17,14 @@ class DepartmentSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'first_name', 'last_name', 'username', 'email')
+        fields = ('id', 'first_name', 'last_name', 'username', 'password', 'email')
+        extra_kwargs = {'password': {'write_only': True}}
+
+    def create(self, data):
+        user = User(first_name=data['first_name'], last_name=data['last_name'], username=data['username'], email=['email'])
+        user.set_password(data['password'])
+        user.save()
+        return user
 
 
 class TeacherSerializer(serializers.ModelSerializer):

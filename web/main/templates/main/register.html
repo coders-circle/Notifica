@@ -19,10 +19,16 @@ Notifica: Register
     <div class="container">
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
-                <form>
-                    <input type="text" placeholder="Email Address">
-                    <input type="text" placeholder="Username">
-                    <input type="password" placeholder="Password">
+                <form method="post">
+                    {% csrf_token %}
+
+                    {% if error %}
+                    <div class="alert alert-danger">{{ error }} </div>
+                    {% endif %}
+
+                    <input name="email" type="text" placeholder="Email Address">
+                    <input name="username" type="text" placeholder="Username">
+                    <input name="password" type="password" placeholder="Password">
                     <label id="agreement-input">
                         <input type="checkbox">
                         I accept <a href="#">terms and conditions</a>
