@@ -2,11 +2,14 @@ from django.shortcuts import render, redirect
 from django.views.generic import View, TemplateView
 from django.contrib.auth import authenticate, logout
 
+from classroom.models import *
+from classroom.users import *
 
-class UserView(TemplateView):
+
+class UserView(View):
 
     def get(self, request):
-        if request.user.is_authenticated and not request.user.is_superuser:
+        if isValidUser(request.user):
             return render(request, "classroom/user.html")
         return redirect("home")
 

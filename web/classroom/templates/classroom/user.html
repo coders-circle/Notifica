@@ -1,11 +1,28 @@
 {% extends 'base.html' %}
+{% load classroom_tags %}
 
 {% block body %}
+<div class="main" >
 
-I am user {{ user.first_name }} {{ user.last_name }}.
+    {% with usertype=user|user_type %}
+    
+        My name is {{ user.first_name }} {{ user.last_name }}.
+        <br>
+        I am user of type: {{usertype}}.
+        
+        <br>
+        {% if usertype == "Student" %}
+            {{ user.student.group }}
+        {% endif %}
+    
+    {% endwith %}
+    
+    <form method="post">
+        {% csrf_token %}
+        <input type="submit" value="Log Out">
+    </form>
 
-<form method="post">
-{% csrf_token %}
-<input type="submit" value="Log Out">
-</form>
+    <a href='{% url 'routine:routine' %}'>View Routine</a>
+
+</div>
 {% endblock body %}

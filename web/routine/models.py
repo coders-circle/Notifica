@@ -32,3 +32,6 @@ class Period(models.Model):
     
     def __str__(self):
         return str(self.subject) + " " + self.get_day_display() + " " + str(self.start_time) + "-" + str(self.end_time) + " (" + str(self.routine.p_class) + ")"
+
+    class Meta:
+        ordering = ["day", "start_time"]

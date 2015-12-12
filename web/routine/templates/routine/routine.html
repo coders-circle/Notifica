@@ -1,1 +1,23 @@
+{% load customtags %}
 routine view
+
+<br>
+{% for day, periods in routine.items %}
+    Day : {{ days|item:forloop.counter0 }}
+    
+    {% for p in periods %}
+        <br>
+        {{ p.start_time }}-{{ p.end_time }}
+        {{ p.subject }}
+
+        Teachers: 
+        {% for t in p.teachers.all %}
+            {{ t }}
+        {% endfor %}
+
+        Remarks: {{ p.remarks }}
+    {% endfor %}
+    <br>
+    <br>
+
+{% endfor %}
