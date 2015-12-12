@@ -4,9 +4,10 @@ from classroom import models as classroom_models
 
 class Routine(models.Model):
     p_class = models.ForeignKey(classroom_models.Class)
+    notifica_id = models.CharField(max_length=32, unique=True)
 
     def __str__(self):
-        return "Routine of " + str(self.p_class)
+        return str(self.p_class.class_id) + " routine @routine:" + self.notifica_id
 
 
 DAYS = (
@@ -22,8 +23,8 @@ DAYS = (
 
 class Period(models.Model):
     routine = models.ForeignKey(Routine)
-    subject = models.ForeignKey(classroom_models.Subject)
-    teachers = models.ManyToManyField(classroom_models.Teacher)
+    subject = models.CharField(max_length=100)
+    teachers = models.TextField(max_length=100)
     start_time = models.IntegerField()
     end_time = models.IntegerField()
     day = models.IntegerField(choices=DAYS)
