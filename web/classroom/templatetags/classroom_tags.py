@@ -1,10 +1,10 @@
 from django import template
-from classroom.users import *
-from classroom.links import *
+from classroom.utils import *
 
 import json
 
 register = template.Library()
+
 
 @register.filter
 def user_type(user):

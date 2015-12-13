@@ -1,0 +1,115 @@
+*{
+    font-family: "Open Sans", "Ubuntu";
+}
+
+body{
+    background-color: #eee !important;
+}
+
+
+.block{
+    min-height: 100px;
+    margin-top:0px;
+    margin-bottom: 50px;
+    padding:25px;
+}
+
+#block-title{
+    background-color:#27ae60;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+#text-title{
+    color:#fff;
+}
+
+.row-day{
+    min-height: 80px;
+    padding:20px;
+}
+
+*[class^='row-day-n'], *[class*='row-day-n']{
+    min-height: 80px;
+    line-height: 1.5em;
+    padding-left:20px;
+}
+
+#col-l{
+    border-right: solid 1px #aaa;
+}
+
+#col-r{
+
+}
+
+.subject-element{
+    padding:8px;
+    margin:3px;
+    background-color:#fff;
+    color:#544;
+    box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    text-align: center;
+}
+
+.btn-add-subject{
+    margin:3px;
+    margin-left: 20px;
+    background-color: #27ae60;
+    color:#fff;
+    padding:8px 20px 8px 20px;
+    box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2);
+    outline: none;
+    border:none;
+    border-radius: 4px;
+}
+
+.btn-add-subject:hover{
+    background-color: #2ecc71;
+}
+
+.btn-add-subject:active{
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.se-details-content{
+    padding:40px;
+}
+
+.se-time{
+    color:#e74c3c;
+}
+.se-subject-name{
+    color:#454;
+    font-size: 2em;
+}
+.se-extra{
+    color:#988;
+}
+
+.se-details-bottom-content{
+    float:right;
+    margin-top:30px;
+}
+
+.btn-se-detail{
+    border: none;
+    outline: none;
+    background: transparent;
+    margin-left:10px;
+    margin-right:10px;
+}
+
+#btn-se-save{
+    color: #27ae60;
+}
+#btn-se-save:hover{
+    color:#2ecc71;
+}
+
+#btn-se-cancel{
+    color:#c0392b;
+}
+#btn-se-cancel:hover{
+    color:#e74c3c;
+}

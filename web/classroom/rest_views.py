@@ -22,7 +22,7 @@ class DepartmentViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         organization = Organization.objects.get(id=serializer.data["organization"])
-        if not self.request.user in organization.admins.all():
+        if self.request.user not in organization.admins.all():
             raise serializers.ValidationError("You have not permission to add department to this organization")
         serializer.save()
 
@@ -34,7 +34,7 @@ class TeacherViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         department = Department.objects.get(id=serializer.data["department"])
-        if not self.request.user in department.organization.admins.all():
+        if self.request.user not in department.organization.admins.all():
             raise serializers.ValidationError("You have not permission to add teacher to this department")
 
 
@@ -45,7 +45,7 @@ class SubjectViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         department = Department.objects.get(id=serializer.data["department"])
-        if not self.request.user in department.organization.admins.all():
+        if self.request.user not in department.organization.admins.all():
             raise serializers.ValidationError("You have not permission to add subject to this department")
 
 
@@ -65,7 +65,7 @@ class GroupViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         pclass = Class.objects.get(id=serializer.data["p_class"])
-        if not self.request.user in pclass.admins.all():
+        if self.request.user not in pclass.admins.all():
             raise serializers.ValidationError("You have not permission to add group to this class")
         serializer.save()
 
@@ -77,7 +77,7 @@ class StudentViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         group = Group.objects.get(id=serializer.data["group"])
-        if not self.request.user in group.p_class.admins.all():
+        if self.request.user not in group.p_class.admins.all():
             raise serializers.ValidationError("You have not permission to add group to this class")
         serializer.save()
 

@@ -3,7 +3,7 @@ from django.views.generic import View, TemplateView
 from django.contrib.auth import authenticate, logout
 
 from classroom.models import *
-from classroom.users import *
+from classroom.utils import *
 
 
 class UserView(View):
