@@ -16,7 +16,17 @@
     color: #d35400;
 }
 
+#view-all-link{
+    margin-top: 30px;
+}
 #title-block input[type="submit"]{
+    margin-left: 50px;
+}
+
+#title-block input[type="submit"],
+#title-block a,
+#view-all-link,
+.view-all-link{
     font-family: "Dosis";
     text-transform:uppercase;
     font-weight: bold;
@@ -27,37 +37,109 @@
     border: none;
     outline: none;
 }
-#title-block input[type="submit"]:hover{
+.view-all-link:hover{
     color:#3498db;
 }
 
-#userdetail-block form{
+#news-block{
     font-family: "Open Sans";
-    font-size: 1.6em;
+    background: linear-gradient(#ecf0f1 0%, #fff 240px, #fff 100%);
 }
-
-#userdetail-block form label{
+#news-block h2{
     font-family: "Open Sans Light";
-    font-weight: normal;
-    color: #889;
-    margin-right: 10px;
-
+    font-size: 32px;
+    text-align: center;
+    margin-bottom: 50px;
 }
-#userdetail-block form input[type="text"]{
-    font-family: "Open Sans"
-    width:60%;
+
+.comments .container-expand-button{
+    text-align: right;
+    color: #999;
+    font-size: 0.9em;
+}
+.comments .container-expand-button button{
     border: none;
-    border-bottom: 1px dashed #ccc;
-    color: #454;
-    padding: 5px 50px 5px 10px;
     outline: none;
-}
-
-#userdetail-block form button{
-    border: none;
     background-color: transparent;
-    color: #e67e22;
-    outline: none;
-    margin-left: -30px;
+}
+.comments .list-comment{
+    display: none;
+}
+.list-comment .user-name{
+    color: #d35400;
+}
+.card-post .comments h4{
     font-size: 1em;
+    color: #aaa;
+}
+
+.card-post .detail{
+    font-family: "Open Sans";
+}
+
+.card-post .op-info{
+    line-height: 1.23em;
+    margin-bottom: 16px;
+}
+.card-post .op-info .op-name,
+.comment .user-name{
+    color: #d35400;
+}
+.card-post .op-info .post-time,
+.comment .post-time{
+    font-family: "Open Sans Light";
+    color: #888;
+    font-size: 0.9em;
+}
+.comment p{
+    color: #666;
+}
+.container-user-avatar{
+    overflow: hidden;
+    border-radius: 50%;
+    float: left;
+    margin-right: 20px;
+}
+.container-user-avatar img{
+    width: 36px;
+    height: 36px;
+}
+.comment{
+    margin-top:20px;
+    margin-bottom:20px;
+}
+
+.card-event .title{
+    font-family: "Open Sans";
+    color: #222;
+}
+
+.card-event .eta-high{
+    color: #27ae60;
+}
+.card-event .eta-med{
+    color: #2980b9;
+}
+.card-event .eta-low{
+    color: #e74c3c;
+}
+
+.card-event .topic{
+    color: #d35400;
+    font-size: 0.9em;
+}
+
+.card-event .post-detail{
+    font-family: "Open Sans Light";
+    text-align: right;
+    color: #aaa;
+    font-size: 0.9em;
+}
+.card-event .post-detail .op-name{
+    color: #d35400;
+    font-size: 1em;
+}
+
+.card-event{
+    line-height: 2em;
 }

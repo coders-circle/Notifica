@@ -1,15 +1,18 @@
 {% extends 'base.html' %}
 {% load classroom_tags %}
-    
+
 {% load staticfiles %}
 
 {% block title %}
-Notifica: User info
+Notifica: News feed
 {% endblock %}
 
 
 {% block head %}
 <link href="{% static 'css/user.css' %}" type="text/css" rel="stylesheet">
+<link href="{% static 'css/ripple.css' %}" type="text/css" rel="stylesheet">
+<script src="{% static 'js/ripple.js' %}"></script>
+<script src="{% static 'js/user.js' %}"></script>
 {% endblock %}
 
 {% block body %}
@@ -18,46 +21,94 @@ Notifica: User info
         {% csrf_token %}
         <input type="submit" value="Log Out">
     </form>
-    <h1>Welcome!</h1>
-    <p>{{ user.first_name }} {{ user.last_name }}</p>
+    <a href="{% url 'routine:routine' %}">Routine</a>
+    <h1>Notifica</h1>
+    <p>
+        Hello! {% if user.first_name %}{{ user.first_name }}{% else %}{{ user.username }}{% endif %}
+    </p>
 </div>
-<div class="block" id="userdetail-block">
+<div class="block" id="news-block">
     <div class="container">
-        <form>
-            <div class="row">
-                <div class="col-md-6">
-                    <label>first name:</label>
-                    <input type="text" value="{{ user.first_name }}">
-                    <button><i class="fa fa-pencil"></i></button>
+        <div class="row">
+            <div class="col-md-5 col-md-offset-1">
+                <h2>Recent Posts</h2>
+                <div class="card card-post">
+                    <div class="op-info">
+                        <div class="container-user-avatar">
+                            <img src="{% static 'img/ninja.png' %}">
+                        </div>
+                        <span class="op-name">Absolute Zero</span>
+                        <br>
+                        <span class="post-time">3 minutes ago</span>
+                    </div>
+                    <p class="detail">
+                        We do not have any class on Sunday, Happy Holiday!
+                    </p>
+                    <div class="comments">
+                        <div class="container-expand-button">
+                            <button class="expand-button">2 comments <i class="fa fa-chevron-down"></i></button>
+                        </div>
+                        <div class="list-comment" data-hidden="true">
+                            <h4>Comments</h4>
+                            <div class="comment">
+                                <div class="user-info">
+                                    <div class="container-user-avatar">
+                                        <img src="{% static 'img/spy.png' %}">
+                                    </div>
+                                    <span class="user-name">Aditya Khatri</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="post-time">3 minutes ago</span>
+                                </div>
+                                <p>Wau, that's great</p>
+                            </div>
+                            <div class="comment">
+                                <div class="user-info">
+                                    <div class="container-user-avatar">
+                                        <img src="{% static 'img/ks.png' %}">
+                                    </div>
+                                    <span class="user-name">Keyser Soze</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="post-time">20 minutes ago</span>
+                                </div>
+                                <p>Really really really long long long long comment. This comment is so long that it goes multiple lines.</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-6">
-                    <label>last name:</label>
-                    <input type="text" value="{{ user.last_name }}">
-                    <button><i class="fa fa-pencil"></i></button>
+                <hr>
+                <div class="card card-post">
+                    <div class="op-info">
+                        <div class="container-user-avatar">
+                            <img src="{% static 'img/ninja.png' %}">
+                        </div>
+                        <span class="op-name">Absolute Zero</span>
+                        <br>
+                        <span class="post-time">2 days ago</span>
+                    </div>
+                    <p class="detail">
+                        How's the website guys? Please give your feedback in the comment.
+                    </p>
+                    <div class="comments">
+                        <div class="container-expand-button">
+                            <div class="expand-button">No comments yet </div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <a id="view-all-link" href="#">View all Posts &nbsp;&nbsp;<i class="fa fa-chevron-right"></i></a>
+            </div>
+            <div class="col-md-4 col-md-offset-1">
+                <h2>Upcomming Events</h2>
+                <div class="card card-event">
+                    <span class="title">Admit Card Distribution</span> in <span class="eta-low">1 days</span>
+                </div>
+                <hr>
+                <div class="card card-event">
+                    <span class="title">Internal Assesment</span> in <span class="eta-high">7 days</span>
                 </div>
             </div>
-            <div class="row">
-            </div>
-        </form>
+        </div>
+        <br>
     </div>
 </div>
 
 
-
-    {% with usertype=user|user_type %}
-    
-        My name is {{ user.first_name }} {{ user.last_name }}.
-        <br>
-        I am user of type: {{usertype}}.
-        
-        <br>
-        {% if usertype == "Student" %}
-            {{ user.student.group }}
-        {% endif %}
-    
-    {% endwith %}
-    <br>
-    <a href="{% url 'routine:routine' %}">View Routine</a>
 
 
 {% endblock %}
