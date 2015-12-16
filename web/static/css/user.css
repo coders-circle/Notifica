@@ -52,16 +52,44 @@
     margin-bottom: 50px;
 }
 
-.comments .container-expand-button{
-    text-align: right;
+hr{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.comments .container-comment-controls{
     color: #999;
     font-size: 0.9em;
+    margin-top: 40px;
 }
-.comments .container-expand-button button{
+.comments .container-comment-controls .btn-send{
+    color: #2980b9;
+    position: absolute;
+    right: 10px;
+    top: 0px;
+}
+.comments .container-comment-controls button{
     border: none;
     outline: none;
     background-color: transparent;
 }
+.comments .container-comment-controls input[type="text"]{
+    width: 100%;
+    outline: none;
+    border: none;
+    padding: 0px 50px 5px 0px;
+    border-bottom: 1px solid #eee;
+    transition: 0.2s;
+    background-color: transparent;
+}
+.comments .container-comment-controls input[type="text"]:focus{
+    border-bottom: 1px solid #ccc;
+}
+.card-post{
+    margin-top: 50px;
+}
+
+
 .comments .list-comment{
     display: none;
 }

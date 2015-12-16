@@ -1,6 +1,6 @@
 jQuery(document).ready(function($) {
     $('body').on( 'click', '.expand-button', function(e){
-        var list_comment = $(this).parent().parent().find(".list-comment");
+        var list_comment = $(this).parent().parent().parent().find(".list-comment");
         var chevron = list_comment.parent().find("i");
         if(list_comment.data("hidden") == "false"){
             list_comment.fadeOut();

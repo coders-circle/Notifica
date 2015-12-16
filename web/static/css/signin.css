@@ -29,6 +29,14 @@
     background: linear-gradient(#ecf0f1 0%, #fff 160px, #fff 100%);
 }
 
+.error{
+    font-family: "Open Sans";
+    color: #e74c3c;
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 1.23em;
+}
+
 form > input[type="text"],
 form > input[type="password"]{
     width: calc(100% - 20px);
@@ -39,6 +47,11 @@ form > input[type="password"]{
     background-color: transparent;
     outline: none;
     font-size: 1.6em;
+    transition: 0.2s;
+}
+form > input[type="text"]:focus,
+form > input[type="password"]:focus{
+    border-bottom: solid 1px #aaa;
 }
 
 form > input[type="submit"]{

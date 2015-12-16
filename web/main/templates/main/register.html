@@ -23,7 +23,7 @@ Notifica: Register
                     {% csrf_token %}
 
                     {% if error %}
-                    <div class="alert alert-danger">{{ error }} </div>
+                    <div class="error"><i class="fa fa-times-circle"></i> {{ error }}</div>
                     {% endif %}
 
                     <input name="email" type="text" placeholder="Email Address">

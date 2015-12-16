@@ -59,7 +59,6 @@ Routine
             </div>
             {% endfor %}
         </div>
-
         <div class="col-md-10" id="col-r" data-starttime="{{start_time}}" data-endtime="{{end_time}}">
             <!--div class="row row-day" id="row-title-subjects">
                 <button class=" btn ripple-effect"><i class="fa fa-plus"></i> Add Period</button>
@@ -77,7 +76,7 @@ Routine
                         {% endif %}
                     {% endwith %}
                     <br>
-                    Teachers: 
+                    Teachers:
                     {% for t in p.teachers|json_decode %}
                         {% with teacher=t|linked_object %}
                             {% if teacher %}

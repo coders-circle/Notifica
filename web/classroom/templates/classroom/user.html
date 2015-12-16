@@ -19,7 +19,7 @@ Notifica: News feed
 <div class="block" id="title-block">
     <form method="post">
         {% csrf_token %}
-        <input type="submit" value="Log Out">
+        <input type="submit" value="Sign out">
     </form>
     <a href="{% url 'routine:routine' %}">Routine</a>
     <h1>Notifica</h1>
@@ -45,11 +45,16 @@ Notifica: News feed
                         We do not have any class on Sunday, Happy Holiday!
                     </p>
                     <div class="comments">
-                        <div class="container-expand-button">
-                            <button class="expand-button">2 comments <i class="fa fa-chevron-down"></i></button>
+                        <div class="container-comment-controls row">
+                            <div class="col-md-8">
+                                <input type="text" placeholder="Enter your comment">
+                                <button class="btn-send"><i class="fa fa-paper-plane"></i></button>
+                            </div>
+                            <div class="col-md-4">
+                                <button class="expand-button">2 comments <i class="fa fa-chevron-down"></i></button>
+                            </div>
                         </div>
                         <div class="list-comment">
-                            <h4>Comments</h4>
                             <div class="comment">
                                 <div class="user-info">
                                     <div class="container-user-avatar">
@@ -71,7 +76,7 @@ Notifica: News feed
                         </div>
                     </div>
                 </div>
-                <hr>
+
                 <div class="card card-post">
                     <div class="op-info">
                         <div class="container-user-avatar">
@@ -85,12 +90,18 @@ Notifica: News feed
                         How's the website guys? Please give your feedback in the comment.
                     </p>
                     <div class="comments">
-                        <div class="container-expand-button">
-                            <div class="expand-button">No comments yet </div>
+                        <div class="container-comment-controls row">
+                            <div class="col-md-8">
+                                <input type="text" placeholder="Enter your comment">
+                                <button class="btn-send"><i class="fa fa-paper-plane"></i></button>
+                            </div>
+                            <div class="col-md-4">
+                                No comments yet
+                            </div>
                         </div>
                     </div>
                 </div>
-                <hr>
+
                 <a id="view-all-link" href="#">View all Posts &nbsp;&nbsp;<i class="fa fa-chevron-right"></i></a>
             </div>
             <div class="col-md-4 col-md-offset-1">
