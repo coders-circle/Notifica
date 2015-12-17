@@ -5,7 +5,7 @@
 {% load classroom_tags %}
 
 {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/routine-default.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/routine.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'css/ripple.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'css/se-expand.css' %}">
 
@@ -32,8 +32,11 @@
     <div class="se-details-content" style="display:none">
         <p class="se-time">10:30 to 12:00</p>
         <p class="se-subject-name">Chaos Theory</p>
-        <p class="se-extra">Chaos theory is the field of study in mathematics that studies the behavior of dynamical systems that are highly sensitive to initial conditions -- response popularly referred to as the butterfly effect.</p>
-
+        <p class="se-extra">
+            Chaos theory is the field of study in mathematics that studies the
+            behavior of dynamical systems that are highly sensitive to initial
+            conditions -- response popularly referred to as the butterfly effect.
+        </p>
         <div class="se-details-bottom-content">
             <button class="btn-se-detail" id="btn-se-save">SAVE</button>
             <button class="btn-se-detail" id="btn-se-cancel">CANCEL</button>
@@ -41,56 +44,52 @@
     </div>
 </div>
 
-<div class="block" id="block-title">
-Routine
+<div class="block" id="title-block">
+    <a href="{% url 'classroom:user' %}">News Feeds</a>
+    <h1>Notifica</h1>
+    <p>
+        Weekly Routine
+    </p>
 </div>
 
-<br>
-
-<div class="block" id="block-content">
+<div class="block" id="content-block">
     <div class="row">
-        <div class="col-md-2 " id="col-l">
-            <!--div class="row row-day" id = "row-title-day-time">
-            Day / Time
-            </div-->
+        <div class="col-sm-1 " id="col-l">
             {% for day in days %}
-            <div class="row row-day">
-                {{ day }}
-            </div>
+            <div class="row row-day">{{ day }}</div>
             {% endfor %}
         </div>
-        <div class="col-md-10" id="col-r" data-starttime="{{start_time}}" data-endtime="{{end_time}}">
-            <!--div class="row row-day" id="row-title-subjects">
-                <button class=" btn ripple-effect"><i class="fa fa-plus"></i> Add Period</button>
-            </div-->
-
+        <div class="col-sm-11" id="col-r" data-starttime="{{start_time}}" data-endtime="{{end_time}}">
             {% for day, periods in routine.items %}
             <div class="row row-day" data-index="{{forloop.counter0}}">
                 {% for p in periods %}
-                <div class="subject-element ripple-effect" data-starttime="{{p.start_time}}" data-endtime="{{p.end_time}}" data-index="{{forloop.counter0}}">
-                    {% with subject=p.subject|linked_object %}
-                        {% if subject %}
-                            {{ subject.name }}
-                        {% else %}
-                            {{ p.subject }}
-                        {% endif %}
-                    {% endwith %}
-                    <br>
-                    Teachers:
-                    {% for t in p.teachers|json_decode %}
-                        {% with teacher=t|linked_object %}
-                            {% if teacher %}
-                                {{ teacher.user.first_name }} {{ teacher.user.last_name }}
+                <div class="period subject-element" data-starttime="{{p.start_time}}" data-endtime="{{p.end_time}}" data-index="{{forloop.counter0}}">
+                    <p class="subject">
+                        {% with subject=p.subject|linked_object %}
+                            {% if subject %}
+                                {{ subject.name }}
                             {% else %}
-                                {{ t }}
+                                {{ p.subject }}
                             {% endif %}
                         {% endwith %}
-                    {% endfor %}
-                    <br>
-                    Remarks: {{ p.remarks }}
+                    </p>
+                    <p class="teachers">
+                        {% for t in p.teachers|json_decode %}
+                            {% with teacher=t|linked_object %}
+                                {% if teacher %}
+                                    {{ teacher.user.first_name }} {{ teacher.user.last_name }}
+                                {% else %}
+                                    {{ t }},
+                                {% endif %}
+                            {% endwith %}
+                        {% endfor %}
+                    </p>
+                    <p class="remarks">
+                        {{ p.remarks }}
+                    </p>
                 </div>
                 {% endfor %}
-                <button class="btn-add-subject ripple-effect"><i class="fa fa-plus"></i></button>
+                <button class="btn-add-subject"><i class="fa fa-plus"></i> Add Period</button>
             </div>
             {% endfor %}
         </div>

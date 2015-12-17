@@ -1,0 +1,110 @@
+*{
+    font-family: "Open Sans", "Ubuntu";
+}
+body{
+    background-color: #ecf0f1;
+    color: #424242;
+}
+#content-block{
+    background: linear-gradient(#ecf0f1 0%, #fff 240px, #fff 100%);
+}
+
+*[class^='row-day-n'], *[class*='row-day-n']{
+    min-height: 80px;
+    line-height: 1.5em;
+    padding-left:20px;
+}
+#col-l{
+}
+.row-day{
+    min-height: 80px;
+}
+#col-l .row-day{
+    display: flex;
+    align-items: center;
+}
+#col-r{
+}
+#col-r .row-day{
+    display: flex;
+    align-items: center;
+}
+.btn-add-subject{
+    font-family: "Open Sans Condensed";
+    text-transform: uppercase;
+    background-color: transparent;
+    color:#27ae60;
+    outline: none;
+    border:none;
+}
+.period{
+    font-family: "Open Sans";
+    padding:8px 12px 8px 12px;
+    margin:3px;
+    color:#484848;
+    cursor: pointer;
+    text-align: left;
+    background-color: #fff;
+    box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    line-height: 1em;
+}
+
+.period p{
+    margin: 10px 0px 6px 6px;
+}
+
+.period .subject{
+    font-size: 1.23em;
+}
+
+.period .teachers{
+    color: #d35400;
+    font-size: 0.88em;
+}
+.period .remarks{
+    font-family: "Open Sans";
+    color: #aaa;
+    font-size: 0.88em;
+}
+
+
+.se-details-content{
+    padding:40px;
+}
+.se-time{
+    color:#e74c3c;
+}
+.se-subject-name{
+    color:#454;
+    font-size: 2em;
+}
+.se-extra{
+    color:#988;
+}
+
+.se-details-bottom-content{
+    float:right;
+    margin-top:30px;
+}
+
+.btn-se-detail{
+    border: none;
+    outline: none;
+    background: transparent;
+    margin-left:10px;
+    margin-right:10px;
+}
+#btn-se-save{
+    color: #27ae60;
+}
+#btn-se-save:hover{
+    color:#2ecc71;
+}
+
+#btn-se-cancel{
+    color:#c0392b;
+}
+#btn-se-cancel:hover{
+    color:#e74c3c;
+}
