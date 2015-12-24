@@ -7,10 +7,11 @@ body{
 }
 
 a{
-    color: #2980b9;
+    color: #3498db;
 }
 a:hover{
-    color:#3498db;
+    color: #2980b9;
+    text-decoration: none;
 }
 a:link {
     text-decoration: none;
@@ -27,7 +28,6 @@ a:visited {
 #title-block{
     font-family: "Open Sans";
     background-color:#ecf0f1;
-    color:#27ae60;
 }
 
 #title-block h1{
@@ -38,7 +38,7 @@ a:visited {
 
 #title-block p{
     font-size: 1.23em;
-    color: #d35400;
+    color: #e74c3c;
 }
 
 #title-block a{

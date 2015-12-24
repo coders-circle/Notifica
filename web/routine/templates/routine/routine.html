@@ -1,49 +1,12 @@
 {% extends "base.html" %}
-
 {% load staticfiles %}
-{% load customtags %}
-{% load classroom_tags %}
 
 {% block head %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/routine.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'css/ripple.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'css/se-expand.css' %}">
-
-<script>
-    // Routine data
-    var routine = [
-        {% for day, periods in routine.items %}
-        [  {% for p in periods %}
-                { "subject":"{{p.subject}}", "teachers":{{p.teachers|safe}}, "remarks":"{{p.remarks}}",
-                  "start_time":{{p.start_time}}, "end_time":{{p.end_time}} },
-            {% endfor %}  ],
-        {% endfor %}
-    ];
-</script>
-
-<script src="{% static 'js/period-positioning.js' %}"></script>
-<script src="{% static 'js/ripple.js' %}"></script>
-<script src="{% static 'js/se-expand.js' %}"></script>
+<script src="{% static 'js/routine.js' %}"></script>
 {% endblock %}
 
 {% block body %}
-
-<div class="subject-element-details" style="display:none">
-    <div class="se-details-content" style="display:none">
-        <p class="se-time">10:30 to 12:00</p>
-        <p class="se-subject-name">Chaos Theory</p>
-        <p class="se-extra">
-            Chaos theory is the field of study in mathematics that studies the
-            behavior of dynamical systems that are highly sensitive to initial
-            conditions -- response popularly referred to as the butterfly effect.
-        </p>
-        <div class="se-details-bottom-content">
-            <button class="btn-se-detail" id="btn-se-save">SAVE</button>
-            <button class="btn-se-detail" id="btn-se-cancel">CANCEL</button>
-        </div>
-    </div>
-</div>
-
 <div class="block" id="title-block">
     <a href="{% url 'classroom:user' %}">News Feeds</a>
     <h1>Notifica</h1>
@@ -52,46 +15,60 @@
     </p>
 </div>
 
-<div class="block" id="content-block">
-    <div class="row">
-        <div class="col-sm-1 " id="col-l">
-            {% for day in days %}
-            <div class="row row-day">{{ day }}</div>
-            {% endfor %}
+<div class="template-period hidden">
+    <p class="subject">Project Management</p>
+    <p class="teachers">Arun Timalsina</p>
+    <p class="remarks"></p>
+</div>
+
+<div class="block" id="routine-block">
+    <div class="row row-heading">
+        <div class="col-md-1">
+            Day / Time
         </div>
-        <div class="col-sm-11" id="col-r" data-starttime="{{start_time}}" data-endtime="{{end_time}}">
-            {% for day, periods in routine.items %}
-            <div class="row row-day" data-index="{{forloop.counter0}}">
-                {% for p in periods %}
-                <div class="period subject-element" data-starttime="{{p.start_time}}" data-endtime="{{p.end_time}}" data-index="{{forloop.counter0}}">
-                    <p class="subject">
-                        {% with subject=p.subject|linked_object %}
-                            {% if subject %}
-                                {{ subject.name }}
-                            {% else %}
-                                {{ p.subject }}
-                            {% endif %}
-                        {% endwith %}
-                    </p>
-                    <p class="teachers">
-                        {% for t in p.teachers|json_decode %}
-                            {% with teacher=t|linked_object %}
-                                {% if teacher %}
-                                    {{ teacher.user.first_name }} {{ teacher.user.last_name }}
-                                {% else %}
-                                    {{ t }},
-                                {% endif %}
-                            {% endwith %}
-                        {% endfor %}
-                    </p>
-                    <p class="remarks">
-                        {{ p.remarks }}
-                    </p>
-                </div>
-                {% endfor %}
-                <button class="btn-add-subject"><i class="fa fa-plus"></i> Add Period</button>
+        <div class="col-md-11">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-1">
+            Sunday
+        </div>
+        <div class="col-md-11">
+            <button class="btn-add-period"><i class="fa fa-plus"></i> Period</button>
+            <div class="periods">
             </div>
-            {% endfor %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-1">
+            Monday
+
+        </div>
+        <div class="col-md-11">
+            <button class="btn-add-period"><i class="fa fa-plus"></i> Period</button>
+            <div class="periods">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-1">
+            Tuesday
+        </div>
+        <div class="col-md-11">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-1">
+            Wednesday
+        </div>
+        <div class="col-md-11">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-1">
+            Thursday
+        </div>
+        <div class="col-md-11">
         </div>
     </div>
 </div>

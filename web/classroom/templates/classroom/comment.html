@@ -1,0 +1,13 @@
+{% load staticfiles %}
+<div class="comment">
+    <div class="userinfo">
+        <img class="user-avatar" src="{% static 'img/' %}{{ comment.userAvatar }}">
+        <a href="{{ comment.userProfileLink }}" class="user-name">{{ comment.userName }}</a>
+        <span class="time">&nbsp;&nbsp;{{ comment.time }}</span>
+    </div>
+    <div class="content">
+        <p>
+            {{ comment.content }}
+        </p>
+    </div>
+</div>
