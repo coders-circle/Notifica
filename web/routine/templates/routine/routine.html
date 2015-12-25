@@ -17,10 +17,24 @@
 
 <div class="template-period hidden">
     <p class="subject">Project Management</p>
-    <p class="teachers">Arun Timalsina</p>
-    <p class="remarks"></p>
+    <p class="teachers">Arun Timalsina, Sashidhar Joshi</p>
+    <p class="remarks">Alt Week</p>
 </div>
-
+<div class="backdrop"></div>
+<div class="add-subject-dialog">
+    <div class="dialog-header">
+        <h3>Add Period</h3>
+    </div>
+    <div class="dialog-content">
+        <input class="input-subject" type="text" placeholder="Subject">
+        <input class="input-teachers" type="text" placeholder="Teachers">
+        <input class="input-remarks" type="text" placeholder="Remarks">
+    </div>
+    <div class="dialog-footer">
+        <button class="btn-dlg-ok"><i class="fa fa-check"></i> Ok</button>
+        <button class="btn-dlg-cancel"><i class="fa fa-times"></i> Cancel</button>
+    </div>
+</div>
 <div class="block" id="routine-block">
     <div class="row row-heading">
         <div class="col-md-1">
@@ -29,47 +43,16 @@
         <div class="col-md-11">
         </div>
     </div>
+    {% for day in days_short %}
     <div class="row">
         <div class="col-md-1">
-            Sunday
+            <p class="day-name">{{ day }}</p>
+            <button class="btn-add-period"><i class="fa fa-plus"></i> Period</button>
         </div>
         <div class="col-md-11">
-            <button class="btn-add-period"><i class="fa fa-plus"></i> Period</button>
             <div class="periods">
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-1">
-            Monday
-
-        </div>
-        <div class="col-md-11">
-            <button class="btn-add-period"><i class="fa fa-plus"></i> Period</button>
-            <div class="periods">
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-1">
-            Tuesday
-        </div>
-        <div class="col-md-11">
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-1">
-            Wednesday
-        </div>
-        <div class="col-md-11">
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-1">
-            Thursday
-        </div>
-        <div class="col-md-11">
-        </div>
-    </div>
-</div>
+    {% endfor %}
 {% endblock %}

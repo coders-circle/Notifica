@@ -3,11 +3,13 @@ body{
     color: #424242;
 }
 #routine-block{
+    padding-top: 0px;
     background: linear-gradient(#ecf0f1 0%, #fff 240px, #fff 100%);
     font-family: "Open Sans", "Ubuntu";
 }
 #routine-block .row{
-    min-height: 60px;
+    text-align: center;
+    min-height: 80px;
     display: flex;
     align-items: center;
 }
@@ -15,15 +17,27 @@ body{
     background: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(236,239,241,1) 10%, rgba(236,239,241 ,1) 90%, rgba(0, 0, 0, 0) 100%);
 }
 #routine-block .row-heading{
-    color: #27ae60;
-    font-weight: 600;
+    font-family: "Open Sans Condensed", "Ubuntu Condensed";
+    font-size: 1.2em;
+    color: #484848;
+    font-weight: 300;
 }
+
 #routine-block .periods{
     text-align: left;
     display: flex;
 }
 
+.day-name{
+    color: #e74c3c;
+    text-transform: uppercase;
+    font-family: "Open Sans Light";
+    font-size: 2em;
+    margin-bottom: 0px;
+}
+
 .btn-add-period{
+    font-size:0.9em;
     font-family: "Open Sans Condensed", "Ubuntu Condensed";
     text-transform: uppercase;
     background-color: transparent;
@@ -32,16 +46,106 @@ body{
 }
 
 .period{
+    min-width: 100px;
     padding:10px;
-    margin:2px 3px;
-    background-color: #fff;
-    color: #e74c3c;
-    line-height: 1em;
+    margin:1px 2px;
+    color: #eee;
+    background-color: #484848;
+    line-height: 1.5em;
+    transition: 0.2s;
+    cursor: pointer;
+}
+.period:hover{
+    background-color: #646464;
+    color: #fff;
 }
 .period p{
     margin: 0px;
 }
+.period .subject{
+    font-weight: bold;
+}
+
+.period .teachers,
+.period .remarks{
+    font-size: 0.9em;
+}
+.period .remarks{
+    font-weight: 300;
+    color: #aaa;
+}
 
 .hidden{
     display: none;
+}
+
+.add-subject-dialog{
+    display: none;
+    font-family: "Open Sans Light";
+    font-size: 1.23em;
+    position: fixed;
+    width: 500px;
+    height: 320px;
+    top: calc(50% - 320px/2);
+    left: calc(50% - 500px/2);
+    background-color: #fff;
+    box-shadow: 0px 10px 40px rgba(0, 0,0, 0.4);
+    z-index: 100;
+}
+.add-subject-dialog .dialog-header{
+    font-family: "Open Sans Condensed", "Ubuntu Condensed";
+    text-transform: uppercase;
+    padding: 5px 30px;
+    background-color: #c0392b;
+    color: #fff;
+}
+.add-subject-dialog .dialog-content{
+    padding: 20px 50px;
+}
+.add-subject-dialog input[type="text"]{
+    outline: none;
+    margin: 10px 0px;
+    padding: 4px 10px;
+    width: 100%;
+    background-color: transparent;
+    border:none;
+    border-bottom: 1px solid #ccc;
+    transition: 0.2s;
+}
+.add-subject-dialog input[type="text"]:focus{
+    border-bottom-color: #aaa;
+}
+.backdrop{
+    display: none;
+    background-color: rgba(0, 0, 0, 0.8);
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 99;
+}
+.dialog-footer{
+    text-align: right;
+    padding: 5px 50px;
+}
+.dialog-footer button{
+    outline: none;
+    background-color: transparent;
+    border:none;
+    font-family: "Open Sans Condensed", "Ubuntu Condensed";
+    text-transform: uppercase;
+    margin-left: 30px;
+}
+.btn-dlg-ok{
+    color: #2ecc71;
+}
+.btn-dlg-ok:hover{
+    color: #27ae60;
+}
+.btn-dlg-cancel{
+    color: #e74c3c;
+}
+.btn-dlg-cancel:hover{
+    color: #c0392b;
 }
