@@ -7,10 +7,11 @@ body{
 }
 
 a{
-    color: #2980b9;
+    color: #3498db;
 }
 a:hover{
-    color:#3498db;
+    color: #2980b9;
+    text-decoration: none;
 }
 a:link {
     text-decoration: none;
@@ -22,4 +23,27 @@ a:visited {
 .block{
     min-height: 60;
     padding: 30px;
+}
+
+#title-block{
+    font-family: "Open Sans";
+    background-color:#ecf0f1;
+}
+
+#title-block h1{
+    font-family: "Open Sans Light";
+    font-size: 56px;
+    color: #201612;
+}
+
+#title-block p{
+    font-size: 1.23em;
+    color: #e74c3c;
+}
+
+#title-block a{
+    font-family: "Open Sans Condensed", "Ubuntu Condensed";
+    text-transform:uppercase;
+    font-size: 1.23em;
+    float:right;
 }

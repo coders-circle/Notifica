@@ -1,0 +1,47 @@
+body{
+    background-color: #fff;
+    color: #424242;
+}
+#routine-block{
+    background: linear-gradient(#ecf0f1 0%, #fff 240px, #fff 100%);
+    font-family: "Open Sans", "Ubuntu";
+}
+#routine-block .row{
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+}
+#routine-block .row:nth-child(even){
+    background: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(236,239,241,1) 10%, rgba(236,239,241 ,1) 90%, rgba(0, 0, 0, 0) 100%);
+}
+#routine-block .row-heading{
+    color: #27ae60;
+    font-weight: 600;
+}
+#routine-block .periods{
+    text-align: left;
+    display: flex;
+}
+
+.btn-add-period{
+    font-family: "Open Sans Condensed", "Ubuntu Condensed";
+    text-transform: uppercase;
+    background-color: transparent;
+    border: none;
+    outline:none;
+}
+
+.period{
+    padding:10px;
+    margin:2px 3px;
+    background-color: #fff;
+    color: #e74c3c;
+    line-height: 1em;
+}
+.period p{
+    margin: 0px;
+}
+
+.hidden{
+    display: none;
+}

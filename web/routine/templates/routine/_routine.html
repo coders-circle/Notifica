@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+{% load customtags %}
+{% load classroom_tags %}
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/routine.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/ripple.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/se-expand.css' %}">
+
+<script>
+    // Routine data
+    var routine = [
+        {% for day, periods in routine.items %}
+        [  {% for p in periods %}
+                { "subject":"{{p.subject}}", "teachers":{{p.teachers|safe}}, "remarks":"{{p.remarks}}",
+                  "start_time":{{p.start_time}}, "end_time":{{p.end_time}} },
+            {% endfor %}  ],
+        {% endfor %}
+    ];
+</script>
+
+<script src="{% static 'js/period-positioning.js' %}"></script>
+<script src="{% static 'js/ripple.js' %}"></script>
+<script src="{% static 'js/se-expand.js' %}"></script>
+<script src="{% static 'js/routine.js' %}"></script>
+{% endblock %}
+
+{% block body %}
+
+<div class="subject-element-details" style="display:none">
+    <div class="se-details-content" style="display:none">
+        <input type="time" id="start_time" class="se-time" placeholder="Start">
+        &nbsp;to&nbsp;
+        <input type="time" id="end_time" class="se-time" placeholder="End">
+        <input type="text"class="se-subject-name" placeholder="Subject">
+        <input type="text" class="se-remarks" value="Remarks">
+        <div class="se-details-bottom-content">
+            <button class="btn-se-detail" id="btn-se-save">SAVE</button>
+            <button class="btn-se-detail" id="btn-se-cancel">CANCEL</button>
+        </div>
+    </div>
+</div>
+
+<div class="block" id="title-block">
+    <a href="{% url 'classroom:user' %}">News Feeds</a>
+    <h1>Notifica</h1>
+    <p>
+        Weekly Routine
+    </p>
+</div>
+
+<div class="block" id="content-block">
+    <div class="row">
+        <div class="col-sm-1 " id="col-l">
+            {% for day in days %}
+            <div class="row row-day">{{ day }}</div>
+            {% endfor %}
+        </div>
+        <div class="col-sm-11" id="col-r" data-starttime="{{start_time}}" data-endtime="{{end_time}}">
+            {% for day, periods in routine.items %}
+            <div class="row row-day" data-index="{{forloop.counter0}}">
+                {% for p in periods %}
+                <div class="period subject-element" data-starttime="{{p.start_time}}" data-endtime="{{p.end_time}}" data-index="{{forloop.counter0}}">
+                    <p class="time">{{ p.start_time }} to {{ p.end_time }}</p>
+                    <p class="subject">
+                        {% with subject=p.subject|linked_object %}
+                            {% if subject %}
+                                {{ subject.name }}
+                            {% else %}
+                                {{ p.subject }}
+                            {% endif %}
+                        {% endwith %}
+                    </p>
+                    <p class="teachers">
+                        {% for t in p.teachers|json_decode %}
+                            {% with teacher=t|linked_object %}
+                                {% if teacher %}
+                                    {{ teacher.user.first_name }} {{ teacher.user.last_name }}
+                                {% else %}
+                                    {{ t }},
+                                {% endif %}
+                            {% endwith %}
+                        {% endfor %}
+                    </p>
+                    <p class="remarks">
+                        {{ p.remarks }}
+                    </p>
+                </div>
+                {% endfor %}
+                <button class="btn-add-subject"><i class="fa fa-plus"></i> Add Period</button>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
