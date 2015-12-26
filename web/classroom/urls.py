@@ -11,7 +11,7 @@ router.register(r'subjects', rest_views.SubjectViewSet)
 router.register(r'classes', rest_views.ClassViewSet)
 router.register(r'groups', rest_views.GroupViewSet)
 router.register(r'students', rest_views.StudentViewSet)
-router.register(r'users', rest_views.UserViewSet)
+router.register(r'users', rest_views.UserViewSet, base_name='user')
 
 
 urlpatterns = [
