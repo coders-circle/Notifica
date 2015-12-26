@@ -14,7 +14,7 @@ def getUserType(user):
 
 
 def isValidUser(user):
-    return user and user.is_authenticated and user.is_active and not user.is_superuser
+    return user and user.is_authenticated and user.is_active
 
 
 def getLinkedObject(string):
