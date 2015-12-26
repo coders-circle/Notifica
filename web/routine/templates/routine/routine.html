@@ -13,7 +13,7 @@ jQuery(document).ready(function($) {
     $('#test').selectize({
         valueField: 'id',
         labelField: 'username',
-        searchField: ['username'],
+        searchField: ['username', 'first_name', 'last_name', 'email'],
         sortField: 'username',
         create: true,
         render: {
@@ -21,6 +21,9 @@ jQuery(document).ready(function($) {
                 return '<div>' +
                     (item.username ? '<span class="name">' + escape(item.username) + '</span>' : '') +
                     '<br>'+
+                    (item.first_name ? '<span class="name">' + escape(item.first_name) + '&nbsp;</span>' : '') +
+                    (item.last_name ? '<span class="name">' + escape(item.last_name) + '</span>' : '') +
+                    (item.first_name || item.last_name? '<br>':'') +
                     (item.email ? '<span class="email">' + escape(item.email) + '</span>' : '') +
                 '</div>';
             }
@@ -33,7 +36,8 @@ jQuery(document).ready(function($) {
                 type: 'GET',
                 error: function() {
                     console.log("hello");
-                    callback([]);
+                    error="cant fetch the suggestions";
+                    callback(error);
                 },
                 success: function(res) {
                     callback(res.slice(0, 10));
