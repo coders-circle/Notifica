@@ -1,9 +1,14 @@
+from django.db.models import Q
+
 from rest_framework import viewsets
 from rest_framework import permissions
 
 from classroom.models import *
 from classroom.serializers import *
 from classroom.permissions import *
+
+import re
+
 
 class OrganizationViewSet(viewsets.ModelViewSet):
     queryset = Organization.objects.all()
@@ -82,6 +87,16 @@ class StudentViewSet(viewsets.ModelViewSet):
 
 
 class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = (IsAdminOrReadOnly,)
+
+    def get_queryset(self):
+        searchstring = self.request.GET.get("q")
+        if searchstring and searchstring != "":
+            words = re.sub("[^\S]", " ", searchstring).split()
+            regexstring = r'(' + '|'.join([re.escape(n) for n in words]) + ')'
+            queryset = User.objects.filter(Q(first_name__iregex=regexstring) | Q(last_name__iregex=regexstring) | Q(username__iregex=regexstring))
+        else:
+            queryset = User.objects.all()
+
+        return queryset

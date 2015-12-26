@@ -24,7 +24,7 @@ DAYS = (
 class Period(models.Model):
     routine = models.ForeignKey(Routine)
     subject = models.CharField(max_length=100)
-    teachers = models.TextField(max_length=100)
+    teachers = models.TextField()
     start_time = models.IntegerField()
     end_time = models.IntegerField()
     day = models.IntegerField(choices=DAYS)
