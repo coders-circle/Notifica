@@ -1,4 +1,4 @@
-package com.notifica.notifica;
+package com.lipi.notifica;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
