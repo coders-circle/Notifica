@@ -3,7 +3,64 @@
 
 {% block head %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/routine.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/selectize.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/selectize.bootstrap3.css' %}">
 <script src="{% static 'js/routine.js' %}"></script>
+<!-- <script src="{% static 'js/angular.min.js' %}"></script> -->
+<script src="{% static 'js/selectize.js' %}"></script>
+<script>
+jQuery(document).ready(function($) {
+    $('#test').selectize({
+        valueField: 'url',
+    labelField: 'name',
+    searchField: 'name',
+    create: false,
+    render: {
+        option: function(item, escape) {
+            return '<div>' +
+                '<span class="title">' +
+                    '<span class="name"><i class="icon ' + (item.fork ? 'fork' : 'source') + '"></i>' + escape(item.name) + '</span>' +
+                    '<span class="by">' + escape(item.username) + '</span>' +
+                '</span>' +
+                '<span class="description">' + escape(item.description) + '</span>' +
+                '<ul class="meta">' +
+                    (item.language ? '<li class="language">' + escape(item.language) + '</li>' : '') +
+                    '<li class="watchers"><span>' + escape(item.watchers) + '</span> watchers</li>' +
+                    '<li class="forks"><span>' + escape(item.forks) + '</span> forks</li>' +
+                '</ul>' +
+            '</div>';
+        }
+    },
+    score: function(search) {
+        var score = this.getScoreFunction(search);
+        return function(item) {
+            return score(item) * (1 + Math.min(item.watchers / 100, 1));
+        };
+    },
+    load: function(query, callback) {
+        if (!query.length) return callback();
+        $.ajax({
+            url: 'https://api.github.com/legacy/repos/search/' + encodeURIComponent(query),
+            type: 'GET',
+            error: function() {
+                callback();
+            },
+            success: function(res) {
+                callback(res.repositories.slice(0, 10));
+            }
+        });
+    }});
+});
+// var app = angular.module('testApp', []);
+// app.config(function($interpolateProvider) {
+//     $interpolateProvider.startSymbol('[');
+//     $interpolateProvider.endSymbol(']');
+// });
+// app.controller('testControl', function($scope, $http) {
+//     $http.get("http://localhost:8000/classroom/api/v1/users/?format=json")
+//         .then(function (response) {$scope.users = response.data;});
+// });
+</script>
 {% endblock %}
 
 {% block body %}
@@ -13,8 +70,33 @@
     <p>
         Weekly Routine
     </p>
+    <div id="test">
+        <input class="typeahead" type="text" placeholder="user">
+    </div>
 </div>
-
+<!-- <div ng-app="testApp" ng-controller="testControl">
+    <ul>
+        <li ng-repeat="x in users">
+            [x.username]
+        </li>
+    </ul>
+</div> -->
+<div id="add-subject-dialog" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Modal Header</h4>
+            </div>
+            <div class="modal-body">
+                <p>Some text in the modal.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="template-period hidden">
     <p class="subject">Project Management</p>
     <p class="teachers">Arun Timalsina, Sashidhar Joshi</p>

@@ -56,7 +56,7 @@ body{
     cursor: pointer;
 }
 .period:hover{
-    background-color: #646464;
+    background-color: #6c6c6c;
     color: #fff;
 }
 .period p{
@@ -72,7 +72,7 @@ body{
 }
 .period .remarks{
     font-weight: 300;
-    color: #aaa;
+    color: #bbb;
 }
 
 .hidden{

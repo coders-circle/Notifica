@@ -15,8 +15,6 @@ router.register(r'users', rest_views.UserViewSet)
 
 
 urlpatterns = [
-
     url(r'^user/$', views.UserView.as_view(), name='user'),
-
     url(r'^api/v1/', include(router.urls)),
 ]

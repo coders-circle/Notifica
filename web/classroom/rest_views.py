@@ -5,7 +5,6 @@ from classroom.models import *
 from classroom.serializers import *
 from classroom.permissions import *
 
-
 class OrganizationViewSet(viewsets.ModelViewSet):
     queryset = Organization.objects.all()
     serializer_class = OrganizationSerializer
