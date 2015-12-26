@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'main', 
     'classroom',
     'routine',
+    'posts',
 ]
 
 MIDDLEWARE_CLASSES = [
