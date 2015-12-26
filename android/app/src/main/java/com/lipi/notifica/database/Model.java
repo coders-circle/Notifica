@@ -26,7 +26,7 @@ public class Model {
             String sqlType = "";
             String typeName = field.getType().getSimpleName();
 
-            // String maps to TEXT, long, int, boolean to INTEGER and float, double to REAL
+            // String maps to TEXT; long, int and boolean to INTEGER; float and double to REAL
             switch (typeName) {
                 case "String":
                     sqlType = "TEXT";
@@ -127,14 +127,14 @@ public class Model {
         // query
         Cursor c = db.query(myClass.getSimpleName(), cols, selection, args, groupBy, having, orderBy);
 
-        // Create object from each row in the result
+        // Create object from each row in the result/cursor
         List<T> list = new ArrayList<>(c.getCount());
         c.moveToPosition(-1);
         while (c.moveToNext()) {
             try {
                 T object = myClass.newInstance();
 
-                // For each field, set the value from the result
+                // For each field, set the value from the cursor
                 for (Field field: fields) {
                     String typeName = field.getType().getSimpleName();
                     switch (typeName) {
