@@ -1,5 +1,4 @@
-package com.notifica.notifica;
-
+package com.lipi.notifica;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,11 +9,11 @@ import android.view.ViewGroup;
 /**
  * Created by aditya on 12/12/15.
  */
-public class PostsTabFragment extends Fragment {
+public class ResourcesTabFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater,  @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
-        View v = inflater.inflate(R.layout.posts_tab,container,false);
+        View v = inflater.inflate(R.layout.resources_tab,container,false);
         return v;
     }
 }

@@ -1,4 +1,4 @@
-package com.notifica.notifica;
+package com.lipi.notifica;
 /**
  * Created by aditya on 12/12/15.
  */

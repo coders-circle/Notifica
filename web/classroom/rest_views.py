@@ -14,9 +14,6 @@ class OrganizationViewSet(viewsets.ModelViewSet):
     serializer_class = OrganizationSerializer
     perimission_classes = (permissions.IsAuthenticatedOrReadOnly, IsAdminOrReadOnly,)
 
-    def perform_create(self, serializer):
-        serializer.save(admins=[self.request.user])
-
     def get_queryset(self):
         searchstring = self.request.GET.get("q")
         if searchstring and searchstring != "":
@@ -94,9 +91,6 @@ class SubjectViewSet(viewsets.ModelViewSet):
 class ClassViewSet(viewsets.ModelViewSet):
     serializer_class = ClassSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsAdminOrReadOnly,)
-
-    def perform_create(self, serializer):
-        serializer.save(admins=[self.request.user])
 
     def get_queryset(self):
         searchstring = self.request.GET.get("q")
