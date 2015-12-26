@@ -33,7 +33,7 @@ class DepartmentViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsAdminOrReadOnly,)
 
     def perform_create(self, serializer):
-        organization = Organization.objects.get(id=serializer.data["organization"])
+        organization = serializer.validated_data["organization"]
         if self.request.user not in organization.admins.all():
             raise serializers.ValidationError("You have not permission to add department to this organization")
         serializer.save()
@@ -54,9 +54,10 @@ class TeacherViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsAdminOrReadOnly,)
 
     def perform_create(self, serializer):
-        department = Department.objects.get(id=serializer.data["department"])
+        department = serializer.validated_data["department"]
         if self.request.user not in department.organization.admins.all():
             raise serializers.ValidationError("You have not permission to add teacher to this department")
+        serializer.save()
 
     def get_queryset(self):
         searchstring = self.request.GET.get("q")
@@ -74,9 +75,10 @@ class SubjectViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsAdminOrReadOnly,)
 
     def perform_create(self, serializer):
-        department = Department.objects.get(id=serializer.data["department"])
+        department = serializer.validated_data["department"]
         if self.request.user not in department.organization.admins.all():
             raise serializers.ValidationError("You have not permission to add subject to this department")
+        serializer.save()
 
     def get_queryset(self):
         searchstring = self.request.GET.get("q")
@@ -112,7 +114,7 @@ class GroupViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsAdminOrReadOnly)
 
     def perform_create(self, serializer):
-        pclass = Class.objects.get(id=serializer.data["p_class"])
+        pclass = serializer.validated_data["p_class"]
         if self.request.user not in pclass.admins.all():
             raise serializers.ValidationError("You have not permission to add group to this class")
         serializer.save()
@@ -133,7 +135,7 @@ class StudentViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsAdminOrReadOnly,)
 
     def perform_create(self, serializer):
-        group = Group.objects.get(id=serializer.data["group"])
+        group = serializer.validated_data["group"]
         if self.request.user not in group.p_class.admins.all():
             raise serializers.ValidationError("You have not permission to add group to this class")
         serializer.save()
