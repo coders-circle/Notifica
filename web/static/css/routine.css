@@ -92,17 +92,22 @@ body{
     box-shadow: 0px 10px 40px rgba(0, 0,0, 0.4);
     z-index: 100;
 }
-.add-subject-dialog .dialog-header{
+#add-subject-dialog .modal-header{
     font-family: "Open Sans Condensed", "Ubuntu Condensed";
     text-transform: uppercase;
-    padding: 5px 30px;
+    padding: 20px 30px;
     background-color: #c0392b;
     color: #fff;
 }
-.add-subject-dialog .dialog-content{
-    padding: 20px 50px;
+#add-subject-dialog .modal-body{
+    padding: 10px 50px;
+    padding-top: 30px;
 }
-.add-subject-dialog input[type="text"]{
+#add-subject-dialog .modal-content{
+    padding-bottom: 10px;
+}
+
+/*#add-subject-dialog input[type="text"]{
     outline: none;
     margin: 10px 0px;
     padding: 4px 10px;
@@ -112,9 +117,9 @@ body{
     border-bottom: 1px solid #ccc;
     transition: 0.2s;
 }
-.add-subject-dialog input[type="text"]:focus{
+#add-subject-dialog input[type="text"]:focus{
     border-bottom-color: #aaa;
-}
+}*/
 .backdrop{
     display: none;
     background-color: rgba(0, 0, 0, 0.8);
@@ -125,11 +130,12 @@ body{
     left: 0;
     z-index: 99;
 }
-.dialog-footer{
+#add-subject-dialog .modal-footer{
+    border: none;
     text-align: right;
-    padding: 5px 50px;
+    padding: 10px 50px;
 }
-.dialog-footer button{
+#add-subject-dialog .modal-footer button{
     outline: none;
     background-color: transparent;
     border:none;

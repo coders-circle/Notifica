@@ -6,56 +6,7 @@
 <link rel="stylesheet" type="text/css" href="{% static 'css/selectize.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'css/selectize.bootstrap3.css' %}">
 <script src="{% static 'js/routine.js' %}"></script>
-<!-- <script src="{% static 'js/angular.min.js' %}"></script> -->
 <script src="{% static 'js/selectize.js' %}"></script>
-<script>
-jQuery(document).ready(function($) {
-    $('#test').selectize({
-        valueField: 'id',
-        labelField: 'username',
-        searchField: ['username', 'first_name', 'last_name', 'email'],
-        sortField: 'username',
-        create: true,
-        render: {
-            option: function(item, escape) {
-                return '<div>' +
-                    (item.username ? '<span class="name">' + escape(item.username) + '</span>' : '') +
-                    '<br>'+
-                    (item.first_name ? '<span class="name">' + escape(item.first_name) + '&nbsp;</span>' : '') +
-                    (item.last_name ? '<span class="name">' + escape(item.last_name) + '</span>' : '') +
-                    (item.first_name || item.last_name? '<br>':'') +
-                    (item.email ? '<span class="email">' + escape(item.email) + '</span>' : '') +
-                '</div>';
-            }
-        },
-
-        load: function(query, callback) {
-            if (!query.length) return callback();
-            $.ajax({
-                url: '/classroom/api/v1/users/?format=json&q=' + encodeURIComponent(query),
-                type: 'GET',
-                error: function() {
-                    console.log("hello");
-                    error="cant fetch the suggestions";
-                    callback(error);
-                },
-                success: function(res) {
-                    callback(res.slice(0, 10));
-                }
-            });
-        }
-    });
-});
-// var app = angular.module('testApp', []);
-// app.config(function($interpolateProvider) {
-//     $interpolateProvider.startSymbol('[');
-//     $interpolateProvider.endSymbol(']');
-// });
-// app.controller('testControl', function($scope, $http) {
-//     $http.get("http://localhost:8000/classroom/api/v1/users/?format=json")
-//         .then(function (response) {$scope.users = response.data;});
-// });
-</script>
 {% endblock %}
 
 {% block body %}
@@ -65,29 +16,36 @@ jQuery(document).ready(function($) {
     <p>
         Weekly Routine
     </p>
-    <div id="test">
-        <input class="typeahead" type="text" placeholder="users">
-    </div>
 </div>
-<!-- <div ng-app="testApp" ng-controller="testControl">
-    <ul>
-        <li ng-repeat="x in users">
-            [x.username]
-        </li>
-    </ul>
-</div> -->
 <div id="add-subject-dialog" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Modal Header</h4>
+                <h4 class="modal-title">Add Period</h4>
             </div>
             <div class="modal-body">
-                <p>Some text in the modal.</p>
+                <div class="row">
+                    <div class="col-sm-6 form-group">
+                        <input id="start-time" class="input-start-time form-control" type="text" placeholder="Start time">
+                    </div>
+                    <div class="col-sm-6 form-group">
+                        <input id="end-time" class="input-end-time form-control" type="text" placeholder="End time">
+                    </div>
+                </div>
+                <div class="form-group" id="subject-input">
+                    <input id="subject" class="input-subject form-control" type="text" placeholder="Subject">
+                </div>
+                <div class="form-group" id="teachers-input">
+                    <input class="input-teachers form-control" type="text" placeholder="Teachers">
+                </div>
+                <div class="form-group">
+                    <input class="input-remarks form-control" type="text" placeholder="Remarks">
+                </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button class="btn-dlg-ok"><i class="fa fa-check"></i> Ok</button>
+                <button class="btn-dlg-cancel"><i class="fa fa-times"></i> Cancel</button>
+                <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
             </div>
         </div>
     </div>
