@@ -7,15 +7,5 @@ register = template.Library()
 
 
 @register.filter
-def user_type(user):
-    return getUserType(user)
-
-
-@register.filter
 def json_decode(string):
     return json.loads(string)
-
-
-@register.filter
-def linked_object(string):
-    return getLinkedObject(string)

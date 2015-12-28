@@ -1,13 +1,12 @@
 from django.db import models
-from classroom import models as classroom_models
+from classroom.models import *
 
 
 class Routine(models.Model):
-    p_class = models.ForeignKey(classroom_models.Class)
-    notifica_id = models.CharField(max_length=32, unique=True)
+    p_class = models.ForeignKey(Class)
 
     def __str__(self):
-        return str(self.p_class.class_id) + " routine @routine:" + self.notifica_id
+        return str(self.p_class.class_id)
 
 
 DAYS = (
@@ -23,13 +22,13 @@ DAYS = (
 
 class Period(models.Model):
     routine = models.ForeignKey(Routine)
-    subject = models.CharField(max_length=100)
-    teachers = models.TextField()
+    subject = models.ForeignKey(Subject)
+    teachers = models.ManyToManyField(Teacher)
     start_time = models.IntegerField()
     end_time = models.IntegerField()
     day = models.IntegerField(choices=DAYS)
     remarks = models.TextField()
-    groups = models.ManyToManyField(classroom_models.Group, blank=True)
+    groups = models.ManyToManyField(Group, blank=True)
 
     def __str__(self):
         return str(self.subject) + " " + self.get_day_display() + " " + str(self.start_time) + "-" + str(self.end_time) + " (" + str(self.routine.p_class) + ")"
