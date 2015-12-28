@@ -19,6 +19,10 @@ class IsAdminOrReadOnly(permissions.BasePermission):
         if hasattr(obj, 'p_class'):
             return request.user in obj.p_class.admins.all()
 
+        # period belongs to a routine which belongs to a class
+        if hasattr(obj, 'routine'):
+            return request.user in obj.routine.p_class.admins.all()
+
         # department belongs to an organization
         if hasattr(obj, 'organization'):
             return request.user in obj.organization.admins.all()
@@ -29,6 +33,6 @@ class IsAdminOrReadOnly(permissions.BasePermission):
 
         # student belongs to a group
         if hasattr(obj, 'group'):
-            return request.user in obj.group.p_calss.admins.all()
+            return request.user in obj.group.p_class.admins.all()
 
         return False

@@ -5,14 +5,14 @@ from classroom.models import *
 class OrganizationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Organization
-        fields = ('id', 'notifica_id', 'name', 'admins')
+        fields = ('id', 'name', 'admins')
 #        read_only_fields = ('admins',)
 
 
 class DepartmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Department
-        fields = ('id', 'notifica_id', 'name', 'organization')
+        fields = ('id', 'name', 'organization')
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -33,26 +33,26 @@ class TeacherSerializer(serializers.ModelSerializer):
     user_id = serializers.PrimaryKeyRelatedField(source='user', queryset=User.objects.all())
     class Meta:
         model = Teacher
-        fields = ('id', 'notifica_id', 'user', 'department', 'user_id')
+        fields = ('id', 'user', 'department', 'user_id')
 
 
 class SubjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Subject
-        fields = ('id', 'notifica_id', 'name', 'department')
+        fields = ('id', 'name', 'department')
 
 
 class ClassSerializer(serializers.ModelSerializer):
     class Meta:
         model = Class
-        fields = ('id', 'notifica_id', 'class_id', 'department', 'admins')
+        fields = ('id', 'class_id', 'department', 'admins')
 #        read_only_fields = ('admins',)
 
 
 class GroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = Group
-        fields = ('id', 'notifica_id', 'group_id', 'p_class')
+        fields = ('id', 'group_id', 'p_class')
 
 
 class StudentSerializer(serializers.ModelSerializer):
@@ -60,4 +60,4 @@ class StudentSerializer(serializers.ModelSerializer):
     user_id = serializers.PrimaryKeyRelatedField(source='user', queryset=User.objects.all())
     class Meta:
         model = Student
-        fields = ('id', 'notifica_id', 'user', 'group', 'user_id')
+        fields = ('id', 'user', 'group', 'user_id')

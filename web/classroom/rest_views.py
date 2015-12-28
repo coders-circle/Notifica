@@ -18,7 +18,7 @@ class OrganizationViewSet(viewsets.ModelViewSet):
         searchstring = self.request.GET.get("q")
         if searchstring and searchstring != "":
             regexstring = get_regex(searchstring)
-            queryset = Organization.objects.filter(Q(notifica_id__iregex=regexstring) | Q(name__iregex=regexstring))
+            queryset = Organization.objects.filter(name__iregex=regexstring)
         else:
             queryset = Organization.objects.all()
 
@@ -39,7 +39,7 @@ class DepartmentViewSet(viewsets.ModelViewSet):
         searchstring = self.request.GET.get("q")
         if searchstring and searchstring != "":
             regexstring = get_regex(searchstring)
-            queryset = Department.objects.filter(Q(notifica_id__iregex=regexstring) | Q(name__iregex=regexstring))
+            queryset = Department.objects.filter(name__iregex=regexstring)
         else:
             queryset = Department.objects.all()
 
@@ -60,7 +60,7 @@ class TeacherViewSet(viewsets.ModelViewSet):
         searchstring = self.request.GET.get("q")
         if searchstring and searchstring != "":
             regexstring = get_regex(searchstring)
-            queryset = Teacher.objects.filter(Q(user__first_name__iregex=regexstring) | Q(user__last_name__iregex=regexstring) | Q(user__username__iregex=regexstring) | Q(notifica_id__iregex=regexstring))
+            queryset = Teacher.objects.filter(Q(user__first_name__iregex=regexstring) | Q(user__last_name__iregex=regexstring) | Q(user__username__iregex=regexstring))
         else:
             queryset = Teacher.objects.all()
 
@@ -81,7 +81,7 @@ class SubjectViewSet(viewsets.ModelViewSet):
         searchstring = self.request.GET.get("q")
         if searchstring and searchstring != "":
             regexstring = get_regex(searchstring)
-            queryset = Subject.objects.filter(Q(notifica_id__iregex=regexstring) | Q(name__iregex=regexstring))
+            queryset = Subject.objects.filter(name__iregex=regexstring)
         else:
             queryset = Subject.objects.all()
 
@@ -96,7 +96,7 @@ class ClassViewSet(viewsets.ModelViewSet):
         searchstring = self.request.GET.get("q")
         if searchstring and searchstring != "":
             regexstring = get_regex(searchstring)
-            queryset = Class.objects.filter(Q(notifica_id__iregex=regexstring) | Q(class_id__iregex=regexstring))
+            queryset = Class.objects.filter(class_id__iregex=regexstring)
         else:
             queryset = Class.objects.all()
 
@@ -117,7 +117,7 @@ class GroupViewSet(viewsets.ModelViewSet):
         searchstring = self.request.GET.get("q")
         if searchstring and searchstring != "":
             regexstring = get_regex(searchstring)
-            queryset = Group.objects.filter(Q(notifica_id__iregex=regexstring) | Q(group_id__iregex=regexstring))
+            queryset = Group.objects.filter(group_id__iregex=regexstring)
         else:
             queryset = Group.objects.all()
 
@@ -138,7 +138,7 @@ class StudentViewSet(viewsets.ModelViewSet):
         searchstring = self.request.GET.get("q")
         if searchstring and searchstring != "":
             regexstring = get_regex(searchstring)
-            queryset = Student.objects.filter(Q(user__first_name__iregex=regexstring) | Q(user__last_name__iregex=regexstring) | Q(user__username__iregex=regexstring) | Q(notifica_id__iregex=regexstring))
+            queryset = Student.objects.filter(Q(user__first_name__iregex=regexstring) | Q(user__last_name__iregex=regexstring) | Q(user__username__iregex=regexstring))
         else:
             queryset = Student.objects.all()
 
