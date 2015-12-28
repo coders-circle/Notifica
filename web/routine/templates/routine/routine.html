@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 {% load staticfiles %}
+{% load customtags %}
+{% load classroom_tags %}
 
 {% block head %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/routine.css' %}">
@@ -7,6 +9,44 @@
 <link rel="stylesheet" type="text/css" href="{% static 'css/selectize.bootstrap3.css' %}">
 <script src="{% static 'js/routine.js' %}"></script>
 <script src="{% static 'js/selectize.js' %}"></script>
+<script>
+    var idCount=1111111;
+    function getNotificaID(){
+        return 'x'+(idCount++).toString();
+    }
+    var routine = [
+        {% for day, periods in routine.items %}[
+            {% for p in periods %} {
+                {% with subject=p.subject|linked_object %}
+                subject:{
+                    name:"{% if subject %} {{ subject.name }} {% else %} {{ p.subject }} {% endif %}",
+                    {% if subject %}
+                    notifica_id:"{{ subject.notifica_id }}"
+                    {% else %}
+                    notifica_id:getNotificaID()
+                    {% endif %}
+                },
+                {% endwith %}
+                teachers:[
+                    {% for t in p.teachers|json_decode %} {
+                        {% with teacher=t|linked_object %}
+                        name:"{% if teacher %}{{teacher.user.first_name}}{% else %}{{ t }}{% endif %}"
+                        {% endwith %}
+                    },
+                    {% endfor %}
+                ],
+                remark:"{{p.remarks}}",
+                start_time:{{p.start_time}},
+                end_time:{{p.end_time}}
+            },
+            {% endfor %}
+        ],
+        {% endfor %}
+    ];
+
+    console.log(routine[0][0].subject);
+</script>
+
 {% endblock %}
 
 {% block body %}
@@ -50,9 +90,9 @@
     </div>
 </div>
 <div class="template-period hidden">
-    <p class="subject">Project Management</p>
-    <p class="teachers">Arun Timalsina, Sashidhar Joshi</p>
-    <p class="remarks">Alt Week</p>
+    <p class="subject"></p>
+    <p class="teachers"></p>
+    <p class="remarks"></p>
 </div>
 <div class="backdrop"></div>
 <div class="add-subject-dialog">

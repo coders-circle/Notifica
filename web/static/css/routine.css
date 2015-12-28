@@ -96,7 +96,7 @@ body{
     font-family: "Open Sans Condensed", "Ubuntu Condensed";
     text-transform: uppercase;
     padding: 20px 30px;
-    background-color: #c0392b;
+    background-color: #e9573f;
     color: #fff;
 }
 #add-subject-dialog .modal-body{
@@ -154,4 +154,18 @@ body{
 }
 .btn-dlg-cancel:hover{
     color: #c0392b;
+}
+
+.li-suggestion{
+    padding: 10px 30px!important;
+}
+.li-suggestion .email, .li-suggestion .username{
+    color: #999;
+    font-size: 0.9em;
+    line-height: 1em;
+}
+.li-suggestion .name{
+    line-height: 1em;
+    font-weight: bold;
+    color:#484848;
 }
