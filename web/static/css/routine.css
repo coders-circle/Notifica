@@ -29,6 +29,16 @@ body{
     text-align: left;
 }
 
+#time-line{
+    display: flex;
+    align-items: center;
+}
+
+#time-line .time-stop{
+    position: absolute;
+    text-align: left;
+}
+
 .day-name{
     color: #e74c3c;
     text-transform: uppercase;

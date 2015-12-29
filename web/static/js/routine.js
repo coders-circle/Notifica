@@ -114,7 +114,6 @@ jQuery(document).ready(function($) {
 		return parseInt(timeSlices[0]*60) + parseInt(timeSlices[1]);
 	}
 
-
 	function calculateMinMaxTime(){
 		for(var i=0; i < routine.length; i++){
 			var periods = routine[i];
@@ -128,13 +127,30 @@ jQuery(document).ready(function($) {
 			}
 		}
 	}
+	function renderTimeLine(){
+		var old_time_stops = $('.time-stop');
+		if(old_time_stops){
+			old_time_stops.remove();
+		}
+		var time_line = $('#time-line');
+		var num_time_stops = 5;
+		var total_duration = max_time-min_time;
+		var time_stop_template = $('<div class="time-stop"></div>');
+		for(var i=0; i < num_time_stops; i++){
+			var time_stop = time_stop_template.clone();
+			time_stop.text(getFormattedTimeString(Math.floor(min_time+i*total_duration/(num_time_stops-1))));
+			time_stop.appendTo(time_line);
+			time_stop.css('padding-left', (99*i/(num_time_stops-1)).toString()+'%');
+		}
 
+	}
 	function renderPeriods(){
 		var old_periods = $('.periods');
 		if(old_periods){
 			old_periods.remove();
 		}
 		calculateMinMaxTime();
+		renderTimeLine();
 		for(var i=0; i < routine.length; i++){
 			var periods = routine[i];
 			if(periods.length > 0){
@@ -158,6 +174,7 @@ jQuery(document).ready(function($) {
 							}
 							disp_periods[current_depth+1].push(disp_periods[current_depth][j]);
 							disp_periods[current_depth].splice(j, 1);
+							--j;
 						}
 					}
 					++current_depth;
@@ -169,7 +186,6 @@ jQuery(document).ready(function($) {
 				period_template.removeClass('template-period');
 				period_template.addClass('period');
 				var total_duration = max_time - min_time;
-				console.log(total_duration);
 				for(var d=0; d < disp_periods.length; d++){
 					var period_container = period_container_template.clone();
 					period_container.addClass('period-row-'+d);
@@ -179,11 +195,10 @@ jQuery(document).ready(function($) {
 						var period_data = disp_periods[d][c];
 						var period_duration = period_data.end_time - period_data.start_time;
 						var time_gap = (period_data.start_time - prev_time);
-						console.log(time_gap);
 						if( time_gap > 0 ){
-							period.css('margin-left', Math.floor(100*time_gap/total_duration).toString()+'%');
+							period.css('margin-left', Math.ceil(100*time_gap/total_duration).toString()+'%');
 						}
-						period.css('width', Math.floor(100*period_duration/total_duration).toString()+'%');
+						period.css('width', Math.ceil(100*period_duration/total_duration).toString()+'%');
 						period.data('id', period_data.id);
 						period.children(".subject").text(period_data.subject.name);
 						period.children(".teachers").text(getNameString(period_data.teachers));
