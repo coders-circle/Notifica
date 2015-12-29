@@ -24,8 +24,9 @@ body{
 }
 
 #routine-block .periods{
-    text-align: left;
     display: flex;
+    align-items: center;
+    text-align: left;
 }
 
 .day-name{
@@ -47,17 +48,19 @@ body{
 
 .period{
     min-width: 100px;
-    padding:10px;
-    margin:1px 2px;
-    color: #eee;
-    background-color: #484848;
-    line-height: 1.5em;
+    padding:5px 5px 5px 10px;
+    margin:3px 3px;
+    background-color: #fff;
+    color: #e9573f;
+    border-left: 10px solid #fc6e51;
+    line-height: 1.67em;
     transition: 0.2s;
     cursor: pointer;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
 }
 .period:hover{
-    background-color: #6c6c6c;
     color: #fff;
+    background-color: #fc6e51;
 }
 .period p{
     margin: 0px;
@@ -71,8 +74,6 @@ body{
     font-size: 0.9em;
 }
 .period .remarks{
-    font-weight: 300;
-    color: #bbb;
 }
 
 .hidden{
@@ -107,29 +108,6 @@ body{
     padding-bottom: 10px;
 }
 
-/*#add-subject-dialog input[type="text"]{
-    outline: none;
-    margin: 10px 0px;
-    padding: 4px 10px;
-    width: 100%;
-    background-color: transparent;
-    border:none;
-    border-bottom: 1px solid #ccc;
-    transition: 0.2s;
-}
-#add-subject-dialog input[type="text"]:focus{
-    border-bottom-color: #aaa;
-}*/
-.backdrop{
-    display: none;
-    background-color: rgba(0, 0, 0, 0.8);
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 99;
-}
 #add-subject-dialog .modal-footer{
     border: none;
     text-align: right;

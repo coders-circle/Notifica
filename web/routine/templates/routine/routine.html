@@ -10,37 +10,23 @@
 <script src="{% static 'js/routine.js' %}"></script>
 <script src="{% static 'js/selectize.js' %}"></script>
 <script>
-    var idCount=1111111;
-    function getNotificaID(){
-        return 'x'+(idCount++).toString();
-    }
+    var periodsCount=0;
     var routine = [
         {% for day, periods in routine.items %}[
             {% for p in periods %} {
-                {% with subject=p.subject|linked_object %}
+                id: periodsCount++,
                 subject:{
-                    name:"{% if subject %} {{ subject.name }} {% else %} {{ p.subject }} {% endif %}",
-                    {% if subject %}
-                    notifica_id:"{{ subject.notifica_id }}"
-                    {% else %}
-                    notifica_id:getNotificaID()
-                    {% endif %}
+                    name: "{{ p.subject }}",
+                    id: {{ p.subject.id }}
                 },
-                {% endwith %}
                 teachers:[
-                    {% for t in p.teachers|json_decode %} {
-                        {% with teacher=t|linked_object %}
-                        name:"{% if teacher %}{{teacher.user.first_name}}{% else %}{{ t }}{% endif %}",
-                        {% if teacher %}
-                        notifica_id:"{{ teacher.notifica_id }}"
-                        {% else %}
-                        notifica_id: getNotificaID()
-                        {% endif %}
-                        {% endwith %}
+                    {% for t in p.teachers.all %} {
+                        name: "{{ t }}",
+                        id: {{ t.id }}
                     },
                     {% endfor %}
                 ],
-                remark:"{{p.remarks}}",
+                remarks:"{{p.remarks}}",
                 start_time:{{p.start_time}},
                 end_time:{{p.end_time}}
             },
@@ -48,8 +34,6 @@
         ],
         {% endfor %}
     ];
-
-    console.log(routine[0][0].teachers);
 </script>
 
 {% endblock %}
@@ -99,21 +83,7 @@
     <p class="teachers"></p>
     <p class="remarks"></p>
 </div>
-<div class="backdrop"></div>
-<div class="add-subject-dialog">
-    <div class="dialog-header">
-        <h3>Add Period</h3>
-    </div>
-    <div class="dialog-content">
-        <input class="input-subject" type="text" placeholder="Subject">
-        <input class="input-teachers" type="text" placeholder="Teachers">
-        <input class="input-remarks" type="text" placeholder="Remarks">
-    </div>
-    <div class="dialog-footer">
-        <button class="btn-dlg-ok"><i class="fa fa-check"></i> Ok</button>
-        <button class="btn-dlg-cancel"><i class="fa fa-times"></i> Cancel</button>
-    </div>
-</div>
+
 <div class="block" id="routine-block">
     <div class="row row-heading">
         <div class="col-md-1">
@@ -123,15 +93,14 @@
         </div>
     </div>
     {% for day in days_short %}
-    <div class="row">
-        <div class="col-md-1">
+    <div class="row row-day row-day-{{ forloop.counter0 }}" data-index-day="{{ forloop.counter0 }}" >
+        <div class="col-sm-1 col-days">
             <p class="day-name">{{ day }}</p>
-            <button class="btn-add-period"><i class="fa fa-plus"></i> Period</button>
+            <button class="btn-add-period" ><i class="fa fa-plus"></i> Period</button>
         </div>
-        <div class="col-md-11">
-            <div class="periods">
-            </div>
+        <div class="col-sm-11 col-periods">
         </div>
     </div>
     {% endfor %}
+</div>
 {% endblock %}
