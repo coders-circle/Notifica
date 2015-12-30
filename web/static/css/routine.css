@@ -61,7 +61,7 @@ body{
     padding:5px 5px 5px 10px;
     margin:3px 3px;
     background-color: #fff;
-    color: #e9573f;
+    color: #323232;
     border-left: 10px solid #fc6e51;
     line-height: 1.67em;
     transition: 0.2s;
@@ -76,14 +76,24 @@ body{
     margin: 0px;
 }
 .period .subject{
-    font-weight: bold;
+    font-size: 1.23em;
+    font-weight: 300;
 }
-
 .period .teachers,
 .period .remarks{
-    font-size: 0.9em;
+    transition: 0.2s;
+    color: #969696;
+    font-size: 0.88em;
+}
+.period .teachers{
+    font-weight: 600;
 }
 .period .remarks{
+}
+
+.period:hover .remarks,
+.period:hover .teachers{
+    color: #eee;
 }
 
 .hidden{

@@ -1,6 +1,10 @@
 jQuery(document).ready(function($) {
 	var min_time = 9999;
 	var max_time = 0;
+	var newID = -1;
+	function getNewID(){
+		return newID--;
+	}
 	renderPeriods();
 	var $subject_select = $('#subject-input').selectize({
 		placeholder: 'Subject',
@@ -8,13 +12,13 @@ jQuery(document).ready(function($) {
         labelField: 'name',
         searchField: ['name'],
         sortField: 'name',
-		persist: false,
 		openOnFocus: false,
 		maxItems: 1,
 		closeAfterSelect: true,
+		createOnBlur: true,
 		create: function(input){
 			return{
-				id: -1,
+				id: getNewID(),
 				name: input
 			}
 		},
@@ -40,10 +44,7 @@ jQuery(document).ready(function($) {
         }
     });
 
-	var newID = -1;
-	function getNewID(){
-		return newID--;
-	}
+
 
 	var $teachers_select = $('#teachers-input').selectize({
 		placeholder: 'Teachers',
@@ -51,7 +52,7 @@ jQuery(document).ready(function($) {
         valueField: 'id',
         searchField: ['name', 'username'],
         sortField: 'name',
-		persist: false,
+		createOnBlur: true,
 		closeAfterSelect: true,
 		openOnFocus: false,
         create: function(input){
@@ -115,6 +116,8 @@ jQuery(document).ready(function($) {
 	}
 
 	function calculateMinMaxTime(){
+		min_time = 9999;
+		max_time = 0;
 		for(var i=0; i < routine.length; i++){
 			var periods = routine[i];
 			for(var j=0; j < periods.length; j++){
