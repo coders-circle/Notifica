@@ -20,6 +20,7 @@ class Department(models.Model):
 
 class Teacher(models.Model):
     user = models.ForeignKey(User, null=True, blank=True)
+    username = models.CharField(max_length=50, null=True, blank=True)
     department = models.ForeignKey(Department, null=True, blank=True)
 
     class Meta:

@@ -60,7 +60,7 @@ class TeacherViewSet(viewsets.ModelViewSet):
         searchstring = self.request.GET.get("q")
         if searchstring and searchstring != "":
             regexstring = get_regex(searchstring)
-            queryset = Teacher.objects.filter(Q(user__first_name__iregex=regexstring) | Q(user__last_name__iregex=regexstring) | Q(user__username__iregex=regexstring))
+            queryset = Teacher.objects.filter(Q(user__first_name__iregex=regexstring) | Q(user__last_name__iregex=regexstring) | Q(user__username__iregex=regexstring) | Q(username=regexstring))
         else:
             queryset = Teacher.objects.all()
 

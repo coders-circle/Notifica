@@ -33,7 +33,7 @@ class TeacherSerializer(serializers.ModelSerializer):
     user_id = serializers.PrimaryKeyRelatedField(source='user', queryset=User.objects.all())
     class Meta:
         model = Teacher
-        fields = ('id', 'user', 'department', 'user_id')
+        fields = ('id', 'user', 'department', 'user_id', 'username')
 
 
 class SubjectSerializer(serializers.ModelSerializer):
