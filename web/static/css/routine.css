@@ -167,3 +167,10 @@ body{
     font-weight: bold;
     color:#484848;
 }
+
+#routine-block .col-md-1{
+    width: 10%;
+}
+#routine-block .col-md-11{
+    width: 90%;
+}

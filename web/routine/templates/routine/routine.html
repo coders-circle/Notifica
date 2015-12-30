@@ -86,19 +86,19 @@
 
 <div class="block" id="routine-block">
     <div class="row row-heading">
-        <div class="col-sm-1">
+        <div class="col-md-1">
             Day / Time
         </div>
-        <div class="col-sm-11" id="time-line">
+        <div class="col-md-11" id="time-line">
         </div>
     </div>
     {% for day in days_short %}
     <div class="row row-day row-day-{{ forloop.counter0 }}" data-index-day="{{ forloop.counter0 }}" >
-        <div class="col-sm-1 col-days">
+        <div class="col-md-1 col-days">
             <p class="day-name">{{ day }}</p>
             <button class="btn-add-period" ><i class="fa fa-plus"></i> Period</button>
         </div>
-        <div class="col-sm-11 col-periods">
+        <div class="col-md-11 col-periods">
         </div>
     </div>
     {% endfor %}
