@@ -26,10 +26,14 @@ class RoutineView(View):
         context = {"days_short": days_short, "days": days, "routine": r, "start_time": s, "end_time": e}
 
         student = getStudent(request.user)
+        is_admin = False
+
         if student:
-            groups = Group.objects.filter(p_class.pk=student.group.p_class.pk)
+            is_admin = student.user in student.group.p_class.admins.all()
+            groups = Group.objects.filter(p_class__pk=student.group.p_class.pk)
             context["groups"] = groups
 
+        context["is_admin"] = is_admin
         return render(request, 'routine/routine.html', context)
 
     def post(self, request):
