@@ -34,6 +34,11 @@
         ],
         {% endfor %}
     ];
+
+    function saveRoutine() {
+        document.forms['routineform'].routine.value = JSON.stringify(routine);
+        document.forms['routineform'].submit();
+    }
 </script>
 
 {% endblock %}
@@ -103,4 +108,13 @@
     </div>
     {% endfor %}
 </div>
+
+<form name="routineform" method="post">
+    {% csrf_token %}
+    <input name="routine" value="" type="hidden">
+</form>
+
+<button onclick="saveRoutine()">Save Changes</button>
+
+Is Admin: {% if is_admin %} true {% else %} false {% endif %}
 {% endblock %}
