@@ -340,7 +340,7 @@ jQuery(document).ready(function($) {
 			period_data.remarks = add_subject_dialog.find(".input-remarks").val();
 			period_data.groups = checked_groups;
 		}
-		renderPeriods();
+		filterRoutine();
 		add_subject_dialog.modal('hide');
 	});
 	$('body').on( 'click', '.btn-dlg-cancel', function(e){
