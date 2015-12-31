@@ -22,7 +22,7 @@
                 },
                 teachers:[
                     {% for t in p.teachers.all %} {
-                        name: "{{ t.user.first_name }} {{ t.user.last_name }}",
+                        name: "{{ t }}",
                         id: {{ t.id }}
                     },
                     {% endfor %}

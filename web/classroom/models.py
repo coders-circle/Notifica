@@ -27,7 +27,12 @@ class Teacher(models.Model):
         verbose_name = "teacher"
 
     def __str__(self):
-        return self.user.username
+        if self.user:
+            return self.user.first_name + " " + self.user.last_name
+        elif self.username:
+            return self.username
+        else:
+            return "unnamed"
 
 
 class Subject(models.Model):
