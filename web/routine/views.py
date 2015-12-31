@@ -67,7 +67,8 @@ class RoutineView(View):
                     p.remarts = period["remarks"]
                     p.save()
                     p.teachers.add(*self.getTeachers(period["teachers"]))
-                    p.groups.add(*getGroups(period["groups"]))
+                    if "groups" in period:
+                        p.groups.add(*getGroups(period["groups"]))
 
         return self.get(request)
 
@@ -77,11 +78,11 @@ class RoutineView(View):
         if sid < 0:
             if sid in self.tempSids:
                 return Subject.objects.get(pk=self.tempSids[sid])
-            subject = Subject()
-            subject.name = subject["name"]
-            subject.save()
-            self.tempSids[sid] = subject.pk
-            return subject
+            newSubject = Subject()
+            newSubject.name = subject["name"]
+            newSubject.save()
+            self.tempSids[sid] = newSubject.pk
+            return newSubject
         return Subject.objects.get(pk=sid)
     
     
