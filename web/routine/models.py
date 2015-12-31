@@ -27,8 +27,11 @@ class Period(models.Model):
     start_time = models.IntegerField()
     end_time = models.IntegerField()
     day = models.IntegerField(choices=DAYS)
-    remarks = models.TextField()
+    remarks = models.TextField(blank=True)
     groups = models.ManyToManyField(Group, blank=True)
+
+    def get_day_display(self):
+        return DAYS[self.day][1]
 
     def __str__(self):
         return str(self.subject) + " " + self.get_day_display() + " " + str(self.start_time) + "-" + str(self.end_time) + " (" + str(self.routine.p_class) + ")"
