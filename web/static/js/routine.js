@@ -1,4 +1,5 @@
 jQuery(document).ready(function($) {
+	var routine_dirty = false;
 	var min_time = 9999;
 	var max_time = 0;
 	var newID = -1;
@@ -248,6 +249,11 @@ jQuery(document).ready(function($) {
 		teachers_control.clear();
 		subject_control.clear();
 
+		var group_selection_container = add_subject_dialog.find(".group-selection");
+		for(var i=0; i<group_list.length; i++){
+			group_selection_container.find('#'+group_list[i].id).prop('checked', true);
+		}
+
 		add_subject_dialog.data("new-period", true);
 		add_subject_dialog.data("index-day", $(this).parent().parent().data('index-day'));
 		add_subject_dialog.modal('show');
@@ -280,6 +286,13 @@ jQuery(document).ready(function($) {
 		}
 		subject_control.addOption(period_data.subject);
 		subject_control.addItem(period_data.subject.id);
+		var group_selection_container = add_subject_dialog.find(".group-selection");
+		for(var i=0; i<group_list.length; i++){
+			group_selection_container.find('#'+group_list[i].id).prop('checked', false);
+		}
+		for(var i=0; i<period_data.groups.length; i++){
+			group_selection_container.find('#'+period_data.groups[i].id).prop('checked', true);
+		}
 
 		add_subject_dialog.modal('show');
 	});
@@ -298,6 +311,13 @@ jQuery(document).ready(function($) {
 			name: subject_control.getItem(subject_control.items[0]).text()
 		};
 		var day_index = add_subject_dialog.data('index-day');
+		var checked_groups = [];
+		var group_selection_container = add_subject_dialog.find(".group-selection");
+		for(var i=0; i<group_list.length; i++){
+			if(group_selection_container.find('#'+group_list[i].id).is(':checked')){
+				checked_groups.push(group_list[i]);
+			}
+		}
 		if(add_subject_dialog.data("new-period")){
 			var new_period = {
 				id: periodsCount++,
@@ -305,7 +325,8 @@ jQuery(document).ready(function($) {
 				teachers: arr_teachers,
 				start_time: getMinutes(add_subject_dialog.find(".input-start-time").val()),
 				end_time: getMinutes(add_subject_dialog.find(".input-end-time").val()),
-				remarks: add_subject_dialog.find(".input-remarks").val()
+				remarks: add_subject_dialog.find(".input-remarks").val(),
+				groups: checked_groups
 			};
 			routine[day_index].push(new_period);
 		}else{
@@ -317,6 +338,7 @@ jQuery(document).ready(function($) {
 			period_data.start_time = getMinutes(add_subject_dialog.find(".input-start-time").val());
 			period_data.end_time = getMinutes(add_subject_dialog.find(".input-end-time").val());
 			period_data.remarks = add_subject_dialog.find(".input-remarks").val();
+			period_data.groups = checked_groups;
 		}
 		renderPeriods();
 		add_subject_dialog.modal('hide');

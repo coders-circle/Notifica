@@ -42,6 +42,13 @@
         ],
         {% endfor %}
     ];
+    var group_list = [
+    {% for group in groups.all %}{
+            id: "{{ group.id }}",
+            name: "{{ group }}"
+        },
+    {% endfor %}
+    ];
     function saveRoutine() {
         document.forms['routineform'].routine.value = JSON.stringify(routine);
         document.forms['routineform'].submit();
@@ -57,14 +64,16 @@
     <p>
         Weekly Routine
     </p>
+    {% if groups.all %}
     <div id="group-select">
         Group:
         <select>
             {% for group in groups.all %}
-            <option value="{{ group.group_id }}">{{group}}</option>
+            <option value="{{ group.id }}">{{group}}</option>
             {% endfor %}
         </select>
     </div>
+    {% endif %}
 </div>
 <div id="add-subject-dialog" class="modal fade" role="dialog">
     <div class="modal-dialog">
@@ -90,6 +99,14 @@
                 <div class="form-group">
                     <input class="input-remarks form-control" type="text" placeholder="Remarks">
                 </div>
+                {% if groups.all %}
+                <label>Groups</label>
+                <div class="group-selection">
+                    {% for group in groups.all %}
+                    <label class="checkbox-inline"><input id="{{ group.id }}" class="input-group-select" type="checkbox" checked>{{ group }}</label>
+                    {% endfor %}
+                </div>
+                {% endif %}
             </div>
             <div class="modal-footer">
                 <button class="btn-dlg-ok"><i class="fa fa-check"></i> Ok</button>
