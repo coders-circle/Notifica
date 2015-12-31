@@ -16,43 +16,47 @@ Notifica: News feed
 {% endblock %}
 
 {% block body %}
-<div class="block" id="title-block">
-    <form method="post">
-        {% csrf_token %}
-        <input type="submit" value="Sign out">
-    </form>
-    <a href="{% url 'routine:routine' %}">Routine</a>
-    <h1>Notifica</h1>
-    <p>
-        Hello! {% if user.first_name %}{{ user.first_name }}{% else %}{{ user.username }}{% endif %}
-    </p>
+<div class="block" id="top-block">
+    <div class="container">
+        <div class="menu">
+            <!-- <form method="post">
+                {% csrf_token %}
+                <input type="submit" value="Sign out">
+            </form> -->
+            <a href="{% url 'routine:routine' %}">Routine</a>
+            <a href="#">Sign out</a>
+        </div>
+        <h2 class="title">News feed</h2>
+    </div>
 </div>
 <div class="block" id="news-block">
     <div class="container">
-        <div class="row">
-            <div class="col-sm-5 col-sm-offset-1">
-                <h2>Recent Posts</h2>
-                {% for userpost in userposts %}
-                    {% include 'main/userpost.html' %}
-                {% endfor %}
-                <a id="view-all-link" href="#">View all Posts &nbsp;&nbsp;<i class="fa fa-chevron-right"></i></a>
-            </div>
-            <div class="col-sm-4 col-sm-offset-1">
-                <h2>Upcomming Events</h2>
-                <div class="card card-event">
-                    <span class="title">Admit Card Distribution</span> in <span class="eta-low">1 days</span>
-                </div>
-                <hr>
-                <div class="card card-event">
-                    <span class="title">Internal Assesment</span> in <span class="eta-high">7 days</span>
+        <div class="controls-news">
+            <div class="fa fa-search"></div>
+            <input type="text" placeholder="search">
+            <div class="filters">
+                <div class="dropdown">
+                    <button class="dropdown-toggle" type="button" data-toggle="dropdown">
+                        Newest &nbsp;<span class="fa fa-chevron-down"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li class="selected"><a href="#">Newest</a></li>
+                        <li><a href="#">Comments</a></li>
+                    </ul>
                 </div>
             </div>
         </div>
-        <br>
+        {% for userpost in userposts %}
+            {% include 'main/userpost.html' %}
+            {% if forloop.counter != userposts|length %}
+            <hr>
+            {% endif %}
+        {% endfor %}
     </div>
 </div>
-
-
-
-
+<div class="block" id="footer-block">
+    <div class="container">
+        copyright (c) 2015, Notifica. All rights reserved.
+    </div>
+</div>
 {% endblock %}

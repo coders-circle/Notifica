@@ -1,115 +1,151 @@
-#title-block input[type="submit"]{
-    margin-left: 50px;
+body{
+    background-color: #e6e9ed;
 }
-#title-block input[type="submit"],
-#view-all-link{
+
+#top-block{
+    font-family: "Open Sans";
+    padding: 20px;
+}
+#top-block .title{
+    font-size: 1.66em;
+    font-weight: bold;
+    margin: 0px;
+    color: #8cc152;
+}
+#top-block .menu{
+    float: right;
+}
+#top-block .menu *{
     font-family: "Open Sans Condensed", "Ubuntu Condensed";
     text-transform:uppercase;
     font-size: 1.23em;
-    float:right;
+    font-weight: 600;
     background-color: transparent;
-    color: #3498db;
+    color: #aab2bd;
     border: none;
     outline: none;
-}
-#view-all-link{
-    margin-top: 30px;
-}
-#title-block input[type="submit"]:hover,
-#view-all-link:hover{
-    color:#2980b9;
-}
-#news-block{
-    font-family: "Open Sans";
-    background: linear-gradient(#ecf0f1 0%, #fff 140px, #fff 100%);
-    padding-top: 0px;
-}
-#news-block h2{
-    font-family: "Open Sans Light";
-    font-size: 32px;
-    text-align: center;
-    color: #e74c3c;
-    margin-bottom: 30px;
-}
-hr{
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-
-.userpost{
-    padding: 20px;
-    margin: 6px 0px;
-
-}
-.userpost > .row{
-    margin-left: 0px;
-    margin-right: 0px;
-}
-.control-toggle-comments{
-    text-align: center;
-}
-.btn-toggle-comments{
-    font-size: 0.9em;
-    font-family: "Open Sans Condensed", "Ubuntu Condensed";
-    border: none;
-    outline: none;
-}
-.btn-send,
-.userpost input[type='text']{
-    background-color: transparent;
-    border: none;
-    outline: none;
-    font-size: 0.9em;
-}
-.btn-send{
-    color: #3498db;
-    position: absolute;
-    right: 0px;
-}
-.btn-send:hover{
-    color: #2980b9;
-}
-.control-add-comment{
-    padding: 0px;
-}
-.userpost input[type='text']{
-    margin: 0px;
-    margin-bottom: 20px;
-    padding: 0px 26px 0px 6px;
-    width: 100%;
-    border-bottom: 1px solid #c2c2c2;
+    margin-left: 30px;
     transition: 0.2s;
 }
-.userpost input[type='text']:focus{
-    border-bottom: 1px solid #727272;
+#top-block .menu *:hover{
+    color: #da4453;
 }
 
-.userinfo .time{
-    color: #aaa;
-    font-size: 0.9em;
+#news-block{
+    font-family: "Open Sans";
+    padding-top: 0px;
 }
-.userinfo-op{
-    margin-bottom: 10px;
+#news-block .container{
+    color: #656d78;
+    background-color: #fff;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
+    border: none;
+    border-radius:4px;
+    padding: 0px 50px;
 }
-.userpost .content{
-    color: #484848;
+.controls-news{
+    margin: 0px -50px;
+    background-color: #a0d468;
+    color: #5ca132;
+    padding:20px 50px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+
 }
-.userpost > .content{
-    padding: 10px 0px;
+.controls-news *{
+    border:none;
+    outline:none;
 }
-.userinfo .user-avatar{
+::-webkit-input-placeholder{
+    color: #66b048;
+}
+.controls-news input[type="text"]{
+    background-color: transparent;
+    font-size: 1.23em;
+    margin-left: -20px;
+    padding-left: 30px;
+    width: 300px;
+}
+.controls-news .filters{
+    float: right;
+}
+.controls-news .filters button{
+    padding: 6px 20px;
+    border-radius: 22px;
+    background-color: transparent;
+    color: #fff;
+    transition: 0.2s;
+}
+.controls-news .filters button:hover,
+.controls-news .filters button:focus{
+    background-color: #fff;
+    color: #8cc152;
+}
+li.selected > a{
+    color: #8cc152;
+}
+
+
+.userpost{
+    padding:10px 20px;
+    margin: 10px 0px;
+    line-height: 2em;
+}
+.userpost .header{
+    margin-bottom: 40px;
+}
+.userpost .tags{
+}
+.userpost .tag{
+    padding:5px 15px;
+    color:#aab2bd;
+    border: 1px solid #e6e9ed;
+    border-radius: 20px;
+    margin: 0px 2px;
+    font-size: 0.88em;
+    font-weight: 600;
+}
+.userpost .num-comments{
+    text-align: center;
+    float:right;
+    color: #ccd1d9;
+}
+.userpost .num-comments .num{
+    font-size: 2em;
+}
+.userpost .user-avatar{
     float: left;
-    width: 42px;
-    margin-right: 10px;
+    width: 48px;
+    margin-right: 50px;
+    margin-top: 5px;
     border-radius: 50%;
+    background-color: #f5f7fa;
 }
-.comments{
-    display: none;
-    padding:10px;
-    margin-top: 10px;
+.userpost .title{
+    font-size: 1.66em;
+    font-weight: 300;
+    color: #656d78;
+    transition: 0.2s;
 }
-.comment{
-    padding:3px 0px;
+.userpost .title:hover{
+    color: #da4453;
+}
+.userpost .info{
+    font-size: 0.88em;
+    color: #aab2bd;
+}
+.userpost .info .user-name{
+    font-weight: bold;
+    color: #aab2bd;
+    transition: 0.2s;
+}
+.userpost .info .user-name:hover{
+    color: #da4453;
+}
+#footer-block{
+    font-family: "Open Sans";
+    font-weight: bold;
+    color: #aab2bd;
 }
 .hidden{
     display: none;
