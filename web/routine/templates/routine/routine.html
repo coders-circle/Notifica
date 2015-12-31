@@ -11,7 +11,8 @@
 <script src="{% static 'js/selectize.js' %}"></script>
 <script>
     var periodsCount=0;
-    var routine = [
+    var routine = [];
+    var routine_all = [
         {% for day, periods in routine.items %}[
             {% for p in periods %} {
                 id: periodsCount++,
@@ -28,13 +29,19 @@
                 ],
                 remarks:"{{p.remarks}}",
                 start_time:{{p.start_time}},
-                end_time:{{p.end_time}}
+                end_time:{{p.end_time}},
+                groups:[
+                    {% for group in p.groups.all %}{
+                        name: "{{group}}",
+                        id: "{{group.id}}"
+                    },
+                    {% endfor %}
+                ]
             },
             {% endfor %}
         ],
         {% endfor %}
     ];
-
     function saveRoutine() {
         document.forms['routineform'].routine.value = JSON.stringify(routine);
         document.forms['routineform'].submit();
@@ -46,10 +53,18 @@
 {% block body %}
 <div class="block" id="title-block">
     <a href="{% url 'user' %}">News Feeds</a>
-    <h1>Notifica</h1>
+    <h1>notifica</h1>
     <p>
         Weekly Routine
     </p>
+    <div id="group-select">
+        Group:
+        <select>
+            {% for group in groups.all %}
+            <option value="{{ group.group_id }}">{{group}}</option>
+            {% endfor %}
+        </select>
+    </div>
 </div>
 <div id="add-subject-dialog" class="modal fade" role="dialog">
     <div class="modal-dialog">
@@ -115,6 +130,5 @@
 </form>
 
 <button onclick="saveRoutine()">Save Changes</button>
-
 Is Admin: {% if is_admin %} true {% else %} false {% endif %}
 {% endblock %}

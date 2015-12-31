@@ -5,7 +5,27 @@ jQuery(document).ready(function($) {
 	function getNewID(){
 		return newID--;
 	}
-	renderPeriods();
+	function filterRoutine(){
+		routine = [];
+		for(var i=0; i<routine_all.length; i++){
+			routine.push([]);
+		}
+		selected_group = $('#group-select select');
+		for(var i=0; i<routine_all.length; i++){
+			for(var j=0; j<routine_all[i].length; j++){
+				if(routine_all[i][j].groups.length == 0){
+					routine[i].push(routine_all[i][j]);
+				}
+				else if($.grep(routine_all[i][j].groups, function(item){
+					return item.id == selected_group.val();
+				}).length != 0){
+					routine[i].push(routine_all[i][j]);
+				}
+			}
+		}
+		renderPeriods();
+	}
+	filterRoutine();
 	var $subject_select = $('#subject-input').selectize({
 		placeholder: 'Subject',
         valueField: 'id',
@@ -43,8 +63,6 @@ jQuery(document).ready(function($) {
             });
         }
     });
-
-
 
 	var $teachers_select = $('#teachers-input').selectize({
 		placeholder: 'Teachers',
@@ -131,6 +149,7 @@ jQuery(document).ready(function($) {
 		}
 	}
 	function renderTimeLine(){
+		if( max_time == 0) return;
 		var old_time_stops = $('.time-stop');
 		if(old_time_stops){
 			old_time_stops.remove();
@@ -305,5 +324,9 @@ jQuery(document).ready(function($) {
 	$('body').on( 'click', '.btn-dlg-cancel', function(e){
 		var add_subject_dialog = $('body').find("#add-subject-dialog");
 		add_subject_dialog.modal('hide');
+	});
+
+	$('#group-select select').change(function(){
+		filterRoutine();
 	});
 });

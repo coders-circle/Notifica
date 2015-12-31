@@ -1,6 +1,8 @@
 #signin-block{
+    padding-top: 60px;
+    padding-bottom: 40px;
     font-family: "Open Sans Light";
-    background: linear-gradient(#ecf0f1 0%, #fff 160px, #fff 100%);
+    background: linear-gradient(#ecf0f1 0%, #fff 140px, #fff 100%);
 }
 
 .error{

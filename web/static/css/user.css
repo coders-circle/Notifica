@@ -21,7 +21,7 @@
 }
 #news-block{
     font-family: "Open Sans";
-    background: linear-gradient(#ecf0f1 0%, #fff 240px, #fff 100%);
+    background: linear-gradient(#ecf0f1 0%, #fff 140px, #fff 100%);
     padding-top: 0px;
 }
 #news-block h2{
@@ -29,7 +29,7 @@
     font-size: 32px;
     text-align: center;
     color: #e74c3c;
-    margin-bottom: 50px;
+    margin-bottom: 30px;
 }
 hr{
     margin-top: 10px;
@@ -37,13 +37,27 @@ hr{
 }
 
 .userpost{
-    margin-bottom: 50px;
-}
+    padding: 20px;
+    margin: 6px 0px;
 
-.userpost button,
-.userpost input[type='text']{
+}
+.userpost > .row{
+    margin-left: 0px;
+    margin-right: 0px;
+}
+.control-toggle-comments{
+    text-align: center;
+}
+.btn-toggle-comments{
+    font-size: 0.9em;
+    font-family: "Open Sans Condensed", "Ubuntu Condensed";
     border: none;
+    outline: none;
+}
+.btn-send,
+.userpost input[type='text']{
     background-color: transparent;
+    border: none;
     outline: none;
     font-size: 0.9em;
 }
@@ -60,9 +74,10 @@ hr{
 }
 .userpost input[type='text']{
     margin: 0px;
-    padding: 0px;
+    margin-bottom: 20px;
+    padding: 0px 26px 0px 6px;
     width: 100%;
-    border-bottom: 1px solid #aaa;
+    border-bottom: 1px solid #c2c2c2;
     transition: 0.2s;
 }
 .userpost input[type='text']:focus{
@@ -78,6 +93,9 @@ hr{
 }
 .userpost .content{
     color: #484848;
+}
+.userpost > .content{
+    padding: 10px 0px;
 }
 .userinfo .user-avatar{
     float: left;
