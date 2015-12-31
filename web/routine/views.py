@@ -18,7 +18,7 @@ days_short = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
 def getGroups(groups):
     gs = []
     for g in groups:
-        gs.append(Groups.objects.get(pk=g["id"]))
+        gs.append(Group.objects.get(pk=g["id"]))
     return gs
 
 
@@ -39,6 +39,7 @@ class RoutineView(View):
             is_admin = student.user in student.group.p_class.admins.all()
             groups = Group.objects.filter(p_class__pk=student.group.p_class.pk)
             context["groups"] = groups
+            context["student"] = student
 
         context["is_admin"] = is_admin
         return render(request, 'routine/routine.html', context)
