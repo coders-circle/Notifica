@@ -65,7 +65,7 @@ class RoutineView(View):
                     p.start_time = period["start_time"]
                     p.end_time = period["end_time"]
                     p.day = d
-                    p.remarts = period["remarks"]
+                    p.remarks = period["remarks"]
                     p.save()
                     p.teachers.add(*self.getTeachers(period["teachers"]))
                     if "groups" in period:
