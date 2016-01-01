@@ -33,7 +33,7 @@ class SigninView(View):
 
 
 class SignoutView(View):
-    def post(self, request):
+    def get(self, request):
         logout(request)
         return redirect("home")
 

@@ -11,7 +11,7 @@ router.register(r'submissions', rest_views.SubmissionViewSet)
 
 
 urlpatterns = [
-    url(r'^feed/$', views.FeedView.as_view(), name='feed'),
+    url(r'^$', views.FeedView.as_view(), name='feed'),
 
     url(r'^api/v1/', include(router.urls)),
 ]
