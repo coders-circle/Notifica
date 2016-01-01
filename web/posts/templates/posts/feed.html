@@ -24,7 +24,7 @@ Notifica: News feed
                 <input type="submit" value="Sign out">
             </form> -->
             <a href="{% url 'routine:routine' %}">Routine</a>
-            <a href="#">Sign out</a>
+            <a href="{% url 'signout' %}">Sign out</a>
         </div>
         <h2 class="title">News feed</h2>
     </div>
@@ -47,7 +47,7 @@ Notifica: News feed
             </div>
         </div>
         {% for userpost in userposts %}
-            {% include 'main/userpost.html' %}
+            {% include 'posts/post.html' %}
             {% if forloop.counter != userposts|length %}
             <hr>
             {% endif %}
