@@ -17,7 +17,7 @@
             {% for p in periods %} {
                 id: periodsCount++,
                 subject:{
-                    name: "{{ p.subject }}",
+                    name: "{{ p.subject|safe }}",
                     id: {{ p.subject.id }}
                 },
                 teachers:[

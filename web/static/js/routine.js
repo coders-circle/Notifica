@@ -36,7 +36,6 @@ jQuery(document).ready(function($) {
 		openOnFocus: false,
 		maxItems: 1,
 		closeAfterSelect: true,
-		createOnBlur: true,
 		create: function(input){
 			return{
 				id: getNewID(),
@@ -69,9 +68,8 @@ jQuery(document).ready(function($) {
 		placeholder: 'Teachers',
 		labelField: 'name',
         valueField: 'id',
-        searchField: ['name', 'username'],
+        searchField: ['name', 'email'],
         sortField: 'name',
-		createOnBlur: true,
 		closeAfterSelect: true,
 		openOnFocus: false,
         create: function(input){
@@ -84,7 +82,6 @@ jQuery(document).ready(function($) {
             option: function(item, escape) {
 				return '<div class="li-suggestion">' +
                     (item.name ? '<span class="name">' + escape(item.name) + '&nbsp;</span>' : '') +
-                    (item.username ? '<br><span class="username">' + escape(item.username) + '</span>' : '') +
                     (item.email ? '<br><span class="email">' + escape(item.email) + '</span>' : '') +
                 '</div>';
             }
@@ -104,9 +101,8 @@ jQuery(document).ready(function($) {
 						var item = newRes[i];
 						newArr.push({
 							id: item.id,
-							username: item.user.username,
-							name: item.user.first_name + ' ' + item.user.last_name,
-							email: item.user.email
+							name: item.user? item.user.first_name + ' ' + item.user.last_name: item.username,
+							email: item.user? item.user.email: null
 						});
 					}
                     callback(newArr);
@@ -163,7 +159,7 @@ jQuery(document).ready(function($) {
 			var time_stop = time_stop_template.clone();
 			time_stop.text(getFormattedTimeString(Math.floor(min_time+i*total_duration/(num_time_stops-1))));
 			time_stop.appendTo(time_line);
-			time_stop.css('padding-left', (99*i/(num_time_stops-1)).toString()+'%');
+			time_stop.css('padding-left', (100*i/(num_time_stops-1)).toString()+'%');
 		}
 
 	}
@@ -219,9 +215,9 @@ jQuery(document).ready(function($) {
 						var period_duration = period_data.end_time - period_data.start_time;
 						var time_gap = (period_data.start_time - prev_time);
 						if( time_gap > 0 ){
-							period.css('margin-left', Math.ceil(100*time_gap/total_duration).toString()+'%');
+							period.css('margin-left', Math.floor(100*time_gap/total_duration).toString()+'%');
 						}
-						period.css('width', Math.ceil(100*period_duration/total_duration).toString()+'%');
+						period.css('width', Math.floor(100*period_duration/total_duration).toString()+'%');
 						period.data('id', period_data.id);
 						period.children(".subject").text(period_data.subject.name);
 						period.children(".teachers").text(getNameString(period_data.teachers));
@@ -328,7 +324,7 @@ jQuery(document).ready(function($) {
 				remarks: add_subject_dialog.find(".input-remarks").val(),
 				groups: checked_groups
 			};
-			routine[day_index].push(new_period);
+			routine_all[day_index].push(new_period);
 		}else{
 			var period_data = $.grep(routine[add_subject_dialog.data('index-day')], function(item){
 				return item.id == add_subject_dialog.data('id-period');

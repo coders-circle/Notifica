@@ -81,14 +81,14 @@ body{
 .period{
     min-width: 100px;
     padding:5px 5px 5px 10px;
-    margin:3px 3px;
+    margin:3px 1px;
     background-color: #fff;
     color: #323232;
-    border-left: 10px solid #fc6e51;
+    border-left: 2px solid #e74c3c;
     line-height: 1.67em;
     transition: 0.2s;
     cursor: pointer;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 2px 5px rgba(0, 0, 1, 0.3);
 }
 .period:hover{
     color: #fff;
