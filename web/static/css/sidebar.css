@@ -98,6 +98,7 @@
     line-height: 1.5em;
     margin-top:50px;
     padding-left: 20px;
+    font-weight: bold;
 }
 .sidebar-nav > .sidebar-brand .user-info .avatar{
     width: 50px;
@@ -107,8 +108,12 @@
     display: block;
     margin-bottom: 20px;
 }
+.sidebar-nav > .sidebar-brand .user-info .name{
+    display: block;
+}
 .sidebar-nav > .sidebar-brand .user-info .extra{
     color:#d9d1cc;
+    display: block;
 }
 
 .sidebar-nav hr{

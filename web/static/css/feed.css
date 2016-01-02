@@ -160,3 +160,23 @@ li.selected > a{
 .hidden{
     display: none;
 }
+#posts-loading-animation {
+    display: block;
+    position: absolute;
+    left: 0px;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    background: url('/static/img/loading-posts.gif') center no-repeat #fff;
+}
+#posts{
+    min-height: 300px;
+    position: relative;
+}
+#msg-empty{
+    margin-top: 20px;
+    font-size: 4em;
+    text-align: center;
+    color: #e6e9ed;
+}
