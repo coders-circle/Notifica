@@ -1,16 +1,25 @@
 body{
     background-color: #e6e9ed;
+    overflow-x: hidden;
 }
 
 #top-block{
     font-family: "Open Sans";
     padding: 20px;
 }
+#sidebar-toggle{
+    color: #aab2bd;
+    float:left;
+    padding-top: 2px;
+    padding-right: 20px;
+    font-size: 1.66em;
+    cursor: pointer;
+}
 #top-block .title{
     font-size: 1.66em;
     font-weight: bold;
     margin: 0px;
-    color: #8cc152;
+    color: #aab2bd;
 }
 #top-block .menu{
     float: right;
@@ -34,19 +43,20 @@ body{
 #news-block{
     font-family: "Open Sans";
     padding-top: 0px;
-}
-#news-block .container{
     color: #656d78;
-    background-color: #fff;
+    background: #fff;
     box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
     border: none;
     border-radius:4px;
     padding: 0px 50px;
+    padding-bottom: 30px;
+    margin-bottom: 10px;
 }
+
 .controls-news{
     margin: 0px -50px;
-    background-color: #a0d468;
-    color: #5ca132;
+    background-color: #f5f7fa;
+    color: #aab2bd;
     padding:20px 50px;
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
@@ -57,7 +67,7 @@ body{
     outline:none;
 }
 ::-webkit-input-placeholder{
-    color: #66b048;
+    color: #ccd1d9;
 }
 .controls-news input[type="text"]{
     background-color: transparent;
@@ -73,16 +83,16 @@ body{
     padding: 6px 20px;
     border-radius: 22px;
     background-color: transparent;
-    color: #fff;
+    color: #656d78;
     transition: 0.2s;
 }
 .controls-news .filters button:hover,
 .controls-news .filters button:focus{
     background-color: #fff;
-    color: #8cc152;
+    color: #da4453;
 }
 li.selected > a{
-    color: #8cc152;
+    color: #da4453;
 }
 
 
@@ -122,7 +132,7 @@ li.selected > a{
     background-color: #f5f7fa;
 }
 .userpost .title{
-    font-size: 1.66em;
+    font-size: 1.23em;
     font-weight: 300;
     color: #656d78;
     transition: 0.2s;
