@@ -19,6 +19,8 @@ public class DbHelper extends SQLiteOpenHelper {
     // Create all tables
     @Override
     public void onCreate(SQLiteDatabase db) {
+
+        // Classroom
         db.execSQL(new Organization().getCreateTableSql());
         db.execSQL(new Department().getCreateTableSql());
         db.execSQL(new Subject().getCreateTableSql());
@@ -27,11 +29,18 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL(new PGroup().getCreateTableSql());
         db.execSQL(new Student().getCreateTableSql());
         db.execSQL(new User().getCreateTableSql());
+
+        // Routine
+        db.execSQL(new Period().getCreateTableSql());
+        db.execSQL(new PeriodGroup().getCreateTableSql());
+        db.execSQL(new PeriodTeacher().getCreateTableSql());
     }
 
     // Destroy and re-create all tables
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+
+        // Classroom
         db.execSQL(new Organization().getDestroyTableSql());
         db.execSQL(new Department().getDestroyTableSql());
         db.execSQL(new Subject().getDestroyTableSql());
@@ -40,6 +49,12 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL(new PGroup().getDestroyTableSql());
         db.execSQL(new Student().getDestroyTableSql());
         db.execSQL(new User().getDestroyTableSql());
+
+        // Routine
+        db.execSQL(new Period().getDestroyTableSql());
+        db.execSQL(new PeriodGroup().getDestroyTableSql());
+        db.execSQL(new PeriodTeacher().getDestroyTableSql());
+
         onCreate(db);
     }
 }

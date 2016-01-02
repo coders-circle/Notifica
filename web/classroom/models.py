@@ -36,11 +36,17 @@ class Teacher(models.Model):
 
 
 class Subject(models.Model):
-    name = models.CharField(max_length=30)
+    name = models.CharField(max_length=50)
+    short_name = models.CharField(max_length=5)
     department = models.ForeignKey(Department, null=True, blank=True)
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        if not self.short_name or self.short_name == "":
+            self.short_name = ''.join(n[0].upper() for n in self.name.split())
+        super(Subject, self).save(*args, **kwargs)
 
 
 class Class(models.Model):

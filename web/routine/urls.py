@@ -10,5 +10,6 @@ router.register(r'periods', rest_views.PeriodViewSet)
 
 urlpatterns = [
     url(r'^$', views.RoutineView.as_view(), name="routine"),
+    url(r'^admin/$', views.RoutineAdminView.as_view(), name="admin"),
     url(r'^api/v1/', include(router.urls)),
 ]
