@@ -51,20 +51,27 @@
 }
 
 .sidebar-nav li {
-    text-indent: 20px;
     line-height: 40px;
 }
 
 .sidebar-nav li a {
+    padding-left: 20px;
     display: block;
     text-decoration: none;
     color: #999999;
 }
+.sidebar-nav li a i{
+    padding-right: 10px;
+}
 
 .sidebar-nav li a:hover {
     text-decoration: none;
-    color: #484848;
+    color: #da4453;
     background-color: rgba(0,0,0, 0.1);
+}
+.sidebar-nav .selected a{
+    color: #434a54;
+    font-weight: bold;
 }
 
 .sidebar-nav li a:active,
@@ -76,7 +83,7 @@
     padding-top: 20px;
     padding-bottom: 20px;
     color:#faf7f5;
-    background-color: #da4453;
+    background-color: #656d78;
     margin-bottom: 10px;
 }
 
@@ -84,6 +91,7 @@
     color: #fff;
     font-weight: 300;
     font-size: 3em;
+    padding-left: 20px;
 }
 .sidebar-nav > .sidebar-brand .user-info{
     font-size: 0.88em;
