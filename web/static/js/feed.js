@@ -23,18 +23,24 @@ jQuery(document).ready(function($) {
             post.find('.user-avatar').attr('src', '/static/img/ninja.png');
             post.find('.title').text(ajaxRes[i].title);
             post.find('.user-name').text(ajaxRes[i].posted_by);
-            post.find('.time').text('few seconds ago');
+            var posted_on = new Date(ajaxRes[i].posted_on);
+            post.find('.time').text(posted_on.toLocaleString());
             var tags_container = post.find('.tags');
-            var tags = $.parseJSON(ajaxRes[i].tags);
-            for(var j = 0; j < tags.length; j++){
-                var tag = tag_template.clone();
-                tag.text(tags[j]);
-                tag.appendTo(tags_container);
+                if(ajaxRes[i].tags){
+                var tags = $.parseJSON(ajaxRes[i].tags);
+                for(var j = 0; j < tags.length; j++){
+                    var tag = tag_template.clone();
+                    tag.text(tags[j]);
+                    tag.appendTo(tags_container);
+                }
             }
             post.removeClass('template-userpost');
             post.removeClass('hidden');
             post.addClass('userpost');
             post.appendTo(posts_container);
+            if(i != ajaxRes.length-1){
+                posts_container.append('<hr>');
+            }
         }
         $('#msg-empty').hide();
         $('#posts-loading-animation').fadeOut();

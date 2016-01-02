@@ -61,7 +61,8 @@
     color: #999999;
 }
 .sidebar-nav li a i{
-    padding-right: 10px;
+    margin-right: 6px;
+    width: 24px;
 }
 
 .sidebar-nav li a:hover {
@@ -81,10 +82,10 @@
 
 .sidebar-nav > .sidebar-brand {
     padding-top: 20px;
-    padding-bottom: 20px;
+    padding-bottom: 14px;
     color:#faf7f5;
     background-color: #656d78;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
 }
 
 .sidebar-nav > .sidebar-brand .title {
@@ -93,31 +94,9 @@
     font-size: 3em;
     padding-left: 20px;
 }
-.sidebar-nav > .sidebar-brand .user-info{
-    font-size: 0.88em;
-    line-height: 1.5em;
-    margin-top:50px;
-    padding-left: 20px;
-    font-weight: bold;
-}
-.sidebar-nav > .sidebar-brand .user-info .avatar{
-    width: 50px;
-    background-color: #faf7f5;
-    border-radius: 50%;
-    padding:5px;
-    display: block;
-    margin-bottom: 20px;
-}
-.sidebar-nav > .sidebar-brand .user-info .name{
-    display: block;
-}
-.sidebar-nav > .sidebar-brand .user-info .extra{
-    color:#d9d1cc;
-    display: block;
-}
 
 .sidebar-nav hr{
-    margin: 5px;
+    margin: 8px;
 }
 
 .sidebar-nav > .sidebar-brand a:hover {
