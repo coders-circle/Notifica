@@ -23,7 +23,7 @@ Notifica: Sign in
                     {% csrf_token %}
 
                     {% if error %}
-                    <div class="error"><i class="fa fa-times-circle"></i> {{ error }}</div>
+                    <div class="error"><i class="fa fa-exclamation-circle"></i> {{ error }}</div>
                     {% endif %}
 
                     <input name="username" type="text" placeholder="Username">

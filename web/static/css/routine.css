@@ -122,19 +122,6 @@ body{
     display: none;
 }
 
-.add-subject-dialog{
-    display: none;
-    font-family: "Open Sans Light";
-    font-size: 1.23em;
-    position: fixed;
-    width: 500px;
-    height: 320px;
-    top: calc(50% - 320px/2);
-    left: calc(50% - 500px/2);
-    background-color: #fff;
-    box-shadow: 0px 10px 40px rgba(0, 0,0, 0.4);
-    z-index: 100;
-}
 #add-subject-dialog .modal-header{
     font-family: "Open Sans Condensed", "Ubuntu Condensed";
     text-transform: uppercase;
