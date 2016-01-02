@@ -16,9 +16,11 @@ class DepartmentSerializer(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
+    avatar = serializers.SerializerMethodField()
+
     class Meta:
         model = User
-        fields = ('id', 'first_name', 'last_name', 'username', 'password', 'email')
+        fields = ('id', 'first_name', 'last_name', 'username', 'password', 'email', 'avatar')
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, data):
@@ -26,6 +28,10 @@ class UserSerializer(serializers.ModelSerializer):
         user.set_password(data['password'])
         user.save()
         return user
+
+    def get_avatar(self, user):
+        profile = UserProfile.objects.get(user__pk=user.id)
+        return profile.avatar.url
 
 
 class TeacherSerializer(serializers.ModelSerializer):

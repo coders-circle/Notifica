@@ -1,8 +1,10 @@
 from rest_framework import serializers
 from posts.models import *
+from classroom.serializers import UserSerializer
 
 
 class PostSerializer(serializers.ModelSerializer):
+    posted_by = UserSerializer(read_only=True)
     class Meta:
         model = Post
         fields = ('id', 'title', 'body', 'posted_on', 'posted_by', 'event_on', 'tags')
@@ -10,6 +12,7 @@ class PostSerializer(serializers.ModelSerializer):
 
 
 class CommentSerializer(serializers.ModelSerializer):
+    posted_by = UserSerializer(read_only=True)
     class Meta:
         model = Comment
         fields = ('id', 'post', 'body', 'posted_on', 'posted_by')
@@ -17,6 +20,7 @@ class CommentSerializer(serializers.ModelSerializer):
 
 
 class AssignmentSerializer(serializers.ModelSerializer):
+    posted_by = UserSerializer(read_only=True)
     class Meta:
         model = Assignment
         fields = ('id', 'title', 'body', 'subject', 'posted_by', 'posted_on', 'submission_date')
@@ -24,6 +28,7 @@ class AssignmentSerializer(serializers.ModelSerializer):
 
 
 class SubmissionSerializer(serializers.ModelSerializer):
+    posted_by = UserSerializer(read_only=True)
     class Meta:
         model = Submission
         fields = ('id', 'assignment', 'body', 'posted_by', 'posted_on')
