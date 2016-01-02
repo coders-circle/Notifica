@@ -5,7 +5,6 @@ import org.json.JSONObject;
 public class Subject extends Model {
     public String name;
     public String short_name;
-    public String notifica_id;
     public long department;
 
     public Subject() {}
@@ -15,6 +14,5 @@ public class Subject extends Model {
         name = json.optString("name");
         short_name = json.optString("short_name");
         department = json.optLong("department", -1);
-        notifica_id = json.optString("notifica_id");
     }
 }

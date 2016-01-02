@@ -21,23 +21,3 @@ class PeriodViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         return getPeriods(self.request.user)
-        #qset1 = Period.objects.none()
-        #qset2 = Period.objects.none()
-
-        ## for teachers check is period contains the teacher
-        #teacher = getTeacher(self.request.user)
-        #if teacher:
-        #    allperiods = Period.objects.all()
-        #    pids = []
-        #    for p in allperiods:
-        #        if teacher in getTeachers(p.teachers):
-        #            pids.append(p.pk)
-
-        #    qset1 = Period.objects.filter(pk__in=pids)
-
-        ## for student the class must match the routine's class
-        #student = getStudent(self.request.user)
-        #if student:
-        #    qset2 = Period.objects.filter(routine__p_class__pk=student.group.p_class.pk)
-
-        #return qset1 | qset2
