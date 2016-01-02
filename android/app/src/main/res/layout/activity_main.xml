@@ -12,13 +12,19 @@
         android:layout_width="match_parent"
         />
 
-    <FrameLayout
-        android:id="@+id/frame_content"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-    <!--<Button
+<!--
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/test"
-        android:onClick="Press"/>-->
+        android:layout_gravity="center_horizontal"
+        android:onClick="Press"/>
+-->
+
+    <FrameLayout
+        android:id="@+id/frame_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="4dp"/>
+
 </LinearLayout>

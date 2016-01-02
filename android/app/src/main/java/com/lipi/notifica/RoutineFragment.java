@@ -23,6 +23,7 @@ public class RoutineFragment extends Fragment {
     static final int NUM_DAYS = 7;
     static final String[] tabTitles = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
     private RoutineDayFragment mCurrentFragment;
+    SlidingTabLayout tabs;
     public ArrayList<ArrayList<Period>> routine;
 
     public RoutineFragment(){
@@ -51,9 +52,23 @@ public class RoutineFragment extends Fragment {
         ViewPager viewPager = (ViewPager) getActivity().findViewById(R.id.pager_routine);
         viewPager.setAdapter(adapter);
 
-        TabLayout tabLayout = (TabLayout) getActivity().findViewById(R.id.tabs_days);
-        tabLayout.setupWithViewPager(viewPager);
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        tabs = (SlidingTabLayout) getActivity().findViewById(R.id.routine_tab);
+        tabs.setDistributeEvenly(true);
+
+        tabs.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
+            @Override
+            public int getIndicatorColor(int position) {
+                return getResources().getColor(R.color.tabsScrollColor);
+            }
+        });
+
+        tabs.setViewPager(viewPager);
+
+        //TabLayout tabLayout = (TabLayout) getActivity().findViewById(R.id.tabs_days);
+        //tabLayout.setupWithViewPager(viewPager);
+        //viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+
+
     }
 
     public class DaysTabsPagerAdapter extends FragmentStatePagerAdapter {

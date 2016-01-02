@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 /**
  * Created by aditya on 12/25/15.
  */
+
 public class SubjectDetailsActivity extends AppCompatActivity {
     private Toolbar toolbar;
     ViewPager pager;
