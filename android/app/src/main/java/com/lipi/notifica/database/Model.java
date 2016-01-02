@@ -111,6 +111,9 @@ public class Model {
         db.close();
     }
 
+    public static <T extends Model> List<T> getAll(Class<T> myClass, SQLiteOpenHelper helper) {
+        return query(myClass, helper, null, null, null, null, null);
+    }
 
     // Get list of rows from database table with given sql query
     public static <T extends Model> List<T> query(Class<T> myClass, SQLiteOpenHelper helper, String selection, String[] args, String groupBy, String having, String orderBy) {
@@ -119,13 +122,8 @@ public class Model {
         Field[] fields = myClass.getFields();
         String[] cols = new String[fields.length];
 
-        // get projection from each field name
-        for (int i=0; i<fields.length; ++i) {
-            cols[i] = fields[i].getName();
-        }
-
         // query
-        Cursor c = db.query(myClass.getSimpleName(), cols, selection, args, groupBy, having, orderBy);
+        Cursor c = db.query(myClass.getSimpleName(), null, selection, args, groupBy, having, orderBy);
 
         // Create object from each row in the result/cursor
         List<T> list = new ArrayList<>(c.getCount());
@@ -168,5 +166,76 @@ public class Model {
         c.close();
         db.close();
         return list;
+    }
+
+    public static <T extends Model> T get(Class<T> myClass, SQLiteOpenHelper helper, long id) {
+        SQLiteDatabase db = helper.getReadableDatabase();
+
+        Field[] fields = myClass.getFields();
+        String[] cols = new String[fields.length];
+
+        // query
+        Cursor c = db.query(myClass.getSimpleName(), null, "_id=?", new String[]{id+""}, null, null, null);
+
+        // Create object from each row in the result/cursor
+        c.moveToPosition(-1);
+        T object = null;
+        while (c.moveToNext()) {
+            try {
+                object = myClass.newInstance();
+
+                // For each field, set the value from the cursor
+                for (Field field: fields) {
+                    String typeName = field.getType().getSimpleName();
+                    switch (typeName) {
+                        case "String":
+                            field.set(object, c.getString(c.getColumnIndex(field.getName())));
+                            break;
+                        case "int":
+                            field.setInt(object, c.getInt(c.getColumnIndex(field.getName())));
+                            break;
+                        case "long":
+                            field.setLong(object, c.getLong(c.getColumnIndex(field.getName())));
+                            break;
+                        case "boolean":
+                            field.setBoolean(object, c.getInt(c.getColumnIndex(field.getName())) != 0);
+                            break;
+                        case "float":
+                            field.setFloat(object, c.getFloat(c.getColumnIndex(field.getName())));
+                            break;
+                        case "double":
+                            field.setDouble(object, c.getDouble(c.getColumnIndex(field.getName())));
+                            break;
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        c.close();
+        db.close();
+        return object;
+    }
+
+    // Get the number of rows with given query
+    public static int count(Class myClass, SQLiteOpenHelper helper, String selection, String[] args) {
+        SQLiteDatabase db = helper.getReadableDatabase();
+        Cursor cursor = db.query(true, myClass.getSimpleName(), new String[]{"_id"}, selection, args, null, null, null, null);
+        return cursor.getCount();
+    }
+
+    // Delete everything
+    public static void deleteAll(Class myClass, SQLiteOpenHelper helper) {
+        SQLiteDatabase db = helper.getWritableDatabase();
+        db.delete(myClass.getSimpleName(), null, null);
+        db.close();
+    }
+
+    // Delete with query
+    public static void delete(Class myClass, SQLiteOpenHelper helper, String selection, String[] args) {
+        SQLiteDatabase db = helper.getWritableDatabase();
+        db.delete(myClass.getSimpleName(), selection, args);
+        db.close();
     }
 }

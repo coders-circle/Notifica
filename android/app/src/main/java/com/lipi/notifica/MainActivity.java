@@ -11,9 +11,9 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
-//    private static final String TAG = "MyActivity";
+    private static final String TAG = "MyActivity";
     private Toolbar toolbar;
-//    Button test;
+    //Button test;
 
 
 
@@ -26,17 +26,19 @@ public class MainActivity extends AppCompatActivity {
         fragmentManager.beginTransaction()
                 .replace(R.id.frame_content, new RoutineFragment()).commitAllowingStateLoss();
 
-//        test  = (Button) findViewById(R.id.test);
-//        test.setText("Test");
+       /* test  = (Button) findViewById(R.id.test);
+        test.setText("Test");*/
 
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
 
     }
-//    public void Press(View v) {
-//        Intent i = new Intent(this, RoutineFragment.class);
-//        startActivity(i);
-//        Log.d(TAG, "Press: zzz");
-//    }
+/*
+    public void Press(View v) {
+        Intent i = new Intent(this, SubjectDetailsActivity.class);
+        startActivity(i);
+        Log.d(TAG, "Press: zzz");
+    }
+*/
 
 }
