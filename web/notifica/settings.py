@@ -130,3 +130,10 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
+
+
+# Rest Framework settings
+
+# REST_FRAMEWORK = {
+#     'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.NamespaceVersioning',
+# }

@@ -12,6 +12,9 @@ class Post(models.Model):
     def __str__(self):
         return self.title + " \"" + self.body[:10] + "\""
 
+    class Meta:
+        ordering = ('posted_on',)
+
 
 class Comment(models.Model):
     post = models.ForeignKey(Post)
