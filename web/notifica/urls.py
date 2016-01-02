@@ -21,7 +21,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^classroom/', include('classroom.urls', namespace='classroom')),
     url(r'^routine/', include('routine.urls', namespace='routine')),
-    url(r'^posts/', include('posts.urls', namespace='posts')),
+    url(r'^feed/', include('posts.urls', namespace='posts')),
 
     url(r'^', include('main.urls')),
 ]

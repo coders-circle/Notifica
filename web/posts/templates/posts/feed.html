@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load classroom_tags %}
+
+{% load staticfiles %}
+
+{% block title %}
+Notifica: News feed
+{% endblock %}
+
+
+{% block head %}
+<link href="{% static 'css/feed.css' %}" type="text/css" rel="stylesheet">
+<link href="{% static 'css/sidebar.css' %}" type="text/css" rel="stylesheet">
+<script src="{% static 'js/feed.js' %}"></script>
+{% endblock %}
+
+{% block body %}
+<div id="wrapper">
+    <div id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+            <li class="sidebar-brand">
+                <span class="title">notifica</span>
+                <div class="user-info">
+                    <img class="avatar" src="{% static 'img/ninja.png' %}">
+                    <span class="name">Absolute Zero</span>
+                    <span class="extra">frozenheliumx@gmail.com</span>
+                </div>
+            </li>
+            <li>
+                <a href="#">News Feed</a>
+            </li>
+            <li>
+                <a href="#">Routine</a>
+            </li>
+            <li>
+                <a href="#">Assignments</a>
+            </li>
+            <hr>
+            <li>
+                <a href="#">Settings</a>
+            </li>
+        </ul>
+    </div>
+
+    <div id="page-content-wrapper">
+        <div class="container-fluid">
+            <div class="block" id="top-block">
+                <div class="menu">
+                    <a href="{% url 'routine:routine' %}">Routine</a>
+                    <a href="{% url 'signout' %}">Sign out</a>
+                </div>
+                <span id="sidebar-toggle" class="fa fa-bars"></span>
+                <h2 class="title">News feed</h2>
+            </div>
+
+            <div class="block" id="news-block">
+                <div class="controls-news">
+                    <div class="fa fa-search"></div>
+                    <input type="text" placeholder="search">
+                    <div class="filters">
+                        <div class="dropdown">
+                            <button class="dropdown-toggle" type="button" data-toggle="dropdown">
+                                Newest &nbsp;<span class="fa fa-chevron-down"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li class="selected"><a href="#">Newest</a></li>
+                                <li><a href="#">Comments</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                {% for userpost in userposts %}
+                    {% include 'posts/post.html' %}
+                    {% if forloop.counter != userposts|length %}
+                    <hr>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div class="block" id="footer-block">
+                    copyright (c) 2015, Notifica. All rights reserved.
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

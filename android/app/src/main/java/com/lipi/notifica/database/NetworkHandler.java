@@ -13,6 +13,24 @@ import java.net.URL;
 import java.util.Scanner;
 
 public class NetworkHandler {
+
+    public interface Callback {
+        void onComplete(Result result);
+    }
+
+    public static class Result {
+        public boolean success;
+        public String result;
+        public int code;
+
+        public Result() {}
+        public Result(boolean success, String result, int code) {
+            this.success = success;
+            this.result = result;
+            this.code = code;
+        }
+    }
+
     public final static String BASE_URL = "http://192.168.0.40:8000/";
     public final static String GET_METHOD = "GET";
     public final static String POST_METHOD = "POST";
@@ -85,10 +103,10 @@ public class NetworkHandler {
     // Async Network Handler
     private class AsyncRequest extends AsyncTask<Void, Void, Void> {
         private final String mAddress, mMethod, mData;
-        private final NetworkResult mResult = new NetworkResult();
-        private final NetworkCallback mCallback;
+        private final Result mResult = new Result();
+        private final Callback mCallback;
 
-        public AsyncRequest(NetworkCallback callback, String address, String method, String data) {
+        public AsyncRequest(Callback callback, String address, String method, String data) {
             mAddress = address;
             mMethod = method;
             mData = data;
@@ -99,14 +117,14 @@ public class NetworkHandler {
         protected Void doInBackground(Void... params) {
             try {
                 mResult.result = request(mAddress, mMethod, mData);
-                mResult.status = HttpURLConnection.HTTP_OK;
+                mResult.code = HttpURLConnection.HTTP_OK;
                 mResult.success = true;
             } catch (IOException e) {
-                mResult.status = HttpURLConnection.HTTP_BAD_REQUEST;
+                mResult.code = HttpURLConnection.HTTP_BAD_REQUEST;
                 mResult.success = false;
                 e.printStackTrace();
             } catch (HttpNotOkException e) {
-                mResult.status = e.status;
+                mResult.code = e.status;
                 mResult.success = false;
                 e.printStackTrace();
             }
@@ -123,19 +141,19 @@ public class NetworkHandler {
 
     // Helper async request methods for GET, POST, PUT, DELETE
 
-    public void get(String address, NetworkCallback callback) {
+    public void get(String address, Callback callback) {
         new AsyncRequest(callback, address, GET_METHOD, null).execute();
     }
 
-    public void post(String address, String data, NetworkCallback callback) {
+    public void post(String address, String data, Callback callback) {
         new AsyncRequest(callback, address, POST_METHOD, data).execute();
     }
 
-    public void put(String address, String data, NetworkCallback callback) {
+    public void put(String address, String data, Callback callback) {
         new AsyncRequest(callback, address, PUT_METHOD, data).execute();
     }
 
-    public void delete(String address, NetworkCallback callback) {
+    public void delete(String address, Callback callback) {
         new AsyncRequest(callback, address, DELETE_METHOD, null).execute();
     }
 
