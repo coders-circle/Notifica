@@ -15,7 +15,6 @@ class RoutineViewSet(viewsets.ModelViewSet):
 
 
 class PeriodViewSet(viewsets.ModelViewSet):
-    queryset = Period.objects.all()
     serializer_class = PeriodSerializer
     perimission_classes = (permissions.IsAuthenticatedOrReadOnly, IsAdminOrReadOnly,)
 

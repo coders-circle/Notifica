@@ -28,6 +28,8 @@ public class Client {
         JSONArray tsJson = json.getJSONArray("teachers");
         if (tsJson != null) {
             for (int i = 0; i < tsJson.length(); ++i) {
+                PeriodTeacher periodTeacher = new PeriodTeacher(p._id, tsJson.getLong(i));
+                periodTeacher.save(mDbHelper);
                 getTeacher(tsJson.getLong(i), callback);
             }
         }
@@ -35,44 +37,46 @@ public class Client {
         JSONArray gsJson = json.getJSONArray("groups");
         if (gsJson != null) {
             for (int i = 0; i < gsJson.length(); ++i) {
+                PeriodGroup periodGroup = new PeriodGroup(p._id, gsJson.getLong(i));
+                periodGroup.save(mDbHelper);
                 getGroup(gsJson.getLong(i), callback);
             }
         }
     }
 
-    private void addSubject(JSONObject json, Callback callback) throws JSONException {
+    private void addSubject(JSONObject json, Callback callback) {
         Subject s = new Subject(json);
         s.save(mDbHelper);
 
         // getDepartment(s.department);
     }
 
-    private void addTeacher(JSONObject json, Callback callback) throws JSONException {
+    private void addTeacher(JSONObject json, Callback callback) {
         Teacher t = new Teacher(json);
         t.save(mDbHelper);
         getUser(t.user, callback);
         // getDepartment(s.department);
     }
 
-    private void addStudent(JSONObject json, Callback callback) throws JSONException {
+    private void addStudent(JSONObject json, Callback callback) {
         Student s = new Student(json);
         s.save(mDbHelper);
         getUser(s.user, callback);
         getGroup(s.p_group, callback);
     }
 
-    private void addUser(JSONObject json, Callback callback) throws JSONException {
+    private void addUser(JSONObject json, Callback callback) {
         User u = new User(json);
         u.save(mDbHelper);
     }
 
-    private void addGroup(JSONObject json, Callback callback) throws JSONException {
+    private void addGroup(JSONObject json, Callback callback) {
         PGroup g = new PGroup(json);
         g.save(mDbHelper);
         getClass(g.p_class, callback);
     }
 
-    private void addClass(JSONObject json, Callback callback) throws JSONException {
+    private void addClass(JSONObject json, Callback callback) {
         PClass c = new PClass(json);
         c.save(mDbHelper);
         // getDepartment(c.p_class);
@@ -90,6 +94,8 @@ public class Client {
                 if (result.success) {
                     // First delete all periods currently stored
                     Period.deleteAll(Period.class, mDbHelper);
+                    PeriodTeacher.deleteAll(PeriodTeacher.class, mDbHelper);
+                    PeriodGroup.deleteAll(PeriodGroup.class, mDbHelper);
 
                     // Then add each period fetched from server
                     try {

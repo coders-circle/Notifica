@@ -11,8 +11,6 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
-//    private static final String TAG = "MyActivity";
-    private Toolbar toolbar;
 //    Button test;
 
 
@@ -29,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
 //        test  = (Button) findViewById(R.id.test);
 //        test.setText("Test");
 
-        toolbar = (Toolbar) findViewById(R.id.tool_bar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
 
     }
