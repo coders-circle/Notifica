@@ -70,6 +70,9 @@ public class Model {
         Class myClass = this.getClass();
         Field[] fields = myClass.getFields();
 
+        if (_id >= 0)
+            delete(myClass, helper, "_id=?", new String[]{""+_id});
+
         ContentValues values = new ContentValues();
 
         // Parse each field and put values for each field
@@ -174,7 +177,7 @@ public class Model {
         String[] cols = new String[fields.length];
 
         // query
-        Cursor c = db.query(myClass.getSimpleName(), null, "_id=?", new String[]{id+""}, null, null, null);
+        Cursor c = db.query(myClass.getSimpleName(), null, "_id=?", new String[]{id + ""}, null, null, null);
 
         // Create object from each row in the result/cursor
         c.moveToPosition(-1);
@@ -220,8 +223,12 @@ public class Model {
     // Get the number of rows with given query
     public static int count(Class myClass, SQLiteOpenHelper helper, String selection, String[] args) {
         SQLiteDatabase db = helper.getReadableDatabase();
-        Cursor cursor = db.query(true, myClass.getSimpleName(), new String[]{"_id"}, selection, args, null, null, null, null);
-        return cursor.getCount();
+        Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM " + myClass.getSimpleName() + " WHERE " + selection, args);
+        cursor.moveToFirst();
+        int size = cursor.getInt(0);
+        cursor.close();
+        db.close();
+        return size;
     }
 
     // Delete everything

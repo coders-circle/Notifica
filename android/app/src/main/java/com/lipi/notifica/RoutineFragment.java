@@ -5,6 +5,7 @@ import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,9 +37,8 @@ public class RoutineFragment extends Fragment {
 
         // Use routine from database
         routine = new ArrayList<>();
-        DbHelper helper = new DbHelper(getActivity());
+        DbHelper helper = new DbHelper(getContext());
         for( int i = 0; i < NUM_DAYS; i++){
-            //routine.add(new ArrayList<Period>());
             routine.add(Period.query(Period.class, helper, "day=?", new String[]{i+""}, null, null, null));
         }
 
@@ -53,7 +53,7 @@ public class RoutineFragment extends Fragment {
         tabs.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
             @Override
             public int getIndicatorColor(int position) {
-                return getResources().getColor(R.color.tabsScrollColor);
+                return ContextCompat.getColor(getContext(), R.color.tabsScrollColor);
             }
         });
 

@@ -6,10 +6,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 // Class responsible for fetching data from server and storing them in local database
 public class Client {
+
+
     public static abstract class Callback {
-        public int queue = 0; // minimum number of callbacks that are in queue besides current one
+        public List<String> queue = new ArrayList<>(); // Queue of current being fetched objects
         public abstract void refresh();
     }
 
@@ -51,17 +56,20 @@ public class Client {
         // getDepartment(s.department);
     }
 
-    private void addTeacher(JSONObject json, Callback callback) {
+    private void addTeacher(JSONObject json, Callback callback) throws JSONException {
         Teacher t = new Teacher(json);
         t.save(mDbHelper);
-        getUser(t.user, callback);
+
+        if (!json.isNull("user"))
+            addUser(json.getJSONObject("user"), callback);
         // getDepartment(s.department);
     }
 
-    private void addStudent(JSONObject json, Callback callback) {
+    private void addStudent(JSONObject json, Callback callback) throws JSONException {
         Student s = new Student(json);
         s.save(mDbHelper);
-        getUser(s.user, callback);
+
+        addUser(json.getJSONObject("user"), callback);
         getGroup(s.p_group, callback);
     }
 
@@ -84,8 +92,11 @@ public class Client {
 
     // Get the routine for this user
     public void getRoutine(final Callback callback) {
-        if (callback != null)
-            callback.queue++;
+        if (callback != null) {
+            if (callback.queue.contains("routine"))
+                return;
+            callback.queue.add("routine");
+        }
 
         NetworkHandler handler = new NetworkHandler(mUsername, mPassword, true);
         handler.get("routine/api/v1/periods/", new NetworkHandler.Callback() {
@@ -109,7 +120,7 @@ public class Client {
                 }
 
                 if (callback != null) {
-                    callback.queue--;
+                    callback.queue.remove("routine");
                     callback.refresh();
                 }
             }
@@ -118,22 +129,18 @@ public class Client {
 
     // Get a subject
     public void getSubject(final long id, final Callback callback) {
-        // Add only if it doesn't exist
-        if (Subject.count(Subject.class, mDbHelper, "_id=?", new String[]{id + ""}) > 0)
-            return;
-
-        if (callback != null)
-            callback.queue++;
+        if (callback != null) {
+            if (callback.queue.contains("subject:"+id))
+                return;
+            callback.queue.add("subject:"+id);
+        }
 
         NetworkHandler handler = new NetworkHandler(mUsername, mPassword, true);
         handler.get("classroom/api/v1/subjects/"+id+"/", new NetworkHandler.Callback() {
             @Override
             public void onComplete(NetworkHandler.Result result) {
                 if (result.success) {
-                    // TODO: Delete it if it already exists
-                    // Subject.delete(Subject.class, mDbHelper, "id=?", new String[]{id + ""});
-
-                    // Then add the new one fetched from server
+                    // Add the new one fetched from server
                     try {
                         JSONObject json = new JSONObject(result.result);
                         if (json.has("detail") && json.getString("detail").equals("Not found."))
@@ -144,7 +151,7 @@ public class Client {
                     }
 
                     if (callback != null) {
-                        callback.queue--;
+                        callback.queue.remove("subject:"+id);
                         callback.refresh();
                     }
                 }
@@ -154,22 +161,18 @@ public class Client {
 
     // Get a teacher
     public void getTeacher(final long id, final Callback callback) {
-        // Add only if it doesn't exist
-        if (Teacher.count(Teacher.class, mDbHelper, "_id=?", new String[]{id + ""}) > 0)
-            return;
-
-        if (callback != null)
-            callback.queue++;
+        if (callback != null) {
+            if (callback.queue.contains("teacher:"+id))
+                return;
+            callback.queue.add("teacher:"+id);
+        }
 
         NetworkHandler handler = new NetworkHandler(mUsername, mPassword, true);
         handler.get("classroom/api/v1/teachers/"+id+"/", new NetworkHandler.Callback() {
             @Override
             public void onComplete(NetworkHandler.Result result) {
                 if (result.success) {
-                    // TODO: Delete it if it already exists
-                    // Teacher.delete(Teacher.class, mDbHelper, "id=?", new String[]{id+""});
-
-                    // Then add the new one fetched from server
+                    // Add the new one fetched from server
                     try {
                         JSONObject json = new JSONObject(result.result);
                         if (json.has("detail") && json.getString("detail").equals("Not found."))
@@ -180,7 +183,7 @@ public class Client {
                     }
 
                     if (callback != null) {
-                        callback.queue--;
+                        callback.queue.remove("teacher:"+id);
                         callback.refresh();
                     }
                 }
@@ -190,22 +193,18 @@ public class Client {
 
     // Get a student
     public void getStudent(final long id, final Callback callback) {
-        // Add only if it doesn't exist
-        if (Student.count(Student.class, mDbHelper, "_id=?", new String[]{id + ""}) > 0)
-            return;
-
-        if (callback != null)
-            callback.queue++;
+        if (callback != null) {
+            if (callback.queue.contains("student:"+id))
+                return;
+            callback.queue.add("student:"+id);
+        }
 
         NetworkHandler handler = new NetworkHandler(mUsername, mPassword, true);
         handler.get("classroom/api/v1/students/"+id+"/", new NetworkHandler.Callback() {
             @Override
             public void onComplete(NetworkHandler.Result result) {
                 if (result.success) {
-                    // TODO: Delete it if it already exists
-                    // Student.delete(Student.class, mDbHelper, "id=?", new String[]{id+""});
-
-                    // Then add the new one fetched from server
+                    // Add the new one fetched from server
                     try {
                         JSONObject json = new JSONObject(result.result);
                         if (json.has("detail") && json.getString("detail").equals("Not found."))
@@ -216,7 +215,7 @@ public class Client {
                     }
 
                     if (callback != null) {
-                        callback.queue--;
+                        callback.queue.remove("student:"+id);
                         callback.refresh();
                     }
                 }
@@ -226,22 +225,18 @@ public class Client {
 
     // Get a user
     public void getUser(final long id, final Callback callback) {
-        // Add only if it doesn't exist
-        if (User.count(User.class, mDbHelper, "_id=?", new String[]{id + ""}) > 0)
-            return;
-
-        if (callback != null)
-            callback.queue++;
+        if (callback != null) {
+            if (callback.queue.contains("user:"+id))
+                return;
+            callback.queue.add("user:"+id);
+        }
 
         NetworkHandler handler = new NetworkHandler(mUsername, mPassword, true);
         handler.get("classroom/api/v1/users/"+id+"/", new NetworkHandler.Callback() {
             @Override
             public void onComplete(NetworkHandler.Result result) {
                 if (result.success) {
-                    // TODO: Delete it if it already exists
-                    // User.delete(User.class, mDbHelper, "id=?", new String[]{id+""});
-
-                    // Then add the new one fetched from server
+                    // Add the new one fetched from server
                     try {
                         JSONObject json = new JSONObject(result.result);
                         if (json.has("detail") && json.getString("detail").equals("Not found."))
@@ -252,7 +247,7 @@ public class Client {
                     }
 
                     if (callback != null) {
-                        callback.queue--;
+                        callback.queue.remove("user:"+id);
                         callback.refresh();
                     }
                 }
@@ -262,22 +257,18 @@ public class Client {
 
     // Get a group
     public void getGroup(final long id, final Callback callback) {
-        // Add only if it doesn't exist
-        if (PGroup.count(PGroup.class, mDbHelper, "_id=?", new String[]{id + ""}) > 0)
-            return;
-
-        if (callback != null)
-            callback.queue++;
+        if (callback != null) {
+            if (callback.queue.contains("group:"+id))
+                return;
+            callback.queue.add("group:"+id);
+        }
 
         NetworkHandler handler = new NetworkHandler(mUsername, mPassword, true);
         handler.get("classroom/api/v1/groups/"+id+"/", new NetworkHandler.Callback() {
             @Override
             public void onComplete(NetworkHandler.Result result) {
                 if (result.success) {
-                    // TODO: Delete it if it already exists
-                    // PGroup.delete(PGroup.class, mDbHelper, "id=?", new String[]{id+""});
-
-                    // Then add the new one fetched from server
+                    // Add the new one fetched from server
                     try {
                         JSONObject json = new JSONObject(result.result);
                         if (json.has("detail") && json.getString("detail").equals("Not found."))
@@ -288,7 +279,7 @@ public class Client {
                     }
 
                     if (callback != null) {
-                        callback.queue--;
+                        callback.queue.remove("group:"+id);
                         callback.refresh();
                     }
                 }
@@ -298,22 +289,18 @@ public class Client {
 
     // Get a class
     public void getClass(final long id, final Callback callback) {
-        // Add only if it doesn't exist
-        if (PClass.count(PClass.class, mDbHelper, "_id=?", new String[]{id + ""}) > 0)
-            return;
-
-        if (callback != null)
-            callback.queue++;
+        if (callback != null) {
+            if (callback.queue.contains("class:"+id))
+                return;
+            callback.queue.add("class:"+id);
+        }
 
         NetworkHandler handler = new NetworkHandler(mUsername, mPassword, true);
         handler.get("classroom/api/v1/classes/"+id+"/", new NetworkHandler.Callback() {
             @Override
             public void onComplete(NetworkHandler.Result result) {
                 if (result.success) {
-                    // TODO: Delete it if it already exists
-                    // PClass.delete(PClass.class, mDbHelper, "id=?", new String[]{id+""});
-
-                    // Then add the new one fetched from server
+                    // Add the new one fetched from server
                     try {
                         JSONObject json = new JSONObject(result.result);
                         if (json.has("detail") && json.getString("detail").equals("Not found."))
@@ -325,7 +312,7 @@ public class Client {
                 }
 
                 if (callback != null) {
-                    callback.queue--;
+                    callback.queue.remove("class:"+id);
                     callback.refresh();
                 }
             }

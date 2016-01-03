@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
                 // The refresh is called number of times as new data are downloaded.
                 // This.queue represents number of refresh callbacks that are pending.
                 // When it is zero, it means everything is downloaded completely.
-                Log.d("refreshing routine", "queue size: "+this.queue);
+                Log.d("refreshing routine", "queue size: "+this.queue.size());
             }
         });
 
