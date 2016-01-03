@@ -11,6 +11,7 @@ jQuery(document).ready(function($) {
         var old_posts = $('.userpost');
         if(old_posts){
             old_posts.remove();
+            $('#posts hr').remove();
         }
     }
     function renderPosts(ajaxRes){
@@ -35,15 +36,16 @@ jQuery(document).ready(function($) {
                 }
             }
             post.removeClass('template-userpost');
-            post.removeClass('hidden');
+            //post.removeClass('hidden');
             post.addClass('userpost');
             post.appendTo(posts_container);
+            post.hide();
+            post.removeClass('hidden');
+            post.fadeIn();
             if(i != ajaxRes.length-1){
                 posts_container.append('<hr>');
             }
         }
-        $('#msg-empty').hide();
-        $('#posts-loading-animation').fadeOut();
     }
     $("#sidebar-toggle").click(function(e) {
         $("#wrapper").toggleClass("toggled");
@@ -55,18 +57,19 @@ jQuery(document).ready(function($) {
         error: function() {
             setTimeout(function(){
                 $('#posts-loading-animation').fadeOut();
-                console.log('here');
-            }, 2000);
+            }, 1000);
         },
         success: function(res) {
             if(res.length > 0){
                 setTimeout(function(){
                     renderPosts(res);
-                }, 2000);
+                    $('#msg-empty').hide();
+                    $('#posts-loading-animation').fadeOut();
+                }, 1000);
             }else{
                 setTimeout(function(){
                     $('#posts-loading-animation').fadeOut();
-                }, 2000);
+                }, 1000);
             }
 
         }
@@ -79,7 +82,6 @@ jQuery(document).ready(function($) {
             last_search_str = search_str;
             typewatch(function(){
                 removeOldPosts();
-                $('#msg-empty').show();
                 $('#posts-loading-animation').fadeIn();
                 $.ajax({
                     url: '/feed/api/v1/posts/?q='+$("#search").val(),
@@ -87,20 +89,22 @@ jQuery(document).ready(function($) {
                     error: function() {
                         setTimeout(function(){
                             $('#posts-loading-animation').fadeOut();
-                            console.log('here');
-                        }, 500);
+                            $('#msg-empty').show();
+                        }, 200);
                     },
                     success: function(res) {
                         if(res.length > 0){
                             setTimeout(function(){
+                                $('#msg-empty').hide();
+                                $('#posts-loading-animation').fadeOut();
                                 renderPosts(res);
-                            }, 500);
+                            }, 200);
                         }else{
                             setTimeout(function(){
                                 $('#posts-loading-animation').fadeOut();
-                            }, 500);
+                                $('#msg-empty').show();
+                            }, 200);
                         }
-
                     }
                 });
             }, 500);

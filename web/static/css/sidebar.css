@@ -68,7 +68,7 @@
 .sidebar-nav li a:hover {
     text-decoration: none;
     color: #da4453;
-    background-color: rgba(0,0,0, 0.1);
+    background-color: rgba(0,0,0, 0.05);
 }
 .sidebar-nav .selected a{
     color: #434a54;

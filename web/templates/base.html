@@ -12,7 +12,7 @@
     <style type="text/css">
         .no-js #loader { display: none;  }
         .js #loader { display: block; position: absolute; left: 100px; top: 0; }
-        .se-pre-con {
+        .pre-load {
         	position: fixed;
         	left: 0px;
         	top: 0px;
@@ -20,18 +20,37 @@
         	height: 100%;
         	z-index: 9999;
         	background: url("{% static 'img/preload.gif' %}") center no-repeat #fff;
+            text-align: center;
+        }
+        .pre-load .app-title{
+            text-transform: lowercase;
+            font-weight: 300;
+            color:#ccd1d9;
+            margin-top:50px;
+            font-size: 3em;
+            display: block;
+        }
+        .pre-load .message{
+            margin-top:20px;
+            color:#ccd1d9;
+            font-size: 1.23em;
+            font-weight: bold;
+            display: block;
         }
     </style>
     <script src="{% static 'js/jquery.min.js' %}"></script>
     <script>
         $(window).load(function() {
-    		$(".se-pre-con").fadeOut("slow");;
+    		$(".pre-load").fadeOut("slow");;
     	});
     </script>
     {% block head %}
     {% endblock %}
 <body>
-    <div id="#loader" class="se-pre-con"></div>
+    <div id="#loader" class="pre-load">
+        <span class="app-title">Notifica</span>
+        <span class="message">A must have Routine app</span>
+    </div>
     {% block body %}
     {% endblock %}
     <link href="{% static 'css/bootstrap.min.css' %}" type="text/css" rel="stylesheet">
