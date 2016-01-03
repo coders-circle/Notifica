@@ -78,3 +78,14 @@ class Student(models.Model):
 
     def __str__(self):
         return self.user.username
+
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, primary_key=True)
+    avatar = models.ImageField(upload_to='avatars/', default='avatars/ninja.png', blank=True)
+
+    def __str__(self):
+        return self.user.username
+
+
+from classroom import signals
