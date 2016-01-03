@@ -7,11 +7,20 @@
     <color name="tabsScrollColor">#861717</color>
 </resources>
 -->
-<resources>
+<!--<resources>
     <color name="colorPrimary">#2e2e2e</color>
     <color name="colorPrimaryDark">#1e1e1e</color>
     <color name="colorAccent">#4e94ba</color>
     <color name="tabsPressed">#ffffff</color>
     <color name="tabsScrollColor">#c4c4c4</color>
     <color name="tabUnpressed">#c4c4c4</color>
+</resources>-->
+<resources>
+<color name="colorPrimary">#656d78</color>
+<color name="colorPrimaryDark">#434a54</color>
+<color name="colorAccent">#da4453</color>
+<color name="tabsPressed">#f5f7fa</color>
+<color name="tabsScrollColor">#aab2bd</color>
+<color name="tabUnpressed">#aab2bd</color>
 </resources>
+
