@@ -120,7 +120,6 @@ public class Model {
         SQLiteDatabase db = helper.getReadableDatabase();
 
         Field[] fields = myClass.getFields();
-        String[] cols = new String[fields.length];
 
         // query
         Cursor c = db.query(myClass.getSimpleName(), null, selection, args, groupBy, having, orderBy);

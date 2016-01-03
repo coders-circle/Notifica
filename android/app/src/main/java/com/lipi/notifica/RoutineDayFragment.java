@@ -29,7 +29,7 @@ public class RoutineDayFragment extends Fragment{
         recyclerView.setLayoutManager(layoutManager);
         Bundle args = getArguments();
         mDay = args.getInt("day");
-        mAdapter = new PeriodAdapter(((RoutineFragment)getParentFragment()).routine.get(mDay));
+        mAdapter = new PeriodAdapter(getActivity(), ((RoutineFragment)getParentFragment()).routine.get(mDay));
         recyclerView.setAdapter(mAdapter);
         return rootView;
     }

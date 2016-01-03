@@ -14,6 +14,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.lipi.notifica.database.Client;
+
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MyActivity";
@@ -28,6 +30,18 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Download and get new routine
+        Client client = new Client(this);
+        client.getRoutine(new Client.Callback() {
+            @Override
+            public void refresh() {
+                // The refresh is called number of times as new data are downloaded.
+                // This.queue represents number of refresh callbacks that are pending.
+                // When it is zero, it means everything is downloaded completely.
+                Log.d("refreshing routine", "queue size: "+this.queue);
+            }
+        });
 
         /*FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()

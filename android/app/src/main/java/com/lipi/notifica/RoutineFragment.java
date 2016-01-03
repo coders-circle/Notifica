@@ -6,32 +6,24 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.design.widget.TabLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
+import com.lipi.notifica.database.*;
+import com.lipi.notifica.database.Period;
 
-/**
- * Created by fhx on 1/1/16.
- */
+import java.util.ArrayList;
+import java.util.List;
+
+
 public class RoutineFragment extends Fragment {
     static final int NUM_TABS = 7;
     static final int NUM_DAYS = 7;
     static final String[] tabTitles = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
     private RoutineDayFragment mCurrentFragment;
     SlidingTabLayout tabs;
-    public ArrayList<ArrayList<Period>> routine;
-
-    public RoutineFragment(){
-        routine = new ArrayList<>();
-        for( int i = 0; i < NUM_DAYS; i++){
-            routine.add(new ArrayList<Period>());
-        }
-        Period testPeriod = new Period();
-        routine.get(0).add(testPeriod);
-    }
+    public List<List<Period>> routine;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -41,6 +33,16 @@ public class RoutineFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        // Use routine from database
+        routine = new ArrayList<>();
+        DbHelper helper = new DbHelper(getActivity());
+        for( int i = 0; i < NUM_DAYS; i++){
+            //routine.add(new ArrayList<Period>());
+            routine.add(Period.query(Period.class, helper, "day=?", new String[]{i+""}, null, null, null));
+        }
+
+
         DaysTabsPagerAdapter adapter = new DaysTabsPagerAdapter(getChildFragmentManager());
         ViewPager viewPager = (ViewPager) getActivity().findViewById(R.id.pager_routine);
         viewPager.setAdapter(adapter);

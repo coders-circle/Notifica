@@ -42,4 +42,18 @@ public class Period extends Model {
         }
         return teachers;
     }
+
+    public static String intToTime(int time) {
+        int hrs = time / 60;
+        int min = time % 60;
+        return String.format("%02d:%02d", hrs, min);
+    }
+
+    public String getStartTime() {
+        return intToTime(start_time);
+    }
+
+    public String getEndTime() {
+        return intToTime(end_time);
+    }
 }

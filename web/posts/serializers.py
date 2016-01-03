@@ -5,10 +5,15 @@ from classroom.serializers import UserSerializer
 
 class PostSerializer(serializers.ModelSerializer):
     posted_by = UserSerializer(read_only=True)
+    num_comments = serializers.SerializerMethodField()
+    
     class Meta:
         model = Post
-        fields = ('id', 'title', 'body', 'posted_on', 'posted_by', 'event_on', 'tags')
+        fields = ('id', 'title', 'body', 'posted_on', 'posted_by', 'event_on', 'tags', 'num_comments')
         read_only_fields = ('posted_by', 'posted_on')
+
+    def get_num_comments(self, post):
+        return Comment.objects.filter(post=post).count()
 
 
 class CommentSerializer(serializers.ModelSerializer):

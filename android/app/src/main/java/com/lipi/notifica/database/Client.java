@@ -14,7 +14,7 @@ public class Client {
     }
 
     private DbHelper mDbHelper;
-    private String mUsername = "", mPassword = "";
+    private String mUsername = "069bct548", mPassword = "adityakhatri";
 
     public Client(Context context) {
         mDbHelper = new DbHelper(context);
@@ -130,8 +130,8 @@ public class Client {
             @Override
             public void onComplete(NetworkHandler.Result result) {
                 if (result.success) {
-                    // Delete it if it already exists
-                    Subject.delete(Subject.class, mDbHelper, "id=?", new String[]{id + ""});
+                    // TODO: Delete it if it already exists
+                    // Subject.delete(Subject.class, mDbHelper, "id=?", new String[]{id + ""});
 
                     // Then add the new one fetched from server
                     try {
@@ -166,8 +166,8 @@ public class Client {
             @Override
             public void onComplete(NetworkHandler.Result result) {
                 if (result.success) {
-                    // Delete it if it already exists
-                    Teacher.delete(Teacher.class, mDbHelper, "id=?", new String[]{id+""});
+                    // TODO: Delete it if it already exists
+                    // Teacher.delete(Teacher.class, mDbHelper, "id=?", new String[]{id+""});
 
                     // Then add the new one fetched from server
                     try {
@@ -202,8 +202,8 @@ public class Client {
             @Override
             public void onComplete(NetworkHandler.Result result) {
                 if (result.success) {
-                    // Delete it if it already exists
-                    Student.delete(Student.class, mDbHelper, "id=?", new String[]{id+""});
+                    // TODO: Delete it if it already exists
+                    // Student.delete(Student.class, mDbHelper, "id=?", new String[]{id+""});
 
                     // Then add the new one fetched from server
                     try {
@@ -238,8 +238,8 @@ public class Client {
             @Override
             public void onComplete(NetworkHandler.Result result) {
                 if (result.success) {
-                    // Delete it if it already exists
-                    User.delete(User.class, mDbHelper, "id=?", new String[]{id+""});
+                    // TODO: Delete it if it already exists
+                    // User.delete(User.class, mDbHelper, "id=?", new String[]{id+""});
 
                     // Then add the new one fetched from server
                     try {
@@ -274,8 +274,8 @@ public class Client {
             @Override
             public void onComplete(NetworkHandler.Result result) {
                 if (result.success) {
-                    // Delete it if it already exists
-                    PGroup.delete(PGroup.class, mDbHelper, "id=?", new String[]{id+""});
+                    // TODO: Delete it if it already exists
+                    // PGroup.delete(PGroup.class, mDbHelper, "id=?", new String[]{id+""});
 
                     // Then add the new one fetched from server
                     try {
@@ -310,8 +310,8 @@ public class Client {
             @Override
             public void onComplete(NetworkHandler.Result result) {
                 if (result.success) {
-                    // Delete it if it already exists
-                    PClass.delete(PClass.class, mDbHelper, "id=?", new String[]{id+""});
+                    // TODO: Delete it if it already exists
+                    // PClass.delete(PClass.class, mDbHelper, "id=?", new String[]{id+""});
 
                     // Then add the new one fetched from server
                     try {
