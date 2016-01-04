@@ -7,8 +7,8 @@
 
     <TextView
         android:id="@+id/sub_shortname"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_gravity="left"
         android:padding="8dp"
         android:gravity="center"
@@ -35,7 +35,7 @@
         <TextView
             android:id="@+id/subject"
             android:layout_marginTop="4dp"
-            android:text="extremely long subject name so that it goes multiline"
+            android:text="subject"
             android:textSize="16sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
