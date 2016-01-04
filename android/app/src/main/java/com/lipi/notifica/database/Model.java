@@ -71,7 +71,7 @@ public class Model {
         Field[] fields = myClass.getFields();
 
         if (_id >= 0)
-            delete(myClass, helper, "_id=?", new String[]{""+_id});
+            delete(myClass, helper, "_id=?", new String[]{"" + _id});
 
         ContentValues values = new ContentValues();
 
