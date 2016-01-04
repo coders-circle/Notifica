@@ -16,11 +16,12 @@
     <color name="tabUnpressed">#c4c4c4</color>
 </resources>-->
 <resources>
-<color name="colorPrimary">#656d78</color>
-<color name="colorPrimaryDark">#434a54</color>
-<color name="colorAccent">#da4453</color>
-<color name="tabsPressed">#f5f7fa</color>
-<color name="tabsScrollColor">#aab2bd</color>
+    <color name="colorPrimary">#656d78</color>
+    <color name="colorPrimaryDark">#434a54</color>
+    <color name="colorAccent">#da4453</color>
+    <color name="textPrimaryHeading">#f5f7fa</color>
+    <color name="tabsPressed">#f5f7fa</color>
+    <color name="tabsScrollColor">#aab2bd</color>
 <color name="tabUnpressed">#aab2bd</color>
 </resources>
 

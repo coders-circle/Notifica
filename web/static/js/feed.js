@@ -23,7 +23,11 @@ jQuery(document).ready(function($) {
             post.find('.num').text('10');
             post.find('.user-avatar').attr('src', '/static/img/ninja.png');
             post.find('.title').text(ajaxRes[i].title);
-            post.find('.user-name').text(ajaxRes[i].posted_by);
+            post.find('.user-name').text(
+                ajaxRes[i].posted_by.first_name?
+                    ajaxRes[i].posted_by.first_name :
+                    ajaxRes[i].posted_by.username
+                );
             var posted_on = new Date(ajaxRes[i].posted_on);
             post.find('.time').text(posted_on.toLocaleString());
             var tags_container = post.find('.tags');

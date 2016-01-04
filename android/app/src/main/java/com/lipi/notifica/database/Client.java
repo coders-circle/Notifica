@@ -19,7 +19,7 @@ public class Client {
     }
 
     private DbHelper mDbHelper;
-    private String mUsername = "069bct548", mPassword = "adityakhatri";
+    private String mUsername = "fhx", mPassword = "noobnoob";
 
     public Client(Context context) {
         mDbHelper = new DbHelper(context);
