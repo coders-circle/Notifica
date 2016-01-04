@@ -11,4 +11,4 @@ class RoutineSerializer(serializers.ModelSerializer):
 class PeriodSerializer(serializers.ModelSerializer):
     class Meta:
         model = Period
-        fields = ('id', 'groups', 'routine', 'subject', 'teachers', 'start_time', 'end_time', 'day', 'remarks')
+        fields = ('id', 'groups', 'routine', 'subject', 'teachers', 'period_type', 'start_time', 'end_time', 'day', 'remarks')

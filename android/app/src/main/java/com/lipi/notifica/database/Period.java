@@ -12,6 +12,7 @@ public class Period extends Model {
     public int start_time;
     public int end_time;
     public int day;
+    public int period_type;
     public String remarks;
 
     public Period() {}
@@ -23,6 +24,7 @@ public class Period extends Model {
         end_time = json.optInt("end_time");
         day = json.optInt("day");
         remarks = json.optString("remarks");
+        period_type = json.optInt("period_type");
     }
 
     public List<PGroup> getGroups(SQLiteOpenHelper helper) {

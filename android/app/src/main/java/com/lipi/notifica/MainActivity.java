@@ -1,8 +1,6 @@
 package com.lipi.notifica;
 
-import android.content.Intent;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,7 +9,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.lipi.notifica.database.Client;
@@ -33,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Download and get new routine
         Client client = new Client(this);
-        client.getRoutine(new Client.Callback() {
+        client.getRoutine(new Client.ClientListener() {
             @Override
             public void refresh() {
                 // The refresh is called number of times as new data are downloaded.

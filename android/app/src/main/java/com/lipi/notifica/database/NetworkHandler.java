@@ -14,7 +14,7 @@ import java.util.Scanner;
 
 public class NetworkHandler {
 
-    public interface Callback {
+    public interface NetworkListener {
         void onComplete(Result result);
     }
 
@@ -24,11 +24,6 @@ public class NetworkHandler {
         public int code;
 
         public Result() {}
-        public Result(boolean success, String result, int code) {
-            this.success = success;
-            this.result = result;
-            this.code = code;
-        }
     }
 
     public final static String BASE_URL = "http://192.168.0.40:8000/";
@@ -104,13 +99,13 @@ public class NetworkHandler {
     private class AsyncRequest extends AsyncTask<Void, Void, Void> {
         private final String mAddress, mMethod, mData;
         private final Result mResult = new Result();
-        private final Callback mCallback;
+        private final NetworkListener mNetworkListener;
 
-        public AsyncRequest(Callback callback, String address, String method, String data) {
+        public AsyncRequest(NetworkListener networkListener, String address, String method, String data) {
             mAddress = address;
             mMethod = method;
             mData = data;
-            mCallback = callback;
+            mNetworkListener = networkListener;
         }
 
         @Override
@@ -133,28 +128,28 @@ public class NetworkHandler {
 
         @Override
         protected void onPostExecute(Void nothing) {
-            if (mCallback != null)
-                mCallback.onComplete(mResult);
+            if (mNetworkListener != null)
+                mNetworkListener.onComplete(mResult);
         }
     }
 
 
     // Helper async request methods for GET, POST, PUT, DELETE
 
-    public void get(String address, Callback callback) {
-        new AsyncRequest(callback, address, GET_METHOD, null).execute();
+    public void get(String address, NetworkListener networkListener) {
+        new AsyncRequest(networkListener, address, GET_METHOD, null).execute();
     }
 
-    public void post(String address, String data, Callback callback) {
-        new AsyncRequest(callback, address, POST_METHOD, data).execute();
+    public void post(String address, String data, NetworkListener networkListener) {
+        new AsyncRequest(networkListener, address, POST_METHOD, data).execute();
     }
 
-    public void put(String address, String data, Callback callback) {
-        new AsyncRequest(callback, address, PUT_METHOD, data).execute();
+    public void put(String address, String data, NetworkListener networkListener) {
+        new AsyncRequest(networkListener, address, PUT_METHOD, data).execute();
     }
 
-    public void delete(String address, Callback callback) {
-        new AsyncRequest(callback, address, DELETE_METHOD, null).execute();
+    public void delete(String address, NetworkListener networkListener) {
+        new AsyncRequest(networkListener, address, DELETE_METHOD, null).execute();
     }
 
 }

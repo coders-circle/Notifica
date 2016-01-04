@@ -12,8 +12,7 @@ import java.util.List;
 // Class responsible for fetching data from server and storing them in local database
 public class Client {
 
-
-    public static abstract class Callback {
+    public static abstract class ClientListener {
         public List<String> queue = new ArrayList<>(); // Queue of current being fetched objects
         public abstract void refresh();
     }
@@ -25,17 +24,17 @@ public class Client {
         mDbHelper = new DbHelper(context);
     }
 
-    private void addPeriod(JSONObject json, Callback callback) throws JSONException {
+    private void addPeriod(JSONObject json, ClientListener clientListener) throws JSONException {
         Period p = new Period(json);
         p.save(mDbHelper);
 
-        getSubject(json.getLong("subject"), callback);
+        getSubject(json.getLong("subject"), clientListener);
         JSONArray tsJson = json.getJSONArray("teachers");
         if (tsJson != null) {
             for (int i = 0; i < tsJson.length(); ++i) {
                 PeriodTeacher periodTeacher = new PeriodTeacher(p._id, tsJson.getLong(i));
                 periodTeacher.save(mDbHelper);
-                getTeacher(tsJson.getLong(i), callback);
+                getTeacher(tsJson.getLong(i), clientListener);
             }
         }
 
@@ -44,62 +43,61 @@ public class Client {
             for (int i = 0; i < gsJson.length(); ++i) {
                 PeriodGroup periodGroup = new PeriodGroup(p._id, gsJson.getLong(i));
                 periodGroup.save(mDbHelper);
-                getGroup(gsJson.getLong(i), callback);
+                getGroup(gsJson.getLong(i), clientListener);
             }
         }
     }
 
-    private void addSubject(JSONObject json, Callback callback) {
+    private void addSubject(JSONObject json, ClientListener clientListener) {
         Subject s = new Subject(json);
         s.save(mDbHelper);
-
         // getDepartment(s.department);
     }
 
-    private void addTeacher(JSONObject json, Callback callback) throws JSONException {
+    private void addTeacher(JSONObject json, ClientListener clientListener) throws JSONException {
         Teacher t = new Teacher(json);
         t.save(mDbHelper);
 
         if (!json.isNull("user"))
-            addUser(json.getJSONObject("user"), callback);
+            addUser(json.getJSONObject("user"), clientListener);
         // getDepartment(s.department);
     }
 
-    private void addStudent(JSONObject json, Callback callback) throws JSONException {
+    private void addStudent(JSONObject json, ClientListener clientListener) throws JSONException {
         Student s = new Student(json);
         s.save(mDbHelper);
 
-        addUser(json.getJSONObject("user"), callback);
-        getGroup(s.p_group, callback);
+        addUser(json.getJSONObject("user"), clientListener);
+        getGroup(s.p_group, clientListener);
     }
 
-    private void addUser(JSONObject json, Callback callback) {
+    private void addUser(JSONObject json, ClientListener clientListener) {
         User u = new User(json);
         u.save(mDbHelper);
     }
 
-    private void addGroup(JSONObject json, Callback callback) {
+    private void addGroup(JSONObject json, ClientListener clientListener) {
         PGroup g = new PGroup(json);
         g.save(mDbHelper);
-        getClass(g.p_class, callback);
+        getClass(g.p_class, clientListener);
     }
 
-    private void addClass(JSONObject json, Callback callback) {
+    private void addClass(JSONObject json, ClientListener clientListener) {
         PClass c = new PClass(json);
         c.save(mDbHelper);
         // getDepartment(c.p_class);
     }
 
     // Get the routine for this user
-    public void getRoutine(final Callback callback) {
-        if (callback != null) {
-            if (callback.queue.contains("routine"))
+    public void getRoutine(final ClientListener clientListener) {
+        if (clientListener != null) {
+            if (clientListener.queue.contains("routine"))
                 return;
-            callback.queue.add("routine");
+            clientListener.queue.add("routine");
         }
 
         NetworkHandler handler = new NetworkHandler(mUsername, mPassword, true);
-        handler.get("routine/api/v1/periods/", new NetworkHandler.Callback() {
+        handler.get("routine/api/v1/periods/", new NetworkHandler.NetworkListener() {
             @Override
             public void onComplete(NetworkHandler.Result result) {
                 if (result.success) {
@@ -112,210 +110,122 @@ public class Client {
                     try {
                         JSONArray periods = new JSONArray(result.result);
                         for (int i = 0; i < periods.length(); ++i) {
-                            addPeriod(periods.getJSONObject(i), callback);
+                            addPeriod(periods.getJSONObject(i), clientListener);
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
 
-                if (callback != null) {
-                    callback.queue.remove("routine");
-                    callback.refresh();
+                if (clientListener != null) {
+                    clientListener.queue.remove("routine");
+                    clientListener.refresh();
+                }
+            }
+        });
+    }
+
+
+    private interface Callback {
+        void callback(JSONObject json) throws JSONException;
+    }
+
+    // A generic get function that is called by following functions
+    private void get(final ClientListener clientListener, final String name, final long id,
+                     final String url, final Callback callback) {
+        if (clientListener != null) {
+            if (clientListener.queue.contains(name+":"+id))
+                return;
+            clientListener.queue.add(name+":"+id);
+        }
+
+        NetworkHandler handler = new NetworkHandler(mUsername, mPassword, true);
+        handler.get(url, new NetworkHandler.NetworkListener() {
+            @Override
+            public void onComplete(NetworkHandler.Result result) {
+                if (result.success) {
+                    // Add the new one fetched from server
+                    try {
+                        JSONObject json = new JSONObject(result.result);
+                        if (json.has("detail") && json.getString("detail").equals("Not found."))
+                            return;
+                        callback.callback(json);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    if (clientListener != null) {
+                        clientListener.queue.remove(name+":"+id);
+                        clientListener.refresh();
+                    }
                 }
             }
         });
     }
 
     // Get a subject
-    public void getSubject(final long id, final Callback callback) {
-        if (callback != null) {
-            if (callback.queue.contains("subject:"+id))
-                return;
-            callback.queue.add("subject:"+id);
-        }
-
-        NetworkHandler handler = new NetworkHandler(mUsername, mPassword, true);
-        handler.get("classroom/api/v1/subjects/"+id+"/", new NetworkHandler.Callback() {
-            @Override
-            public void onComplete(NetworkHandler.Result result) {
-                if (result.success) {
-                    // Add the new one fetched from server
-                    try {
-                        JSONObject json = new JSONObject(result.result);
-                        if (json.has("detail") && json.getString("detail").equals("Not found."))
-                            return;
-                        addSubject(json, callback);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+    public void getSubject(final long id, final ClientListener clientListener) {
+        get(clientListener, "subject", id, "classroom/api/v1/subjects/" + id + "/",
+                new Callback() {
+                    @Override
+                    public void callback(JSONObject json) throws JSONException{
+                        addSubject(json, clientListener);
                     }
-
-                    if (callback != null) {
-                        callback.queue.remove("subject:"+id);
-                        callback.refresh();
-                    }
-                }
-            }
-        });
+                });
     }
 
     // Get a teacher
-    public void getTeacher(final long id, final Callback callback) {
-        if (callback != null) {
-            if (callback.queue.contains("teacher:"+id))
-                return;
-            callback.queue.add("teacher:"+id);
-        }
-
-        NetworkHandler handler = new NetworkHandler(mUsername, mPassword, true);
-        handler.get("classroom/api/v1/teachers/"+id+"/", new NetworkHandler.Callback() {
-            @Override
-            public void onComplete(NetworkHandler.Result result) {
-                if (result.success) {
-                    // Add the new one fetched from server
-                    try {
-                        JSONObject json = new JSONObject(result.result);
-                        if (json.has("detail") && json.getString("detail").equals("Not found."))
-                            return;
-                        addTeacher(json, callback);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+    public void getTeacher(final long id, final ClientListener clientListener) {
+        get(clientListener, "teacher", id, "classroom/api/v1/teachers/" + id + "/",
+                new Callback() {
+                    @Override
+                    public void callback(JSONObject json) throws JSONException{
+                        addTeacher(json, clientListener);
                     }
-
-                    if (callback != null) {
-                        callback.queue.remove("teacher:"+id);
-                        callback.refresh();
-                    }
-                }
-            }
-        });
+                });
     }
 
     // Get a student
-    public void getStudent(final long id, final Callback callback) {
-        if (callback != null) {
-            if (callback.queue.contains("student:"+id))
-                return;
-            callback.queue.add("student:"+id);
-        }
-
-        NetworkHandler handler = new NetworkHandler(mUsername, mPassword, true);
-        handler.get("classroom/api/v1/students/"+id+"/", new NetworkHandler.Callback() {
-            @Override
-            public void onComplete(NetworkHandler.Result result) {
-                if (result.success) {
-                    // Add the new one fetched from server
-                    try {
-                        JSONObject json = new JSONObject(result.result);
-                        if (json.has("detail") && json.getString("detail").equals("Not found."))
-                            return;
-                        addStudent(json, callback);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+    public void getStudent(final long id, final ClientListener clientListener) {
+        get(clientListener, "student", id, "classroom/api/v1/students/" + id + "/",
+                new Callback() {
+                    @Override
+                    public void callback(JSONObject json) throws JSONException {
+                        addStudent(json, clientListener);
                     }
-
-                    if (callback != null) {
-                        callback.queue.remove("student:"+id);
-                        callback.refresh();
-                    }
-                }
-            }
-        });
+                });
     }
 
     // Get a user
-    public void getUser(final long id, final Callback callback) {
-        if (callback != null) {
-            if (callback.queue.contains("user:"+id))
-                return;
-            callback.queue.add("user:"+id);
-        }
-
-        NetworkHandler handler = new NetworkHandler(mUsername, mPassword, true);
-        handler.get("classroom/api/v1/users/"+id+"/", new NetworkHandler.Callback() {
-            @Override
-            public void onComplete(NetworkHandler.Result result) {
-                if (result.success) {
-                    // Add the new one fetched from server
-                    try {
-                        JSONObject json = new JSONObject(result.result);
-                        if (json.has("detail") && json.getString("detail").equals("Not found."))
-                            return;
-                        addUser(json, callback);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+    public void getUser(final long id, final ClientListener clientListener) {
+        get(clientListener, "user", id, "classroom/api/v1/users/" + id + "/",
+                new Callback() {
+                    @Override
+                    public void callback(JSONObject json) throws JSONException {
+                        addUser(json, clientListener);
                     }
-
-                    if (callback != null) {
-                        callback.queue.remove("user:"+id);
-                        callback.refresh();
-                    }
-                }
-            }
-        });
+                });
     }
 
     // Get a group
-    public void getGroup(final long id, final Callback callback) {
-        if (callback != null) {
-            if (callback.queue.contains("group:"+id))
-                return;
-            callback.queue.add("group:"+id);
-        }
-
-        NetworkHandler handler = new NetworkHandler(mUsername, mPassword, true);
-        handler.get("classroom/api/v1/groups/"+id+"/", new NetworkHandler.Callback() {
-            @Override
-            public void onComplete(NetworkHandler.Result result) {
-                if (result.success) {
-                    // Add the new one fetched from server
-                    try {
-                        JSONObject json = new JSONObject(result.result);
-                        if (json.has("detail") && json.getString("detail").equals("Not found."))
-                            return;
-                        addGroup(json, callback);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+    public void getGroup(final long id, final ClientListener clientListener) {
+        get(clientListener, "group", id, "classroom/api/v1/groups/" + id + "/",
+                new Callback() {
+                    @Override
+                    public void callback(JSONObject json) throws JSONException {
+                        addGroup(json, clientListener);
                     }
-
-                    if (callback != null) {
-                        callback.queue.remove("group:"+id);
-                        callback.refresh();
-                    }
-                }
-            }
-        });
+                });
     }
 
     // Get a class
-    public void getClass(final long id, final Callback callback) {
-        if (callback != null) {
-            if (callback.queue.contains("class:"+id))
-                return;
-            callback.queue.add("class:"+id);
-        }
-
-        NetworkHandler handler = new NetworkHandler(mUsername, mPassword, true);
-        handler.get("classroom/api/v1/classes/"+id+"/", new NetworkHandler.Callback() {
-            @Override
-            public void onComplete(NetworkHandler.Result result) {
-                if (result.success) {
-                    // Add the new one fetched from server
-                    try {
-                        JSONObject json = new JSONObject(result.result);
-                        if (json.has("detail") && json.getString("detail").equals("Not found."))
-                            return;
-                        addClass(json, callback);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+    public void getClass(final long id, final ClientListener clientListener) {
+        get(clientListener, "class", id, "classroom/api/v1/classes/" + id + "/",
+                new Callback() {
+                    @Override
+                    public void callback(JSONObject json) throws JSONException {
+                        addClass(json, clientListener);
                     }
-                }
-
-                if (callback != null) {
-                    callback.queue.remove("class:"+id);
-                    callback.refresh();
-                }
-            }
-        });
+                });
     }
 }

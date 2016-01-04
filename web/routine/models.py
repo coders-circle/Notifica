@@ -19,14 +19,20 @@ DAYS = (
     (6, 'Saturday'),
 )
 
+PERIOD_TYPES = (
+    (0, 'Lecture'),
+    (1, 'Practical'),
+)
+
 
 class Period(models.Model):
     routine = models.ForeignKey(Routine)
     subject = models.ForeignKey(Subject)
-    teachers = models.ManyToManyField(Teacher)
+    teachers = models.ManyToManyField(Teacher, blank=True)
     start_time = models.IntegerField()
     end_time = models.IntegerField()
     day = models.IntegerField(choices=DAYS)
+    period_type = models.IntegerField(choices=PERIOD_TYPES, default=0)
     remarks = models.TextField(blank=True)
     groups = models.ManyToManyField(Group, blank=True)
 
