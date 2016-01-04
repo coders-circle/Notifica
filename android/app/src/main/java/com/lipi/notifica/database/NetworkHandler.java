@@ -26,7 +26,7 @@ public class NetworkHandler {
         public Result() {}
     }
 
-    public final static String BASE_URL = "http://192.168.1.6:8000/";
+    public final static String BASE_URL = "http://192.168.0.40:8000/";
     public final static String GET_METHOD = "GET";
     public final static String POST_METHOD = "POST";
     public final static String PUT_METHOD = "PUTT";

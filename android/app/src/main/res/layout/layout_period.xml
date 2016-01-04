@@ -17,7 +17,7 @@
         android:textColor="@color/textPrimaryHeading"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
-        android:background="@drawable/border_circle"/>
+        android:background="@drawable/border_octagon"/>
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
