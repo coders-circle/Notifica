@@ -25,6 +25,7 @@ public class RoutineDayFragment extends Fragment{
         RecyclerView.LayoutManager layoutManager;
         recyclerView = (RecyclerView)rootView.findViewById(R.id.recycler_view_periods);
         recyclerView.setHasFixedSize(true);
+        recyclerView.setClickable(true);
         layoutManager = new LinearLayoutManager(rootView.getContext());
         recyclerView.setLayoutManager(layoutManager);
         Bundle args = getArguments();

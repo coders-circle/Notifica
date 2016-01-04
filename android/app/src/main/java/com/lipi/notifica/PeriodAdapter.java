@@ -49,10 +49,10 @@ public class PeriodAdapter extends RecyclerView.Adapter<PeriodAdapter.PeriodView
         for(int i = 0; i < teachers.size(); i++){
             if(teachers.get(i).user != -1) {
                 User usr = User.get(User.class, helper, teachers.get(i).user);
-                teacher_str += usr.first_name + " " + usr.last_name;
+                teacher_str += usr.first_name.length() > 0? usr.first_name + " " + usr.last_name : "";
             }
             else{
-                teacher_str += "bla bla";
+                teacher_str += teachers.get(i).username;
             }
             if (i != teachers.size() - 1) {
                 teacher_str += ", ";
@@ -70,7 +70,19 @@ public class PeriodAdapter extends RecyclerView.Adapter<PeriodAdapter.PeriodView
         holder.time.setText(period.getStartTime() + " - " + period.getEndTime());
         holder.subject.setText(subject.name);
         holder.teachers.setText(teacher_str);
+        if(teacher_str.length() == 0){
+            holder.teachers.setVisibility(View.GONE);
+        }
+        else{
+            holder.teachers.setVisibility(View.VISIBLE);
+        }
         holder.remarks.setText(period.remarks);
+        if(period.remarks.length() == 0){
+            holder.remarks.setVisibility(View.GONE);
+        }
+        else{
+            holder.remarks.setVisibility(View.VISIBLE);
+        }
 
 
     }
