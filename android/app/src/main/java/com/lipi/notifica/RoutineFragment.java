@@ -38,8 +38,9 @@ public class RoutineFragment extends Fragment {
         // Use routine from database
         routine = new ArrayList<>();
         DbHelper helper = new DbHelper(getContext());
-        for( int i = 0; i < NUM_DAYS; i++){
-            routine.add(Period.query(Period.class, helper, "day=?", new String[]{i+""}, null, null, null));
+        for( int i = 0; i < NUM_DAYS; i++) {
+            // Get periods for current day, ordered by start_time
+            routine.add(Period.query(Period.class, helper, "day=?", new String[]{i+""}, null, null, "start_time"));
         }
 
 
