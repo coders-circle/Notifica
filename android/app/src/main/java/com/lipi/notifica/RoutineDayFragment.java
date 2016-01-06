@@ -2,6 +2,7 @@ package com.lipi.notifica;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -43,11 +44,13 @@ public class RoutineDayFragment extends Fragment{
         private Drawable mDivider;
         public PeriodDivider(Context context){
             mDivider = context.getResources().getDrawable(R.drawable.divider_period);
-        }
 
+        }
         @Override
         public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
-            int left = parent.getPaddingLeft() + 10;
+            int left = parent.getPaddingLeft()
+                    + parent.getChildAt(0).findViewById(R.id.sub_shortname).getRight()
+                    + parent.getChildAt(0).findViewById(R.id.subject).getLeft();
             int right = parent.getWidth() - parent.getPaddingRight() - 10;
             int childCount = parent.getChildCount();
             for (int i = 0; i < childCount-1; i++) {

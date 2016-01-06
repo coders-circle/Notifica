@@ -39,4 +39,5 @@
     <color name="tabsScrollColor">#e0e0e0</color>
     <color name="tabUnpressed">#99ffffff</color>
     <color name="listDivider">#d2ffffff</color>
+    <color name="periodDivider">#10000000</color>
 </resources>
