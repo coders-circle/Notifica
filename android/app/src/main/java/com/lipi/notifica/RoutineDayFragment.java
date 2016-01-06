@@ -1,5 +1,8 @@
 package com.lipi.notifica;
 
+import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -24,6 +27,7 @@ public class RoutineDayFragment extends Fragment{
         RecyclerView recyclerView;
         RecyclerView.LayoutManager layoutManager;
         recyclerView = (RecyclerView)rootView.findViewById(R.id.recycler_view_periods);
+        recyclerView.addItemDecoration(new PeriodDivider(rootView.getContext()));
         recyclerView.setHasFixedSize(true);
         recyclerView.setClickable(true);
         layoutManager = new LinearLayoutManager(rootView.getContext());
@@ -33,5 +37,27 @@ public class RoutineDayFragment extends Fragment{
         mAdapter = new PeriodAdapter(getActivity(), ((RoutineFragment)getParentFragment()).routine.get(mDay));
         recyclerView.setAdapter(mAdapter);
         return rootView;
+    }
+
+    public class PeriodDivider extends RecyclerView.ItemDecoration{
+        private Drawable mDivider;
+        public PeriodDivider(Context context){
+            mDivider = context.getResources().getDrawable(R.drawable.divider_period);
+        }
+
+        @Override
+        public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
+            int left = parent.getPaddingLeft() + 10;
+            int right = parent.getWidth() - parent.getPaddingRight() - 10;
+            int childCount = parent.getChildCount();
+            for (int i = 0; i < childCount-1; i++) {
+                View child = parent.getChildAt(i);
+                RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
+                int top = child.getBottom() + params.bottomMargin;
+                int bottom = top + mDivider.getIntrinsicHeight();
+                mDivider.setBounds(left, top, right, bottom);
+                mDivider.draw(c);
+            }
+        }
     }
 }

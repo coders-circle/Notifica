@@ -1,50 +1,26 @@
-body{
-    background-color: #ecf0f1;
-}
-
-*{
-    font-family: "Open Sans" "Arial";
-}
-
-a{
-    color: #3498db;
-}
-a:hover{
-    color: #2980b9;
-    text-decoration: none;
-}
-a:link {
-    text-decoration: none;
-}
-a:visited {
-    text-decoration: none;
-}
-
 .block{
-    min-height: 60;
-    padding: 10px 30px;
+
 }
 
-#title-block{
-    font-family: "Open Sans";
-    background-color:#ecf0f1;
+#footer-block{
+    margin-top: 20px;
+    padding-bottom: 20px;
+    color: #a2a2a2;
 }
 
-#title-block h1{
-    font-family: "Open Sans Light";
-    font-size: 56px;
-    color: #201612;
+#footer-block .about,
+#footer-block .links{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+#footer-block .about .title {
     text-transform: lowercase;
+    font-size:2em;
+    margin-top:30px;
 }
-
-#title-block p{
-    font-size: 1.23em;
-    color: #e74c3c;
+#footer-block .about .extra{
+    font-weight: bold;
 }
-
-#title-block a{
-    font-family: "Open Sans Condensed", "Ubuntu Condensed";
-    text-transform:uppercase;
-    font-size: 1.23em;
-    float:right;
+#footer-block .links > a{
+    margin-right: 10px;
 }

@@ -1,6 +1,5 @@
 jQuery(document).ready(function($) {
     var posts = [];
-
     var typewatch = (function(){
         var timer = 0;
         return function(callback, ms){
@@ -12,15 +11,11 @@ jQuery(document).ready(function($) {
         var old_posts = $('.userpost');
         if(old_posts){
             old_posts.remove();
-            $('.posts hr').remove();
-        }
-        var msg = $('.posts .msg');
-        if(msg){
-            msg.remove();
+            $('#posts hr').remove();
         }
     }
     function renderPosts(ajaxRes){
-        var posts_container = $('.posts');
+        var posts_container = $('#posts');
         var post_template = $('.template-userpost').clone();
         var tag_template = $('<span class="tag"></span>');
         for(var i = 0; i < ajaxRes.length; i++){
@@ -44,8 +39,8 @@ jQuery(document).ready(function($) {
                     tag.appendTo(tags_container);
                 }
             }
-            post.find('.content').text(ajaxRes[i].body);
             post.removeClass('template-userpost');
+            //post.removeClass('hidden');
             post.addClass('userpost');
             post.appendTo(posts_container);
             post.hide();
@@ -56,52 +51,64 @@ jQuery(document).ready(function($) {
             }
         }
     }
-    function onSuccess(res){
-        if(res.length > 0){
-            renderPosts(res);
-        } else {
-            var empty_msg = $('#empty-msg').clone();
-            empty_msg.removeClass('hidden');
-            empty_msg.appendTo($('.posts'));
-        }
-        $('#posts-loading-animation').fadeOut();
-    }
-    function onFailure(){
-        var error_msg = $('#error-msg').clone();
-        error_msg.removeClass('hidden');
-        error_msg.appendTo($('.posts'));
-        $('#posts-loading-animation').fadeOut();
-    }
-    $('#posts-loading-animation').show();
+    $("#sidebar-toggle").click(function(e) {
+        $("#wrapper").toggleClass("toggled");
+    });
+
     $.ajax({
         url: '/feed/api/v1/posts/',
         type: 'GET',
         error: function() {
-            onFailure();
+            setTimeout(function(){
+                $('#posts-loading-animation').fadeOut();
+            }, 1000);
         },
         success: function(res) {
-            onSuccess(res);
+            if(res.length > 0){
+                setTimeout(function(){
+                    renderPosts(res);
+                    $('#msg-empty').hide();
+                    $('#posts-loading-animation').fadeOut();
+                }, 1000);
+            }else{
+                setTimeout(function(){
+                    $('#posts-loading-animation').fadeOut();
+                }, 1000);
+            }
+
         }
     });
+
     var last_search_str = "";
-    var search_event_count = 0;
-    $("#search-post-input").keyup(function(){
-        var search_str = $("#search-post-input").val();
+    $("#search").keyup(function(){
+        var search_str = $("#search").val();
         if( search_str != last_search_str){
             last_search_str = search_str;
             typewatch(function(){
-                var current_search_event_count = ++search_event_count;
                 removeOldPosts();
                 $('#posts-loading-animation').fadeIn();
                 $.ajax({
-                    url: '/feed/api/v1/posts/?q='+$("#search-post-input").val(),
+                    url: '/feed/api/v1/posts/?q='+$("#search").val(),
                     type: 'GET',
-                    error: function() { onFailure(); },
+                    error: function() {
+                        setTimeout(function(){
+                            $('#posts-loading-animation').fadeOut();
+                            $('#msg-empty').show();
+                        }, 200);
+                    },
                     success: function(res) {
-                        if( current_search_event_count >= search_event_count ) {
-                            onSuccess(res);
+                        if(res.length > 0){
+                            setTimeout(function(){
+                                $('#msg-empty').hide();
+                                $('#posts-loading-animation').fadeOut();
+                                renderPosts(res);
+                            }, 200);
+                        }else{
+                            setTimeout(function(){
+                                $('#posts-loading-animation').fadeOut();
+                                $('#msg-empty').show();
+                            }, 200);
                         }
-                        --search_event_count;
                     }
                 });
             }, 500);
