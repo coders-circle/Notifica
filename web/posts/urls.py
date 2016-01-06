@@ -6,8 +6,9 @@ from posts import views, rest_views
 router = DefaultRouter()
 router.register(r'posts', rest_views.PostViewSet, base_name='post')
 router.register(r'comments', rest_views.CommentViewSet, base_name='comment')
-router.register(r'assignments', rest_views.AssignmentViewSet)
-router.register(r'submissions', rest_views.SubmissionViewSet)
+router.register(r'events', rest_views.EventViewSet, base_name='event')
+router.register(r'assignments', rest_views.AssignmentViewSet, base_name='assignment')
+router.register(r'submissions', rest_views.SubmissionViewSet, base_name='submission')
 
 
 urlpatterns = [

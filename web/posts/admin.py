@@ -22,5 +22,6 @@ class AssignmentAdmin(admin.ModelAdmin):
 
 admin.site.register(Post, PostAdmin)
 admin.site.register(Comment)
+admin.site.register(Event)
 admin.site.register(Assignment, AssignmentAdmin)
 admin.site.register(Submission)

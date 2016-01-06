@@ -9,14 +9,15 @@
         android:id="@+id/sub_shortname"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_gravity="left"
+        android:layout_gravity="start"
         android:padding="8dp"
         android:gravity="center"
-        android:textSize="18dp"
+        android:textSize="16sp"
         android:text="X"
         android:textColor="@color/textPrimaryHeading"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
         android:background="@drawable/border_octagon"/>
     <LinearLayout
         android:layout_width="wrap_content"

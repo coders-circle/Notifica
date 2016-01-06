@@ -4,6 +4,8 @@ from classroom.models import *
 
 class Routine(models.Model):
     p_class = models.ForeignKey(Class)
+    created_at = models.DateTimeField(auto_now_add=True)
+    modified_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return str(self.p_class.class_id)
