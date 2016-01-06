@@ -96,6 +96,7 @@ class RoutineAdminView(View):
                     p.teachers.add(*self.getTeachers(period["teachers"]))
                     if "groups" in period:
                         p.groups.add(*getGroups(period["groups"]))
+            r.save()
 
         return self.get(request)
 

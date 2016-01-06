@@ -3,18 +3,18 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:padding="10dp"
     android:layout_height="wrap_content"
-    android:clickable="true"
     android:focusable="true">
 
     <TextView
         android:id="@+id/sub_shortname"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_gravity="left"
         android:padding="8dp"
         android:gravity="center"
-        android:textSize="16dp"
-        android:text="DSAP"
+        android:textStyle="bold"
+        android:textSize="12sp"
+        android:text="X"
         android:textColor="@color/textPrimaryHeading"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
@@ -25,11 +25,10 @@
         android:orientation="vertical"
         android:paddingLeft="20dp"
         android:layout_toRightOf="@id/sub_shortname">
-
         <TextView
             android:id="@+id/time"
             android:text="time"
-            android:textSize="13sp"
+            android:textSize="12sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp" />
@@ -43,7 +42,7 @@
             android:layout_height="wrap_content" />
         <TextView
             android:id="@+id/teachers"
-            android:textSize="13sp"
+            android:textSize="12sp"
             android:layout_marginTop="4dp"
             android:text="Mr. Absolute Zero, bla bla"
             android:layout_width="wrap_content"
@@ -51,7 +50,7 @@
         <TextView
             android:id="@+id/remarks"
             android:layout_marginTop="4dp"
-            android:textSize="13sp"
+            android:textSize="12sp"
             android:text="remarks"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

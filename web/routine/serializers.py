@@ -5,7 +5,7 @@ from routine.models import *
 class RoutineSerializer(serializers.ModelSerializer):
     class Meta:
         model = Routine
-        fields = ('id', 'p_class')
+        fields = ('id', 'p_class', 'created_at', 'modified_at')
 
 
 class PeriodSerializer(serializers.ModelSerializer):

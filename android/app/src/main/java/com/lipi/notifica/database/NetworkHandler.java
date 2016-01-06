@@ -1,7 +1,10 @@
 package com.lipi.notifica.database;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Base64;
+
+import com.lipi.notifica.R;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -26,22 +29,23 @@ public class NetworkHandler {
         public Result() {}
     }
 
-    public final static String BASE_URL = "http://192.168.1.6:8000/";
     public final static String GET_METHOD = "GET";
     public final static String POST_METHOD = "POST";
-    public final static String PUT_METHOD = "PUTT";
+    public final static String PUT_METHOD = "PUT";
     public final static String DELETE_METHOD = "DELETE";
 
+    public final String mBaseUrl; //"http://192.168.0.40:8000/";  Change this value in strings.xml
     private final String mUsername, mPassword;
     private final boolean mJson;
 
     // Create a network handler to handle HTTP requests and responses.
     // Pass both username and password as null for no authentication.
     // Set json to true if request and responses are to be json data.
-    public NetworkHandler(String username, String password, boolean json) {
+    public NetworkHandler(Context context, String username, String password, boolean json) {
         mUsername = username;
         mPassword = password;
         mJson = json;
+        mBaseUrl = context.getString(R.string.base_url);
     }
 
     // Create a HTTP request of method 'method'.
@@ -49,7 +53,7 @@ public class NetworkHandler {
     public String request(String address, String method, String postData) throws IOException, HttpNotOkException {
 
         // Create a connection to given address
-        URL url = new URL(BASE_URL + address);
+        URL url = new URL(mBaseUrl + address);
         HttpURLConnection connection = (HttpURLConnection)url.openConnection();
 
         try {

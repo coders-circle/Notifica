@@ -28,12 +28,14 @@ class PostViewSet(viewsets.ModelViewSet):
         else:
             queryset = Post.objects.all()
 
+        # TODO: Filter queryset for those posted for classes and organizations user belongs to.
+
         # recent query set for posts later than given time
         timequery = self.request.GET.get("time")
         recentQueryset = Post.objects.none()
         if timequery:
             time = dateparse.parse_datetime(timequery)
-            recentQueryset = queryset.filter(posted_on__gt=time)
+            recentQueryset = queryset.filter(modified_at=time)
 
         # slice the result to desired offset:count
 
@@ -63,6 +65,15 @@ class CommentViewSet(viewsets.ModelViewSet):
         if postid:
             return Comment.objects.filter(post__pk=postid)
         return Comment.objects.all()
+
+
+class EventViewSet(viewsets.ModelViewSet):
+    queryset = Event.objects.all()
+    serializer_class = PostSerializer
+    perimission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+
+    def perform_create(self, serializer):
+        serializer.save(posted_by=self.request.user)
 
 
 class AssignmentViewSet(viewsets.ModelViewSet):

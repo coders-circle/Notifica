@@ -17,10 +17,12 @@ public class Client {
         public abstract void refresh();
     }
 
-    private DbHelper mDbHelper;
-    private String mUsername = "fhx", mPassword = "noobnoob";
+    private final DbHelper mDbHelper;
+    private final Context mContext;
+    private final String mUsername = "fhx", mPassword = "noobnoob";
 
     public Client(Context context) {
+        mContext = context;
         mDbHelper = new DbHelper(context);
     }
 
@@ -96,7 +98,7 @@ public class Client {
             clientListener.queue.add("routine");
         }
 
-        NetworkHandler handler = new NetworkHandler(mUsername, mPassword, true);
+        NetworkHandler handler = new NetworkHandler(mContext, mUsername, mPassword, true);
         handler.get("routine/api/v1/periods/", new NetworkHandler.NetworkListener() {
             @Override
             public void onComplete(NetworkHandler.Result result) {
@@ -139,7 +141,7 @@ public class Client {
             clientListener.queue.add(name+":"+id);
         }
 
-        NetworkHandler handler = new NetworkHandler(mUsername, mPassword, true);
+        NetworkHandler handler = new NetworkHandler(mContext, mUsername, mPassword, true);
         handler.get(url, new NetworkHandler.NetworkListener() {
             @Override
             public void onComplete(NetworkHandler.Result result) {

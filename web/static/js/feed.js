@@ -33,8 +33,8 @@ jQuery(document).ready(function($) {
                     ajaxRes[i].posted_by.first_name :
                     ajaxRes[i].posted_by.username
                 );
-            var posted_on = new Date(ajaxRes[i].posted_on);
-            post.find('.time').text(posted_on.toLocaleString());
+            var posted_at = new Date(ajaxRes[i].posted_at);
+            post.find('.time').text(posted_at.toLocaleString());
             var tags_container = post.find('.tags');
                 if(ajaxRes[i].tags){
                 var tags = $.parseJSON(ajaxRes[i].tags);
