@@ -7,12 +7,13 @@
 
     <TextView
         android:id="@+id/sub_shortname"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_gravity="left"
         android:padding="8dp"
         android:gravity="center"
-        android:textSize="18dp"
+        android:textStyle="bold"
+        android:textSize="12sp"
         android:text="X"
         android:textColor="@color/textPrimaryHeading"
         android:layout_marginTop="10dp"
