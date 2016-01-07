@@ -10,5 +10,7 @@ from classroom.utils import *
 class FeedView(View):
     def get(self, request):
         if isValidUser(request.user):
-            return render(request, "posts/feed.html")
+            context = {}
+            context["current_page"] = "News feed"
+            return render(request, "posts/feed.html", context)
         return redirect("home")

@@ -14,66 +14,43 @@ Notifica: News feed
 {% endblock %}
 
 {% block body %}
-    <div class="msg hidden" id="empty-msg">Sorry, no result found</div>
-    <div class="msg hidden" id="error-msg">Oops! Something went wrong</div>
-    <div class="template-userpost hidden">
-        <div class="row header">
-            <div class="col-sm-10">
-                <div class="row">
-                    <div class="col-xs-3 user-avatar-container"><img class="user-avatar"></div>
-                    <div class="col-xs-9">
-                        <a href="#" class="title"></a>
-                        <div class="info"><span class="time"></span> by <a href="#" class="user-name"></a></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-2">
-                <a class="num-comments"><span class="num"></span> comments</a>
-            </div>
-        </div>
+{% include 'navigation-drawer.html' %}
+{% include 'posts/userpost-template.html' %}
+<div class="msg hidden" id="empty-msg">Sorry, no result found</div>
+<div class="msg hidden" id="error-msg">Oops! Something went wrong</div>
+<div class="block" id="title-block">
+    <div class="container">
+        <button class="input-neat" id="drawer-open-btn">
+            <i class="fa fa-bars"></i>
+        </button>
+        <span class="title">News feed</span>
+    </div>
+</div>
+<div class="block" id="content-block">
+    <div class="container">
         <div class="row">
-            <div class="col-sm-12 content">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-12 tags">
-            </div>
-        </div>
-    </div>
-    {% include 'navigation-drawer.html' %}
-    <div class="block" id="title-block">
-        <div class="container">
-            <button class="input-neat" id="drawer-open-btn">
-                <i class="fa fa-bars"></i>
-            </button>
-            <span class="title">News feed</span>
-        </div>
-    </div>
-    <div class="block" id="content-block">
-        <div class="container">
-            <div class="row">
-                <div id="post-block" class="col-md-8">
-                    <div class="search-input-container">
-                        <i class="fa fa-search"></i>
-                        <input class="input-neat" id="search-post-input" type="text" placeholder="search for posts by title, content, tag">
-                    </div>
-                    <div class="posts">
-                    </div>
-                    <div class="bottom-control-container">
-                        <div id="posts-loading-animation"></div>
-                        <button class="input-neat" id="more-post-btn">load more posts</button>
-                    </div>
+            <div id="post-block" class="col-md-8">
+                <div class="search-input-container">
+                    <i class="fa fa-search"></i>
+                    <input class="input-neat" id="search-post-input" type="text" placeholder="search for posts by title, content, tag">
                 </div>
-                <div id="news-block" class="col-md-4">
-                    <div class="news">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                    </div>
-                    <div class="news">
-                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                    </div>
+                <div class="posts">
+                </div>
+                <div class="bottom-control-container">
+                    <div id="posts-loading-animation"></div>
+                    <button class="input-neat" id="more-post-btn">load more posts</button>
+                </div>
+            </div>
+            <div id="news-block" class="col-md-4">
+                <div class="news">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </div>
+                <div class="news">
+                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                 </div>
             </div>
         </div>
     </div>
-    {% include 'footer.html' %}
+</div>
+{% include 'footer.html' %}
 {% endblock %}

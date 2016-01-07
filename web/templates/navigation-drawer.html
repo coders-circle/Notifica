@@ -5,11 +5,15 @@
             <i class="fa fa-chevron-left"></i>
         </button>
         <span class="app-title">notifica</span>
+        <div class="user-info">
+            <div class="name">{{ user.first_name }} {{user.last_name}}</div>
+            <div class="extra">{{ user.email }}</div>
+        </div>
     </div>
     <div class="menu">
-        <a class="item active" href="#"><i class="fa fa-newspaper-o"></i> News feed</a>
-        <a class="item" href="#"><i class="fa fa-clock-o"></i> Routine</a>
-        <a class="item" href="#"><i class="fa fa-edit"></i> Assignments</a>
+        <a class="item {% if current_page == 'News feed' %}active{% endif %}" href="#"><i class="fa fa-newspaper-o"></i> News feed</a>
+        <a class="item {% if current_page == 'Routine' %}active{% endif %}" href="#"><i class="fa fa-clock-o"></i> Routine</a>
+        <a class="item {% if current_page == 'Assignments' %}active{% endif %}" href="#"><i class="fa fa-edit"></i> Assignments</a>
         <hr>
         <a class="item" href="#"><i class="fa fa-cog"></i> Settings</a>
         <a class="item" href="#"><i class="fa fa-sign-out"></i> Sign out</a>

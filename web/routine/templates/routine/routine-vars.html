@@ -1,0 +1,15 @@
+<script>
+    var periodsCount=0;
+    var user_group_id = "{{ student.group.id }}";
+    var routine = [];
+    var routine_all = [{% for day, periods in routine.items %}[{% for p in periods %}{
+                id: periodsCount++,
+                subject:{ name: "{{ p.subject|safe }}", id: {{ p.subject.id }} },
+                teachers:[{% for t in p.teachers.all %}{name: "{{ t }}", id: {{ t.id }}}, {% endfor %}],
+                remarks:"{{p.remarks}}",
+                start_time:{{p.start_time}},
+                end_time:{{p.end_time}},
+                groups:[{% for group in p.groups.all %}{name: "{{group}}", id: "{{group.id}}"},{% endfor %}]
+            },{% endfor %}],{% endfor %}];
+    var group_list = [{% for group in groups.all %}{id: "{{ group.id }}",name: "{{ group }}"},{% endfor %}];
+</script>

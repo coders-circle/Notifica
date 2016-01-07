@@ -1,0 +1,50 @@
+#title-block{
+    display: block;
+    color: #a2a2a2;
+}
+#save-btn{
+    font-family: "Open Sans Condensed", "Ubuntu Condensed";
+    text-transform: uppercase;
+    float:right;
+}
+#save-btn:hover{
+    color: #da4453;
+}
+#group-select{
+    display: inline-block;
+    margin-right:30px;
+    font-weight: 300;
+    float:right;
+}
+#group-select select{
+    outline: none;
+    min-width: 100px;
+    padding: 2px 6px;
+    margin-left: 10px;
+    border: none;
+    border-bottom: 1px solid #c2c2c2;
+    background-color: transparent;
+    transition: 0.2s;
+}
+#group-select select option{
+    padding: 10px;
+}
+.btn-add-period{
+    font-size:0.9em;
+    font-family: "Open Sans Condensed", "Ubuntu Condensed";
+    text-transform: uppercase;
+    background-color: transparent;
+    border: none;
+    outline:none;
+}
+.period:hover{
+    color: #fff;
+    background-color: #fc6e51;
+}
+.period{
+    cursor: pointer;
+}
+.period:hover .remarks,
+.period:hover .teachers{
+    color: #eee;
+}
