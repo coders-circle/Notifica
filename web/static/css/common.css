@@ -24,3 +24,15 @@
 #footer-block .links > a{
     margin-right: 10px;
 }
+
+.hidden{
+    display: none;
+}
+.ghost{
+    visibility: hidden;
+}
+.input-neat{
+    border: none;
+    outline: none;
+    background-color: transparent;
+}

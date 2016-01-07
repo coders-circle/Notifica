@@ -1,32 +1,12 @@
 jQuery(document).ready(function($) {
 	var routine_dirty = false;
-	var min_time = 9999;
-	var max_time = 0;
+
 	var newID = -1;
 	function getNewID(){
 		return newID--;
 	}
-	function filterRoutine(){
-		routine = [];
-		for(var i=0; i<routine_all.length; i++){
-			routine.push([]);
-		}
-		selected_group = $('#group-select select');
-		for(var i=0; i<routine_all.length; i++){
-			for(var j=0; j<routine_all[i].length; j++){
-				if(routine_all[i][j].groups.length == 0){
-					routine[i].push(routine_all[i][j]);
-				}
-				else if($.grep(routine_all[i][j].groups, function(item){
-					return item.id == selected_group.val();
-				}).length != 0){
-					routine[i].push(routine_all[i][j]);
-				}
-			}
-		}
-		renderPeriods();
-	}
-	filterRoutine();
+	selected_group = $('#group-select select');
+
 	var $subject_select = $('#subject-input').selectize({
 		placeholder: 'Subject',
         valueField: 'id',
@@ -114,126 +94,14 @@ jQuery(document).ready(function($) {
 	var teachers_control = $teachers_select[0].selectize;
 	var subject_control = $subject_select[0].selectize;
 
-	function getNameString(arr){
-		var formattedStr = '';
-		for(var i = 0; i < arr.length; i++){
-			formattedStr += arr[i].name;
-			if(i != arr.length-1) formattedStr += ", ";
-		}
-		return formattedStr;
-	}
-	function getFormattedTimeString(mins){
-		return (Math.floor(mins/60)).toString() + ':' + (mins%60).toString();
-	}
+
 	function getMinutes(formattedTimeStr){
 		timeSlices = formattedTimeStr.split(':');
 		return parseInt(timeSlices[0]*60) + parseInt(timeSlices[1]);
 	}
 
-	function calculateMinMaxTime(){
-		min_time = 9999;
-		max_time = 0;
-		for(var i=0; i < routine.length; i++){
-			var periods = routine[i];
-			for(var j=0; j < periods.length; j++){
-				if( periods[j].start_time < min_time ){
-					min_time = periods[j].start_time;
-				}
-				if( periods[j].end_time > max_time ){
-					max_time = periods[j].end_time;
-				}
-			}
-		}
-	}
-	function renderTimeLine(){
-		if( max_time == 0) return;
-		var old_time_stops = $('.time-stop');
-		if(old_time_stops){
-			old_time_stops.remove();
-		}
-		var time_line = $('#time-line');
-		var num_time_stops = 5;
-		var total_duration = max_time-min_time;
-		var time_stop_template = $('<div class="time-stop"></div>');
-		for(var i=0; i < num_time_stops; i++){
-			var time_stop = time_stop_template.clone();
-			time_stop.text(getFormattedTimeString(Math.floor(min_time+i*total_duration/(num_time_stops-1))));
-			time_stop.appendTo(time_line);
-			time_stop.css('padding-left', (100*i/(num_time_stops-1)).toString()+'%');
-		}
-
-	}
-	function renderPeriods(){
-		var old_periods = $('.periods');
-		if(old_periods){
-			old_periods.remove();
-		}
-		calculateMinMaxTime();
-		renderTimeLine();
-		for(var i=0; i < routine.length; i++){
-			var periods = routine[i];
-			if(periods.length > 0){
-				periods.sort(function(a, b){
-					if(a.start_time < b.start_time) return -1;
-					else if(a.start_time > b.start_time) return 1;
-					else return 0;
-				});
-				disp_periods = [];
-				disp_periods.push([]);
-				for(var n=0; n<periods.length; n++){
-					disp_periods[0].push(periods[n]);
-				}
-				var current_depth = 0;
-				while(current_depth < disp_periods.length){
-					for(var j=1; j < disp_periods[current_depth].length; j++){
-						if(disp_periods[current_depth][j].start_time >= disp_periods[current_depth][j-1].start_time
-							&& disp_periods[current_depth][j].start_time < disp_periods[current_depth][j-1].end_time){
-							if(disp_periods.length == current_depth+1){
-								disp_periods.push([]);
-							}
-							disp_periods[current_depth+1].push(disp_periods[current_depth][j]);
-							disp_periods[current_depth].splice(j, 1);
-							--j;
-						}
-					}
-					++current_depth;
-				}
-				var periods_col = $('.row-day-'+i).find('.col-periods');
-				var period_container_template = $('<div class="periods"></div>');
-				var period_template = $('.template-period').clone();
-				period_template.removeClass('hidden');
-				period_template.removeClass('template-period');
-				period_template.addClass('period');
-				var total_duration = max_time - min_time;
-				for(var d=0; d < disp_periods.length; d++){
-					var period_container = period_container_template.clone();
-					period_container.addClass('period-row-'+d);
-					var prev_time = min_time;
-					for(var c=0; c < disp_periods[d].length; c++){
-						var period = period_template.clone();
-						var period_data = disp_periods[d][c];
-						var period_duration = period_data.end_time - period_data.start_time;
-						var time_gap = (period_data.start_time - prev_time);
-						if( time_gap > 0 ){
-							period.css('margin-left', Math.floor(100*time_gap/total_duration).toString()+'%');
-						}
-						period.css('width', Math.floor(100*period_duration/total_duration).toString()+'%');
-						period.data('id', period_data.id);
-						period.children(".subject").text(period_data.subject.name);
-						period.children(".teachers").text(getNameString(period_data.teachers));
-						period.children(".remarks").text(period_data.remarks);
-						period.appendTo(period_container);
-						prev_time = period_data.end_time;
-					}
-					period_container.appendTo(periods_col);
-				}
-
-			}
-		}
-	}
-
 	$('body').on( 'click', '.btn-add-period', function(e){
-		var add_subject_dialog = $('body').find("#add-subject-dialog");
+		var add_subject_dialog = $('body').find("#add-period-dialog");
 		var start_time = add_subject_dialog.find(".input-start-time");
 		var end_time = add_subject_dialog.find(".input-end-time");
 		var remarks = add_subject_dialog.find(".input-remarks");
@@ -256,7 +124,7 @@ jQuery(document).ready(function($) {
     });
 
 	$('body').on( 'click', '.period', function(e){
-		var add_subject_dialog = $('body').find("#add-subject-dialog");
+		var add_subject_dialog = $('body').find("#add-period-dialog");
 		add_subject_dialog.data("new-period", false);
 		add_subject_dialog.data("id-period", $(this).data('id'));
 		var day_index = $(this).parent().parent().parent().data('index-day');
@@ -294,7 +162,7 @@ jQuery(document).ready(function($) {
 	});
 
 	$('body').on( 'click', '.btn-dlg-ok', function(e){
-		var add_subject_dialog = $('body').find("#add-subject-dialog");
+		var add_subject_dialog = $('body').find("#add-period-dialog");
 		var arr_teachers = [];
 		for(var i=0; i < teachers_control.items.length; i++){
 			arr_teachers.push({
@@ -340,7 +208,7 @@ jQuery(document).ready(function($) {
 		add_subject_dialog.modal('hide');
 	});
 	$('body').on( 'click', '.btn-dlg-cancel', function(e){
-		var add_subject_dialog = $('body').find("#add-subject-dialog");
+		var add_subject_dialog = $('body').find("#add-period-dialog");
 		add_subject_dialog.modal('hide');
 	});
 

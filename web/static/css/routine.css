@@ -1,6 +1,14 @@
-body{
-    background-color: #fff;
-    color: #424242;
+#title-block{
+    color: #727272;
+    padding-top: 16px;
+    padding-bottom: 6px;
+}
+#title-block button{
+    font-size: 1.5em;
+    margin-right: 10px;
+}
+#title-block .title{
+    font-size: 1.6em;
 }
 
 #group-select{
@@ -22,27 +30,19 @@ body{
 #group-select select option{
     padding: 10px;
 }
-
-
 #routine-block{
     padding-top: 0px;
-    background: linear-gradient(#ecf0f1 0%, #fff 240px, #fff 100%);
     font-family: "Open Sans", "Ubuntu";
+    font-weight: 300;
 }
 #routine-block .row{
     text-align: center;
-    min-height: 80px;
+    min-height: 60px;
     display: flex;
     align-items: center;
 }
-#routine-block .row:nth-child(even){
+#routine-block .row:nth-child(odd){
     background: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(236,239,241,1) 10%, rgba(236,239,241 ,1) 90%, rgba(0, 0, 0, 0) 100%);
-}
-#routine-block .row-heading{
-    font-family: "Open Sans Condensed", "Ubuntu Condensed";
-    font-size: 1.2em;
-    color: #484848;
-    font-weight: 300;
 }
 
 #routine-block .periods{
@@ -51,20 +51,32 @@ body{
     text-align: left;
 }
 
+#routine-block #title-row{
+    font-family: "Open Sans Condensed", "Ubuntu Condensed";
+    color: #e74c3c;
+    display: block;
+    min-height: auto;
+    padding-top: 20px;
+}
+
 #time-line{
     display: flex;
     align-items: center;
+    position: relative;
+    margin-left: -1%;
 }
-
 #time-line .time-stop{
     position: absolute;
     text-align: left;
 }
-
+#time-line .ghost{
+    width: 0px;
+    overflow: hidden;
+}
 .day-name{
     color: #e74c3c;
     text-transform: uppercase;
-    font-family: "Open Sans Light";
+    font-weight: 300;
     font-size: 2em;
     margin-bottom: 0px;
 }
@@ -122,67 +134,5 @@ body{
     display: none;
 }
 
-#add-subject-dialog .modal-header{
-    font-family: "Open Sans Condensed", "Ubuntu Condensed";
-    text-transform: uppercase;
-    padding: 20px 30px;
-    background-color: #e9573f;
-    color: #fff;
-}
-#add-subject-dialog .modal-body{
-    padding: 10px 50px;
-    padding-top: 30px;
-}
-#add-subject-dialog .modal-content{
-    padding-bottom: 10px;
-}
-
-#add-subject-dialog .modal-footer{
-    border: none;
-    text-align: right;
-    padding: 10px 50px;
-}
-#add-subject-dialog .modal-footer button{
-    outline: none;
-    background-color: transparent;
-    border:none;
-    font-family: "Open Sans Condensed", "Ubuntu Condensed";
-    text-transform: uppercase;
-    margin-left: 30px;
-}
-#add-subject-dialog .group-selection label{
-  display: inline-block;
-}
-.btn-dlg-ok{
-    color: #2ecc71;
-}
-.btn-dlg-ok:hover{
-    color: #27ae60;
-}
-.btn-dlg-cancel{
-    color: #e74c3c;
-}
-.btn-dlg-cancel:hover{
-    color: #c0392b;
-}
-
-.li-suggestion{
-    padding: 10px 30px!important;
-}
-.li-suggestion .email, .li-suggestion .username{
-    color: #999;
-    font-size: 0.9em;
-    line-height: 1em;
-}
-.li-suggestion .name{
-    line-height: 1em;
-    font-weight: bold;
-    color:#484848;
-}
-
-#routine-block .col-md-1{
-    width: 10%;
-}
-#routine-block .col-md-11{
-    width: 90%;
+#routine-block .container{
 }
