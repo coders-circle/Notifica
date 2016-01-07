@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.lipi.notifica" >
     <uses-permission android:name="android.permission.INTERNET"/>
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -17,6 +16,13 @@
             </intent-filter>
         </activity>
         <activity android:name="com.lipi.notifica.SubjectDetailsActivity"/>
+        <receiver android:name="com.lipi.notifica.RoutineWidgetProvider" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+                android:resource="@xml/routine_appwidget_info" />
+        </receiver>
     </application>
 
 </manifest>

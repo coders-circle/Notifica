@@ -2,7 +2,6 @@ package com.lipi.notifica;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -48,6 +47,9 @@ public class RoutineDayFragment extends Fragment{
         }
         @Override
         public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
+            if( parent.getChildCount() < 2 ){
+                return;
+            }
             int left = parent.getPaddingLeft()
                     + parent.getChildAt(0).findViewById(R.id.sub_shortname).getRight()
                     + parent.getChildAt(0).findViewById(R.id.subject).getLeft();

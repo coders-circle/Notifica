@@ -43,7 +43,6 @@ public class RoutineFragment extends Fragment {
             routine.add(Period.query(Period.class, helper, "day=?", new String[]{i+""}, null, null, "start_time"));
         }
 
-
         DaysTabsPagerAdapter adapter = new DaysTabsPagerAdapter(getChildFragmentManager());
         ViewPager viewPager = (ViewPager) getActivity().findViewById(R.id.pager_routine);
         viewPager.setAdapter(adapter);
