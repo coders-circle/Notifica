@@ -87,7 +87,7 @@ public class PeriodAdapter extends RecyclerView.Adapter<PeriodAdapter.PeriodView
 
     }
 
-    public class PeriodViewHolder extends RecyclerView.ViewHolder{
+    public class PeriodViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         protected TextView subShortName;
         protected TextView time;
         protected TextView subject;
@@ -96,11 +96,17 @@ public class PeriodAdapter extends RecyclerView.Adapter<PeriodAdapter.PeriodView
 
         public PeriodViewHolder(View v){
             super(v);
+            v.setOnClickListener(this);
             subShortName = (TextView)v.findViewById(R.id.sub_shortname);
             time = (TextView)v.findViewById(R.id.time);
             subject = (TextView)v.findViewById(R.id.subject);
             teachers = (TextView)v.findViewById(R.id.teachers);
             remarks = (TextView)v.findViewById(R.id.remarks);
+
+        }
+
+        @Override
+        public void onClick(View view) {
 
         }
     }
