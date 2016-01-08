@@ -18,7 +18,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".SubjectDetailsActivity"/>
-        <activity android:name=".SettingsActivity"/>
+        <activity android:name=".SettingsActivity" android:theme="@style/ForSettings"/>
 Se
         <receiver android:name="com.lipi.notifica.RoutineWidgetProvider" >
             <intent-filter>
