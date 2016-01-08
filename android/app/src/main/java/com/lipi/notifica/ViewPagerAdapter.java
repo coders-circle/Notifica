@@ -32,8 +32,8 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
         }
         else if(position == 1)
         {
-            PostsTabFragment postsTabFragment = new PostsTabFragment();
-            return postsTabFragment;
+            NewsfeedFragment newsfeedFragment = new NewsfeedFragment();
+            return newsfeedFragment;
         }
         else
         {

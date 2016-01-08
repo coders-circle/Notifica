@@ -8,6 +8,12 @@
     transition: 0.5s;
     font-family: "Open Sans", sans-serif;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    color: #fff;
+}
+.navigation-drawer .header{
+    background-image: url('/static/img/drawer-header-bg.jpg');
+    background-position: center;
+    background-size: contain;
 }
 .backdrop{
     display: none;
@@ -60,4 +66,21 @@
 }
 .navigation-drawer .menu hr{
     margin: 8px;
+}
+
+.user-info{
+    margin-top: 40px;
+    font-size: 0.88em;
+    color: #fff;
+    font-weight: bold;
+}
+.user-info .name{
+    margin-top: 6px;
+}
+.user-info .avatar{
+    width: 50px;
+    height: 50px;
+    padding: 6px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.6);
 }

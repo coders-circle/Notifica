@@ -10,11 +10,10 @@ import android.view.ViewGroup;
 /**
  * Created by aditya on 12/12/15.
  */
-public class PostsTabFragment extends Fragment {
-
+public class NewsfeedFragment extends Fragment {
+    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater,  @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
-        View v = inflater.inflate(R.layout.posts_tab,container,false);
-        return v;
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_newsfeed, container, false);
     }
 }
