@@ -40,4 +40,5 @@
     <color name="tabUnpressed">#99ffffff</color>
     <color name="listDivider">#d2ffffff</color>
     <color name="periodDivider">#10000000</color>
+    <color name="postDivider">@color/periodDivider</color>
 </resources>

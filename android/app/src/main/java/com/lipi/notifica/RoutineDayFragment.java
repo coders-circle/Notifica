@@ -43,7 +43,6 @@ public class RoutineDayFragment extends Fragment{
         private Drawable mDivider;
         public PeriodDivider(Context context){
             mDivider = context.getResources().getDrawable(R.drawable.divider_period);
-
         }
         @Override
         public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
