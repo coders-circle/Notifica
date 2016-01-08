@@ -1,5 +1,6 @@
 package com.lipi.notifica;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.PersistableBundle;
 import android.support.design.widget.NavigationView;
@@ -12,7 +13,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.lipi.notifica.database.Client;
 
@@ -61,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
                 Fragment selectedFragment = null;
+
                 switch (menuItem.getItemId()){
                     case R.id.news_feed:
                         selectedFragment = mNewsfeedFragment;
@@ -71,10 +72,12 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.assignment:
                         break;
                     case R.id.settings:
-                        break;
-                    default:
-                        break;
+                        drawerLayout.closeDrawers();
+                        Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+                        startActivity(intent);
+                        return false;
                 }
+
                 if( selectedFragment != null ){
                     android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                     fragmentTransaction.replace(R.id.frame_content, selectedFragment);
@@ -89,11 +92,13 @@ public class MainActivity extends AppCompatActivity {
 
         // Initializing Drawer Layout and ActionBarToggle
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer);
-        mDrawerToggle = new ActionBarDrawerToggle(this,
-                drawerLayout,toolbar,R.string.openDrawer, R.string.closeDrawer);
+        mDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,R.string.openDrawer, R.string.closeDrawer);
 
-        //Setting the actionbarToggle to drawer layout
+        // Setting the actionbarToggle to drawer layout
         drawerLayout.setDrawerListener(mDrawerToggle);
+        // Sync-ing is necessary to show hamburger icon
+        mDrawerToggle.syncState();
+
 
         if (savedInstanceState == null) {
             // start up app with News feed

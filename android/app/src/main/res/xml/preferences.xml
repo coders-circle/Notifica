@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <CheckBoxPreference
+        android:title="Be awesome"
+        android:summary="Check this and you will be awesome. Don't worry you still will be awesome if you don't check this. But not as awesome as those who do."
+        android:defaultValue="false" />
+
+    <CheckBoxPreference
+        android:title="Check me"
+        android:summary="Will you check me. Jesus will love you if you do."
+        android:defaultValue="false" />
+</PreferenceScreen>
