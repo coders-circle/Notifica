@@ -9,6 +9,8 @@ import java.util.List;
 // The SQLite database handler class
 public class DbHelper extends SQLiteOpenHelper {
 
+    public final static String[] DAYS = new String[] { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
+
     // Database name and version
     public static final String DB_NAME = "Notifica.db";
     public static final int DB_VERSION = 2;

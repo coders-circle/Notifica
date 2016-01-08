@@ -19,30 +19,7 @@ import java.util.Calendar;
 
 public class PeriodWidgetProvider extends AppWidgetProvider {
 
-    @Override
-    public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-
-        // Get all ids
-        ComponentName thisWidget = new ComponentName(context, PeriodWidgetProvider.class);
-        int[] allWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget);
-
-        for (int widgetId : allWidgetIds) {
-            RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_period);
-
-            // Register an onClickListener to launch MainActivity
-            Intent intent = new Intent(context, MainActivity.class);
-            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
-            remoteViews.setOnClickPendingIntent(R.id.widget_period_text, pendingIntent);
-
-            updateWidget(context, remoteViews);
-
-            // Tell the AppWidgetManager to perform an update on the current app widget
-            appWidgetManager.updateAppWidget(widgetId, remoteViews);
-        }
-    }
-
     public static void updateWidget(Context context, RemoteViews remoteViews) {
-        Log.d("updating", "widget");
         // Update widget
         DbHelper dbHelper = new DbHelper(context);
         Calendar cal = Calendar.getInstance();
@@ -51,7 +28,8 @@ public class PeriodWidgetProvider extends AppWidgetProvider {
         int currentDay = cal.get(Calendar.DAY_OF_WEEK) - 1;
         int day = currentDay;
 
-        Period period = Period.get(Period.class, dbHelper, "start_time>? AND day=?", new String[]{""+currentTime, ""+day}, "start_time");
+        Period current = Period.get(Period.class, dbHelper, "start_time<=? AND end_time>? AND day=?", new String[]{""+currentTime, ""+currentTime, ""+day}, "start_time");
+        Period period = Period.get(Period.class, dbHelper, "start_time>? AND day=?", new String[]{"" + currentTime, "" + day}, "start_time");
 
         int count = 0;
         while (period==null && count < 7) {
@@ -60,21 +38,66 @@ public class PeriodWidgetProvider extends AppWidgetProvider {
             count++;
         }
 
-        int remaining = 5;
+        int remaining;
 
         if (period != null) {
             remaining = period.start_time - currentTime;
-            if (day != currentDay)
+            if (count > 0)
                 remaining = 24*60 - currentTime + (count-1) * 24 + period.start_time;
 
             Subject subject = Subject.get(Subject.class, dbHelper, period.subject);
-            remoteViews.setTextViewText(R.id.widget_period_text, "Next " + subject.name + " in " + Period.intToTime(remaining));
+
+            // Show current period if exists
+            String text = "";
+            if (current != null) {
+                Subject sub = Subject.get(Subject.class, dbHelper, current.subject);
+                text += sub.name + " " + current.getStartTime() + " - " + current.getEndTime() + "\n";
+            }
+
+            // Show next period
+            text += "Next " + subject.name + " in " + Period.intToTime(remaining) + " (";
+
+            if (count == 1)
+                text += "Tomorrow ";
+            else if (count > 1) {
+                text += DbHelper.DAYS[day] + " ";
+            }
+
+            text += period.getStartTime() + " - " + period.getEndTime() + ")";
+            remoteViews.setTextViewText(R.id.widget_period_text, text);
         }
 
-        /*Intent intent = new Intent(context, PeriodWidgetBroadcastReceiver.class);
+        // Set alarm for update in next minute
+        Intent intent = new Intent(context, PeriodWidgetProvider.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
         AlarmManager alarm = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        //alarm.cancel(pendingIntent);
-        alarm.set(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() + 5000, pendingIntent);*/
+        alarm.cancel(pendingIntent);
+        alarm.set(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() + 60000, pendingIntent);
+    }
+
+
+    @Override
+    public void onReceive(Context context, Intent intent)
+    {
+        super.onReceive(context, intent);
+
+        ComponentName thisWidget = new ComponentName(context, PeriodWidgetProvider.class);
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+        int[] allWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget);
+
+        for (int widgetId : allWidgetIds) {
+
+            RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.layout_period_widget);
+
+            // Register an onClickListener to launch MainActivity
+            Intent intent1 = new Intent(context, MainActivity.class);
+            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent1, 0);
+            remoteViews.setOnClickPendingIntent(R.id.widget_period_text, pendingIntent);
+
+            updateWidget(context, remoteViews);
+
+            // Tell the AppWidgetManager to perform an update on the current app widget
+            appWidgetManager.updateAppWidget(widgetId, remoteViews);
+        }
     }
 }
