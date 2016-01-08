@@ -1,7 +1,10 @@
 package com.lipi.notifica;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,6 +70,9 @@ public class PeriodAdapter extends RecyclerView.Adapter<PeriodAdapter.PeriodView
         }
 
         holder.subShortName.setText(subShortName);
+        holder.subShortName.setBackgroundResource(R.drawable.border_circle);
+        GradientDrawable shortNameBackground = (GradientDrawable) holder.subShortName.getBackground();
+
         holder.time.setText(period.getStartTime() + " - " + period.getEndTime());
         holder.subject.setText(subject.name);
         holder.teachers.setText(teacher_str);
@@ -83,7 +89,19 @@ public class PeriodAdapter extends RecyclerView.Adapter<PeriodAdapter.PeriodView
         else{
             holder.remarks.setVisibility(View.VISIBLE);
         }
+        shortNameBackground.setColor(returnColor(subject._id));
+    }
 
+    public int returnColor(long id){
+        int rand = ((int) id)%3;
+        switch (rand){
+            case 0:
+                return Color.parseColor("#268b83");
+            case 1:
+                return Color.parseColor("#e7a403");
+            default:
+                return Color.parseColor("#e53935");
+        }
 
     }
 

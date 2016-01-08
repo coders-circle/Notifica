@@ -1,21 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-<resources>
-    <color name="colorPrimary">#F44336</color>
-    <color name="colorPrimaryDark">#D32F2F</color>
-    <color name="colorAccent">#FF4081</color>
-    <color name="tabsScrollColor">#861717</color>
-</resources>
--->
-<!--<resources>
-    <color name="colorPrimary">#2e2e2e</color>
-    <color name="colorPrimaryDark">#1e1e1e</color>
-    <color name="colorAccent">#4e94ba</color>
-    <color name="tabsPressed">#ffffff</color>
-    <color name="tabsScrollColor">#c4c4c4</color>
-    <color name="tabUnpressed">#c4c4c4</color>
-</resources>-->
-<!--
+
+<!-- The Dark One
 <resources>
     <color name="colorPrimary">#303030</color>
     <color name="colorPrimaryDark">#212121</color>
@@ -28,6 +13,8 @@
     <color name="listDivider">#d2ffffff</color>
 </resources>
 -->
+
+<!-- The Orange One
 <resources>
     <color name="colorPrimary">#F4511E</color>
     <color name="colorPrimaryDark">#D84315</color>
@@ -42,3 +29,20 @@
     <color name="periodDivider">#10000000</color>
     <color name="postDivider">@color/periodDivider</color>
 </resources>
+-->
+<resources>
+    <color name="colorPrimary">#2b2a30</color>
+    <color name="colorPrimaryDark">#232228</color>
+    <color name="colorPrimaryLight">#2e292e</color>
+    <color name="colorAccent">#da4453</color>
+    <color name="textPrimaryHeading">#ffffff</color>
+    <color name="tabsPressed">#ffffffff</color>
+    <color name="navigationPressed">#ffffffff</color>
+    <color name="navigationUnpressed">#99ffffff</color>
+    <color name="tabsScrollColor">#de3a35</color>
+    <color name="tabUnpressed">#99ffffff</color>
+    <color name="listDivider">@color/colorPrimaryLight</color>
+    <color name="periodDivider">@color/colorPrimaryLight</color>
+    <color name="postDivider">@color/periodDivider</color>
+</resources>
+
