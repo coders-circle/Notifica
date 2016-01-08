@@ -10,6 +10,12 @@ from classroom.permissions import *
 from main.search import *
 
 
+class ProfileViewSet(viewsets.ModelViewSet):
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
+    perimission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+
+
 class OrganizationViewSet(viewsets.ModelViewSet):
     serializer_class = OrganizationSerializer
     perimission_classes = (permissions.IsAuthenticatedOrReadOnly, IsAdminOrReadOnly,)

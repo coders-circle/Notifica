@@ -2,25 +2,32 @@ from rest_framework import serializers
 from classroom.models import *
 
 
+class ProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = ('avatar', )
+
+
 class OrganizationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Organization
-        fields = ('id', 'name', 'admins')
+        fields = ('id', 'name', 'admins', 'profile')
 #        read_only_fields = ('admins',)
 
 
 class DepartmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Department
-        fields = ('id', 'name', 'organization')
+        fields = ('id', 'name', 'organization', 'profile')
 
 
 class UserSerializer(serializers.ModelSerializer):
     avatar = serializers.SerializerMethodField()
+    profile = serializers.SerializerMethodField()
 
     class Meta:
         model = User
-        fields = ('id', 'first_name', 'last_name', 'username', 'password', 'email', 'avatar')
+        fields = ('id', 'first_name', 'last_name', 'username', 'password', 'email', 'profile', 'avatar')
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, data):
@@ -29,9 +36,12 @@ class UserSerializer(serializers.ModelSerializer):
         user.save()
         return user
 
+    def get_profile(self, user):
+        return UserProfile.objects.get(user__pk=user.id).profile.pk
+
     def get_avatar(self, user):
         profile = UserProfile.objects.get(user__pk=user.id)
-        return profile.avatar.url
+        return profile.profile.avatar.url
 
 
 class TeacherSerializer(serializers.ModelSerializer):
@@ -51,7 +61,7 @@ class SubjectSerializer(serializers.ModelSerializer):
 class ClassSerializer(serializers.ModelSerializer):
     class Meta:
         model = Class
-        fields = ('id', 'class_id', 'department', 'admins')
+        fields = ('id', 'class_id', 'department', 'admins', 'profile')
 #        read_only_fields = ('admins',)
 
 

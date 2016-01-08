@@ -18,3 +18,21 @@ def getStudent(user):
         return Student.objects.get(user=user)
     except:
         return None
+
+
+def get_profiles_for_user(user):
+    profile = UserProfile.objects.get(user=user)
+    result = [profile.profile]
+
+    teacher = getTeacher(user)
+    if teacher and teacher.department:
+        result = result + [teacher.department.profile, teacher.department.organization.profile]
+
+    student = getStudent(user)
+    if student:
+        cls = student.group.p_class
+        result = result + [cls.profile]
+        if cls.department:
+            result = result + [cls.department.profile, cls.department.organization.profile]
+
+    return [r.pk for r in result]

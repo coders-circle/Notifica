@@ -9,7 +9,7 @@ class PostSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Post
-        fields = ('id', 'title', 'body', 'posted_at', 'modified_at', 'posted_by', 'tags', 'num_comments')
+        fields = ('id', 'title', 'body', 'posted_at', 'modified_at', 'posted_by', 'tags', 'num_comments', 'profile')
         read_only_fields = ('posted_by', 'posted_at', 'modified_at')
 
     def get_num_comments(self, post):
