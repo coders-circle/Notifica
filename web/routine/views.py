@@ -23,52 +23,39 @@ def getGroups(groups):
 
 
 class RoutineView(View):
-
     def get(self, request):
         if not isValidUser(request.user):
             return redirect("home")
-
         r, s, e = getRoutine(request.user)
-
         context = {"days_short": days_short, "days": days, "routine": r, "start_time": s, "end_time": e}
-
         student = getStudent(request.user)
         is_admin = False
-
         if student:
             is_admin = student.user in student.group.p_class.admins.all()
             groups = Group.objects.filter(p_class__pk=student.group.p_class.pk)
             context["groups"] = groups
             context["student"] = student
-
+        context["current_page"] = "Routine"
         context["is_admin"] = is_admin
+        if( is_admin ):
+            return render(request, 'routine/routine-admin.html', context)    
         return render(request, 'routine/routine.html', context)
 
-
-
 class RoutineAdminView(View):
-
     def get(self, request):
         if not isValidUser(request.user):
             return redirect("home")
-
-        r, s, e = getRoutine(request.user)
-
-        context = {"days_short": days_short, "days": days, "routine": r, "start_time": s, "end_time": e}
-
         student = getStudent(request.user)
-
         if not student:
             redirect("routine:routine")
-
         if student.user not in student.group.p_class.admins.all():
             redirect("routine:routine")
-
+        r, s, e = getRoutine(request.user)
+        context = {"days_short": days_short, "days": days, "routine": r, "start_time": s, "end_time": e}
         groups = Group.objects.filter(p_class__pk=student.group.p_class.pk)
         context["groups"] = groups
         context["student"] = student
-
-        return render(request, 'routine/routine_admin.html', context)
+        return render(request, 'routine/routine-admin.html', context)
 
     def post(self, request):
         if not isValidUser(request.user):

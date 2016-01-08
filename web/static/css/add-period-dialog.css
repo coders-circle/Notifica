@@ -1,0 +1,57 @@
+#add-period-dialog .modal-header{
+    font-family: "Open Sans Condensed", "Ubuntu Condensed";
+    text-transform: uppercase;
+    padding: 20px 30px;
+    background-color: #e9573f;
+    color: #fff;
+}
+#add-period-dialog .modal-body{
+    padding: 10px 50px;
+    padding-top: 30px;
+}
+#add-period-dialog .modal-content{
+    padding-bottom: 10px;
+}
+
+#add-period-dialog .modal-footer{
+    border: none;
+    text-align: right;
+    padding: 10px 50px;
+}
+#add-period-dialog .modal-footer button{
+    outline: none;
+    background-color: transparent;
+    border:none;
+    font-family: "Open Sans Condensed", "Ubuntu Condensed";
+    text-transform: uppercase;
+    margin-left: 30px;
+}
+#add-period-dialog .group-selection label{
+  display: inline-block;
+}
+.btn-dlg-ok{
+    color: #2ecc71;
+}
+.btn-dlg-ok:hover{
+    color: #27ae60;
+}
+.btn-dlg-cancel{
+    color: #e74c3c;
+}
+.btn-dlg-cancel:hover{
+    color: #c0392b;
+}
+
+.li-suggestion{
+    padding: 10px 30px!important;
+}
+.li-suggestion .email, .li-suggestion .username{
+    color: #999;
+    font-size: 0.9em;
+    line-height: 1em;
+}
+.li-suggestion .name{
+    line-height: 1em;
+    font-weight: bold;
+    color:#484848;
+}

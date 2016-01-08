@@ -1,0 +1,63 @@
+.navigation-drawer{
+    position: fixed;
+    z-index: 99;
+    left: 0px;
+    width: 300px;
+    height: 100%;
+    margin-left: -350px;
+    transition: 0.5s;
+    font-family: "Open Sans", sans-serif;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+}
+.backdrop{
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 98;
+    background-color: rgba(255, 255, 255, 0.6);
+    transition: 0.5s
+}
+.navigation-drawer .header{
+    padding: 10px;
+}
+.navigation-drawer .header button{
+    font-size: 1.5em;
+    float:right;
+}
+.drawer-shown{
+    margin-left: 0px;
+}
+.navigation-drawer .header .app-title{
+    font-size: 2em;
+}
+.navigation-drawer .header button{
+    background-color: transparent;
+    border: none;
+    outline: none;
+}
+
+.navigation-drawer .menu{
+    padding-top: 8px;
+}
+.navigation-drawer .menu .item{
+    display: block;
+    width: 100%;
+    padding: 8px 16px;
+}
+.navigation-drawer .menu .item > i{
+    width: 24px;
+    margin-right: 4px;
+}
+.navigation-drawer .menu .item:hover{
+    background-color: rgba(0, 0, 0, 0.05);
+}
+.active{
+    font-weight: bold;
+    color: #da4453
+}
+.navigation-drawer .menu hr{
+    margin: 8px;
+}

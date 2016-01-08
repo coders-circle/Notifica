@@ -17,9 +17,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".SubjectDetailsActivity"/>
 
+
+        <receiver android:name=".PeriodWidgetBroadcastReceiver" android:process=":remote" />
+        <activity android:name="com.lipi.notifica.SubjectDetailsActivity"/>
+
+        <receiver android:name="com.lipi.notifica.RoutineWidgetProvider" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+                android:resource="@xml/routine_appwidget_info" />
+        </receiver>
 
         <receiver android:name=".PeriodWidgetProvider" >
             <intent-filter >
@@ -29,7 +39,6 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget_period_info" />
         </receiver>
-        <receiver android:name=".PeriodWidgetBroadcastReceiver" android:process=":remote" />
     </application>
 
 </manifest>
