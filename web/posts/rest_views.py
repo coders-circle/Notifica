@@ -4,6 +4,7 @@ from django.utils import dateparse
 from rest_framework import viewsets
 from rest_framework import permissions
 
+from classroom.utils import *
 from posts.models import *
 from posts.serializers import *
 
@@ -28,7 +29,9 @@ class PostViewSet(viewsets.ModelViewSet):
         else:
             queryset = Post.objects.all()
 
-        # TODO: Filter queryset for those posted for classes and organizations user belongs to.
+        # Filter queryset for those posted for classes and organizations user belongs to.
+        myprofiles = get_profiles_for_user(self.request.user)
+        queryset = queryset.filter(profile__pk__in=myprofiles)
 
         # recent query set for posts later than given time
         timequery = self.request.GET.get("time")

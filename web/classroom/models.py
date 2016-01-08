@@ -2,9 +2,45 @@ from django.db import models
 from django.contrib.auth.models import User, UserManager
 
 
+def getProfileObject(profile):
+    try:
+        o = Organization.objects.get(profile=profile)
+        return o, "Organization"
+    except:
+        try:
+            c = Class.objects.get(profile=profile)
+            return c, "Class"
+        except:
+            try:
+                d = Department.objects.get(profile=profile)
+                return d, "Department"
+            except:
+                try:
+                    u = UserProfile.objects.get(profile=profile)
+                    return u, "User"
+                except:
+                    return None, "None"
+
+
+class Profile(models.Model):
+    avatar = models.ImageField(upload_to='avatars/', default='avatars/ninja.png', blank=True)
+
+    def __str__(self):
+        obj, kind = getProfileObject(self)
+        if kind == "Organization" or kind =="Department":
+            return obj.name
+        elif kind == "Class":
+            return obj.class_id
+        elif kind == "User":
+            return obj.user.username
+        else:
+            return "Unknown Profile"
+
+
 class Organization(models.Model):
     name = models.CharField(max_length=50)
     admins = models.ManyToManyField(User)
+    profile = models.OneToOneField(Profile)
 
     def __str__(self):
         return self.name
@@ -13,6 +49,7 @@ class Organization(models.Model):
 class Department(models.Model):
     name = models.CharField(max_length=50)
     organization = models.ForeignKey(Organization)
+    profile = models.OneToOneField(Profile)
 
     def __str__(self):
         return self.name + ", " + str(self.organization)
@@ -53,6 +90,7 @@ class Class(models.Model):
     class_id = models.CharField(max_length=30)
     department = models.ForeignKey(Department, null=True, blank=True)
     admins = models.ManyToManyField(User)
+    profile = models.OneToOneField(Profile)
 
     class Meta:
         verbose_name_plural = "classes"
@@ -82,8 +120,23 @@ class Student(models.Model):
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, primary_key=True)
-    avatar = models.ImageField(upload_to='avatars/', default='avatars/ninja.png', blank=True)
+    profile = models.OneToOneField(Profile, blank=True)
 
+    def save(self, *args, **kwargs):
+        exist = True
+        try:
+            p = self.profile
+            if not p:
+                exist = False
+        except:
+            exist = False
+
+        if not exist:
+            p = Profile()
+            p.save()
+            self.profile = p
+        super(UserProfile, self).save(*args, **kwargs)
+        
     def __str__(self):
         return self.user.username
 

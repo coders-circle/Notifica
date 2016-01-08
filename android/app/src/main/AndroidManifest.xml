@@ -2,26 +2,42 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.lipi.notifica" >
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
-        <activity android:name="com.lipi.notifica.MainActivity" >
+
+        <activity android:name=".MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".SubjectDetailsActivity"/>
+
+
+        <receiver android:name=".PeriodWidgetBroadcastReceiver" android:process=":remote" />
         <activity android:name="com.lipi.notifica.SubjectDetailsActivity"/>
+
         <receiver android:name="com.lipi.notifica.RoutineWidgetProvider" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
             <meta-data android:name="android.appwidget.provider"
                 android:resource="@xml/routine_appwidget_info" />
+        </receiver>
+
+        <receiver android:name=".PeriodWidgetProvider" >
+            <intent-filter >
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_period_info" />
         </receiver>
     </application>
 

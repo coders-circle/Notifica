@@ -170,19 +170,17 @@ public class Model {
         return list;
     }
 
-    public static <T extends Model> T get(Class<T> myClass, SQLiteOpenHelper helper, long id) {
+    public static <T extends Model> T get(Class<T> myClass, SQLiteOpenHelper helper, String selection, String[] args, String order_by) {
         SQLiteDatabase db = helper.getReadableDatabase();
-
         Field[] fields = myClass.getFields();
-        String[] cols = new String[fields.length];
 
         // query
-        Cursor c = db.query(myClass.getSimpleName(), null, "_id=?", new String[]{id + ""}, null, null, null);
+        Cursor c = db.query(myClass.getSimpleName(), null, selection, args, null, null, order_by);
 
         // Create object from each row in the result/cursor
         c.moveToPosition(-1);
         T object = null;
-        while (c.moveToNext()) {
+        if (c.moveToNext()) {
             try {
                 object = myClass.newInstance();
 
@@ -218,6 +216,10 @@ public class Model {
         c.close();
         db.close();
         return object;
+    }
+
+    public static <T extends Model> T get(Class<T> myClass, SQLiteOpenHelper helper, long id) {
+        return get(myClass, helper, "_id=?", new String[]{id+""}, null);
     }
 
     // Get the number of rows with given query
