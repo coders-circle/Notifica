@@ -15,7 +15,6 @@
     <color name="tabsScrollColor">#c4c4c4</color>
     <color name="tabUnpressed">#c4c4c4</color>
 </resources>-->
-<!--
 <resources>
     <color name="colorPrimary">#303030</color>
     <color name="colorPrimaryDark">#212121</color>
@@ -23,11 +22,14 @@
     <color name="colorAccent">#da4453</color>
     <color name="textPrimaryHeading">#ffffff</color>
     <color name="tabsPressed">#ffffffff</color>
+    <color name="navigationUnpressed">#99000000</color>
     <color name="tabsScrollColor">#e0e0e0</color>
     <color name="tabUnpressed">#99ffffff</color>
     <color name="listDivider">#d2ffffff</color>
+    <color name="periodDivider">#10000000</color>
+    <color name="postDivider">@color/periodDivider</color>
 </resources>
--->
+<!--
 <resources>
     <color name="colorPrimary">#F4511E</color>
     <color name="colorPrimaryDark">#D84315</color>
@@ -42,3 +44,4 @@
     <color name="periodDivider">#10000000</color>
     <color name="postDivider">@color/periodDivider</color>
 </resources>
+-->
