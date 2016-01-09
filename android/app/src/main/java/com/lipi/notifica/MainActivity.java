@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.lipi.notifica.database.Client;
+import com.lipi.notifica.database.DbHelper;
 
 public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
@@ -26,12 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ActionBarDrawerToggle mDrawerToggle;
 
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
+    public void initDb() {
         // Download and get new routine
         Client client = new Client(this);
         client.getRoutine(new Client.ClientListener() {
@@ -43,6 +39,19 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("refreshing routine", "queue size: "+this.queue.size());
             }
         });
+
+        // Clean up unnecessary cache data
+        DbHelper dbHelper = new DbHelper(this);
+        dbHelper.clean();
+    }
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        initDb();
 
         // Create the fragment once
         mRoutineFragment = new RoutineFragment();

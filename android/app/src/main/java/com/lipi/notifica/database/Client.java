@@ -2,10 +2,14 @@ package com.lipi.notifica.database;
 
 import android.content.Context;
 
+import com.lipi.notifica.Utilities;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +17,7 @@ import java.util.List;
 public class Client {
 
     public static abstract class ClientListener {
-        public List<String> queue = new ArrayList<>(); // Queue of current being fetched objects
+        public List<String> queue = new ArrayList<>();  // Queue of current being fetched objects
         public abstract void refresh();
     }
 
@@ -30,7 +34,7 @@ public class Client {
         Period p = new Period(json);
         p.save(mDbHelper);
 
-        getSubject(json.getLong("subject"), clientListener);
+        getSubject(p.subject, clientListener);
         JSONArray tsJson = json.getJSONArray("teachers");
         if (tsJson != null) {
             for (int i = 0; i < tsJson.length(); ++i) {
@@ -88,6 +92,20 @@ public class Client {
         PClass c = new PClass(json);
         c.save(mDbHelper);
         // getDepartment(c.p_class);
+    }
+
+    private void addPost(JSONObject json, ClientListener clientListener) throws JSONException {
+        Post p = new Post(json);
+        p.save(mDbHelper);
+
+        addUser(json.getJSONObject("posted_by"), clientListener);
+    }
+
+    private void addComment(JSONObject json, ClientListener clientListener) throws JSONException {
+        Comment c = new Comment(json);
+        c.save(mDbHelper);
+
+        addUser(json.getJSONObject("posted_by"), clientListener);
     }
 
     // Get the routine for this user
@@ -170,7 +188,7 @@ public class Client {
         get(clientListener, "subject", id, "classroom/api/v1/subjects/" + id + "/",
                 new Callback() {
                     @Override
-                    public void callback(JSONObject json) throws JSONException{
+                    public void callback(JSONObject json) throws JSONException {
                         addSubject(json, clientListener);
                     }
                 });
@@ -229,5 +247,90 @@ public class Client {
                         addClass(json, clientListener);
                     }
                 });
+    }
+
+
+    // Get a profile
+    public void getProfile(final long id, final ClientListener clientListener) {
+
+        if (clientListener != null) {
+            if (clientListener.queue.contains("profile:"+id))
+                return;
+            clientListener.queue.add("profile:"+id);
+        }
+
+        // If profile already exists, refresh once
+        if (Profile.count(Profile.class, mDbHelper, "_id=?", new String[]{id+""}) > 0) {
+            if (clientListener != null)
+                clientListener.refresh();
+        }
+
+        // Also get new one from server and refresh again
+        NetworkHandler handler = new NetworkHandler(mContext, mUsername, mPassword, true);
+        handler.get("classroom/api/v1/profiles/" + id + "/", new NetworkHandler.NetworkListener() {
+            @Override
+            public void onComplete(NetworkHandler.Result result) {
+                if (result.success) {
+                    // Save the fetched profile
+                    try {
+                        JSONObject json = new JSONObject(result.result);
+                        if (json.has("detail") && json.getString("detail").equals("Not found."))
+                            return;
+
+                        Profile p = new Profile(json);
+                        p.save(mDbHelper);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                if (clientListener != null) {
+                    clientListener.queue.remove("profile:" + id);
+                    clientListener.refresh();
+                }
+            }
+        });
+    }
+
+    // Get posts from server, offset, count and time can be -1 if not needed
+    public void getPosts(long offset, long count, long time, final ClientListener clientListener) {
+        if (clientListener != null)
+            clientListener.queue.add("posts");
+
+        // Get posts
+        String query = "";
+        if (offset >= 0)
+            query +=  "offset="+offset;
+        if (count >= 0)
+            query += (query.equals("")?"":"&") + "count="+count;
+        if (time >= 0)
+            try {
+                query += (query.equals("")?"":"&") + "time="+ URLEncoder.encode(Utilities.formatDateTimeToIso(time), "utf-8");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+
+        NetworkHandler handler = new NetworkHandler(mContext, mUsername, mPassword, true);
+        handler.get("feed/api/v1/posts/" + (query.equals("")?"":"?"+query), new NetworkHandler.NetworkListener() {
+            @Override
+            public void onComplete(NetworkHandler.Result result) {
+                if (result.success) {
+                    // Add each post fetched from server
+                    try {
+                        JSONArray posts = new JSONArray(result.result);
+                        for (int i = 0; i < posts.length(); ++i) {
+                            addPost(posts.getJSONObject(i), clientListener);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                if (clientListener != null) {
+                    clientListener.queue.remove("posts");
+                    clientListener.refresh();
+                }
+            }
+        });
     }
 }

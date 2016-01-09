@@ -7,6 +7,7 @@ public class User extends Model {
     public String last_name;
     public String username;
     public String email;
+    public long profile;
 
     public User() {}
 
@@ -16,5 +17,6 @@ public class User extends Model {
         last_name = json.optString("last_name");
         username = json.optString("username");
         email = json.optString("email");
+        profile = json.optLong("profile");
     }
 }

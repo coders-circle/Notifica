@@ -55,7 +55,7 @@ public class PeriodWidgetProvider extends AppWidgetProvider {
             }
 
             // Show next period
-            text += "Next " + subject.name + " in " + Period.intToTime(remaining) + " (";
+            text += "Next " + subject.name + " in " + Utilities.formatMinutes(remaining) + " (";
 
             if (count == 1)
                 text += "Tomorrow ";

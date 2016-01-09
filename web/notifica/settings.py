@@ -138,6 +138,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 # Rest Framework settings
 
-# REST_FRAMEWORK = {
-#     'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.NamespaceVersioning',
-# }
+REST_FRAMEWORK = {
+#    'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.NamespaceVersioning',
+    'DATETIME_FORMAT' : "%Y-%m-%dT%H:%M:%SZ",
+}

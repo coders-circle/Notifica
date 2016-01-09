@@ -5,6 +5,7 @@ import org.json.JSONObject;
 public class PClass extends Model {
     public String class_id;
     public long department;
+    public long profile;
 
     public PClass() {}
 
@@ -12,5 +13,6 @@ public class PClass extends Model {
         _id = json.optLong("id", -1);
         class_id = json.optString("class_id");
         department = json.optLong("department");
+        profile = json.optLong("profile");
     }
 }

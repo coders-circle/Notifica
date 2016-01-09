@@ -38,12 +38,18 @@ class PostViewSet(viewsets.ModelViewSet):
         recentQueryset = Post.objects.none()
         if timequery:
             time = dateparse.parse_datetime(timequery)
-            recentQueryset = queryset.filter(modified_at=time)
+            recentQueryset = queryset.filter(modified_at__gt=time)
 
         # slice the result to desired offset:count
 
         offset = self.request.GET.get("offset")
         count = self.request.GET.get("count")
+
+        if not count and timequery:
+            if not offset:
+                return recentQueryset
+            else:
+                return recentQueryset[int(offset):]
 
         if offset:
             queryset = queryset[int(offset):]

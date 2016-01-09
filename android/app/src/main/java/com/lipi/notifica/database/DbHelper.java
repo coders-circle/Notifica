@@ -13,7 +13,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
     // Database name and version
     public static final String DB_NAME = "Notifica.db";
-    public static final int DB_VERSION = 2;
+    public static final int DB_VERSION = 4;
 
     // Create the helper object
     public DbHelper(Context context) {
@@ -33,11 +33,16 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL(new PGroup().getCreateTableSql());
         db.execSQL(new Student().getCreateTableSql());
         db.execSQL(new User().getCreateTableSql());
+        db.execSQL(new Profile().getCreateTableSql());
 
         // Routine
         db.execSQL(new Period().getCreateTableSql());
         db.execSQL(new PeriodGroup().getCreateTableSql());
         db.execSQL(new PeriodTeacher().getCreateTableSql());
+
+        // Feed
+        db.execSQL(new Post().getCreateTableSql());
+        db.execSQL(new Comment().getCreateTableSql());
     }
 
     // Destroy and re-create all tables
@@ -53,11 +58,16 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL(new PGroup().getDestroyTableSql());
         db.execSQL(new Student().getDestroyTableSql());
         db.execSQL(new User().getDestroyTableSql());
+        db.execSQL(new Profile().getDestroyTableSql());
 
         // Routine
         db.execSQL(new Period().getDestroyTableSql());
         db.execSQL(new PeriodGroup().getDestroyTableSql());
         db.execSQL(new PeriodTeacher().getDestroyTableSql());
+
+        // Feed
+        db.execSQL(new Post().getDestroyTableSql());
+        db.execSQL(new Comment().getDestroyTableSql());
 
         onCreate(db);
     }
@@ -158,5 +168,24 @@ public class DbHelper extends SQLiteOpenHelper {
             PClass.deleteAll(PClass.class, this);
         else
             PClass.delete(PClass.class, this, "_id NOT IN " + cList, null);
+    }
+
+    // Delete all profiles except 'keep' recent entries
+    public void deleteProfiles(int keep) {
+        List<Profile> profiles = Profile.getAll(Profile.class, this, "downloaded_at");
+        String plist = "(";
+        for (int i=keep;i<profiles.size(); ++i) {
+            if (i!=keep)
+                plist += ", ";
+            plist += profiles.get(i)._id;
+        }
+        plist += ")";
+        Profile.delete(Profile.class, this, "_id IN " + plist, null);
+    }
+
+    // Clean up unnecessary cache data
+    public void clean() {
+        deleteProfiles(30);
+        deleteUseless();
     }
 }

@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.lipi.notifica.database.Post;
+
 import java.util.List;
 
 /**
@@ -38,7 +40,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     public void onBindViewHolder(PostViewHolder holder, int position) {
         Post post = mPosts.get(position);
         holder.title.setText(post.title);
-        holder.content.setText(post.content);
+        holder.content.setText(post.body);
     }
 
     public class PostViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{

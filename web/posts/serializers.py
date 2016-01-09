@@ -3,6 +3,8 @@ from posts.models import *
 from classroom.serializers import UserSerializer
 
 
+datetimeformat = "%Y-%m-%d-%H-%M-%S"
+
 class PostSerializer(serializers.ModelSerializer):
     posted_by = UserSerializer(read_only=True)
     num_comments = serializers.SerializerMethodField()

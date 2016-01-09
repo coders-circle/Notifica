@@ -13,6 +13,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.lipi.notifica.database.Client;
+import com.lipi.notifica.database.DbHelper;
+import com.lipi.notifica.database.Post;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,26 +60,37 @@ public class NewsfeedFragment extends Fragment {
     // TODO: implement fetching of posts from server
     // fetch posts from the server
     private void getPosts(){
-        mPosts.clear();
-        Post testPost1 = new Post();
-        Post testPost2 = new Post();
-        Post testPost3 = new Post();
-        testPost1.title = "Hello World!";
-        testPost1.content = "OK DOOD!";
-        testPost2.title = "Yay! 2nd post";
-        testPost2.content = "some shit";
-        testPost3.title = "Saturday be tomorrow";
-        testPost3.content = "Dont go to college tomorrow, cause its saturday";
-        mPosts.add(testPost1);
-        mPosts.add(testPost2);
-        mPosts.add(testPost3);
-        refreshView();
+        // get from cache and show tehm
+        final DbHelper helper = new DbHelper(getContext());
+        changeData(Post.getAll(Post.class, helper, "modified_at"));
+        if (mAdapter != null)
+            mAdapter.notifyDataSetChanged();
+
+        // get recent ones as well
+        long time = 0;
+        if (mPosts.size() > 0)
+            time = mPosts.get(0).modified_at;
+        Client client = new Client(getContext());
+        client.getPosts(-1, -1, time, new Client.ClientListener() {
+            @Override
+            public void refresh() {
+                changeData(Post.getAll(Post.class, helper, "modified_at"));
+                refreshView();
+            }
+        });
     }
 
-    public void refreshView(){
+    public void changeData(List<Post> newPosts) {
+        mPosts.clear();
+        for (Post post: newPosts)
+            mPosts.add(post);
+
         if(mAdapter != null){
             mAdapter.notifyDataSetChanged();
         }
+    }
+
+    public void refreshView(){
         if(mSwipeRefreshLayout != null){
             mSwipeRefreshLayout.setRefreshing(false);
         }

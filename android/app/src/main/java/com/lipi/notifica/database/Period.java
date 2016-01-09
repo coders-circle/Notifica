@@ -2,6 +2,8 @@ package com.lipi.notifica.database;
 
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.lipi.notifica.Utilities;
+
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -45,17 +47,11 @@ public class Period extends Model {
         return teachers;
     }
 
-    public static String intToTime(int time) {
-        int hrs = time / 60;
-        int min = time % 60;
-        return String.format("%02d:%02d", hrs, min);
-    }
-
     public String getStartTime() {
-        return intToTime(start_time);
+        return Utilities.formatMinutes(start_time);
     }
 
     public String getEndTime() {
-        return intToTime(end_time);
+        return Utilities.formatMinutes(end_time);
     }
 }

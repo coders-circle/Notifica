@@ -118,6 +118,10 @@ public class Model {
         return query(myClass, helper, null, null, null, null, null);
     }
 
+    public static <T extends Model> List<T> getAll(Class<T> myClass, SQLiteOpenHelper helper, String order_by) {
+        return query(myClass, helper, null, null, null, null, order_by);
+    }
+
     // Get list of rows from database table with given sql query
     public static <T extends Model> List<T> query(Class<T> myClass, SQLiteOpenHelper helper, String selection, String[] args, String groupBy, String having, String orderBy) {
         SQLiteDatabase db = helper.getReadableDatabase();
