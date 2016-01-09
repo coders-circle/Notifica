@@ -62,7 +62,7 @@ public class NewsfeedFragment extends Fragment {
     private void getPosts(){
         // get from cache and show tehm
         final DbHelper helper = new DbHelper(getContext());
-        changeData(Post.getAll(Post.class, helper, "modified_at"));
+        changeData(Post.getAll(Post.class, helper, "modified_at DESC"));
         if (mAdapter != null)
             mAdapter.notifyDataSetChanged();
 
@@ -74,7 +74,7 @@ public class NewsfeedFragment extends Fragment {
         client.getPosts(-1, -1, time, new Client.ClientListener() {
             @Override
             public void refresh() {
-                changeData(Post.getAll(Post.class, helper, "modified_at"));
+                changeData(Post.getAll(Post.class, helper, "modified_at DESC"));
                 refreshView();
             }
         });
