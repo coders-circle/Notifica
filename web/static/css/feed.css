@@ -57,6 +57,8 @@ hr {
 }
 #post-block .bottom-control-container button{
     font-family: "Open Sans Condensed", "Ubuntu Condensed";
+    font-weight: 700;
+    text-transform: uppercase;
     color: #a2a2a2;
 }
 #post-block .bottom-control-container button:hover{

@@ -1,8 +1,25 @@
+#title-block{
+    background-color: #f5f5f5;
+    color: #646464;
+    padding: 30px 0px;
+}
+#title-block .links{
+    text-align: right;
+    text-transform: uppercase;
+}
+#title-block .title{
+    font-family: "Raleway";
+    font-weight: 100;
+    font-size: 4em;
+    font-weight: 100;
+}
+#title-block .extra{
+    font-size: 1.6em;
+}
+
 #signin-block{
-    padding-top: 60px;
-    padding-bottom: 40px;
+    padding-top: 20px;
     font-family: "Open Sans Light";
-    background: linear-gradient(#ecf0f1 0%, #fff 140px, #fff 100%);
 }
 
 .error{
@@ -15,7 +32,7 @@
 
 form > input[type="text"],
 form > input[type="password"]{
-    width: calc(100% - 20px);
+    width: calc(100% - 40px);
     margin:20px;
     padding: 0px 20px 10px 20px;
     border: none;
@@ -32,10 +49,11 @@ form > input[type="password"]:focus{
 
 form > input[type="submit"]{
     float: right;
-    font-family: "Open Sans Condensed";
+    font-family: "Open Sans Condensed", "Ubuntu Condensed";
+    font-weight: 700;
     text-transform: uppercase;
     margin-top: 30px;
-    margin-right: 0px;
+    margin-right: 20px;
     font-size: 1.6em;
     border: none;
     background-color: transparent;
@@ -49,20 +67,8 @@ form > input[type="submit"]:hover{
 
 #register-link{
     font-family: "Open Sans";
-    font-weight: bold;
     color: #776;
+    font-weight: normal;
     text-align: center;
-    margin-top: 150px;
-}
-
-#footer-block{
-    background: linear-gradient(#fff, #ecf0f1);
-}
-#footer-block p{
-    font-family: "Open Sans Light";
-    color: #877;
-}
-#footer-block hr{
-    border-color: #ccc;
-    border-bottom-color: transparent;
+    padding-top: 100px;
 }

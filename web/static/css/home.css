@@ -2,9 +2,63 @@
     margin-bottom: 50px;
 }
 
+#title-block{
+    background-color: #a2a2a2;
+    background-image: url('/static/img/bg-wide.jpg');
+    background-blend-mode: soft-light;
+    background-position: left;
+    background-size: cover;
+    color: #646464;
+    min-height: 340px;
+    padding: 30px 0px;
+}
+#title-block a{
+    color: #646464;
+    font-size: 1.23em;
+}
+#title-block a:hover{
+    color:#c0392b;
+}
+#title-block .links{
+    text-align: right;
+    text-transform: uppercase;
+}
+#title-block .title{
+    font-family: "Raleway";
+    font-weight: 100;
+    font-size: 7em;
+    font-weight: 100;
+}
+#title-block .extra{
+    font-size: 2em;
+}
+.container-download-btn{
+    margin-top: 50px;
+    display: block;
+    text-align: center;
+}
+.app-download-link i{
+    margin-right: 10px;
+    background-color: #e0e0e0;
+    color: #646464;
+    padding:10px;
+    border-radius: 50%;
+}
+.app-download-link{
+    color: #646464;
+    border-radius: 6px;
+    padding: 16px 50px;
+}
+#title-block .app-download-link:hover{
+    background-color: #969696;
+    color: #e0e0e0;
+}
+.app-download-link:hover i{
+    color: #646464;
+}
+
 #feature-block{
     font-family: "Open Sans";
-    background: linear-gradient(#ecf0f1 0%, #fff 140px, #fff 100%);
     font-weight: 300;
 }
 
@@ -21,15 +75,22 @@
     line-height: 1.5em;
     text-align: justify;
 }
+#feature-block{
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+#feature-block .app-download-link{
+    font-size: 1.23em;
+}
 
-#footer-block{
-    background: linear-gradient(#fff, #ecf0f1);
+.feature-img{
+    text-align: center;
+    display: block;
+    vertical-align: middle;
+    height: 100%;
 }
-#footer-block p{
-    font-weight: 300;
-    color: #877;
-}
-#footer-block hr{
-    border-color: #ccc;
-    border-bottom-color: transparent;
+.feature-img > img{
+    width: 100%;
+    display: block;
+    vertical-align: middle;
 }

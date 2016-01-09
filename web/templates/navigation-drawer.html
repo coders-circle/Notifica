@@ -12,11 +12,11 @@
         </div>
     </div>
     <div class="menu">
-        <a class="item {% if current_page == 'News feed' %}active{% endif %}" href="#"><i class="fa fa-newspaper-o"></i> News feed</a>
-        <a class="item {% if current_page == 'Routine' %}active{% endif %}" href="#"><i class="fa fa-clock-o"></i> Routine</a>
+        <a class="item {% if current_page == 'News feed' %}active{% endif %}" href="{% url 'posts:feed' %}"><i class="fa fa-newspaper-o"></i> News feed</a>
+        <a class="item {% if current_page == 'Routine' %}active{% endif %}" href="{% url 'routine:routine' %}"><i class="fa fa-clock-o"></i> Routine</a>
         <a class="item {% if current_page == 'Assignments' %}active{% endif %}" href="#"><i class="fa fa-edit"></i> Assignments</a>
         <hr>
         <a class="item" href="#"><i class="fa fa-cog"></i> Settings</a>
-        <a class="item" href="#"><i class="fa fa-sign-out"></i> Sign out</a>
+        <a class="item" href="{% url 'signout' %}"><i class="fa fa-sign-out"></i> Sign out</a>
     </div>
 </div>

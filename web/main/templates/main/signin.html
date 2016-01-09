@@ -11,9 +11,13 @@ Notifica: Sign in
 
 {% block body %}
 <div class="block" id="title-block">
-    <a href="/home">Home</a>
-    <h1>Notifica</h1>
-    <p>Sign in with your account</p>
+    <div class="container">
+        <div class="links">
+            <a href="{% url 'home' %}">Home</a>
+        </div>
+        <h1 class="title">Notifica</h1>
+        <p class="extra">Sign in with your account</p>
+    </div>
 </div>
 <div class="block" id="signin-block">
     <div class="container">
@@ -37,10 +41,5 @@ Notifica: Sign in
         </div>
     </div>
 </div>
-<div class="block" id="footer-block">
-    <hr>
-    <p>Copyright (c) 2015, All rights reserved</p>
-</div>
-
-
+{% include 'footer.html' %}
 {% endblock %}

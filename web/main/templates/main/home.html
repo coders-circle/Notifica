@@ -11,14 +11,24 @@ Notifica: Home
 
 {% block body %}
 <div class="block" id="title-block">
-    <a href="{% url 'signin' %}">Sign in</a>
-    <h1>Notifica</h1>
-    <p>A must have routine app</p>
+    <div class="container">
+        <div class="links">
+            <a href="{% url 'signin' %}">Sign in</a>
+        </div>
+        <h1 class="title">Notifica</h1>
+        <p class="extra">A must have routine app</p>
+        <div class="container-download-btn">
+            <a class="app-download-link" href="#"><i class="fa fa-download"></i> Download Android App</a>
+        </div>
+    </div>
 </div>
 <div class="block" id="feature-block">
     <div class="container">
         <div class="row">
-            <div class="col-md-6 col-md-offset-6 feature">
+            <div class="col-md-6 feature-img">
+                <img src="{% static 'img/features.jpg' %}">
+            </div>
+            <div class="col-md-6 feature">
                 <h2>Always get notified, never miss a thing</h2>
                 <p>
                     This app not only keeps you informed about your upcoming classes,
@@ -46,7 +56,12 @@ Notifica: Home
                     and provide direct, real-time feedback and suggestions and tutorials.
                 </p>
             </div>
+            <div class="col-md-6 feature-img">
+                <img src="{% static 'img/flat-room.jpg' %}">
+            </div>
         </div>
+
+
         <div class="row">
             <div class="col-md-8 col-md-offset-2 feature">
                 <h2>Time is important, save it</h2>
@@ -58,10 +73,14 @@ Notifica: Home
                 </p>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="container-download-btn">
+                    <a class="app-download-link" href="#"><i class="fa fa-download"></i> Download the Android App right now</a>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-<div class="block" id="footer-block">
-    <hr>
-    <p>Copyright (c) 2015, All rights reserved</p>
-</div>
+{% include 'footer.html' %}
 {% endblock %}
