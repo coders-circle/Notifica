@@ -28,24 +28,16 @@ class RoutineView(View):
             return redirect("home")
         r, s, e = getRoutine(request.user)
         context = {"days_short": days_short, "days": days, "routine": r, "start_time": s, "end_time": e}
-        student = getStudent(request.user)
-        is_admin = False
-        if student:
-            is_admin = student.user in student.group.p_class.admins.all()
-            groups = Group.objects.filter(p_class__pk=student.group.p_class.pk)
-            context["groups"] = groups
-            context["student"] = student
         context["current_page"] = "Routine"
-        context["is_admin"] = is_admin
-        if( is_admin ):
-            return render(request, 'routine/routine-admin.html', context)    
         return render(request, 'routine/routine.html', context)
+
 
 class RoutineAdminView(View):
     def get(self, request):
         if not isValidUser(request.user):
             return redirect("home")
-        student = getStudent(request.user)
+        students = getStudents(request.user)
+        student = None if len(students)==0 else students[0]
         if not student:
             redirect("routine:routine")
         if student.user not in student.group.p_class.admins.all():
@@ -64,7 +56,9 @@ class RoutineAdminView(View):
         self.tempSids = {}
         self.tempTids = {}
 
-        student = getStudent(request.user)
+        # TODO: Support multiple students
+        students = getStudents(request.user)
+        student = None if len(students)==0 else students[0]
         if student:
             Period.objects.all().delete()
             routine = json.loads(request.POST.get('routine'))

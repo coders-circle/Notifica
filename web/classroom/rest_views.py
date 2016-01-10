@@ -4,6 +4,7 @@ from rest_framework import viewsets
 from rest_framework import permissions
 
 from classroom.models import *
+from classroom.utils import *
 from classroom.serializers import *
 from classroom.permissions import *
 
@@ -48,6 +49,11 @@ class DepartmentViewSet(viewsets.ModelViewSet):
             queryset = Department.objects.filter(name__iregex=regexstring)
         else:
             queryset = Department.objects.all()
+
+        # get departments that user belongs to
+        user = self.request.GET.get("user")
+        if user:
+            queryset = queryset.filter(pk__in=get_departments(User.objects.get(pk=user)))
 
         return queryset
 
@@ -105,6 +111,11 @@ class ClassViewSet(viewsets.ModelViewSet):
             queryset = Class.objects.filter(class_id__iregex=regexstring)
         else:
             queryset = Class.objects.all()
+
+        # get classes that a user belongs to
+        user = self.request.GET.get("user")
+        if user:
+            queryset = queryset.filter(pk__in=get_classes(User.objects.get(pk=user)))
 
         return queryset
 

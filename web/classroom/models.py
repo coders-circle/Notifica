@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User, UserManager
 
+import random
+
 
 def getProfileObject(profile):
     try:
@@ -72,10 +74,16 @@ class Teacher(models.Model):
             return "unnamed"
 
 
+def get_random_color():
+    r = lambda: random.randint(0,255)
+    return('#%02X%02X%02X'%(r(), r(), r()))
+
+
 class Subject(models.Model):
     name = models.CharField(max_length=50)
     short_name = models.CharField(max_length=5)
     department = models.ForeignKey(Department, null=True, blank=True)
+    color = models.CharField(max_length=10, default=get_random_color)
 
     def __str__(self):
         return self.name
