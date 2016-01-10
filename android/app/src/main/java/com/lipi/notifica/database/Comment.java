@@ -18,8 +18,8 @@ public class Comment extends Model {
         _id = json.optLong("id", -1);
         post = json.optLong("post");
         body = json.optString("body");
-        posted_at = Utilities.getDateTimeFromIso(json.optString("posted_at"));
-        modified_at = Utilities.getDateTimeFromIso(json.optString("modified_at"));
+        posted_at = Utilities.getDateTimeFromIso(json.optString("posted_at")).getTime();
+        modified_at = Utilities.getDateTimeFromIso(json.optString("modified_at")).getTime();
         if (!json.isNull("posted_by"))
             posted_by = json.optJSONObject("posted_by").optLong("_id");
         num_comments = json.optLong("num_comments");

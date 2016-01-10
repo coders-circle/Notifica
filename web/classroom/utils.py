@@ -6,33 +6,62 @@ def isValidUser(user):
     return user and user.is_authenticated and user.is_active
 
 
-def getTeacher(user):
-    try:
-        return Teacher.objects.get(user=user)
-    except:
-        return None
+def getTeachers(user):
+    return Teacher.objects.filter(user=user)
 
 
-def getStudent(user):
-    try:
-        return Student.objects.get(user=user)
-    except:
-        return None
+def getStudents(user):
+    return Student.objects.filter(user=user)
 
 
-def get_profiles_for_user(user):
+def get_profiles(user):
     profile = UserProfile.objects.get(user=user)
     result = [profile.profile]
 
-    teacher = getTeacher(user)
-    if teacher and teacher.department:
-        result = result + [teacher.department.profile, teacher.department.organization.profile]
+    teachers = getTeachers(user)
+    for teacher in teachers:
+        if teacher.department:
+            result = result + [teacher.department.profile, teacher.department.organization.profile]
 
-    student = getStudent(user)
-    if student:
+    students = getStudents(user)
+    for student in students:
         cls = student.group.p_class
         result = result + [cls.profile]
         if cls.department:
             result = result + [cls.department.profile, cls.department.organization.profile]
+
+    return [r.pk for r in result]
+
+
+def get_classes(user):
+    result = []
+
+    teachers = getTeachers(user)
+    for teacher in teachers:
+        periods = Period.objects.filter(teachers__pk=teacher.pk)
+        for p in periods:
+            result.append(p.routine.p_class)
+
+    students = getStudents(user)
+    for student in students:
+        result.append(student.group.p_class)
+
+    return [r.pk for r in result]
+
+
+def get_departments(user):
+    result = []
+
+    teachers = getTeachers(user)
+    for teacher in teachers:
+        periods = Period.objects.filter(teachers__pk=teacher.pk)
+        for p in periods:
+            if p.routine.p_class.department:
+                result.append(p.routine.p_class.department)
+
+    students = getStudents(user)
+    for student in students:
+        if student.group.p_class.department:
+            result.append(student.group.p_class.department)
 
     return [r.pk for r in result]

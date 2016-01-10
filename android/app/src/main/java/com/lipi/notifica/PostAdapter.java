@@ -1,14 +1,18 @@
 package com.lipi.notifica;
 
 import android.content.Context;
+import android.graphics.drawable.GradientDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.lipi.notifica.database.DbHelper;
 import com.lipi.notifica.database.Post;
+import com.lipi.notifica.database.User;
 
 import java.util.List;
 
@@ -41,16 +45,35 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         Post post = mPosts.get(position);
         holder.title.setText(post.title);
         holder.content.setText(post.body);
+
+        DbHelper helper = new DbHelper(mContext);
+        User poster = User.get(User.class, helper, post.posted_by);
+
+        String info= "";
+        if (poster != null) {
+            if (poster.first_name.equals(""))
+                info = "posted by " + poster.username;
+            else
+                info = "posted by " + poster.first_name;
+        }
+        holder.info.setText(info);
+
+        ((GradientDrawable)holder.avatar.getBackground()).setColor(PeriodAdapter.returnColor(post.posted_by));
     }
 
     public class PostViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         protected TextView title;
         protected TextView content;
+        protected TextView info;
+        protected ImageView avatar;
+
         PostViewHolder(View v){
             super(v);
             v.setOnClickListener(this);
             title = (TextView)v.findViewById(R.id.title);
             content = (TextView)v.findViewById(R.id.content);
+            info = (TextView)v.findViewById(R.id.info);
+            avatar = (ImageView)v.findViewById(R.id.avatar);
         }
         @Override
         public void onClick(View view) {

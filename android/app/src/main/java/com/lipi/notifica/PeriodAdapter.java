@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +17,6 @@ import com.lipi.notifica.database.Subject;
 import com.lipi.notifica.database.Teacher;
 import com.lipi.notifica.database.User;
 
-/**
- * Created by fhx on 1/1/16.
- */
 public class PeriodAdapter extends RecyclerView.Adapter<PeriodAdapter.PeriodViewHolder>{
     private List<Period> mPeriods;
     private Context mContext;
@@ -64,8 +60,8 @@ public class PeriodAdapter extends RecyclerView.Adapter<PeriodAdapter.PeriodView
         String subShortName = subject.short_name;
         if(subShortName.length() == 0){
             String[] subWords = subject.name.split(" ");
-            for( int i = 0; i < subWords.length; i++){
-                subShortName += subWords[i].toUpperCase().charAt(0);
+            for (String subWord : subWords) {
+                subShortName += subWord.toUpperCase().charAt(0);
             }
         }
 
@@ -73,7 +69,8 @@ public class PeriodAdapter extends RecyclerView.Adapter<PeriodAdapter.PeriodView
         holder.subShortName.setBackgroundResource(R.drawable.border_circle);
         GradientDrawable shortNameBackground = (GradientDrawable) holder.subShortName.getBackground();
 
-        holder.time.setText(period.getStartTime() + " - " + period.getEndTime());
+        String timeText = period.getStartTime() + " - " + period.getEndTime();
+        holder.time.setText(timeText);
         holder.subject.setText(subject.name);
         holder.teachers.setText(teacher_str);
         if(teacher_str.length() == 0){
@@ -92,7 +89,7 @@ public class PeriodAdapter extends RecyclerView.Adapter<PeriodAdapter.PeriodView
         shortNameBackground.setColor(returnColor(subject._id));
     }
 
-    public int returnColor(long id){
+    public static int returnColor(long id){
         int rand = ((int) id)%3;
         switch (rand){
             case 0:

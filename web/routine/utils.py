@@ -5,20 +5,19 @@ from classroom.utils import *
 from routine.models import *
 
 def getPeriods(user):
-    qset1 = Period.objects.none()
-    qset2 = Period.objects.none()
+    qset = Period.objects.none()
 
     # for teacher, check if period contains the teacher
-    teacher = getTeacher(user)
-    if teacher:
-        qset1 = Period.objects.filter(teachers=teacher)
+    teachers = getTeachers(user)
+    for teacher in teachers:
+        qset = qset | Period.objects.filter(teachers=teacher)
 
     # for student, the class must match the routine's class
-    student = getStudent(user)
-    if student:
-        qset2 = Period.objects.filter(routine__p_class__pk=student.group.p_class.pk)
+    students = getStudents(user)
+    for student in students:
+        qset = qset | Period.objects.filter(routine__p_class__pk=student.group.p_class.pk)
 
-    return qset1 | qset2
+    return qset
 
 def getRoutine(user):
     routine = {}

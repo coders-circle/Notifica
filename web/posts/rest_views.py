@@ -30,7 +30,7 @@ class PostViewSet(viewsets.ModelViewSet):
             queryset = Post.objects.all()
 
         # Filter queryset for those posted for classes and organizations user belongs to.
-        myprofiles = get_profiles_for_user(self.request.user)
+        myprofiles = get_profiles(self.request.user)
         queryset = queryset.filter(profile__pk__in=myprofiles)
 
         # recent query set for posts later than given time

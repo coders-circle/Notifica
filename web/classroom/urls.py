@@ -17,6 +17,9 @@ router.register(r'users', rest_views.UserViewSet, base_name='user')
 
 urlpatterns = [
     url(r'^user/$', views.UserView.as_view(), name='user'),
+    url(r'^class/(?P<id>\d+)/$', views.ClassView.as_view(), name='class'),
+    url(r'^department/(?P<id>\d+)/$', views.DepartmentView.as_view(), name='department'),
+    url(r'^organization/(?P<id>\d+)/$', views.OrganizationView.as_view(), name='organization'),
 
     url(r'^api/v1/', include(router.urls)),
 ]

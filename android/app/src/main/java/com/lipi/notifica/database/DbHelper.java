@@ -168,6 +168,9 @@ public class DbHelper extends SQLiteOpenHelper {
             PClass.deleteAll(PClass.class, this);
         else
             PClass.delete(PClass.class, this, "_id NOT IN " + cList, null);
+
+
+        // TODO: Users
     }
 
     // Delete all profiles except 'keep' recent entries
