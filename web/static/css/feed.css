@@ -90,7 +90,7 @@ hr {
 }
 .userpost .info{
     font-size: 0.88em;
-    color: #bababa;
+    color: #969696;
 }
 .userpost .content{
     padding: 20px 50px;
@@ -123,7 +123,7 @@ hr {
 #news-block .news{
     margin-bottom: 5px;
     padding: 6px 16px;
-    color: #a2a2a2;
+    color: #727272;
     background-color: #fff;
     box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.1);
 }

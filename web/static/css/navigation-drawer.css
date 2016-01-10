@@ -62,7 +62,7 @@
 }
 .active{
     font-weight: bold;
-    color: #da4453
+    color: #c0392b;
 }
 .navigation-drawer .menu hr{
     margin: 8px;
