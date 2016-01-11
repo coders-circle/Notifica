@@ -42,7 +42,7 @@ class RoutineAdminView(View):
             redirect("routine:routine")
         if student.user not in student.group.p_class.admins.all():
             redirect("routine:routine")
-        r = getRoutine(request.user)
+        r = getRoutineForAdmin(request.user)
         context = {"days_short": days_short, "days": days, "routine": r}
         groups = Group.objects.filter(p_class__pk=student.group.p_class.pk)
         context["groups"] = groups

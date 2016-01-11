@@ -13,7 +13,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
     // Database name and version
     public static final String DB_NAME = "Notifica.db";
-    public static final int DB_VERSION = 4;
+    public static final int DB_VERSION = 5;
 
     // Create the helper object
     public DbHelper(Context context) {

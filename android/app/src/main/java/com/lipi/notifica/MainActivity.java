@@ -39,13 +39,13 @@ public class MainActivity extends AppCompatActivity {
             // When it is zero, it means everything is downloaded completely.
             @Override
             public void refresh() {
-                Log.d("refreshing routine", "queue size: "+this.queue.size());
+                Log.d("refreshing routine", "queue size: " + this.queue.size());
+
+                // Clean up unnecessary cache data
+                DbHelper dbHelper = new DbHelper(MainActivity.this);
+                dbHelper.clean();
             }
         });
-
-        // Clean up unnecessary cache data
-        DbHelper dbHelper = new DbHelper(this);
-        dbHelper.clean();
     }
 
 
