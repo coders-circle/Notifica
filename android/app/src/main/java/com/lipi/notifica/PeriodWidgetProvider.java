@@ -25,8 +25,7 @@ public class PeriodWidgetProvider extends AppWidgetProvider {
         Calendar cal = Calendar.getInstance();
         int currentTime = cal.get(Calendar.HOUR_OF_DAY) * 60 + cal.get(Calendar.MINUTE);
 
-        int currentDay = cal.get(Calendar.DAY_OF_WEEK) - 1;
-        int day = currentDay;
+        int day = cal.get(Calendar.DAY_OF_WEEK) - 1;
 
         Period current = Period.get(Period.class, dbHelper, "start_time<=? AND end_time>? AND day=?", new String[]{""+currentTime, ""+currentTime, ""+day}, "start_time");
         Period period = Period.get(Period.class, dbHelper, "start_time>? AND day=?", new String[]{"" + currentTime, "" + day}, "start_time");
@@ -91,8 +90,9 @@ public class PeriodWidgetProvider extends AppWidgetProvider {
 
             // Register an onClickListener to launch MainActivity
             Intent intent1 = new Intent(context, MainActivity.class);
-            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent1, 0);
-            remoteViews.setOnClickPendingIntent(R.id.widget_period_text, pendingIntent);
+            intent1.putExtra("start_page", R.id.routine);
+            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
+            remoteViews.setOnClickPendingIntent(R.id.widget_period, pendingIntent);
 
             updateWidget(context, remoteViews);
 

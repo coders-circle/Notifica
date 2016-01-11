@@ -159,6 +159,10 @@ class StudentViewSet(viewsets.ModelViewSet):
         else:
             queryset = Student.objects.all()
 
+        p_class = self.request.GET.get("class")
+        if p_class:
+            queryset = queryset.filter(group__p_class__pk=p_class)
+
         return queryset
 
 

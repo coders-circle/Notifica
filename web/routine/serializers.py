@@ -12,3 +12,9 @@ class PeriodSerializer(serializers.ModelSerializer):
     class Meta:
         model = Period
         fields = ('id', 'groups', 'routine', 'subject', 'teachers', 'period_type', 'start_time', 'end_time', 'day', 'remarks')
+
+
+class ElectiveSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Elective
+        fields = ('id', 'groups', 'routine', 'subject', 'teachers', 'period_type', 'start_time', 'end_time', 'day', 'remarks', 'students')

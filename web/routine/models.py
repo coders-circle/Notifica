@@ -46,3 +46,10 @@ class Period(models.Model):
 
     class Meta:
         ordering = ["day", "start_time"]
+
+
+class Elective(Period):
+    students = models.ManyToManyField(Student, blank=True)
+
+    class Meta:
+        ordering = ["day", "start_time"]

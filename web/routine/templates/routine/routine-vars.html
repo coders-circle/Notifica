@@ -9,6 +9,8 @@
                 remarks:"{{p.remarks}}",
                 start_time:{{p.start_time}},
                 end_time:{{p.end_time}},
+                is_elective:{% if p.is_elective %}true{%else%}false{%endif%},
+                {% if p.is_elective %} students: [{% for s in p.students %}{name: "{{s.user.first_name}} {{s.user.last_name}}", id:"{{s.id}}"}, {%endfor%}], {% endif %}
                 groups:[{% for group in p.groups.all %}{name: "{{group}}", id: "{{group.id}}"},{% endfor %}]
             },{% endfor %}],{% endfor %}];
     var group_list = [{% for group in groups.all %}{id: "{{ group.id }}",name: "{{ group }}"},{% endfor %}];

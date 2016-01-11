@@ -5,6 +5,7 @@ import android.content.res.Configuration;
 import android.os.PersistableBundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -26,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
     private NewsfeedFragment mNewsfeedFragment;
 
     private ActionBarDrawerToggle mDrawerToggle;
+
+    NavigationView.OnNavigationItemSelectedListener mNavigationItemSelectedListener;
 
     public void initDb() {
         // Download and get new routine
@@ -64,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
 
         //Setting Navigation View Item Selected Listener to handle the item click of the navigation menu
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+        mNavigationItemSelectedListener = new NavigationView.OnNavigationItemSelectedListener() {
 
             // This method will trigger on item Click of navigation menu
             @Override
@@ -88,16 +91,14 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 if( selectedFragment != null ){
-                    android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(R.id.frame_content, selectedFragment);
-                    fragmentTransaction.commit();
-                    if(menuItem.isChecked()) menuItem.setChecked(false);
-                    else menuItem.setChecked(true);
+                    getSupportFragmentManager().beginTransaction().replace(R.id.frame_content, selectedFragment).commit();
+                    menuItem.setChecked(true);
                     drawerLayout.closeDrawers();
                 }
                 return true;
             }
-        });
+        };
+        navigationView.setNavigationItemSelectedListener(mNavigationItemSelectedListener);
 
         // Initializing Drawer Layout and ActionBarToggle
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer);
@@ -105,17 +106,9 @@ public class MainActivity extends AppCompatActivity {
 
         // Setting the actionbarToggle to drawer layout
         drawerLayout.setDrawerListener(mDrawerToggle);
+
         // Sync-ing is necessary to show hamburger icon
         mDrawerToggle.syncState();
-
-
-        if (savedInstanceState == null) {
-            // start up app with News feed
-            android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.frame_content, mNewsfeedFragment);
-            fragmentTransaction.commit();
-            navigationView.getMenu().findItem(R.id.news_feed).setChecked(true);
-        }
     }
 
     @Override
@@ -127,7 +120,27 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        // Pass any configuration change to the drawer toggles
         mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return mDrawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        // Start from new feed page by default
+        int startPage = R.id.news_feed;
+        // Start from intended page if passed through intent
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            startPage = extras.getInt("start_page", R.id.news_feed);
+        }
+
+        mNavigationItemSelectedListener.onNavigationItemSelected(navigationView.getMenu().findItem(startPage));
+
     }
 }
