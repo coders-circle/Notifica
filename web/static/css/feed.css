@@ -146,14 +146,12 @@ hr {
     margin-bottom: 30px;
 }
 #quick-links-block .title{
-    text-transform: uppercase;
-    font-weight: bold;
     font-size: 0.88em;
     margin-bottom: 10px;
-    color: #969696;
 }
 .card{
     background-color: #fff;
+    color: #646464;
     box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.2);
     padding: 10px 20px;
     margin: 4px 0px;
@@ -166,8 +164,10 @@ hr {
     float:left;
     margin-right: 20px;
 }
-.card-class .info{
-
+.card-class .info .name{
+    font-family: "Open Sans";
+    font-weight: 400;
+    font-size: 1.23em;
 }
 .card-department .info .organization,
 .card-class .info .department{
