@@ -140,3 +140,38 @@ hr {
     background-blend-mode: multiply;
     background-color: #fff;
 }
+
+
+.block-list{
+    margin-bottom: 30px;
+}
+#quick-links-block .title{
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 0.88em;
+    margin-bottom: 10px;
+    color: #969696;
+}
+.card{
+    background-color: #fff;
+    box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.2);
+    padding: 10px 20px;
+    margin: 4px 0px;
+}
+.card-class .avatar{
+    width: 40px;
+    height: 40px;
+    background-color: #e0e0e0;
+    border-radius: 50%;
+    float:left;
+    margin-right: 20px;
+}
+.card-class .info{
+
+}
+.card-department .info .organization,
+.card-class .info .department{
+    font-size: 0.88em;
+    font-weight: bold;
+    color: #a2a2a2;
+}

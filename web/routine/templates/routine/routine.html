@@ -6,7 +6,7 @@
 {% block head %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/routine.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'css/navigation-drawer.css' %}">
-<script src="{% static 'js/routine-renderer.js' %}"></script>
+<script src="{% static 'js/routine.js' %}"></script>
 <script src="{% static 'js/navigation-drawer.js' %}"></script>
 {% include 'routine/routine-vars.html' %}
 {% endblock %}
@@ -17,7 +17,7 @@
 <div class="block" id="title-block">
     <div class="container">
         <button class="input-neat" id="drawer-open-btn">
-            <i class="fa fa-bars"></i>=
+            <i class="fa fa-bars"></i>
         </button>
         <span class="title">Weekly Routine</span>
     </div>
