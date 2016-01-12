@@ -26,8 +26,8 @@ class RoutineView(View):
     def get(self, request):
         if not isValidUser(request.user):
             return redirect("home")
-        r, s, e = getRoutine(request.user)
-        context = {"days_short": days_short, "days": days, "routine": r, "start_time": s, "end_time": e}
+        r = getRoutine(request.user)
+        context = {"days_short": days_short, "days": days, "routine": r}
         context["current_page"] = "Routine"
         return render(request, 'routine/routine.html', context)
 
@@ -42,8 +42,8 @@ class RoutineAdminView(View):
             redirect("routine:routine")
         if student.user not in student.group.p_class.admins.all():
             redirect("routine:routine")
-        r, s, e = getRoutine(request.user)
-        context = {"days_short": days_short, "days": days, "routine": r, "start_time": s, "end_time": e}
+        r = getRoutineForAdmin(request.user)
+        context = {"days_short": days_short, "days": days, "routine": r}
         groups = Group.objects.filter(p_class__pk=student.group.p_class.pk)
         context["groups"] = groups
         context["student"] = student
@@ -66,7 +66,11 @@ class RoutineAdminView(View):
 
             for d, day in enumerate(routine):
                 for period in day:
-                    p = Period()
+                    is_elective = "is_elective" in period and period["is_elective"]
+                    if is_elective:
+                        p = Elective()
+                    else:
+                        p = Period()
                     p.routine = r
                     p.subject = self.getSubject(period["subject"])
                     p.start_time = period["start_time"]
@@ -75,6 +79,11 @@ class RoutineAdminView(View):
                     p.remarks = period["remarks"]
                     p.save()
                     p.teachers.add(*self.getTeachers(period["teachers"]))
+
+                    if is_elective:
+                        # TODO: Support students of this class only
+                        p.students.add(*self.getStudents(period["students"]))
+
                     if "groups" in period:
                         p.groups.add(*getGroups(period["groups"]))
             r.save()
@@ -110,3 +119,11 @@ class RoutineAdminView(View):
             else:
                 ts.append(Teacher.objects.get(pk=tid))
         return ts
+
+
+    def getStudents(self, students):
+        ss = []
+        for s in students:
+            sid = int(s["id"])
+            ss.append(Student.objects.get(sid))
+        return ss

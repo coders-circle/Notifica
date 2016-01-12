@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -86,7 +87,11 @@ public class PeriodAdapter extends RecyclerView.Adapter<PeriodAdapter.PeriodView
         else{
             holder.remarks.setVisibility(View.VISIBLE);
         }
-        shortNameBackground.setColor(returnColor(subject._id));
+
+        shortNameBackground.setColor(
+                //returnColor(subject._id)
+                Color.parseColor(subject.color)
+        );
     }
 
     public static int returnColor(long id){

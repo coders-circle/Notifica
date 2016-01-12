@@ -116,7 +116,8 @@ public class Client {
             clientListener.queue.add("routine");
         }
 
-        NetworkHandler handler = new NetworkHandler(mContext, mUsername, mPassword, true);
+        // Get periods
+        final NetworkHandler handler = new NetworkHandler(mContext, mUsername, mPassword, true);
         handler.get("routine/api/v1/periods/", new NetworkHandler.NetworkListener() {
             @Override
             public void onComplete(NetworkHandler.Result result) {
@@ -137,10 +138,30 @@ public class Client {
                     }
                 }
 
-                if (clientListener != null) {
-                    clientListener.queue.remove("routine");
-                    clientListener.refresh();
-                }
+                // also get the electives
+                handler.get("routine/api/v1/electives/", new NetworkHandler.NetworkListener() {
+                    @Override
+                    public void onComplete(NetworkHandler.Result result) {
+                        if (result.success) {
+                            // Add each elective fetched from server
+                            try {
+                                JSONArray periods = new JSONArray(result.result);
+                                for (int i = 0; i < periods.length(); ++i) {
+                                    JSONObject json = periods.getJSONObject(i);
+
+                                    addPeriod(json, clientListener);
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                        if (clientListener != null) {
+                            clientListener.queue.remove("routine");
+                            clientListener.refresh();
+                        }
+                    }
+                });
             }
         });
     }
