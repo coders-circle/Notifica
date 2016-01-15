@@ -1,6 +1,9 @@
 package com.lipi.notifica.database;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Log;
 
 import com.lipi.notifica.Utilities;
 
@@ -8,7 +11,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
@@ -80,6 +86,8 @@ public class Client {
     private void addUser(JSONObject json, ClientListener clientListener) {
         User u = new User(json);
         u.save(mDbHelper);
+
+        getProfile(u.profile, clientListener);
     }
 
     private void addGroup(JSONObject json, ClientListener clientListener) {
@@ -271,6 +279,9 @@ public class Client {
     }
 
 
+    private static class TempClass {
+        public Object object;
+    }
     // Get a profile
     public void getProfile(final long id, final ClientListener clientListener) {
 
@@ -280,14 +291,17 @@ public class Client {
             clientListener.queue.add("profile:"+id);
         }
 
+        final TempClass oldAvatar = new TempClass();
+        oldAvatar.object = null;
         // If profile already exists, refresh once
         if (Profile.count(Profile.class, mDbHelper, "_id=?", new String[]{id+""}) > 0) {
+            oldAvatar.object = Profile.get(Profile.class, mDbHelper, id).avatar_data;
             if (clientListener != null)
                 clientListener.refresh();
         }
 
         // Also get new one from server and refresh again
-        NetworkHandler handler = new NetworkHandler(mContext, mUsername, mPassword, true);
+        final NetworkHandler handler = new NetworkHandler(mContext, mUsername, mPassword, true);
         handler.get("classroom/api/v1/profiles/" + id + "/", new NetworkHandler.NetworkListener() {
             @Override
             public void onComplete(NetworkHandler.Result result) {
@@ -298,8 +312,27 @@ public class Client {
                         if (json.has("detail") && json.getString("detail").equals("Not found."))
                             return;
 
-                        Profile p = new Profile(json);
+                        // Also save the avatar of the profile
+                        final Profile p = new Profile(json);
+                        if (oldAvatar.object != null)
+                            p.avatar_data = (byte[])oldAvatar.object;
                         p.save(mDbHelper);
+
+                        if (clientListener != null)
+                            clientListener.queue.add("profile_avatar:" + p.avatar);
+
+                        handler.getImage(p.avatar, new NetworkHandler.NetworkListener() {
+                            @Override
+                            public void onComplete(NetworkHandler.Result result) {
+                                p.setAvatar(((NetworkHandler.ImageResult) result).bitmap);
+                                p.save(mDbHelper);
+                                if (clientListener != null) {
+                                    clientListener.queue.remove("profile_avatar:" + p.avatar);
+                                    clientListener.refresh();
+                                }
+                            }
+                        });
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

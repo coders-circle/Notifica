@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +24,7 @@ import java.util.List;
 /**
  * Created by aditya on 12/12/15.
  */
-public class NewsfeedFragment extends Fragment {
+public class NewsFeedFragment extends Fragment {
     private RecyclerView.Adapter mAdapter;
     private SwipeRefreshLayout mSwipeRefreshLayout;
 
@@ -60,14 +61,22 @@ public class NewsfeedFragment extends Fragment {
     // TODO: implement fetching of posts from server
     // fetch posts from the server
     private void getPosts(){
-        // get from cache and show tehm
+        // get from cache and show them
         final DbHelper helper = new DbHelper(getContext());
         changeData(Post.getAll(Post.class, helper, "modified_at DESC"));
         if (mAdapter != null)
             mAdapter.notifyDataSetChanged();
 
         // get recent ones as well
-        long time = 0;
+        Client client = new Client(getContext());
+        client.getPosts(-1, 30, -1, new Client.ClientListener() {
+            @Override
+            public void refresh() {
+                changeData(Post.getAll(Post.class, helper, "modified_at DESC"));
+                refreshView();
+            }
+        });
+        /*long time = 0;
         if (mPosts.size() > 0)
             time = mPosts.get(0).modified_at;
         Client client = new Client(getContext());
@@ -77,7 +86,7 @@ public class NewsfeedFragment extends Fragment {
                 changeData(Post.getAll(Post.class, helper, "modified_at DESC"));
                 refreshView();
             }
-        });
+        });*/
     }
 
     public void changeData(List<Post> newPosts) {

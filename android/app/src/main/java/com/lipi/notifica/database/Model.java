@@ -42,6 +42,9 @@ public class Model {
                 case "double":
                     sqlType = "REAL";
                     break;
+                case "byte[]":
+                    sqlType = "BLOB";
+                    break;
             }
 
             if (!sqlType.equals("")) {
@@ -100,6 +103,9 @@ public class Model {
                             break;
                         case "double":
                             values.put(field.getName(), field.getDouble(this));
+                            break;
+                        case "byte[]":
+                            values.put(field.getName(), (byte[])field.get(this));
                             break;
                     }
                 } catch (IllegalAccessException e) {
@@ -160,6 +166,9 @@ public class Model {
                         case "double":
                             field.setDouble(object, c.getDouble(c.getColumnIndex(field.getName())));
                             break;
+                        case "byte[]":
+                            field.set(object, c.getBlob(c.getColumnIndex(field.getName())));
+                            break;
                     }
                 }
 
@@ -209,6 +218,9 @@ public class Model {
                             break;
                         case "double":
                             field.setDouble(object, c.getDouble(c.getColumnIndex(field.getName())));
+                            break;
+                        case "byte[]":
+                            field.set(object, c.getBlob(c.getColumnIndex(field.getName())));
                             break;
                     }
                 }

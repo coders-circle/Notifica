@@ -1,8 +1,11 @@
 package com.lipi.notifica.database;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Base64;
+import android.util.Log;
 
 import com.lipi.notifica.R;
 
@@ -27,6 +30,10 @@ public class NetworkHandler {
         public int code;
 
         public Result() {}
+    }
+
+    public static class ImageResult extends  Result {
+        public Bitmap bitmap;
     }
 
     public final static String GET_METHOD = "GET";
@@ -137,6 +144,38 @@ public class NetworkHandler {
         }
     }
 
+    private class AsyncRequestImage extends AsyncTask<Void, Void, Void> {
+        private final String mAddress;
+        private final ImageResult mResult = new ImageResult();
+        private final NetworkListener mNetworkListener;
+
+        public AsyncRequestImage(NetworkListener networkListener, String address) {
+            mAddress = address;
+            mNetworkListener = networkListener;
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            try {
+                URL url = new URL(mAddress);
+                mResult.bitmap = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+                mResult.code = HttpURLConnection.HTTP_OK;
+                mResult.success = true;
+            } catch (IOException e) {
+                mResult.code = HttpURLConnection.HTTP_BAD_REQUEST;
+                mResult.success = false;
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void nothing) {
+            if (mNetworkListener != null)
+                mNetworkListener.onComplete(mResult);
+        }
+    }
+
 
     // Helper async request methods for GET, POST, PUT, DELETE
 
@@ -154,6 +193,12 @@ public class NetworkHandler {
 
     public void delete(String address, NetworkListener networkListener) {
         new AsyncRequest(networkListener, address, DELETE_METHOD, null).execute();
+    }
+
+
+
+    public void getImage(String address, NetworkListener listener) {
+        new AsyncRequestImage(listener, address).execute();
     }
 
 }

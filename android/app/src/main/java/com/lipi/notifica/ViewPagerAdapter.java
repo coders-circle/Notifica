@@ -32,8 +32,8 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
         }
         else if(position == 1)
         {
-            NewsfeedFragment newsfeedFragment = new NewsfeedFragment();
-            return newsfeedFragment;
+            NewsFeedFragment newsFeedFragment = new NewsFeedFragment();
+            return newsFeedFragment;
         }
         else
         {
