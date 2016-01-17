@@ -5,7 +5,6 @@ import android.content.res.Configuration;
 import android.os.PersistableBundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -13,18 +12,16 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.lipi.notifica.database.Client;
 import com.lipi.notifica.database.DbHelper;
 
 public class MainActivity extends AppCompatActivity {
-    private Toolbar toolbar;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
 
     private RoutineFragment mRoutineFragment;
-    private NewsfeedFragment mNewsfeedFragment;
+    private NewsFeedFragment mNewsFeedFragment;
 
     private ActionBarDrawerToggle mDrawerToggle;
 
@@ -58,9 +55,9 @@ public class MainActivity extends AppCompatActivity {
 
         // Create the fragment once
         mRoutineFragment = new RoutineFragment();
-        mNewsfeedFragment = new NewsfeedFragment();
+        mNewsFeedFragment = new NewsFeedFragment();
 
-        toolbar = (Toolbar) findViewById(R.id.tool_bar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
 
         //Initializing NavigationView
@@ -76,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
 
                 switch (menuItem.getItemId()){
                     case R.id.news_feed:
-                        selectedFragment = mNewsfeedFragment;
+                        selectedFragment = mNewsFeedFragment;
                         break;
                     case R.id.routine:
                         selectedFragment = mRoutineFragment;

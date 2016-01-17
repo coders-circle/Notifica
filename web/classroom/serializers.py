@@ -5,7 +5,7 @@ from classroom.models import *
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
-        fields = ('avatar', )
+        fields = ('id', 'avatar', )
 
 
 class OrganizationSerializer(serializers.ModelSerializer):

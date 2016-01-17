@@ -1,6 +1,6 @@
 <script>
     var periodsCount=0;
-    var user_group_id = "{{ student.group.id }}";
+    var user_group_id = "{{ user.group.id }}";
     var routine = [];
     var routine_all = [{% for day, periods in routine.items %}[{% for p in periods %}{
                 id: periodsCount++,

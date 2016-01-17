@@ -90,7 +90,7 @@ hr {
 }
 .userpost .info{
     font-size: 0.88em;
-    color: #bababa;
+    color: #969696;
 }
 .userpost .content{
     padding: 20px 50px;
@@ -123,7 +123,7 @@ hr {
 #news-block .news{
     margin-bottom: 5px;
     padding: 6px 16px;
-    color: #a2a2a2;
+    color: #727272;
     background-color: #fff;
     box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.1);
 }
@@ -139,4 +139,39 @@ hr {
     background-image: url('/static/img/loading-posts.gif');
     background-blend-mode: multiply;
     background-color: #fff;
+}
+
+
+.block-list{
+    margin-bottom: 30px;
+}
+#quick-links-block .title{
+    font-size: 0.88em;
+    margin-bottom: 10px;
+}
+.card{
+    background-color: #fff;
+    color: #646464;
+    box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.2);
+    padding: 10px 20px;
+    margin: 4px 0px;
+}
+.card-class .avatar{
+    width: 40px;
+    height: 40px;
+    background-color: #e0e0e0;
+    border-radius: 50%;
+    float:left;
+    margin-right: 20px;
+}
+.card-class .info .name{
+    font-family: "Open Sans";
+    font-weight: 400;
+    font-size: 1.23em;
+}
+.card-department .info .organization,
+.card-class .info .department{
+    font-size: 0.88em;
+    font-weight: bold;
+    color: #a2a2a2;
 }

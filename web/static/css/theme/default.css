@@ -6,7 +6,7 @@ body {
 a, a:focus, a:active {
     font-family: "Open Sans Condensed", "Ubuntu Condensed";
     font-weight: 700;
-    color: #a2a2a2;
+    color: #808080;
     transition: 0.5s;
 }
 a:hover {

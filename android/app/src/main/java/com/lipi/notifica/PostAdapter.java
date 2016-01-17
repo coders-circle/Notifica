@@ -12,13 +12,11 @@ import android.widget.TextView;
 
 import com.lipi.notifica.database.DbHelper;
 import com.lipi.notifica.database.Post;
+import com.lipi.notifica.database.Profile;
 import com.lipi.notifica.database.User;
 
 import java.util.List;
 
-/**
- * Created by fhx on 1/8/16.
- */
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder> {
     private List<Post> mPosts;
     private Context mContext;
@@ -51,14 +49,18 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
         String info= "";
         if (poster != null) {
+            Profile posterProfile = Profile.get(Profile.class, helper, poster.profile);
             if (poster.first_name.equals(""))
                 info = "posted by " + poster.username;
             else
                 info = "posted by " + poster.first_name;
-        }
-        holder.info.setText(info);
 
+            if (posterProfile != null)
+            if (posterProfile.getAvatar() != null)
+                holder.avatar.setImageBitmap(posterProfile.getAvatar());
+        }
         ((GradientDrawable)holder.avatar.getBackground()).setColor(PeriodAdapter.returnColor(post.posted_by));
+        holder.info.setText(info);
     }
 
     public class PostViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{

@@ -8,21 +8,25 @@ function renderRoutine(){
     renderPeriods();
 }
 function filterRoutine(group_id){
-    routine = [];
-    for(var i=0; i<routine_all.length; i++){
-        routine.push([]);
-    }
-    for(var i=0; i<routine_all.length; i++){
-        for(var j=0; j<routine_all[i].length; j++){
-            if(routine_all[i][j].groups.length == 0){
-                routine[i].push(routine_all[i][j]);
-            }
-            else if($.grep(routine_all[i][j].groups, function(item){
-                return item.id == group_id;
-            }).length != 0){
-                routine[i].push(routine_all[i][j]);
+    if(group_id != null && group_id != ""){
+        routine = [];
+        for(var i=0; i<routine_all.length; i++){
+            routine.push([]);
+        }
+        for(var i=0; i<routine_all.length; i++){
+            for(var j=0; j<routine_all[i].length; j++){
+                if(routine_all[i][j].groups.length == 0){
+                    routine[i].push(routine_all[i][j]);
+                }
+                else if($.grep(routine_all[i][j].groups, function(item){
+                    return item.id == group_id;
+                }).length != 0){
+                    routine[i].push(routine_all[i][j]);
+                }
             }
         }
+    } else {
+        routine = routine_all;
     }
 }
 function getNameString(arr){
