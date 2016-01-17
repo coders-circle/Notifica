@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.settings:
                         drawerLayout.closeDrawers();
                         Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
-                        startActivity(intent);
+                        startActivityForResult(intent, 1);
                         return false;
                 }
 
@@ -138,6 +138,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
         mNavigationItemSelectedListener.onNavigationItemSelected(navigationView.getMenu().findItem(startPage));
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Settings activity telling us to close
+        if(requestCode == 1 && resultCode == -1)
+            finish();
     }
 }

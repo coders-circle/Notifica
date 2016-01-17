@@ -13,12 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
-/**
- * Created by fhx on 1/1/16.
- */
 public class RoutineDayFragment extends Fragment{
-    private RecyclerView.Adapter mAdapter;
-    private int mDay;
 
     @Nullable
     @Override
@@ -33,9 +28,9 @@ public class RoutineDayFragment extends Fragment{
         layoutManager = new LinearLayoutManager(rootView.getContext());
         recyclerView.setLayoutManager(layoutManager);
         Bundle args = getArguments();
-        mDay = args.getInt("day");
-        mAdapter = new PeriodAdapter(getActivity(), ((RoutineFragment)getParentFragment()).routine.get(mDay));
-        recyclerView.setAdapter(mAdapter);
+        int day = args.getInt("day");
+        RecyclerView.Adapter adapter = new PeriodAdapter(getActivity(), ((RoutineFragment) getParentFragment()).routine.get(day));
+        recyclerView.setAdapter(adapter);
         return rootView;
     }
 

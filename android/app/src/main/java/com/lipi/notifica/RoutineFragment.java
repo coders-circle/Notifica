@@ -15,6 +15,7 @@ import com.lipi.notifica.database.*;
 import com.lipi.notifica.database.Period;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 
@@ -58,6 +59,8 @@ public class RoutineFragment extends Fragment {
         });
 
         tabs.setViewPager(viewPager);
+
+        viewPager.setCurrentItem(Calendar.getInstance().get(Calendar.DAY_OF_WEEK) - 1);
 
         //TabLayout tabLayout = (TabLayout) getActivity().findViewById(R.id.tabs_days);
         //tabLayout.setupWithViewPager(viewPager);

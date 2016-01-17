@@ -1,8 +1,10 @@
 package com.lipi.notifica.database;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.lipi.notifica.Utilities;
@@ -29,11 +31,15 @@ public class Client {
 
     private final DbHelper mDbHelper;
     private final Context mContext;
-    private final String mUsername = "fhx", mPassword = "noobnoob";
+    private final String mUsername, mPassword;
 
     public Client(Context context) {
         mContext = context;
         mDbHelper = new DbHelper(context);
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        mUsername = preferences.getString("username", "");
+        mPassword = preferences.getString("password", "");
     }
 
     private void addPeriod(JSONObject json, ClientListener clientListener) throws JSONException {

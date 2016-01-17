@@ -1,7 +1,8 @@
 from django.db.models import Q
 
-from rest_framework import viewsets
-from rest_framework import permissions
+from rest_framework import viewsets, permissions
+from rest_framework.views import APIView
+from rest_framework.response import Response
 
 from classroom.models import *
 from classroom.utils import *
@@ -177,5 +178,10 @@ class UserViewSet(viewsets.ModelViewSet):
             queryset = User.objects.filter(Q(first_name__iregex=regexstring) | Q(last_name__iregex=regexstring) | Q(username__iregex=regexstring))
         else:
             queryset = User.objects.all()
+
+        # filter by username as well
+        username = self.request.GET.get("username")
+        if username:
+            queryset = queryset.filter(username=username)
 
         return queryset
