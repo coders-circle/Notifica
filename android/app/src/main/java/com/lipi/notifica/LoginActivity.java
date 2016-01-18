@@ -13,6 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.lipi.notifica.database.Client;
 import com.lipi.notifica.database.NetworkHandler;
 
 import org.json.JSONArray;
@@ -167,8 +168,16 @@ public class LoginActivity extends AppCompatActivity {
                                         .putString("password", password)
                                         .putBoolean("logged_in", true)
                                         .apply();
-                                listener.onResult(0);
 
+                                // Get the user profile as well
+                                Client client = new Client(LoginActivity.this, username, password);
+                                client.addUser(user, new Client.ClientListener() {
+                                    @Override
+                                    public void refresh() {
+                                        if (this.queue.size() == 0)
+                                            listener.onResult(0);
+                                    }
+                                });
                             } catch (JSONException e) {
                                 e.printStackTrace();
                                 listener.onResult(-3);

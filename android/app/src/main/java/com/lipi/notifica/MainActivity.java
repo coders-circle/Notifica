@@ -1,8 +1,10 @@
 package com.lipi.notifica;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.PersistableBundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
@@ -12,9 +14,14 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.lipi.notifica.database.Client;
 import com.lipi.notifica.database.DbHelper;
+import com.lipi.notifica.database.Profile;
+import com.lipi.notifica.database.User;
 
 public class MainActivity extends AppCompatActivity {
     private NavigationView navigationView;
@@ -69,6 +76,18 @@ public class MainActivity extends AppCompatActivity {
 
         //Initializing NavigationView
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
+
+        // Set from profile
+        DbHelper helper = new DbHelper(this);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        User user = User.get(User.class, helper, "username=?", new String[]{preferences.getString("username", "")}, null);
+        Profile profile = Profile.get(Profile.class, helper, user.profile);
+
+        View headerView = navigationView.getHeaderView(0);
+        String name = user.first_name + " " + user.last_name;
+        ((TextView)headerView.findViewById(R.id.username)).setText(name);
+        ((TextView)headerView.findViewById(R.id.email)).setText(user.email);
+        ((ImageView)headerView.findViewById(R.id.avatar)).setImageBitmap(profile.getAvatar());
 
         //Setting Navigation View Item Selected Listener to handle the item click of the navigation menu
         mNavigationItemSelectedListener = new NavigationView.OnNavigationItemSelectedListener() {

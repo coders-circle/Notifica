@@ -42,6 +42,13 @@ public class Client {
         mPassword = preferences.getString("password", "");
     }
 
+    public Client(Context context, String username, String password) {
+        mContext = context;
+        mDbHelper = new DbHelper(context);
+        mUsername = username;
+        mPassword = password;
+    }
+
     private void addPeriod(JSONObject json, ClientListener clientListener) throws JSONException {
         Period p = new Period(json);
         p.save(mDbHelper);
@@ -89,7 +96,7 @@ public class Client {
         getGroup(s.p_group, clientListener);
     }
 
-    private void addUser(JSONObject json, ClientListener clientListener) {
+    public void addUser(JSONObject json, ClientListener clientListener) {
         User u = new User(json);
         u.save(mDbHelper);
 

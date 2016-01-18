@@ -1,8 +1,10 @@
 package com.lipi.notifica.database;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.preference.PreferenceManager;
 
 import java.util.List;
 
@@ -14,10 +16,12 @@ public class DbHelper extends SQLiteOpenHelper {
     // Database name and version
     public static final String DB_NAME = "Notifica.db";
     public static final int DB_VERSION = 6;
+    private final Context mContext;
 
     // Create the helper object
     public DbHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
+        mContext = context;
     }
 
     // Create all tables
@@ -179,8 +183,16 @@ public class DbHelper extends SQLiteOpenHelper {
     // Delete all profiles except 'keep' recent entries
     public void deleteProfiles(int keep) {
         List<Profile> profiles = Profile.getAll(Profile.class, this, "downloaded_at");
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+        long myId = User.get(User.class, this, "username=?", new String[]{preferences.getString("username", "")}, null).profile;
+
         String plist = "(";
         for (int i=keep;i<profiles.size(); ++i) {
+            // Don't delete self
+            if (profiles.get(i)._id == myId)
+                continue;
+
             if (i!=keep)
                 plist += ", ";
             plist += profiles.get(i)._id;
