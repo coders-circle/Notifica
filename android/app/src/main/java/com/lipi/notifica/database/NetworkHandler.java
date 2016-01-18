@@ -19,6 +19,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.InetAddress;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.Scanner;
 
 public class NetworkHandler {
@@ -60,7 +61,7 @@ public class NetworkHandler {
 
     // Create a HTTP request of method 'method'.
     // Set postData to null for get request only.
-    public String request(String address, String method, String postData) throws IOException, HttpNotOkException {
+    public void request(Result result, String address, String method, String postData) throws IOException {
 
         // Create a connection to given address
         URL url = new URL(mBaseUrl + address);
@@ -86,23 +87,26 @@ public class NetworkHandler {
             if (postData != null && postData.length() > 0) {
                 connection.setDoOutput(true);
 
-                // TODO: Check with fixed length mode instead of chunked mode
-                //connection.setFixedLengthStreamingMode(postData.length());
-                connection.setChunkedStreamingMode(0);
+                connection.setFixedLengthStreamingMode(postData.length());
+                //connection.setChunkedStreamingMode(0);
 
                 OutputStream out = new BufferedOutputStream(connection.getOutputStream());
                 out.write(postData.getBytes());
                 out.flush();
             }
 
-            // handle issues
-            int statusCode = connection.getResponseCode();
-            if (statusCode != HttpURLConnection.HTTP_OK)
-                throw new HttpNotOkException(statusCode);
+            // status code
+            result.code = connection.getResponseCode();
 
             // Get the response and disconnect when done
-            InputStream in = new BufferedInputStream(connection.getInputStream());
-            return new Scanner(in).useDelimiter("\\A").next();
+            if (result.code >= 400) {
+                InputStream in = new BufferedInputStream(connection.getErrorStream());
+                result.result = new Scanner(in).useDelimiter("\\A").next();
+            }
+            else {
+                InputStream in = new BufferedInputStream(connection.getInputStream());
+                result.result = new Scanner(in).useDelimiter("\\A").next();
+            }
         }
         finally {
             connection.disconnect();
@@ -125,15 +129,10 @@ public class NetworkHandler {
         @Override
         protected Void doInBackground(Void... params) {
             try {
-                mResult.result = request(mAddress, mMethod, mData);
-                mResult.code = HttpURLConnection.HTTP_OK;
-                mResult.success = true;
+                mResult.result = "";
+                request(mResult, mAddress, mMethod, mData);
+                mResult.success = (mResult.code == 200 || mResult.code ==  201);
             } catch (IOException e) {
-                mResult.code = HttpURLConnection.HTTP_BAD_REQUEST;
-                mResult.success = false;
-                e.printStackTrace();
-            } catch (HttpNotOkException e) {
-                mResult.code = e.status;
                 mResult.success = false;
                 e.printStackTrace();
             }

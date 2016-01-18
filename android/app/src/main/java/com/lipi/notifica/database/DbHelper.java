@@ -48,7 +48,10 @@ public class DbHelper extends SQLiteOpenHelper {
     // Destroy and re-create all tables
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        deleteAll(db);
+    }
 
+    public void deleteAll(SQLiteDatabase db) {
         // Classroom
         db.execSQL(new Organization().getDestroyTableSql());
         db.execSQL(new Department().getDestroyTableSql());

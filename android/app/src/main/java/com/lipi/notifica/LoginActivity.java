@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -49,6 +48,14 @@ public class LoginActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+        findViewById(R.id.register_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivityForResult(intent, 1);
+            }
+        });
     }
 
     private void startMainActivity() {
@@ -63,7 +70,7 @@ public class LoginActivity extends AppCompatActivity {
         final EditText passwordView = (EditText)findViewById(R.id.password);
 
         final String username = usernameView.getText().toString();
-        String password = passwordView.getText().toString();
+        final String password = passwordView.getText().toString();
 
         if (username.equals("")) {
             usernameView.requestFocus();
@@ -103,7 +110,7 @@ public class LoginActivity extends AppCompatActivity {
                         break;
                     case -2:
                         passwordView.requestFocus();
-                        passwordView.setError("Invalid password");
+                        passwordView.setError("Wrong password");
                         break;
                     default:
                         Toast.makeText(LoginActivity.this, "Couldn't login. Check internet connection and try again", Toast.LENGTH_SHORT).show();
@@ -174,5 +181,13 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Register activity telling us to close
+        if(requestCode == 1 && resultCode == -1)
+            finish();
     }
 }

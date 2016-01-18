@@ -7,6 +7,7 @@ def create_new_profile(sender, instance, created, **kwargs):
     if created:
         userprofile = UserProfile(user=instance)
         profile = Profile()
+        profile.save()
         userprofile.profile = profile
         userprofile.save()
 

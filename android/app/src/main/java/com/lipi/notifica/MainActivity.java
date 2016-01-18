@@ -28,21 +28,28 @@ public class MainActivity extends AppCompatActivity {
     NavigationView.OnNavigationItemSelectedListener mNavigationItemSelectedListener;
 
     public void initDb() {
-        // Download and get new routine
-        Client client = new Client(this);
-        client.getRoutine(new Client.ClientListener() {
-            // The refresh is called number of times as new data are downloaded.
-            // This.queue represents number of refresh callbacks that are pending.
-            // When it is zero, it means everything is downloaded completely.
+        new Thread(new Runnable() {
             @Override
-            public void refresh() {
-                Log.d("refreshing routine", "queue size: " + this.queue.size());
+            public void run() {
+                // Download and get new routine
+                Client client = new Client(MainActivity.this);
+                client.getRoutine(new Client.ClientListener() {
+                    // The refresh is called number of times as new data are downloaded.
+                    // This.queue represents number of refresh callbacks that are pending.
+                    // When it is zero, it means everything is downloaded completely.
+                    @Override
+                    public void refresh() {
+                        // Log.d("refreshing routine", "queue size: " + this.queue.size());
 
-                // Clean up unnecessary cache data
-                DbHelper dbHelper = new DbHelper(MainActivity.this);
-                dbHelper.clean();
+                        if (this.queue.size() == 0) {
+                            // Clean up unnecessary cache data
+                            DbHelper dbHelper = new DbHelper(MainActivity.this);
+                            dbHelper.clean();
+                        }
+                    }
+                });
             }
-        });
+        }).run();
     }
 
 

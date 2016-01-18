@@ -20,7 +20,7 @@ class ClassView(View):
         if not isValidUser(request.user):
             return redirect("home")
         
-        p_class = Class.objects.filter(pk=id)
+        p_class = Class.objects.get(pk=id)
         context = {"user":request.user, "class":p_class}
         return render(request, "classroom/class.html", context)
 
@@ -30,7 +30,7 @@ class DepartmentView(View):
         if not isValidUser(request.user):
             return redirect("home")
         
-        department = Department.objects.filter(pk=id)
+        department = Department.objects.get(pk=id)
         context = {"user":request.user, "department":department}
         return render(request, "classroom/department.html", context)
 
@@ -40,6 +40,6 @@ class OrganizationView(View):
         if not isValidUser(request.user):
             return redirect("home")
         
-        organization = Organization.objects.filter(pk=id)
-        context = {"user":request.user, "class":organization}
+        organization = Organization.objects.get(pk=id)
+        context = {"user":request.user, "organization":organization}
         return render(request, "classroom/organization.html", context)

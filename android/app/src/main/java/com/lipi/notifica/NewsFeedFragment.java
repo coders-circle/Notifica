@@ -9,7 +9,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,9 +20,6 @@ import com.lipi.notifica.database.Post;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by aditya on 12/12/15.
- */
 public class NewsFeedFragment extends Fragment {
     private RecyclerView.Adapter mAdapter;
     private SwipeRefreshLayout mSwipeRefreshLayout;
@@ -58,35 +54,33 @@ public class NewsFeedFragment extends Fragment {
         return rootView;
     }
 
-    // TODO: implement fetching of posts from server
     // fetch posts from the server
-    private void getPosts(){
+    private void getPosts() {
         // get from cache and show them
         final DbHelper helper = new DbHelper(getContext());
         changeData(Post.getAll(Post.class, helper, "modified_at DESC"));
         if (mAdapter != null)
             mAdapter.notifyDataSetChanged();
 
-        // get recent ones as well
-        Client client = new Client(getContext());
-        client.getPosts(-1, 30, -1, new Client.ClientListener() {
+        new Thread(new Runnable() {
             @Override
-            public void refresh() {
-                changeData(Post.getAll(Post.class, helper, "modified_at DESC"));
-                refreshView();
+            public void run() {
+                // get recent ones as well
+                Client client = new Client(getContext());
+                client.getPosts(-1, 30, -1, new Client.ClientListener() {
+                    @Override
+                    public void refresh() {
+                        changeData(Post.getAll(Post.class, helper, "modified_at DESC"));
+                        refreshView();
+                    }
+                });
+
+                /*long time = 0;
+                if (mPosts.size() > 0)
+                    time = mPosts.get(0).modified_at;
+                client.getPosts(-1, -1, time...*/
             }
-        });
-        /*long time = 0;
-        if (mPosts.size() > 0)
-            time = mPosts.get(0).modified_at;
-        Client client = new Client(getContext());
-        client.getPosts(-1, -1, time, new Client.ClientListener() {
-            @Override
-            public void refresh() {
-                changeData(Post.getAll(Post.class, helper, "modified_at DESC"));
-                refreshView();
-            }
-        });*/
+        }).run();
     }
 
     public void changeData(List<Post> newPosts) {

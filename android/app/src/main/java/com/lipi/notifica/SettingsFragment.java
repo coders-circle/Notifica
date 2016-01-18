@@ -7,6 +7,8 @@ import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 
+import com.lipi.notifica.database.DbHelper;
+
 public class SettingsFragment extends PreferenceFragment {
 
     @Override
@@ -26,6 +28,8 @@ public class SettingsFragment extends PreferenceFragment {
                         .putString("username", "")
                         .putString("password", "")
                         .putBoolean("logged_in", false).apply();
+                DbHelper dbHelper = new DbHelper(getActivity());
+                dbHelper.deleteAll(dbHelper.getWritableDatabase());
 
                 // Start login activity
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
