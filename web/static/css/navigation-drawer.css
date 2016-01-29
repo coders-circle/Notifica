@@ -61,8 +61,8 @@
     background-color: rgba(0, 0, 0, 0.05);
 }
 .active{
-    font-weight: bold;
     color: #c0392b;
+    background-color: rgba(0, 0, 0, 0.08);
 }
 .navigation-drawer .menu hr{
     margin: 8px;
@@ -71,7 +71,7 @@
 .user-info{
     margin-top: 40px;
     font-size: 0.88em;
-    color: #fff;
+    color: #eee;
     font-weight: bold;
 }
 .user-info .name{
@@ -83,4 +83,17 @@
     padding: 6px;
     border-radius: 50%;
     background-color: rgba(255, 255, 255, 0.6);
+}
+
+.app-info .logo{
+    width: 18px;
+    margin-right: 10px;
+}
+
+.app-info .app-name{
+    font-family: "Raleway", "Open Sans";
+    font-size: 2em;
+    vertical-align: middle;
+    color: #eee;
+    font-weight: bold;
 }
