@@ -1,10 +1,15 @@
+{% load staticfiles %}
+
 <div class="backdrop"></div>
 <div class="navigation-drawer color-bg shadow">
     <div class="header color-bg-dark">
         <button id="drawer-close-btn">
             <i class="fa fa-chevron-left"></i>
         </button>
-        <span class="app-title">notifica</span>
+        <div class="app-info">
+            <img class="logo" src="{% static 'img/logo.png' %}">
+            <a class="app-name">Notifica</a>
+        </div>
         <div class="user-info">
             <img class="avatar" src="/media/{{profile.profile.avatar}}">
             <div class="name">{{ user.first_name }} {{user.last_name}}</div>

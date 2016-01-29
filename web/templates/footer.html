@@ -1,15 +1,19 @@
+{% load staticfiles %}
+
 <div class="block" id="footer-block">
     <div class="container">
         <hr>
         <div class="row">
             <div class="col-sm-6">
-                <div class="about">
-                    <a href="#" class="title"><i class="fa fa-graduation-cap"></i> Notifica</a>
-                    <br>
-                    <span class="extra">a must have routine app</span>
+                <div id="about">
+                    <div class="logo-container">
+                        <img class="logo" src="{% static 'img/logo.png' %}">
+                    </div>
+                    <a href="{% url 'home' %}" class="app-name">Notifica</a>
+                    <div class="slogan">a must have routine app</div>
                 </div>
             </div>
-            <div class="col-sm-6 links">
+            <div class="col-sm-6" id="links">
                 <a href="#">Terms &amp; Conditions</a>
                 <a href="#">Privacy Policy</a>
                 <a href="#">Developers</a>
