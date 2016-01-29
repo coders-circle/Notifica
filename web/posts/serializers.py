@@ -2,8 +2,11 @@ from rest_framework import serializers
 from posts.models import *
 from classroom.serializers import UserSerializer
 
+import json
+
 
 datetimeformat = "%Y-%m-%d-%H-%M-%S"
+
 
 class PostSerializer(serializers.ModelSerializer):
     posted_by = UserSerializer(read_only=True)
@@ -11,7 +14,7 @@ class PostSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Post
-        fields = ('id', 'title', 'body', 'posted_at', 'modified_at', 'posted_by', 'tags', 'num_comments', 'profile')
+        fields = ('id', 'title', 'body', 'posted_at', 'modified_at', 'posted_by', 'tags', 'num_comments', 'profile', 'links')
         read_only_fields = ('posted_by', 'posted_at', 'modified_at')
 
     def get_num_comments(self, post):
@@ -23,7 +26,7 @@ class CommentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Comment
-        fields = ('id', 'post', 'body', 'posted_at', 'modified_at', 'posted_by')
+        fields = ('id', 'post', 'body', 'posted_at', 'modified_at', 'posted_by', 'links')
         read_only_fields = ('posted_by', 'posted_at', 'modified')
 
 
@@ -32,7 +35,7 @@ class EventSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Event
-        fields = ('id', 'title', 'body', 'posted_at', 'modified_at', 'event_at', 'posted_by', 'tags')
+        fields = ('id', 'title', 'body', 'posted_at', 'modified_at', 'event_at', 'posted_by', 'tags', 'links')
         read_only_fields = ('posted_by', 'posted_at', 'modified_at')
 
 
@@ -41,7 +44,7 @@ class AssignmentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Assignment
-        fields = ('id', 'title', 'body', 'subject', 'posted_by', 'posted_at', 'modified', 'submission_date')
+        fields = ('id', 'title', 'body', 'subject', 'posted_by', 'posted_at', 'modified', 'submission_date', 'links')
         read_only_fields = ('posted_by', 'posted_at', 'modified')
 
 
@@ -50,5 +53,5 @@ class SubmissionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Submission
-        fields = ('id', 'assignment', 'body', 'posted_by', 'posted_at', 'modified')
+        fields = ('id', 'assignment', 'body', 'posted_by', 'posted_at', 'modified', 'links')
         read_only_fields = ('posted_by', 'posted_at', 'modified')

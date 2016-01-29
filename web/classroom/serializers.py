@@ -47,6 +47,7 @@ class UserSerializer(serializers.ModelSerializer):
 class TeacherSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
     user_id = serializers.PrimaryKeyRelatedField(source='user', queryset=User.objects.all())
+
     class Meta:
         model = Teacher
         fields = ('id', 'user', 'department', 'user_id', 'username')
@@ -74,6 +75,7 @@ class GroupSerializer(serializers.ModelSerializer):
 class StudentSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
     user_id = serializers.PrimaryKeyRelatedField(source='user', queryset=User.objects.all())
+
     class Meta:
         model = Student
         fields = ('id', 'user', 'group', 'user_id')
