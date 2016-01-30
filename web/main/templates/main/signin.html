@@ -15,8 +15,11 @@ Notifica: Sign in
         <div class="links">
             <a href="{% url 'home' %}">Home</a>
         </div>
-        <h1 class="title">Notifica</h1>
-        <p class="extra">Sign in with your account</p>
+        <div class="app-info">
+            <img class="logo" src="{% static 'img/logo.png' %}">
+            <h1 class="app-name">Notifica</h1>
+            <p class="extra">Sign in with your account</p>
+        </div>
     </div>
 </div>
 <div class="block" id="signin-block">
@@ -35,7 +38,7 @@ Notifica: Sign in
                     <input type="submit" value="Sign in">
                 </form>
                 <div id="register-link">
-                    Don't have a Notifica account? <a href="/register">Register</a> for your Notifica account.
+                    Don't have a Notifica account? <a href="/register">Register</a> to get one.
                 </div>
             </div>
         </div>

@@ -7,11 +7,15 @@
     text-align: right;
     text-transform: uppercase;
 }
-#title-block .title{
+#title-block .app-name{
     font-family: "Raleway";
-    font-weight: 100;
     font-size: 4em;
-    font-weight: 100;
+    display: inline-block;
+    vertical-align: middle;
+}
+#title-block .logo{
+    width: 40px;
+    margin-right: 20px;
 }
 #title-block .extra{
     font-size: 1.6em;
@@ -19,11 +23,9 @@
 
 #signin-block{
     padding-top: 20px;
-    font-family: "Open Sans Light";
 }
 
 .error{
-    font-family: "Open Sans";
     color: #e74c3c;
     text-align: center;
     margin-bottom: 30px;
@@ -32,6 +34,7 @@
 
 form > input[type="text"],
 form > input[type="password"]{
+    font-weight: 300;
     width: calc(100% - 40px);
     margin:20px;
     padding: 0px 20px 10px 20px;
@@ -49,26 +52,28 @@ form > input[type="password"]:focus{
 
 form > input[type="submit"]{
     float: right;
-    font-family: "Open Sans Condensed", "Ubuntu Condensed";
-    font-weight: 700;
+    font-family: "Cabin Condensed", "Ubuntu Condensed";
     text-transform: uppercase;
     margin-top: 30px;
     margin-right: 20px;
     font-size: 1.6em;
     border: none;
     background-color: transparent;
-    color: #2980b9;
+    color: #646464;
     outline: none;
+    transition: 0.2s;
 }
 
 form > input[type="submit"]:hover{
-    color:#3498db;
+    color:#da4453;
 }
 
 #register-link{
-    font-family: "Open Sans";
-    color: #776;
-    font-weight: normal;
     text-align: center;
     padding-top: 100px;
+}
+
+#register-link a{
+    font-size: 1.2em;
+    font-weight: bold;
 }

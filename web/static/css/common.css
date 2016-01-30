@@ -41,6 +41,7 @@
 }
 
 #footer-block #links a{
-    display: block;
+    display: inline-block;
     margin: 10px;
+    font-weight: bold;
 }
