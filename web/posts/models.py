@@ -13,7 +13,7 @@ class Content(models.Model):
 
     class Meta:
         abstract = True
-        ordering = ('modified_at', 'posted_at',)
+        ordering = ("-modified_at", "-posted_at",)
     
 
 class Post(Content):

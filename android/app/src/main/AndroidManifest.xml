@@ -22,7 +22,7 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".SubjectDetailsActivity"/>
         <activity android:name=".SettingsActivity" android:theme="@style/ForSettings"/>
-Se
+
         <receiver android:name="com.lipi.notifica.RoutineWidgetProvider" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
