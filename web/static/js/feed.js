@@ -1,5 +1,6 @@
 jQuery(document).ready(function($) {
-    var posts = [];
+    var defaultPosts = [];
+    var queryPosts = [];
 
     var typewatch = (function(){
         var timer = 0;
@@ -19,39 +20,39 @@ jQuery(document).ready(function($) {
             msg.remove();
         }
     }
-    function renderPosts(ajaxRes){
+    function renderPosts(posts){
         var posts_container = $('.posts');
         var post_template = $('.template-userpost').clone();
         var tag_template = $('<span class="tag"></span>');
-        for(var i = 0; i < ajaxRes.length; i++){
+        for(var i = 0; i < posts.length; i++){
             var post = post_template.clone();
-            post.find('.num').text(ajaxRes[i].num_comments);
+            post.find('.num').text(posts[i].num_comments);
             post.find('.user-avatar').attr('src', '/static/img/ninja.png');
-            post.find('.title').text(ajaxRes[i].title);
+            post.find('.title').text(posts[i].title);
             post.find('.user-name').text(
-                ajaxRes[i].posted_by.first_name?
-                    ajaxRes[i].posted_by.first_name :
-                    ajaxRes[i].posted_by.username
+                posts[i].posted_by.first_name?
+                    posts[i].posted_by.first_name :
+                    posts[i].posted_by.username
                 );
-            var posted_at = new Date(ajaxRes[i].posted_at);
+            var posted_at = new Date(posts[i].posted_at);
             post.find('.time').text(posted_at.toLocaleString());
             var tags_container = post.find('.tags');
-                if(ajaxRes[i].tags){
-                var tags = $.parseJSON(ajaxRes[i].tags);
+                if(posts[i].tags){
+                var tags = $.parseJSON(posts[i].tags);
                 for(var j = 0; j < tags.length; j++){
                     var tag = tag_template.clone();
                     tag.text(tags[j]);
                     tag.appendTo(tags_container);
                 }
             }
-            post.find('.content').text(ajaxRes[i].body);
+            post.find('.content').text(posts[i].body);
             post.removeClass('template-userpost');
             post.addClass('userpost');
             post.appendTo(posts_container);
             post.hide();
             post.removeClass('hidden');
             post.fadeIn();
-            if(i != ajaxRes.length-1){
+            if(i != posts.length-1){
                 posts_container.append('<hr>');
             }
         }
@@ -72,17 +73,20 @@ jQuery(document).ready(function($) {
         error_msg.appendTo($('.posts'));
         $('#posts-loading-animation').fadeOut();
     }
-    $('#posts-loading-animation').show();
-    $.ajax({
-        url: '/feed/api/v1/posts/',
-        type: 'GET',
-        error: function() {
-            onFailure();
-        },
-        success: function(res) {
-            onSuccess(res);
-        }
-    });
+    function onLoad(){
+        $('#posts-loading-animation').show();
+        $.ajax({
+            url: '/feed/api/v1/posts/',
+            type: 'GET',
+            error: function() {
+                onFailure();
+            },
+            success: function(res) {
+                onSuccess(res);
+            }
+        });
+    }
+
     var last_search_str = "";
     var search_event_count = 0;
     $("#search-post-input").keyup(function(){
@@ -107,4 +111,28 @@ jQuery(document).ready(function($) {
             }, 500);
         }
     });
+
+    var total_search_count = 0;
+    var num_posts = 0;
+    function queryPosts(search_str){
+        typewatch(function(){
+            var search_count = ++total_search_count;
+            removeOldPosts();
+            $('#posts-loading-animation').fadeIn();
+            $.ajax({
+                url: '/feed/api/v1/posts/?q='+search_str,
+                type: 'GET',
+                error: function() { onFailure(); },
+                success: function(res) {
+                    if( search_count >= total_search ) {
+                        onSuccess(res);
+                    }
+                    --search_event_count;
+                }
+            });
+
+        }, 500);
+    }
+
+    onLoad();
 });
