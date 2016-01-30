@@ -25,7 +25,7 @@ jQuery(document).ready(function($) {
         var tag_template = $('<span class="tag"></span>');
         for(var i = 0; i < ajaxRes.length; i++){
             var post = post_template.clone();
-            post.find('.num').text('10');
+            post.find('.num').text(ajaxRes[i].num_comments);
             post.find('.user-avatar').attr('src', '/static/img/ninja.png');
             post.find('.title').text(ajaxRes[i].title);
             post.find('.user-name').text(
