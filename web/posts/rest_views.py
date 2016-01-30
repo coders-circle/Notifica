@@ -59,7 +59,15 @@ class PostViewSet(viewsets.ModelViewSet):
 
         time = self
 
-        return list(set([x for x in queryset] + [y for y in recentQueryset]))
+        result = []
+        for x in queryset:
+            if x not in result:
+                result.append(x)
+
+        for y in queryset:
+            if y not in result:
+                result.append(y)
+        return result
 
 
 class CommentViewSet(viewsets.ModelViewSet):

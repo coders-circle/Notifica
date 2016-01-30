@@ -8,6 +8,7 @@ from classroom.models import *
 from classroom.utils import *
 from classroom.serializers import *
 from classroom.permissions import *
+from routine.models import *
 
 from main.search import *
 
@@ -76,6 +77,12 @@ class TeacherViewSet(viewsets.ModelViewSet):
             queryset = Teacher.objects.filter(Q(user__first_name__iregex=regexstring) | Q(user__last_name__iregex=regexstring) | Q(user__username__iregex=regexstring) | Q(username__iregex=regexstring))
         else:
             queryset = Teacher.objects.all()
+
+        p_class = self.request.GET.get("class")
+        if p_class:
+            periods = Period.objects.filter(routine__p_class__pk=p_class)
+            teachers = periods.values_list("teachers", flat=True)
+            queryset = queryset.filter(pk__in=teachers)
 
         return queryset
 
