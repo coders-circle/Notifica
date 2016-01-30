@@ -10,10 +10,29 @@ Notifica: Register
 {% endblock %}
 
 {% block body %}
+<div id="terms-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                {% include 'main/terms.html' %}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="block" id="title-block">
-    <a href="/home">Home</a>
-    <h1>Notifica</h1>
-    <p>Register for your Notifica account</p>
+    <div class="container">
+        <div class="links">
+            <a href="{% url 'home' %}">Home</a>
+        </div>
+        <div class="app-info">
+            <img class="logo" src="{% static 'img/logo.png' %}">
+            <h1 class="app-name">Notifica</h1>
+            <p class="extra">Register for your Notifica account</p>
+        </div>
+    </div>
 </div>
 <div class="block" id="register-block">
     <div class="container">
@@ -27,11 +46,19 @@ Notifica: Register
                     {% endif %}
 
                     <input name="email" type="text" placeholder="Email Address">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <input name="first-name" type="text" placeholder="First Name">
+                        </div>
+                        <div class="col-md-6">
+                            <input name="last-name" type="text" placeholder="Last Name">
+                        </div>
+                    </div>
                     <input name="username" type="text" placeholder="Username">
                     <input name="password" type="password" placeholder="Password">
                     <label id="agreement-input">
                         <input type="checkbox">
-                        I accept <a href="#">terms and conditions</a>
+                        I accept <a href="#" data-toggle="modal" data-target="#terms-modal">Terms &amp; Conditions</a>
                     </label>
                     <input type="submit" value="Register">
                 </form>
@@ -42,10 +69,5 @@ Notifica: Register
         </div>
     </div>
 </div>
-<div class="block" id="footer-block">
-    <hr>
-    <p>Copyright (c) 2015, All rights reserved</p>
-</div>
-
-
+{% include 'footer.html' %}
 {% endblock %}
