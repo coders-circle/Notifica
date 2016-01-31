@@ -112,27 +112,5 @@ jQuery(document).ready(function($) {
         }
     });
 
-    var total_search_count = 0;
-    var num_posts = 0;
-    function queryPosts(search_str){
-        typewatch(function(){
-            var search_count = ++total_search_count;
-            removeOldPosts();
-            $('#posts-loading-animation').fadeIn();
-            $.ajax({
-                url: '/feed/api/v1/posts/?q='+search_str,
-                type: 'GET',
-                error: function() { onFailure(); },
-                success: function(res) {
-                    if( search_count >= total_search ) {
-                        onSuccess(res);
-                    }
-                    --search_event_count;
-                }
-            });
-
-        }, 500);
-    }
-
     onLoad();
 });

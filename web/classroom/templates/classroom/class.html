@@ -37,7 +37,11 @@
                     </div>
                     <div id="tab-contents">
                         <div class="tab-content active" id="news-feed">
-                            News feed
+                            <form class="form-add-post">
+                                <input type="text" class="input-neat" name="title" placeholder="Title">
+                                <textarea class="input-neat" name="content" rows="10" placeholder="Content"></textarea>
+                                <input type="submit" class="btn btn-default">
+                            </form>
                         </div>
                         <div class="tab-content hidden" id="teachers">
                             <div class="row">
@@ -103,7 +107,48 @@
                             </div>
                         </div>
                         <div class="tab-content hidden" id="students">
-                            Students
+                            <table class="table-students">
+                                <tr>
+                                    <th>S.N.</th>
+                                    <th>Name</th>
+                                    <th>Roll</th>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Abinash Manandhar</td>
+                                    <td>069-BCT-501</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Anish Shrestha</td>
+                                    <td>069-BCT-502</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Anjesh Kafle</td>
+                                    <td>069-BCT-503</td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>Ankit Mehata</td>
+                                    <td>069-BCT-504</td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>Ayush Shakya</td>
+                                    <td>069-BCT-505</td>
+                                </tr>
+                                <tr>
+                                    <td>6</td>
+                                    <td>Bibek Dahal</td>
+                                    <td>069-BCT-507</td>
+                                </tr>
+                                <tr>
+                                    <td>7</td>
+                                    <td>Aditya Khatri</td>
+                                    <td>069-BCT-548</td>
+                                </tr>
+                            </table>
                         </div>
                         <div class="tab-content hidden" id="subjects">
                             Subjects

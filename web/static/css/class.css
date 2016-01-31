@@ -82,7 +82,7 @@
 }
 
 .tab-content{
-    padding: 10px 20px;
+    padding: 20px;
     display: block;
 }
 
@@ -108,4 +108,46 @@
 .card-teacher .extra{
     font-weight: bold;
     font-size: 0.88em;
+}
+
+.form-add-post input[type="text"]{
+    width: 100%;
+    border: 1px solid #bbb;
+    border-radius: 5px;
+    margin: 10px 0px;
+    padding: 10px 16px;
+}
+.form-add-post{
+    text-align: right;
+}
+.form-add-post input[type="submit"]{
+}
+.form-add-post textarea{
+    width: 100%;
+    border: 1px solid #bbb;
+    border-radius: 5px;
+    margin: 10px 0px;
+    padding: 10px 16px;
+    resize: none;
+}
+
+.table-students{
+    width: 100%;
+    color: #646464;
+}
+.table-students th{
+    padding: 12px 18px;
+}
+.table-students td{
+    padding: 12px 18px;
+    background: #fff;
+}
+.table-students tr{
+    border-bottom: 1px solid #eee;
+}
+.table-students tr:first-child{
+    border-bottom: none;
+}
+.table-students tr:last-child{
+    border-bottom: none;
 }
