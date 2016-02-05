@@ -1,5 +1,6 @@
 package com.lipi.notifica;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -13,10 +14,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.lipi.notifica.database.Client;
 import com.lipi.notifica.database.DbHelper;
@@ -31,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
     private NewsFeedFragment mNewsFeedFragment;
 
     private ActionBarDrawerToggle mDrawerToggle;
+
+    boolean isVisible = true;
 
     NavigationView.OnNavigationItemSelectedListener mNavigationItemSelectedListener;
 
@@ -89,6 +95,46 @@ public class MainActivity extends AppCompatActivity {
         ((TextView)headerView.findViewById(R.id.email)).setText(user.email);
         ((ImageView)headerView.findViewById(R.id.avatar)).setImageBitmap(profile.getAvatar());
 
+        final Menu defaultMenu = navigationView.getMenu();
+
+        defaultMenu.setGroupCheckable(R.id.basic_group, true, true);
+        defaultMenu.setGroupCheckable(R.id.settings_group, true, true);
+
+        MenuItem newsFeedItem = defaultMenu.add(R.id.basic_group, R.id.news_feed, Menu.NONE, "News Feed");
+        newsFeedItem.setIcon(R.mipmap.ic_launcher);
+        newsFeedItem.setCheckable(true);
+        newsFeedItem.setChecked(false);
+
+        MenuItem routineItem = defaultMenu.add(R.id.basic_group, R.id.routine, Menu.NONE, "Routine");
+        routineItem.setIcon(R.mipmap.ic_launcher);
+        routineItem.setCheckable(true);
+        routineItem.setChecked(false);
+
+        MenuItem assignmentItem = defaultMenu.add(R.id.basic_group, R.id.assignment, Menu.NONE, "Assignments");
+        assignmentItem.setIcon(R.mipmap.ic_launcher);
+        assignmentItem.setCheckable(true);
+        assignmentItem.setChecked(false);
+
+        MenuItem settingsItem = defaultMenu.add(R.id.settings_group, R.id.settings, Menu.NONE, "Settings");
+        settingsItem.setIcon(R.mipmap.ic_launcher);
+        settingsItem.setCheckable(true);
+        settingsItem.setChecked(false);
+
+        MenuItem addClass = defaultMenu.add(R.id.classes_group, R.id.add_class, Menu.NONE,"Add Class");
+        defaultMenu.setGroupVisible(R.id.classes_group,!isVisible);
+        addClass.setIcon(R.mipmap.ic_launcher);
+        addClass.setCheckable(true);
+        addClass.setChecked(false);
+
+        Button refresh = (Button) headerView.findViewById(R.id.class_select);
+        refresh.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                isVisible=!isVisible;
+                defaultMenu.setGroupVisible(R.id.basic_group,isVisible);
+                defaultMenu.setGroupVisible(R.id.settings_group,isVisible);
+                defaultMenu.setGroupVisible(R.id.classes_group,!isVisible);
+            }
+        });
         //Setting Navigation View Item Selected Listener to handle the item click of the navigation menu
         mNavigationItemSelectedListener = new NavigationView.OnNavigationItemSelectedListener() {
 
@@ -173,3 +219,4 @@ public class MainActivity extends AppCompatActivity {
             finish();
     }
 }
+

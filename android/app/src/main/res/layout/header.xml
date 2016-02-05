@@ -6,38 +6,56 @@
     android:orientation="vertical"
     >
 
+    <Button
+        android:id="@+id/class_select"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:padding="4dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="36dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/border_circle"
+        android:backgroundTint="#FFFFFF"/>
+
+
     <ImageView
         android:id="@+id/avatar"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:padding="4dp"
         android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/border_circle"
+        android:backgroundTint="#FFFFFF"
         android:layout_above="@+id/username"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Aditya Khatri"
+        android:text="User Name"
         android:textSize="14sp"
         android:textColor="#FFF"
         android:textStyle="bold"
-        android:gravity="left"
+        android:gravity="start"
         android:paddingBottom="4dp"
         android:paddingStart="16dp"
-        android:paddingLeft="16dp"
+        android:paddingEnd="16dp"
         android:id="@+id/username"
         android:layout_above="@+id/email"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="adityakhatri47@gmail.com"
+        android:text="email ID"
         android:id="@+id/email"
         android:gravity="left"
         android:layout_marginBottom="8dp"
         android:textSize="14sp"
         android:paddingStart="16dp"
-        android:paddingLeft="16dp"
+        android:paddingEnd="16dp"
         android:textColor="#fff"
         android:layout_alignParentBottom="true"
         android:layout_alignLeft="@+id/username"
