@@ -15,4 +15,17 @@ $(document).ready(function(){
             target_container.addClass('active');
         }
     });
+
+    function loadTeachers(){
+        $.ajax({
+            url: '/classroom/api/v1/teachers',
+            type: 'GET',
+            error: function() {
+                alert('failed to fetch teacher info :/');
+            },
+            success: function(res) {
+                
+            }
+        });
+    }
 });

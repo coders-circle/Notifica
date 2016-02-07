@@ -45,5 +45,8 @@
     <color name="listDivider">@color/colorPrimaryLight</color>
     <color name="periodDivider">@color/colorPrimaryLight</color>
     <color name="postDivider">@color/periodDivider</color>
+
+    <color name="colorPrimaryText">#ffffff</color>
+    <color name="colorSecondaryText">#99ffffff</color>
 </resources>
 

@@ -25,6 +25,7 @@
     </div>
 </div>
 <div class="block" id="body-block">
+    {% include 'classroom/card-teacher.html' %}
     <div class="container">
         <div class="row">
             <div class="col-md-8">
@@ -45,67 +46,14 @@
                         </div>
                         <div class="tab-content hidden" id="teachers">
                             <div class="row">
+                                <div class="animation-loading" id="teachers-loading-animation"></div>
                                 <div class="col-sm-6">
-                                    <div class="card card-teacher">
-                                        <div class="row">
-                                            <div class="col-xs-2">
-                                                <img class="avatar" src="/static/img/ninja.png">
-                                            </div>
-                                            <div class="col-xs-10">
-                                                <div class="name">Absolute Zero</div>
-                                                <div class="extra">Phd. Computer Technology</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card card-teacher">
-                                        <div class="row">
-                                            <div class="col-xs-2">
-                                                <img class="avatar" src="/static/img/ninja.png">
-                                            </div>
-                                            <div class="col-xs-10">
-                                                <div class="name">Absolute Zero</div>
-                                                <div class="extra">Phd. Computer Technology</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card card-teacher">
-                                        <div class="row">
-                                            <div class="col-xs-2">
-                                                <img class="avatar" src="/static/img/ninja.png">
-                                            </div>
-                                            <div class="col-xs-10">
-                                                <div class="name">Absolute Zero</div>
-                                                <div class="extra">Phd. Computer Technology</div>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                                 <div class="col-sm-6">
-                                    <div class="card card-teacher">
-                                        <div class="row">
-                                            <div class="col-xs-2">
-                                                <img class="avatar" src="/static/img/ks.png">
-                                            </div>
-                                            <div class="col-xs-10">
-                                                <div class="name">Mr. Frozen Helium</div>
-                                                <div class="extra">Phd. Computer Technology</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card card-teacher">
-                                        <div class="row">
-                                            <div class="col-xs-2">
-                                                <img class="avatar" src="/static/img/ninja.png">
-                                            </div>
-                                            <div class="col-xs-10">
-                                                <div class="name">Absolute Zero</div>
-                                                <div class="extra">Phd. Computer Technology</div>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
+
                         <div class="tab-content hidden" id="students">
                             <table class="table-students">
                                 <tr>
