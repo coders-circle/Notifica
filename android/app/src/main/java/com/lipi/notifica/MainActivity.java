@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.os.PersistableBundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
@@ -18,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private ActionBarDrawerToggle mDrawerToggle;
 
     boolean isVisible = true;
+    boolean swap = true;
 
     NavigationView.OnNavigationItemSelectedListener mNavigationItemSelectedListener;
 
@@ -89,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
         User user = User.get(User.class, helper, "username=?", new String[]{preferences.getString("username", "")}, null);
         Profile profile = Profile.get(Profile.class, helper, user.profile);
 
-        View headerView = navigationView.getHeaderView(0);
+        final View headerView = navigationView.getHeaderView(0);
         String name = user.first_name + " " + user.last_name;
         ((TextView)headerView.findViewById(R.id.username)).setText(name);
         ((TextView)headerView.findViewById(R.id.email)).setText(user.email);
@@ -101,35 +104,45 @@ public class MainActivity extends AppCompatActivity {
         defaultMenu.setGroupCheckable(R.id.settings_group, true, true);
 
         MenuItem newsFeedItem = defaultMenu.add(R.id.basic_group, R.id.news_feed, Menu.NONE, "News Feed");
-        newsFeedItem.setIcon(R.mipmap.ic_launcher);
+        newsFeedItem.setIcon(R.mipmap.news_feed);
         newsFeedItem.setCheckable(true);
         newsFeedItem.setChecked(false);
 
         MenuItem routineItem = defaultMenu.add(R.id.basic_group, R.id.routine, Menu.NONE, "Routine");
-        routineItem.setIcon(R.mipmap.ic_launcher);
+        routineItem.setIcon(R.mipmap.routine);
         routineItem.setCheckable(true);
         routineItem.setChecked(false);
 
         MenuItem assignmentItem = defaultMenu.add(R.id.basic_group, R.id.assignment, Menu.NONE, "Assignments");
-        assignmentItem.setIcon(R.mipmap.ic_launcher);
+        assignmentItem.setIcon(R.mipmap.assignment);
         assignmentItem.setCheckable(true);
         assignmentItem.setChecked(false);
 
         MenuItem settingsItem = defaultMenu.add(R.id.settings_group, R.id.settings, Menu.NONE, "Settings");
-        settingsItem.setIcon(R.mipmap.ic_launcher);
+        settingsItem.setIcon(R.mipmap.settings);
         settingsItem.setCheckable(true);
         settingsItem.setChecked(false);
 
         MenuItem addClass = defaultMenu.add(R.id.classes_group, R.id.add_class, Menu.NONE,"Add Class");
-        defaultMenu.setGroupVisible(R.id.classes_group,!isVisible);
+        defaultMenu.setGroupVisible(R.id.classes_group, !isVisible);
         addClass.setIcon(R.mipmap.ic_launcher);
         addClass.setCheckable(true);
         addClass.setChecked(false);
 
-        Button refresh = (Button) headerView.findViewById(R.id.class_select);
-        refresh.setOnClickListener(new View.OnClickListener() {
+        final ImageButton swapClasses = (ImageButton) headerView.findViewById(R.id.class_select);
+        swapClasses.setBackgroundResource(R.mipmap.swap_class);
+
+        swapClasses.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 isVisible=!isVisible;
+                if(swap){
+                    swapClasses.setBackgroundResource(R.mipmap.close);
+                    swap = false;
+                }
+                else{
+                    swapClasses.setBackgroundResource(R.mipmap.swap_class);
+                    swap = true;
+                }
                 defaultMenu.setGroupVisible(R.id.basic_group,isVisible);
                 defaultMenu.setGroupVisible(R.id.settings_group,isVisible);
                 defaultMenu.setGroupVisible(R.id.classes_group,!isVisible);

@@ -5,11 +5,15 @@ import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.lipi.notifica.database.DbHelper;
@@ -20,16 +24,30 @@ import com.lipi.notifica.database.User;
 
 public class PeriodAdapter extends RecyclerView.Adapter<PeriodAdapter.PeriodViewHolder>{
     private List<Period> mPeriods;
+    private List<Integer> mBreaks = new ArrayList<>();
     private Context mContext;
 
     public PeriodAdapter(Context context, List<Period> periods){
         mPeriods = periods;
         mContext = context;
+
+        if (mPeriods.size() > 1) {
+            int cnt = 0;
+            Period lastPeriod = mPeriods.get(0);
+            for (int i=1; i<mPeriods.size(); ++i) {
+                Period next = mPeriods.get(i);
+                if (next.start_time > lastPeriod.end_time) {
+                    mBreaks.add(i + cnt);
+                    cnt++;
+                }
+                lastPeriod = next;
+            }
+        }
     }
 
     @Override
     public int getItemCount() {
-        return mPeriods.size();
+        return mPeriods.size() + mBreaks.size();
     }
 
     @Override
@@ -41,7 +59,28 @@ public class PeriodAdapter extends RecyclerView.Adapter<PeriodAdapter.PeriodView
 
     @Override
     public void onBindViewHolder(PeriodViewHolder holder, int position) {
-        Period period = mPeriods.get(position);
+        // If break then show "Break"
+        if (mBreaks.contains(position)) {
+            holder.subject.setText("Break");
+            holder.remarks.setVisibility(View.GONE);
+            holder.time.setVisibility(View.GONE);
+            holder.teachers.setVisibility(View.GONE);
+            holder.subShortName.setVisibility(View.GONE);
+            holder.subject.setGravity(Gravity.CENTER);
+            return;
+        }
+
+        // Else find the period and show that
+        int pPosition = position;
+        for (Integer b: mBreaks) {
+            if (b < position)
+                pPosition--;
+            else if (b > position)
+                break;
+        }
+
+        Period period = mPeriods.get(pPosition);
+
         DbHelper helper = new DbHelper(mContext);
         Subject subject = Subject.get(Subject.class, helper, period.subject);
         List<Teacher> teachers = period.getTeachers(helper);
