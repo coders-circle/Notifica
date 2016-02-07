@@ -1,14 +1,11 @@
 package com.lipi.notifica;
 
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
-import android.widget.RelativeLayout;
 
 /**
  * Created by fhx on 2/7/16.
@@ -18,7 +15,7 @@ public class PostDetailActivity extends AppCompatActivity{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_postdetail);
+        setContentView(R.layout.activity_post_detail);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_post_detail);
         setSupportActionBar(toolbar);

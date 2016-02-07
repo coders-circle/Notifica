@@ -11,7 +11,7 @@
     <string name="notifica">Notifica</string>
 
     <!--following naming convention should be used for header-->
-    <string name="header_postdetail">Post Detail</string>
+    <string name="header_post_detail">Post Detail</string>
     <string name="title_lorem">Lorem Ipsum</string>
     <string name="content_lorem">
         Lorem ipsum dolor sit amet, eos id quem omnes, periculis quaerendum ne ius. At deleniti instructior vis, partem impetus ut has. Mei in saepe deleniti, dico fabulas ad nec. Vel eu aperiri epicuri, mel an amet perpetua.

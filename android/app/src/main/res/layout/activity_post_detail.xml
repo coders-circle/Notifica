@@ -13,7 +13,7 @@
         android:fitsSystemWindows="true"
         android:theme="@style/ThemeOverlay.AppCompat.Dark"
         app:navigationIcon="?attr/homeAsUpIndicator"
-        app:title="@string/header_postdetail"
+        app:title="@string/header_post_detail"
         android:elevation="4dp">
     </android.support.v7.widget.Toolbar>
 
