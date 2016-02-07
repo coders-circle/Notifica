@@ -22,6 +22,7 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".SubjectDetailsActivity"/>
         <activity android:name=".SettingsActivity" android:theme="@style/ForSettings"/>
+        <activity android:name=".PostDetailActivity" android:theme="@style/AppTheme"/>
 
         <receiver android:name="com.lipi.notifica.RoutineWidgetProvider" >
             <intent-filter>

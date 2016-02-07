@@ -1,6 +1,7 @@
 package com.lipi.notifica;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -51,9 +52,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         if (poster != null) {
             Profile posterProfile = Profile.get(Profile.class, helper, poster.profile);
             if (poster.first_name.equals(""))
-                info = "posted by " + poster.username;
+                info = "by " + poster.username;
             else
-                info = "posted by " + poster.first_name;
+                info = "by " + poster.first_name;
 
             if (posterProfile != null)
             if (posterProfile.getAvatar() != null)
@@ -80,6 +81,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         @Override
         public void onClick(View view) {
             int pos = getAdapterPosition();
+
+            //TODO: pass along the post info
+            mContext.startActivity(new Intent(mContext, PostDetailActivity.class));
         }
     }
 }
