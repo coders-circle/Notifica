@@ -25,7 +25,8 @@
     </div>
 </div>
 <div class="block" id="body-block">
-    {% include 'classroom/card-teacher.html' %}
+    {% include 'classroom/card-teacher-template.html' %}
+    {% include 'classroom/card-subject-template.html' %}
     <div class="container">
         <div class="row">
             <div class="col-md-8">
@@ -47,59 +48,22 @@
                         <div class="tab-content hidden" id="teachers">
                             <div class="row">
                                 <div class="animation-loading" id="teachers-loading-animation"></div>
-                                <div class="col-sm-6">
+                                <div class="col-sm-6 even-container">
                                 </div>
-                                <div class="col-sm-6">
+                                <div class="col-sm-6 odd-container">
                                 </div>
                             </div>
                         </div>
 
                         <div class="tab-content hidden" id="students">
                             <table class="table-students">
-                                <tr>
-                                    <th>S.N.</th>
-                                    <th>Name</th>
-                                    <th>Roll</th>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Abinash Manandhar</td>
-                                    <td>069-BCT-501</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Anish Shrestha</td>
-                                    <td>069-BCT-502</td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Anjesh Kafle</td>
-                                    <td>069-BCT-503</td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>Ankit Mehata</td>
-                                    <td>069-BCT-504</td>
-                                </tr>
-                                <tr>
-                                    <td>5</td>
-                                    <td>Ayush Shakya</td>
-                                    <td>069-BCT-505</td>
-                                </tr>
-                                <tr>
-                                    <td>6</td>
-                                    <td>Bibek Dahal</td>
-                                    <td>069-BCT-507</td>
-                                </tr>
-                                <tr>
-                                    <td>7</td>
-                                    <td>Aditya Khatri</td>
-                                    <td>069-BCT-548</td>
-                                </tr>
                             </table>
                         </div>
                         <div class="tab-content hidden" id="subjects">
-                            Subjects
+                            <div class="col-sm-6 even-container">
+                            </div>
+                            <div class="col-sm-6 odd-container">
+                            </div>
                         </div>
                     </div>
                 </div>
