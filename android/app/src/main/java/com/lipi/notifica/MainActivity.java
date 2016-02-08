@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.PersistableBundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
@@ -97,6 +98,8 @@ public class MainActivity extends AppCompatActivity {
         ((TextView)headerView.findViewById(R.id.username)).setText(name);
         ((TextView)headerView.findViewById(R.id.email)).setText(user.email);
         ((ImageView)headerView.findViewById(R.id.avatar)).setImageBitmap(profile.getAvatar());
+
+        ((GradientDrawable)(headerView.findViewById(R.id.avatar)).getBackground()).setColor(0xFFFFFFFF);
 
         final Menu defaultMenu = navigationView.getMenu();
 

@@ -7,11 +7,19 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-/**
- * Created by fhx on 2/7/16.
- */
+import com.lipi.notifica.database.Client;
+import com.lipi.notifica.database.Comment;
+import com.lipi.notifica.database.DbHelper;
+import com.lipi.notifica.database.Post;
+
+import java.util.List;
+
 public class PostDetailActivity extends AppCompatActivity{
-    private RecyclerView.Adapter mAdapter;
+    private DbHelper mDbHelper;
+    private PostDetailAdapter mAdapter;
+    private long mPostId;
+    private Client mClient;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,10 +35,38 @@ public class PostDetailActivity extends AppCompatActivity{
         layoutManager = new LinearLayoutManager(getBaseContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        mAdapter = new PostDetailAdapter(this);
+        mDbHelper = new DbHelper(this);
+        mClient = new Client(this);
+
+        Bundle extras = getIntent().getExtras();
+        mPostId = extras.getLong("post_id");
+        Post post = Post.get(Post.class, mDbHelper, mPostId);
+
+        mAdapter = new PostDetailAdapter(this, post, new PostDetailAdapter.PostDetailListener() {
+            @Override
+            public void onAdd(String comment) {
+                mClient.postComment(comment, mPostId, new Client.ClientListener() {
+                    @Override
+                    public void refresh() {
+                        refreshComments();
+                    }
+                });
+            }
+        });
         recyclerView.setAdapter(mAdapter);
 
-        // TODO: fill ths adapter with comments
+        mClient.getComments(mPostId, new Client.ClientListener() {
+            @Override
+            public void refresh() {
+                refreshComments();
+            }
+        });
+    }
+
+    private void refreshComments() {
+        List<Comment> comments = Comment.query(Comment.class,
+                mDbHelper, "post=?", new String[]{"" + mPostId}, null, null, "modified_at DESC");
+        mAdapter.setComments(comments);
     }
 
     @Override

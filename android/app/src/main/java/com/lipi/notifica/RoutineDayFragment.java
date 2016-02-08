@@ -25,6 +25,7 @@ public class RoutineDayFragment extends Fragment{
         recyclerView.addItemDecoration(new PeriodDivider(rootView.getContext()));
         recyclerView.setHasFixedSize(true);
         recyclerView.setClickable(true);
+
         layoutManager = new LinearLayoutManager(rootView.getContext());
         recyclerView.setLayoutManager(layoutManager);
         Bundle args = getArguments();
@@ -41,14 +42,16 @@ public class RoutineDayFragment extends Fragment{
         }
         @Override
         public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
-            if( parent.getChildCount() < 2 ){
+            if( parent.getChildCount() < 2 ) {
                 return;
             }
+
             int left = parent.getPaddingLeft()
                     + parent.getChildAt(0).findViewById(R.id.sub_shortname).getRight()
                     + parent.getChildAt(0).findViewById(R.id.subject).getLeft();
             int right = parent.getWidth() - parent.getPaddingRight() - 10;
             int childCount = parent.getChildCount();
+
             for (int i = 0; i < childCount-1; i++) {
                 View child = parent.getChildAt(i);
                 RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
