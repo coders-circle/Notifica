@@ -128,22 +128,8 @@ public class PeriodAdapter extends RecyclerView.Adapter<PeriodAdapter.PeriodView
         }
 
         shortNameBackground.setColor(
-                //returnColor(subject._id)
                 Color.parseColor(subject.color)
         );
-    }
-
-    public static int returnColor(long id){
-        int rand = ((int) id)%3;
-        switch (rand){
-            case 0:
-                return Color.parseColor("#268b83");
-            case 1:
-                return Color.parseColor("#e7a403");
-            default:
-                return Color.parseColor("#e53935");
-        }
-
     }
 
     public class PeriodViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{

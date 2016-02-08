@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NewsFeedFragment extends Fragment {
-    private RecyclerView.Adapter mAdapter;
+    private PostAdapter mAdapter;
     private SwipeRefreshLayout mSwipeRefreshLayout;
 
     private List<Post> mPosts;
@@ -84,12 +84,10 @@ public class NewsFeedFragment extends Fragment {
     }
 
     public void changeData(List<Post> newPosts) {
-        mPosts.clear();
-        for (Post post: newPosts)
-            mPosts.add(post);
+        mPosts = newPosts;
 
-        if(mAdapter != null){
-            mAdapter.notifyDataSetChanged();
+        if(mAdapter != null) {
+            mAdapter.setPosts(mPosts);
         }
     }
 

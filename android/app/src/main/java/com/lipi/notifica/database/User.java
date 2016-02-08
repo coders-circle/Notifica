@@ -1,5 +1,7 @@
 package com.lipi.notifica.database;
 
+import android.content.Context;
+
 import org.json.JSONObject;
 
 public class User extends Model {
@@ -18,5 +20,12 @@ public class User extends Model {
         username = json.optString("username");
         email = json.optString("email");
         profile = json.optLong("profile");
+    }
+
+    public String getName() {
+        if (first_name.equals(""))
+            return username;
+        else
+            return first_name + " " + last_name;
     }
 }

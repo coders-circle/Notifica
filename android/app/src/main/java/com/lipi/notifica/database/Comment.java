@@ -21,7 +21,7 @@ public class Comment extends Model {
         posted_at = Utilities.getDateTimeFromIso(json.optString("posted_at")).getTime();
         modified_at = Utilities.getDateTimeFromIso(json.optString("modified_at")).getTime();
         if (!json.isNull("posted_by"))
-            posted_by = json.optJSONObject("posted_by").optLong("_id");
+            posted_by = json.optJSONObject("posted_by").optLong("id");
         num_comments = json.optLong("num_comments");
     }
 }
