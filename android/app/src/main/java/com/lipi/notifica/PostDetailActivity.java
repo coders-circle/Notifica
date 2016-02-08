@@ -1,11 +1,14 @@
 package com.lipi.notifica;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 
 import com.lipi.notifica.database.Client;
 import com.lipi.notifica.database.Comment;
@@ -28,7 +31,7 @@ public class PostDetailActivity extends AppCompatActivity{
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_post_detail);
         setSupportActionBar(toolbar);
 
-        RecyclerView recyclerView;
+        final RecyclerView recyclerView;
         RecyclerView.LayoutManager layoutManager;
         recyclerView = (RecyclerView)findViewById(R.id.recycler_view_post_details);
         recyclerView.setHasFixedSize(true);
@@ -49,6 +52,13 @@ public class PostDetailActivity extends AppCompatActivity{
                     @Override
                     public void refresh() {
                         refreshComments();
+
+                        // TODO: maybe add onSuccess() & onFailure() methods too
+                        EditText commentInput =  ((EditText)recyclerView.findViewById(R.id.input_comment));
+                        commentInput.setText("");
+                        commentInput.clearFocus();
+                        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(commentInput.getWindowToken(), 0);
                     }
                 });
             }
