@@ -1,0 +1,111 @@
+#title-block{
+    padding: 10px 0px;
+    color: #a2a2a2;
+    background-color: #fff;
+
+}
+#title-block .app-info{
+}
+#title-block .app-name{
+    font-family: "Raleway", "Open Sans";
+    font-size: 3em;
+    vertical-align: middle;
+}
+#title-block .logo{
+    width: 40px;
+    margin-right: 20px;
+}
+
+#title-block .avatar{
+    width: 50px;
+    height: 50px;
+    padding:4px;
+    margin-bottom: 10px;
+}
+
+#content-block{
+    padding-top: 30px;
+}
+
+#content-block .title{
+    font-size: 2em;
+    font-weight: 300;
+    color: #646464;
+}
+
+.card{
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.card-post{
+    padding: 20px 40px;
+    line-height:1.5;
+}
+
+.card-post .extra{
+    color: #a2a2a2;
+}
+.card-post .extra span{
+    margin-right: 20px;
+}
+
+.card-post .content{
+    color: #646464;
+    margin-top: 30px;
+    text-align: justify;
+}
+
+.card-post #comment-form{
+    margin-top: 40px;
+    text-align: right;
+}
+
+#comment-form input[type="text"]{
+    width: 100%;
+    background-color: transparent;
+    border-bottom: 1px solid #ddd;
+    padding: 10px 20px;
+}
+#comment-form input[type="text"]:focus{
+    border-bottom-color: #bbb;
+}
+#comment-form input[type="submit"]{
+    margin-top: 30px;
+}
+
+.card-comment{
+    margin-top:10px;
+}
+.card-comment .container-avatar{
+    text-align: center;
+}
+.card-comment .avatar{
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #eee;
+    padding: 10px;
+}
+.card-comment .user-name{
+    font-weight: bold;
+}
+.card-comment .time{
+    color: #a2a2a2;
+    font-size: 0.88em;
+}
+
+.card-comment .content{
+    margin-top: 10px;
+    color: #646464;
+}
+
+.card-quick-tasks a{
+    display: block;
+    line-height: 2;
+}
+.card-quick-tasks i{
+    margin-right: 10px;
+    width: 24px;
+}

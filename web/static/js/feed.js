@@ -10,11 +10,13 @@ $(document).ready(function(){
         for(var i = 0; i < posts.length; i++){
             var post = post_template.clone();
             post.find('.num').text(posts[i].num_comments);
-            post.find('.user-avatar').attr('src', '/static/img/ninja.png');
+            post.find('.user-avatar').attr('src', posts[i].posted_by.avatar);
             post.find('.title').text(posts[i].title);
+            post.find('.title').attr('href', '/feed/post/'+posts[i].id);
             post.find('.user-name').text(
                 posts[i].posted_by.first_name?
-                    posts[i].posted_by.first_name :
+                    posts[i].posted_by.first_name
+                        + ' ' + posts[i].posted_by.last_name:
                     posts[i].posted_by.username
                 );
             var posted_at = new Date(posts[i].posted_at);
