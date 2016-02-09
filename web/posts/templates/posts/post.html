@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load classroom_tags %}
+{% load staticfiles %}
+
+{% block title %}
+Notifica: {{ post.title }}
+{% endblock %}
+
+{% block body %}
+
+<br>
+{{post.title}}
+
+<br><br>
+{{post.body}}
+
+<br>
+<a href="/feed/api/v1/comments/?postid={{post.pk}}">View Comments</a>
+
+{% endblock %}

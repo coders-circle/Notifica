@@ -82,10 +82,6 @@ public class Utilities {
 
 
     public static String getTimeAgo(long time) {
-        if (time < 1000000000000L) {
-            // if timestamp given in seconds, convert to millis
-            time *= 1000;
-        }
 
         long now = Calendar.getInstance().getTimeInMillis();
         if (time > now || time <= 0) {
