@@ -201,9 +201,27 @@ public class DbHelper extends SQLiteOpenHelper {
         Profile.delete(Profile.class, this, "_id IN " + plist, null);
     }
 
+    // Delete all posts except 'keep' recent entries
+    public void deletePosts(int keep) {
+        List<Post> posts = Post.getAll(Post.class, this, "modified_at DESC");
+
+        String plist = "(";
+        for (int i=keep;i<posts.size(); ++i) {
+            if (i!=keep)
+                plist += ", ";
+            plist += posts.get(i)._id;
+        }
+        plist += ")";
+        Post.delete(Post.class, this, "_id IN " + plist, null);
+
+        // Also delete comments for those posts
+        Comment.delete(Comment.class, this, "post IN "+plist, null);
+    }
+
     // Clean up unnecessary cache data
     public void clean() {
         deleteProfiles(30);
+        deletePosts(6);
         deleteUseless();
     }
 }

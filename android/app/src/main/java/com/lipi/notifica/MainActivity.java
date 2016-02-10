@@ -38,6 +38,11 @@ public class MainActivity extends AppCompatActivity {
     NavigationView.OnNavigationItemSelectedListener mNavigationItemSelectedListener;
 
     public void initDb() {
+
+        // Clean up unnecessary cache data
+        DbHelper dbHelper = new DbHelper(MainActivity.this);
+        dbHelper.clean();
+
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -49,13 +54,6 @@ public class MainActivity extends AppCompatActivity {
                     // When it is zero, it means everything is downloaded completely.
                     @Override
                     public void refresh() {
-                        // Log.d("refreshing routine", "queue size: " + this.queue.size());
-
-                        if (this.queue.size() == 0) {
-                            // Clean up unnecessary cache data
-                            DbHelper dbHelper = new DbHelper(MainActivity.this);
-                            dbHelper.clean();
-                        }
                     }
                 });
             }

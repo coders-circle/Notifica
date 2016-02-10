@@ -53,6 +53,8 @@ public class PostDetailActivity extends AppCompatActivity{
                     public void refresh() {
                         refreshComments();
 
+                        // TODO: Check for error
+
                         EditText commentInput =  ((EditText)recyclerView.findViewById(R.id.input_comment));
                         commentInput.setText("");
                         commentInput.clearFocus();
