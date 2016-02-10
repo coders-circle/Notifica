@@ -15,7 +15,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
     // Database name and version
     public static final String DB_NAME = "Notifica.db";
-    public static final int DB_VERSION = 6;
+    public static final int DB_VERSION = 8;
     private final Context mContext;
 
     // Create the helper object
@@ -43,6 +43,7 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL(new Period().getCreateTableSql());
         db.execSQL(new PeriodGroup().getCreateTableSql());
         db.execSQL(new PeriodTeacher().getCreateTableSql());
+        db.execSQL(new Routine().getCreateTableSql());
 
         // Feed
         db.execSQL(new Post().getCreateTableSql());
@@ -71,6 +72,7 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL(new Period().getDestroyTableSql());
         db.execSQL(new PeriodGroup().getDestroyTableSql());
         db.execSQL(new PeriodTeacher().getDestroyTableSql());
+        db.execSQL(new Routine().getDestroyTableSql());
 
         // Feed
         db.execSQL(new Post().getDestroyTableSql());
@@ -220,8 +222,11 @@ public class DbHelper extends SQLiteOpenHelper {
 
     // Clean up unnecessary cache data
     public void clean() {
-        deleteProfiles(30);
-        deletePosts(6);
-        deleteUseless();
+        try {
+            deleteProfiles(30);
+            deletePosts(6);
+            deleteUseless();
+        }
+        catch (Exception ignored) {}
     }
 }

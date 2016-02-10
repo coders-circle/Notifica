@@ -14,7 +14,7 @@ import datetime
 
 class PostViewSet(viewsets.ModelViewSet):
     serializer_class = PostSerializer
-    perimission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    perimission_classes = (permissions.IsAuthenticated,)
 
     def perform_create(self, serializer):
         serializer.save(posted_by=self.request.user)
@@ -28,6 +28,10 @@ class PostViewSet(viewsets.ModelViewSet):
             queryset = Post.objects.filter(Q(title__iregex=regexstring) | Q(body__iregex=regexstring) | Q(tags__iregex=regexstring))
         else:
             queryset = Post.objects.all()
+
+        profile = self.request.GET.get("profile")
+        if profile:
+            queryset = queryset.filter(profile__pk=profile)
 
         # Filter queryset for those posted for classes and organizations user belongs to.
         myprofiles = get_profiles(self.request.user)

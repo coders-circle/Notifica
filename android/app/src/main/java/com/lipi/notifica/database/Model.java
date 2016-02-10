@@ -135,7 +135,7 @@ public class Model {
         Field[] fields = myClass.getFields();
 
         // query
-        Cursor c = db.query(myClass.getSimpleName(), null, selection, args, groupBy, having, orderBy);
+        Cursor c = db.query(true, myClass.getSimpleName(), null, selection, args, groupBy, having, orderBy, null);
 
         // Create object from each row in the result/cursor
         List<T> list = new ArrayList<>(c.getCount());

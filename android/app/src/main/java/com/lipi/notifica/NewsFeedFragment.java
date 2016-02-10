@@ -26,9 +26,13 @@ public class NewsFeedFragment extends Fragment {
 
     private List<Post> mPosts = new ArrayList<>();
     private DbHelper mDbHelper;
+    private long mProfileId = -1;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        if (getArguments() != null)
+            mProfileId = getArguments().getLong("profile_id", -1);
+
         mDbHelper = new DbHelper(getContext());
 
         View rootView = inflater.inflate(R.layout.fragment_newsfeed, container, false);
@@ -75,7 +79,7 @@ public class NewsFeedFragment extends Fragment {
     private void getPosts() {
 
         // First get from cache and show them
-        changeData(Post.getAll(Post.class, mDbHelper, "modified_at DESC"));
+        changeData();
         if (mAdapter != null)
             mAdapter.notifyDataSetChanged();
 
@@ -84,10 +88,10 @@ public class NewsFeedFragment extends Fragment {
             public void run() {
                 // Then get 5 recent ones from the server as well
                 Client client = new Client(getContext());
-                client.getPosts(-1, 5, -1, new Client.ClientListener() {
+                client.getPosts(-1, 5, -1, mProfileId, new Client.ClientListener() {
                     @Override
                     public void refresh() {
-                        changeData(Post.getAll(Post.class, mDbHelper, "modified_at DESC"));
+                        changeData();
                         refreshView();
                     }
                 });
@@ -101,10 +105,10 @@ public class NewsFeedFragment extends Fragment {
             public void run() {
                 // Get 5 more posts from the server
                 Client client = new Client(getContext());
-                client.getPosts(mPosts.size(), 5, -1, new Client.ClientListener() {
+                client.getPosts(mPosts.size(), 5, -1, mProfileId, new Client.ClientListener() {
                     @Override
                     public void refresh() {
-                        changeData(Post.getAll(Post.class, mDbHelper, "modified_at DESC"));
+                        changeData();
                         refreshView();
                     }
                 });
@@ -112,8 +116,11 @@ public class NewsFeedFragment extends Fragment {
         }).run();
     }
 
-    public void changeData(List<Post> newPosts) {
-        mPosts = newPosts;
+    public void changeData() {
+        if (mProfileId >= 0) {
+            mPosts = Post.query(Post.class, mDbHelper, "profile=?", new String[]{mProfileId+""}, null, null, "modified_at DESC");
+        } else
+            mPosts = Post.getAll(Post.class, mDbHelper, "modified_at DESC");
 
         if(mAdapter != null) {
             mAdapter.setPosts(mPosts);

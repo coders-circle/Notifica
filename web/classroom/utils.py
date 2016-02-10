@@ -21,14 +21,14 @@ def get_profiles(user):
     teachers = getTeachers(user)
     for teacher in teachers:
         if teacher.department:
-            result = result + [teacher.department.profile, teacher.department.organization.profile]
+            result = result + [teacher.department.profile]
 
     students = getStudents(user)
     for student in students:
         cls = student.group.p_class
         result = result + [cls.profile]
         if cls.department:
-            result = result + [cls.department.profile, cls.department.organization.profile]
+            result = result + [cls.department.profile]
 
     return [r.pk for r in result]
 

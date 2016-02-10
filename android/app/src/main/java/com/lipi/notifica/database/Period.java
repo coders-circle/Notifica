@@ -11,6 +11,7 @@ import java.util.List;
 
 public class Period extends Model {
     public long subject;
+    public long routine;
     public int start_time;
     public int end_time;
     public int day;
@@ -27,6 +28,7 @@ public class Period extends Model {
         day = json.optInt("day");
         remarks = json.optString("remarks");
         period_type = json.optInt("period_type");
+        routine = json.optLong("routine");
     }
 
     public List<PGroup> getGroups(SQLiteOpenHelper helper) {

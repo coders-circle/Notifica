@@ -20,6 +20,7 @@
         </activity>
         <activity android:name=".RegisterActivity" android:theme="@style/ForLogin"/>
         <activity android:name=".MainActivity" />
+        <activity android:name=".ClassActivity" />
         <activity android:name=".SubjectDetailsActivity"/>
         <activity android:name=".SettingsActivity" android:theme="@style/ForSettings"/>
         <activity android:name=".PostDetailActivity" android:theme="@style/AppTheme"/>

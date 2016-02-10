@@ -14,18 +14,22 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.lipi.notifica.database.Client;
 import com.lipi.notifica.database.DbHelper;
+import com.lipi.notifica.database.PClass;
 import com.lipi.notifica.database.Profile;
 import com.lipi.notifica.database.User;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
+    private Menu mMenu;
+    private DbHelper mDbHelper;
 
     private RoutineFragment mRoutineFragment;
     private NewsFeedFragment mNewsFeedFragment;
@@ -40,20 +44,42 @@ public class MainActivity extends AppCompatActivity {
     public void initDb() {
 
         // Clean up unnecessary cache data
-        DbHelper dbHelper = new DbHelper(MainActivity.this);
-        dbHelper.clean();
+        mDbHelper.clean();
 
         new Thread(new Runnable() {
             @Override
             public void run() {
                 // Download and get new routine
-                Client client = new Client(MainActivity.this);
+                final Client client = new Client(MainActivity.this);
                 client.getRoutine(new Client.ClientListener() {
                     // The refresh is called number of times as new data are downloaded.
                     // This.queue represents number of refresh callbacks that are pending.
                     // When it is zero, it means everything is downloaded completely.
                     @Override
                     public void refresh() {
+                        if (queue.size() == 0) {
+                            refreshMenuItems();
+                        }
+                    }
+                });
+
+                // Also get all student and teacher profiles associated with the account
+                User user = User.getLoggedInUser(MainActivity.this);
+                client.getAssociated("student", user._id, new Client.ClientListener() {
+                    @Override
+                    public void refresh() {
+                        if (queue.size() == 0) {
+                            refreshMenuItems();
+                        }
+                    }
+                });
+
+                client.getAssociated("teacher", user._id, new Client.ClientListener() {
+                    @Override
+                    public void refresh() {
+                        if (queue.size() == 0) {
+                            refreshMenuItems();
+                        }
                     }
                 });
             }
@@ -61,33 +87,49 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Add a menu item to a group with given id, name and icon
-    private MenuItem addMenuItem(Menu menu, int group, int id, String name, int icon) {
-        MenuItem menuItem = menu.add(group, id, Menu.NONE, name);
+    private MenuItem addMenuItem(int group, int id, String name, int icon) {
+        MenuItem menuItem = mMenu.add(group, id, Menu.NONE, name);
         menuItem.setIcon(icon);
         menuItem.setCheckable(true);
         menuItem.setChecked(false);
         return menuItem;
     }
 
+    private void refreshMenuItems() {
+        // Add basic items
+        mMenu.clear();
+        addMenuItem(R.id.basic_group, R.id.news_feed, "News Feed", R.mipmap.news_feed);
+        addMenuItem(R.id.basic_group, R.id.routine, "Routine", R.mipmap.routine);
+        addMenuItem(R.id.basic_group, R.id.assignment, "Assignments", R.mipmap.assignment);
+        addMenuItem(R.id.settings_group, R.id.settings, "Settings", R.mipmap.settings);
+        addMenuItem(R.id.classes_group, R.id.add_class, "Add Class", R.mipmap.ic_launcher);
+
+        // Get classes
+        // TODO: get classes from routine and students accounts
+        List<PClass> classes = PClass.getAll(PClass.class, new DbHelper(this));
+
+        // Add menu item for each class
+        for (PClass pClass: classes) {
+            addMenuItem(R.id.classes_group, 0, pClass.class_id, R.mipmap.ic_launcher);
+        }
+
+        mMenu.setGroupVisible(R.id.classes_group, !isVisible);
+    }
+
     // Prepare the navigation drawer menu
     private void prepareMenu() {
         // Add checkable groups to the menu
-        final Menu defaultMenu = navigationView.getMenu();
-        defaultMenu.setGroupCheckable(R.id.basic_group, true, true);
-        defaultMenu.setGroupCheckable(R.id.settings_group, true, true);
+        mMenu = navigationView.getMenu();
+        mMenu.setGroupCheckable(R.id.basic_group, true, true);
+        mMenu.setGroupCheckable(R.id.settings_group, true, true);
 
         // Add menu items
-        addMenuItem(defaultMenu, R.id.basic_group, R.id.news_feed, "News Feed", R.mipmap.news_feed);
-        addMenuItem(defaultMenu, R.id.basic_group, R.id.routine, "Routine", R.mipmap.routine);
-        addMenuItem(defaultMenu, R.id.basic_group, R.id.assignment, "Assignments", R.mipmap.assignment);
-        addMenuItem(defaultMenu, R.id.settings_group, R.id.settings, "Settings", R.mipmap.settings);
-        addMenuItem(defaultMenu, R.id.classes_group, R.id.add_class, "Add Class", R.mipmap.ic_launcher);
-
-        defaultMenu.setGroupVisible(R.id.classes_group, !isVisible);
+        refreshMenuItems();
 
         // Initialize the swap button in the drawer
-        View headerView = navigationView.getHeaderView(0);
+        final View headerView = navigationView.getHeaderView(0);
         final ImageView swapClasses = (ImageView) headerView.findViewById(R.id.class_select);
+
         swapClasses.setImageResource(R.mipmap.swap_class);
         ((View)swapClasses.getParent()).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -99,9 +141,9 @@ public class MainActivity extends AppCompatActivity {
                     swapClasses.setImageResource(R.mipmap.swap_class);
                     swap = true;
                 }
-                defaultMenu.setGroupVisible(R.id.basic_group, isVisible);
-                defaultMenu.setGroupVisible(R.id.settings_group, isVisible);
-                defaultMenu.setGroupVisible(R.id.classes_group, !isVisible);
+                mMenu.setGroupVisible(R.id.basic_group, isVisible);
+                mMenu.setGroupVisible(R.id.settings_group, isVisible);
+                mMenu.setGroupVisible(R.id.classes_group, !isVisible);
             }
         });
     }
@@ -111,6 +153,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mDbHelper = new DbHelper(this);
         initDb();
 
         // Create the fragments once
@@ -128,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Set the drawer header contents from the user profile
         User user = User.getLoggedInUser(this);
-        Profile profile = Profile.get(Profile.class, new DbHelper(this), user.profile);
+        Profile profile = Profile.get(Profile.class, mDbHelper, user.profile);
         ((TextView)headerView.findViewById(R.id.username)).setText(user.getName());
         ((TextView)headerView.findViewById(R.id.email)).setText(user.email);
         ((ImageView)headerView.findViewById(R.id.avatar)).setImageBitmap(profile.getAvatar());
@@ -157,13 +200,23 @@ public class MainActivity extends AppCompatActivity {
                         Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
                         startActivityForResult(intent, 1);
                         return false;
+                    case R.id.add_class:
+                        drawerLayout.closeDrawers();
+                        return false;
+                    default:
+                        drawerLayout.closeDrawers();
+                        String class_id = menuItem.getTitle().toString();
+                        Intent intent1 = new Intent(MainActivity.this, ClassActivity.class);
+                        intent1.putExtra("class_id", class_id);
+                        startActivity(intent1);
+                        return false;
                 }
 
-                if( selectedFragment != null ){
+                if(selectedFragment != null){
                     getSupportFragmentManager().beginTransaction().replace(R.id.frame_content, selectedFragment).commit();
                     menuItem.setChecked(true);
-                    drawerLayout.closeDrawers();
                 }
+                drawerLayout.closeDrawers();
                 return true;
             }
         };

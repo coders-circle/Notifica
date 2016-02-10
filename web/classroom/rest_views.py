@@ -84,6 +84,10 @@ class TeacherViewSet(viewsets.ModelViewSet):
             teachers = periods.values_list("teachers", flat=True)
             queryset = queryset.filter(pk__in=teachers)
 
+        user = self.request.GET.get("user")
+        if user:
+            queryset = queryset.filter(user__pk=user)
+
         return queryset
 
 
@@ -170,6 +174,10 @@ class StudentViewSet(viewsets.ModelViewSet):
         p_class = self.request.GET.get("class")
         if p_class:
             queryset = queryset.filter(group__p_class__pk=p_class)
+
+        user = self.request.GET.get("user")
+        if user:
+            queryset = queryset.filter(user__pk=user)
 
         return queryset
 

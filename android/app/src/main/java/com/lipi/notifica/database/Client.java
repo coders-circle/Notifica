@@ -54,6 +54,8 @@ public class Client {
         Period p = new Period(json);
         p.save(mDbHelper);
 
+        getRoutine(json.getLong("routine"), clientListener);
+
         getSubject(p.subject, clientListener);
         JSONArray tsJson = json.getJSONArray("teachers");
         if (tsJson != null) {
@@ -113,7 +115,9 @@ public class Client {
     private void addClass(JSONObject json, ClientListener clientListener) {
         PClass c = new PClass(json);
         c.save(mDbHelper);
-        // getDepartment(c.p_class);
+        // TODO: getDepartment(c.p_class);
+
+        getProfile(c.profile, clientListener);
     }
 
     private void addPost(JSONObject json, ClientListener clientListener) throws JSONException {
@@ -128,6 +132,13 @@ public class Client {
         c.save(mDbHelper);
 
         addUser(json.getJSONObject("posted_by"), clientListener);
+    }
+
+    private void addRoutine(JSONObject json, ClientListener clientListener) throws JSONException {
+        Routine r = new Routine(json);
+        r.save(mDbHelper);
+
+        getClass(json.getLong("p_class"), clientListener);
     }
 
     // Get the routine for this user
@@ -148,6 +159,7 @@ public class Client {
                     Period.deleteAll(Period.class, mDbHelper);
                     PeriodTeacher.deleteAll(PeriodTeacher.class, mDbHelper);
                     PeriodGroup.deleteAll(PeriodGroup.class, mDbHelper);
+                    Routine.deleteAll(Routine.class, mDbHelper);
 
                     // Then add each period fetched from server
                     try {
@@ -224,6 +236,17 @@ public class Client {
                 }
             }
         });
+    }
+
+    // Get a routine
+    public void getRoutine(final long id, final ClientListener clientListener) {
+        get(clientListener, "routine", id, "routine/api/v1/routines/" + id + "/",
+                new Callback() {
+                    @Override
+                    public void callback(JSONObject json) throws JSONException {
+                        addRoutine(json, clientListener);
+                    }
+                });
     }
 
     // Get a subject
@@ -361,7 +384,7 @@ public class Client {
     }
 
     // Get posts from server, offset, count and time can be -1 if not needed
-    public void getPosts(long offset, long count, long time, final ClientListener clientListener) {
+    public void getPosts(long offset, long count, long time, long profile, final ClientListener clientListener) {
         if (clientListener != null)
             clientListener.queue.add("posts");
 
@@ -377,6 +400,8 @@ public class Client {
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
+        if (profile >= 0)
+            query += (query.equals("")?"":"&") + "profile="+profile;
 
         NetworkHandler handler = new NetworkHandler(mContext, mUsername, mPassword, true);
         handler.get("feed/api/v1/posts/" + (query.equals("")?"":"?"+query), new NetworkHandler.NetworkListener() {
@@ -464,6 +489,30 @@ public class Client {
                     Toast.makeText(mContext, "Couldn't post comment.\nCheck internet connection and try again.",
                             Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+    }
+
+
+    public void getAssociated(final String type, long userId, final ClientListener clientListener) {
+        NetworkHandler handler = new NetworkHandler(mContext, mUsername, mPassword, true);
+        handler.get("classroom/api/v1/" + type + "s/?user=" + userId, new NetworkHandler.NetworkListener() {
+            @Override
+            public void onComplete(NetworkHandler.Result result) {
+                if (result.success) {
+                    try {
+                        JSONArray list = new JSONArray(result.result);
+                        for (int i=0; i<list.length(); ++i) {
+                            if (type.equals("teacher"))
+                                addTeacher(list.getJSONObject(i), clientListener);
+                            else if (type.equals("student"))
+                                addStudent(list.getJSONObject(i), clientListener);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                clientListener.refresh();
             }
         });
     }
