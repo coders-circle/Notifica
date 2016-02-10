@@ -5,7 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,19 +24,17 @@ public class NewsFeedFragment extends Fragment {
     private PostAdapter mAdapter;
     private SwipeRefreshLayout mSwipeRefreshLayout;
 
-    private List<Post> mPosts;
+    private List<Post> mPosts = new ArrayList<>();
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mPosts = new ArrayList<>();
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_newsfeed, container, false);
-        RecyclerView recyclerView;
-        RecyclerView.LayoutManager layoutManager;
-        recyclerView = (RecyclerView)rootView.findViewById(R.id.recycler_view_posts);
+
+        RecyclerView recyclerView = (RecyclerView)rootView.findViewById(R.id.recycler_view_posts);
         recyclerView.addItemDecoration(new PostDivider(rootView.getContext()));
         recyclerView.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(rootView.getContext());
+
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(rootView.getContext());
         recyclerView.setLayoutManager(layoutManager);
 
         mAdapter = new PostAdapter(getActivity(), mPosts);
@@ -54,9 +52,10 @@ public class NewsFeedFragment extends Fragment {
         return rootView;
     }
 
-    // fetch posts from the server
+    // Fetch posts from the server
     private void getPosts() {
-        // get from cache and show them
+
+        // First get from cache and show them
         final DbHelper helper = new DbHelper(getContext());
         changeData(Post.getAll(Post.class, helper, "modified_at DESC"));
         if (mAdapter != null)
@@ -65,7 +64,7 @@ public class NewsFeedFragment extends Fragment {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                // get recent ones as well
+                // Then get recent ones from the server as well
                 Client client = new Client(getContext());
                 client.getPosts(-1, 30, -1, new Client.ClientListener() {
                     @Override
@@ -74,11 +73,6 @@ public class NewsFeedFragment extends Fragment {
                         refreshView();
                     }
                 });
-
-                /*long time = 0;
-                if (mPosts.size() > 0)
-                    time = mPosts.get(0).modified_at;
-                client.getPosts(-1, -1, time...*/
             }
         }).run();
     }
@@ -99,9 +93,11 @@ public class NewsFeedFragment extends Fragment {
 
     public class PostDivider extends RecyclerView.ItemDecoration{
         private Drawable mDivider;
+
         public PostDivider(Context context){
-            mDivider = context.getResources().getDrawable(R.drawable.divider_post);
+            mDivider = ContextCompat.getDrawable(context, R.drawable.divider_post);
         }
+
         @Override
         public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
             if( parent.getChildCount() < 2 ){

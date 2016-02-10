@@ -5,14 +5,9 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
-/**
- * Created by aditya on 12/25/15.
- */
-
 public class SubjectDetailsActivity extends AppCompatActivity {
-    private Toolbar toolbar;
     ViewPager pager;
-    ViewPagerAdapter adapter;
+    SubjectViewPagerAdapter adapter;
     SlidingTabLayout tabs;
     CharSequence Titles[]={"Details","Posts","Resources"};
     int NumberOfTabs = 3;
@@ -20,14 +15,14 @@ public class SubjectDetailsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.subject_details);
+        setContentView(R.layout.activity_subject);
 
-        toolbar = (Toolbar) findViewById(R.id.tool_bar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
 
 
         // Creating The ViewPagerAdapter and Passing Fragment Manager, Titles fot the Tabs and Number Of Tabs.
-        adapter =  new ViewPagerAdapter(getSupportFragmentManager(),Titles,NumberOfTabs);
+        adapter =  new SubjectViewPagerAdapter(getSupportFragmentManager(),Titles,NumberOfTabs);
 
         // Assigning ViewPager View and setting the adapter
         pager = (ViewPager) findViewById(R.id.pager);

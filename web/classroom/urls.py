@@ -13,6 +13,7 @@ router.register(r'classes', rest_views.ClassViewSet, base_name='class')
 router.register(r'groups', rest_views.GroupViewSet, base_name='group')
 router.register(r'students', rest_views.StudentViewSet, base_name='student')
 router.register(r'users', rest_views.UserViewSet, base_name='user')
+router.register(r'requests', rest_views.RequestViewSet, base_name='request')
 
 
 urlpatterns = [

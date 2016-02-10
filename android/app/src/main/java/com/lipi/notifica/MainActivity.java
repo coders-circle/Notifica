@@ -1,13 +1,9 @@
 package com.lipi.notifica;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.PersistableBundle;
-import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
@@ -15,15 +11,12 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.lipi.notifica.database.Client;
 import com.lipi.notifica.database.DbHelper;
@@ -69,72 +62,35 @@ public class MainActivity extends AppCompatActivity {
         }).run();
     }
 
+    // Add a menu item to a group with given id, name and icon
+    private MenuItem addMenuItem(Menu menu, int group, int id, String name, int icon) {
+        MenuItem menuItem = menu.add(group, id, Menu.NONE, name);
+        menuItem.setIcon(icon);
+        menuItem.setCheckable(true);
+        menuItem.setChecked(false);
+        return menuItem;
+    }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        initDb();
-
-        // Create the fragment once
-        mRoutineFragment = new RoutineFragment();
-        mNewsFeedFragment = new NewsFeedFragment();
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar);
-        setSupportActionBar(toolbar);
-
-        //Initializing NavigationView
-        navigationView = (NavigationView) findViewById(R.id.navigation_view);
-
-        // Set from profile
-        DbHelper helper = new DbHelper(this);
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        User user = User.get(User.class, helper, "username=?", new String[]{preferences.getString("username", "")}, null);
-        Profile profile = Profile.get(Profile.class, helper, user.profile);
-
-        final View headerView = navigationView.getHeaderView(0);
-        String name = user.first_name + " " + user.last_name;
-        ((TextView)headerView.findViewById(R.id.username)).setText(name);
-        ((TextView)headerView.findViewById(R.id.email)).setText(user.email);
-        ((ImageView)headerView.findViewById(R.id.avatar)).setImageBitmap(profile.getAvatar());
-
-        ((GradientDrawable)(headerView.findViewById(R.id.avatar)).getBackground()).setColor(0xFFFFFFFF);
-
+    // Prepare the navigation drawer menu
+    private void prepareMenu() {
+        // Add checkable groups to the menu
         final Menu defaultMenu = navigationView.getMenu();
-
         defaultMenu.setGroupCheckable(R.id.basic_group, true, true);
         defaultMenu.setGroupCheckable(R.id.settings_group, true, true);
 
-        MenuItem newsFeedItem = defaultMenu.add(R.id.basic_group, R.id.news_feed, Menu.NONE, "News Feed");
-        newsFeedItem.setIcon(R.mipmap.news_feed);
-        newsFeedItem.setCheckable(true);
-        newsFeedItem.setChecked(false);
+        // Add menu items
+        addMenuItem(defaultMenu, R.id.basic_group, R.id.news_feed, "News Feed", R.mipmap.news_feed);
+        addMenuItem(defaultMenu, R.id.basic_group, R.id.routine, "Routine", R.mipmap.routine);
+        addMenuItem(defaultMenu, R.id.basic_group, R.id.assignment, "Assignments", R.mipmap.assignment);
+        addMenuItem(defaultMenu, R.id.settings_group, R.id.settings, "Settings", R.mipmap.settings);
+        addMenuItem(defaultMenu, R.id.classes_group, R.id.add_class, "Add Class", R.mipmap.ic_launcher);
 
-        MenuItem routineItem = defaultMenu.add(R.id.basic_group, R.id.routine, Menu.NONE, "Routine");
-        routineItem.setIcon(R.mipmap.routine);
-        routineItem.setCheckable(true);
-        routineItem.setChecked(false);
-
-        MenuItem assignmentItem = defaultMenu.add(R.id.basic_group, R.id.assignment, Menu.NONE, "Assignments");
-        assignmentItem.setIcon(R.mipmap.assignment);
-        assignmentItem.setCheckable(true);
-        assignmentItem.setChecked(false);
-
-        MenuItem settingsItem = defaultMenu.add(R.id.settings_group, R.id.settings, Menu.NONE, "Settings");
-        settingsItem.setIcon(R.mipmap.settings);
-        settingsItem.setCheckable(true);
-        settingsItem.setChecked(false);
-
-        MenuItem addClass = defaultMenu.add(R.id.classes_group, R.id.add_class, Menu.NONE,"Add Class");
         defaultMenu.setGroupVisible(R.id.classes_group, !isVisible);
-        addClass.setIcon(R.mipmap.ic_launcher);
-        addClass.setCheckable(true);
-        addClass.setChecked(false);
 
+        // Initialize the swap button in the drawer
+        View headerView = navigationView.getHeaderView(0);
         final ImageButton swapClasses = (ImageButton) headerView.findViewById(R.id.class_select);
         swapClasses.setBackgroundResource(R.mipmap.swap_class);
-
         swapClasses.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 isVisible=!isVisible;
@@ -151,10 +107,41 @@ public class MainActivity extends AppCompatActivity {
                 defaultMenu.setGroupVisible(R.id.classes_group,!isVisible);
             }
         });
-        //Setting Navigation View Item Selected Listener to handle the item click of the navigation menu
-        mNavigationItemSelectedListener = new NavigationView.OnNavigationItemSelectedListener() {
+    }
 
-            // This method will trigger on item Click of navigation menu
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        initDb();
+
+        // Create the fragments once
+        mRoutineFragment = new RoutineFragment();
+        mNewsFeedFragment = new NewsFeedFragment();
+
+        // Set the toolbar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar);
+        setSupportActionBar(toolbar);
+
+        // Initialize the navigation drawer
+
+        navigationView = (NavigationView) findViewById(R.id.navigation_view);
+        View headerView = navigationView.getHeaderView(0);
+
+        // Set the drawer header contents from the user profile
+        User user = User.getLoggedInUser(this);
+        Profile profile = Profile.get(Profile.class, new DbHelper(this), user.profile);
+        ((TextView)headerView.findViewById(R.id.username)).setText(user.getName());
+        ((TextView)headerView.findViewById(R.id.email)).setText(user.email);
+        ((ImageView)headerView.findViewById(R.id.avatar)).setImageBitmap(profile.getAvatar());
+        ((GradientDrawable)(headerView.findViewById(R.id.avatar)).getBackground()).setColor(0xFFFFFFFF);
+
+        // Prepare the menu items on the drawer
+        prepareMenu();
+
+        // Handle navigation item selection
+        mNavigationItemSelectedListener = new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
                 Fragment selectedFragment = null;
@@ -185,14 +172,12 @@ public class MainActivity extends AppCompatActivity {
         };
         navigationView.setNavigationItemSelectedListener(mNavigationItemSelectedListener);
 
-        // Initializing Drawer Layout and ActionBarToggle
+        // Initialize Drawer Layout and ActionBarToggle
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer);
         mDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,R.string.openDrawer, R.string.closeDrawer);
-
-        // Setting the actionbarToggle to drawer layout
         drawerLayout.setDrawerListener(mDrawerToggle);
 
-        // Sync-ing is necessary to show hamburger icon
+        // Sync-ing is necessary to show the hamburger icon
         mDrawerToggle.syncState();
     }
 

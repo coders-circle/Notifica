@@ -35,11 +35,6 @@ public class Utilities {
         return String.format("%02d:%02d", hrs, min);
     }
 
-    public static String formatDateTime(long dateTime) {
-        Date date = new Date(dateTime);
-        return SimpleDateFormat.getInstance().format(date);
-    }
-
 
     // convert from bitmap to byte array
     public static byte[] getBytes(Bitmap bitmap) {
@@ -67,8 +62,6 @@ public class Utilities {
         }
 
     }
-
-
 
 
 

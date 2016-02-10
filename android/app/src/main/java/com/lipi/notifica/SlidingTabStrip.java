@@ -1,7 +1,4 @@
 package com.lipi.notifica;
-/**
- * Created by aditya on 12/12/15.
- */
 
 import android.content.Context;
 import android.graphics.Canvas;

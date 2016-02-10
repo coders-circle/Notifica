@@ -1,4 +1,5 @@
 from rest_framework import permissions
+from classroom.models import *
 
 
 class IsAdminOrReadOnly(permissions.BasePermission):
@@ -11,7 +12,7 @@ class IsAdminOrReadOnly(permissions.BasePermission):
         if obj == request.user:
             return True
 
-        # organization and class are maintained by their admins
+        # department and class are maintained by their admins
         if hasattr(obj, 'admins'):
             return request.user in obj.admins.all()
 
@@ -23,10 +24,6 @@ class IsAdminOrReadOnly(permissions.BasePermission):
         if hasattr(obj, 'routine'):
             return request.user in obj.routine.p_class.admins.all()
 
-        # department belongs to an organization
-        if hasattr(obj, 'organization'):
-            return request.user in obj.organization.admins.all()
-
         # teacher and subject belong to a department
         if hasattr(obj, 'department'):
             return request.user in obj.department.organization.admins.all()
@@ -36,3 +33,31 @@ class IsAdminOrReadOnly(permissions.BasePermission):
             return request.user in obj.group.p_class.admins.all()
 
         return False
+
+
+def FilterRequest(obj, user):
+    if user.is_superuser:
+        return True
+
+    if obj.sender_type == 0 and obj.sender == user.pk:
+        return True
+
+    if obj.sender_type == 1 and \
+        user in Class.objects.get(pk=obj.sender).admins.all():
+        return True
+
+    if obj.request_type == 0 and \
+        user in Class.objects.get(pk=obj.to).admins.all():
+        return True
+
+    if obj.request_type == 1 and \
+        user in Department.objects.get(pk=obj.to).admins.all():
+        return True
+
+    return False
+
+
+class IsRequestOwner(permissions.BasePermission):
+
+    def has_object_permission(self, request, view, obj):
+        return FilterRequest(obj, request.user)

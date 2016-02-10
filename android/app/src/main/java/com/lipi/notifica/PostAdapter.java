@@ -53,14 +53,12 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
         DbHelper helper = new DbHelper(mContext);
         User poster = User.get(User.class, helper, post.posted_by);
-
         Bitmap avatar = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_default_avatar);
 
         String info= "";
         if (poster != null) {
             Profile posterProfile = Profile.get(Profile.class, helper, poster.profile);
-            info = "by " + poster.getName();
-            info += ", ";
+            info = "by " + poster.getName() + ", ";
 
             if (posterProfile != null && posterProfile.getAvatar() != null)
                 avatar = posterProfile.getAvatar();
@@ -87,6 +85,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             info = (TextView)v.findViewById(R.id.info);
             avatar = (ImageView)v.findViewById(R.id.avatar);
         }
+
         @Override
         public void onClick(View view) {
             long postId = mPosts.get(getAdapterPosition())._id;

@@ -21,17 +21,21 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class LoginActivity extends AppCompatActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        // If user is already logged in, go to the MainActivity
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         if (preferences.contains("username") && preferences.contains("password")
                 && preferences.getBoolean("logged_in", false)) {
             startMainActivity();
             return;
         }
+
+        // When login button is clicked, try logging in
         findViewById(R.id.login_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -39,6 +43,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        // Make sure user can press log-in from keyboard when focused in password field
         ((EditText)findViewById(R.id.password)).setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -50,6 +55,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        // When register button is clicked, start the register activity
         findViewById(R.id.register_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,11 +73,19 @@ public class LoginActivity extends AppCompatActivity {
 
     private void signIn() {
 
+        // On no internet connection, we do not even want to try to login
+        if (!NetworkHandler.isNetworkAvailable(this)) {
+            Toast.makeText(LoginActivity.this, "You are not connected to internet. Check your connection and try again", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         final EditText usernameView = (EditText)findViewById(R.id.username);
         final EditText passwordView = (EditText)findViewById(R.id.password);
 
         final String username = usernameView.getText().toString();
         final String password = passwordView.getText().toString();
+
+        // Validate the username and password to some extent in offline mode
 
         if (username.equals("")) {
             usernameView.requestFocus();
@@ -84,27 +98,29 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        if (!NetworkHandler.isNetworkAvailable(this)) {
-            Toast.makeText(LoginActivity.this, "You are not connected to internet. Check your connection and try again", Toast.LENGTH_SHORT).show();
-            return;
-        }
+        // Show login progress bar
 
         final ProgressBar progressBar = (ProgressBar)findViewById(R.id.login_progress);
         final View loginForm = findViewById(R.id.login_form);
         loginForm.setVisibility(View.INVISIBLE);
         progressBar.setVisibility(View.VISIBLE);
 
+        // Next login from network
         login(username, password, new Listener() {
             @Override
             public void onResult(int code) {
+                // On login failure, show back the login form and hide the progress bar
                 if (code != 0) {
                     progressBar.setVisibility(View.GONE);
                     loginForm.setVisibility(View.VISIBLE);
                 }
+
                 switch (code) {
+                    // On success, goto the main activity
                     case 0:
                         startMainActivity();
                         break;
+                    // On failure, show respective error messages
                     case -1:
                         usernameView.requestFocus();
                         usernameView.setError("Invalid username");
@@ -133,6 +149,8 @@ public class LoginActivity extends AppCompatActivity {
         unauthenticatedHandler.get("classroom/api/v1/users/?username=" + username, new NetworkHandler.NetworkListener() {
             @Override
             public void onComplete(NetworkHandler.Result result) {
+
+                // The GET request was unsuccessful due to server or internet problems
                 if (!result.success) {
                     listener.onResult(-3);
                     return;
@@ -140,10 +158,14 @@ public class LoginActivity extends AppCompatActivity {
 
                 try {
                     JSONArray users = new JSONArray(result.result);
+
+                    // If user with such username isn't present, then error
                     if (users.length() != 1) {
                         listener.onResult(-1);
                         return;
                     }
+
+                    // If user is present, we want to authenticate with password
                     final long user_id = users.getJSONObject(0).getLong("id");
 
                     // Now authenticate the username:password
@@ -151,6 +173,8 @@ public class LoginActivity extends AppCompatActivity {
                     handler.get("classroom/api/v1/users/" + user_id + "/", new NetworkHandler.NetworkListener() {
                         @Override
                         public void onComplete(NetworkHandler.Result result) {
+
+                            // On authentication failure, the GET request fails with 403 error code
                             if (!result.success) {
                                 listener.onResult(result.code==403?-2:-3);
                                 return;
@@ -161,7 +185,7 @@ public class LoginActivity extends AppCompatActivity {
                                 if (!user.has("id") || user.getLong("id") != user_id)
                                     listener.onResult(-1);
 
-                                // Successful login
+                                // Successful login: save the username and password
                                 SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
                                 preferences.edit()
                                         .putString("username", username)
@@ -192,7 +216,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-
+    // Register activity finishes with some result
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Register activity telling us to close

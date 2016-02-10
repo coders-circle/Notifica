@@ -4,13 +4,10 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -31,6 +28,7 @@ public class PeriodAdapter extends RecyclerView.Adapter<PeriodAdapter.PeriodView
         mPeriods = periods;
         mContext = context;
 
+        // Find out the break times
         if (mPeriods.size() > 1) {
             int cnt = 0;
             Period lastPeriod = mPeriods.get(0);
@@ -81,29 +79,30 @@ public class PeriodAdapter extends RecyclerView.Adapter<PeriodAdapter.PeriodView
 
         Period period = mPeriods.get(pPosition);
 
+        // Get the subject and teachers
         DbHelper helper = new DbHelper(mContext);
         Subject subject = Subject.get(Subject.class, helper, period.subject);
         List<Teacher> teachers = period.getTeachers(helper);
         String teacher_str = "";
-        for(int i = 0; i < teachers.size(); i++){
+
+        for(int i = 0; i < teachers.size(); i++) {
+            // Teacher may or may not have a user account
             if(teachers.get(i).user != -1) {
                 User usr = User.get(User.class, helper, teachers.get(i).user);
-                teacher_str += usr.first_name.length() > 0? usr.first_name + " " + usr.last_name : "";
+                teacher_str += usr.getName();
             }
             else{
                 teacher_str += teachers.get(i).username;
             }
+
             if (i != teachers.size() - 1) {
                 teacher_str += ", ";
             }
         }
-        String subShortName = subject.short_name;
-        if(subShortName.length() == 0){
-            String[] subWords = subject.name.split(" ");
-            for (String subWord : subWords) {
-                subShortName += subWord.toUpperCase().charAt(0);
-            }
-        }
+
+        String subShortName = subject.getShortName();
+
+        // Set the period view contents
 
         holder.subShortName.setText(subShortName);
         holder.subShortName.setBackgroundResource(R.drawable.border_circle);
@@ -113,12 +112,14 @@ public class PeriodAdapter extends RecyclerView.Adapter<PeriodAdapter.PeriodView
         holder.time.setText(timeText);
         holder.subject.setText(subject.name);
         holder.teachers.setText(teacher_str);
+
         if(teacher_str.length() == 0){
             holder.teachers.setVisibility(View.GONE);
         }
         else{
             holder.teachers.setVisibility(View.VISIBLE);
         }
+
         holder.remarks.setText(period.remarks);
         if(period.remarks.length() == 0){
             holder.remarks.setVisibility(View.GONE);

@@ -10,7 +10,7 @@
     <string name="base_url">http://192.168.1.6:8000/</string>
     <string name="notifica">Notifica</string>
 
-    <!--following naming convention should be used for header-->
+    <!--following naming convention should be used for layout_nav_header-->
     <string name="header_post_detail">Post Detail</string>
     <string name="title_lorem">Lorem Ipsum</string>
     <string name="content_lorem">
