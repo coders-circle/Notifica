@@ -192,3 +192,26 @@ class UserViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(username=username)
 
         return queryset
+
+
+class RequestViewSet(viewsets.ModelViewSet):
+    serializer_class = RequestSerializer
+    permission_classes = (permissions.IsAuthenticated, IsRequestOwner)
+
+    def perform_create(self, serializer):
+        sender_type = serializer.validated_data["sender_type"]
+        sender = serializer.validated_data["sender"]
+
+        if sender_type==1 and self.request.user not in Class.objects.get(pk=sender).admins.all():
+            raise serializers.ValidationError("You have not permission to send request on behalf of this class")
+        serializer.save()
+
+    def get_queryset(self):
+        queryset = Request.objects.all()
+        filtered = []
+
+        for p in queryset:
+            if FilterRequest(p, self.request.user):
+                filtered.append(p.pk)
+
+        return Request.objects.filter(pk__in=filtered)

@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 
 from classroom.models import *
 from classroom.utils import *
+from posts.models import *
 
 
 class FeedView(View):
@@ -14,4 +15,14 @@ class FeedView(View):
             context["current_page"] = "News feed"
             request.user.profile = UserProfile.objects.get(user=request.user).profile
             return render(request, "posts/feed.html", context)
+        return redirect("home")
+
+
+class PostView(View):
+    def get(self, request, post_id):
+        if isValidUser(request.user):
+            context  = {}
+            context["post"] = Post.objects.get(pk=post_id)
+            request.user.profile = UserProfile.objects.get(user=request.user).profile
+            return render(request, "posts/post.html", context)
         return redirect("home")

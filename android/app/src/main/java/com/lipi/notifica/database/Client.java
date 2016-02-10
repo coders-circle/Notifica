@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.lipi.notifica.Utilities;
 
@@ -396,6 +397,72 @@ public class Client {
                 if (clientListener != null) {
                     clientListener.queue.remove("posts");
                     clientListener.refresh();
+                }
+            }
+        });
+    }
+
+
+
+    // Get comments from server
+    public void getComments(final long postId, final ClientListener clientListener) {
+        if (clientListener != null)
+            clientListener.queue.add("comments:"+postId);
+
+        // Get comments
+        NetworkHandler handler = new NetworkHandler(mContext, mUsername, mPassword, true);
+        handler.get("feed/api/v1/comments/?postid="+postId, new NetworkHandler.NetworkListener() {
+            @Override
+            public void onComplete(NetworkHandler.Result result) {
+                if (result.success) {
+                    // Delete previous comments for this post
+                    Comment.delete(Comment.class, mDbHelper, "post=?", new String[]{""+postId});
+
+                    // Now add each comment fetched from server
+                    try {
+                        JSONArray comments = new JSONArray(result.result);
+                        for (int i = 0; i < comments.length(); ++i) {
+                            addComment(comments.getJSONObject(i), clientListener);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                if (clientListener != null) {
+                    clientListener.queue.remove("comments:"+postId);
+                    clientListener.refresh();
+                }
+            }
+        });
+    }
+
+    // Post comment
+    public void postComment(final String comment, final long postId, final ClientListener clientListener) {
+        JSONObject data = new JSONObject();
+        try {
+            data.put("post", postId);
+            data.put("body", comment);
+            data.put("links", "[]");
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return;
+        }
+
+        NetworkHandler handler = new NetworkHandler(mContext, mUsername, mPassword, true);
+        handler.post("feed/api/v1/comments/", data.toString(), new NetworkHandler.NetworkListener() {
+            @Override
+            public void onComplete(NetworkHandler.Result result) {
+                if (result.success) {
+                    try {
+                        addComment(new JSONObject(result.result), clientListener);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    clientListener.refresh();
+                } else {
+                    Toast.makeText(mContext, "Couldn't post comment.\nCheck internet connection and try again.",
+                            Toast.LENGTH_SHORT).show();
                 }
             }
         });

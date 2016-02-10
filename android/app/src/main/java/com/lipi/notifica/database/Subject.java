@@ -17,4 +17,17 @@ public class Subject extends Model {
         department = json.optLong("department", -1);
         color = json.optString("color");
     }
+
+    public String getShortName() {
+        String subShortName = short_name;
+
+        // Create short name if doesn't already exist
+        if(subShortName.length() == 0){
+            String[] subWords = name.split(" ");
+            for (String subWord : subWords) {
+                subShortName += subWord.toUpperCase().charAt(0);
+            }
+        }
+        return subShortName;
+    }
 }

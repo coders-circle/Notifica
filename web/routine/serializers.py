@@ -15,6 +15,15 @@ class PeriodSerializer(serializers.ModelSerializer):
 
 
 class ElectiveSerializer(serializers.ModelSerializer):
+    group = serializers.SerializerMethodField()
+    routine = serializers.SerializerMethodField()
+
     class Meta:
         model = Elective
-        fields = ('id', 'groups', 'routine', 'subject', 'teachers', 'period_type', 'start_time', 'end_time', 'day', 'remarks', 'students')
+        fields = ('id', 'group', 'routine', 'subject', 'teachers', 'period_type', 'start_time', 'end_time', 'day', 'remarks', 'students')
+
+    def get_group(self, elective):
+        return elective.p_group.name
+
+    def get_routine(self, elective):
+        return elective.p_group.routine.pk

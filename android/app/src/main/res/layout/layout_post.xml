@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?android:attr/selectableItemBackground"
-    android:paddingTop="10dp"
-    android:paddingBottom="10dp"
-    android:paddingLeft="20dp"
-    android:paddingRight="20dp">
+    android:paddingTop="20dp"
+    android:paddingBottom="20dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -28,13 +29,13 @@
             <TextView
                 android:id="@+id/title"
                 android:text="Title of the post"
-                android:textSize="15dp"
+                android:textSize="18dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
                 android:id="@+id/info"
-                android:text="posted by Mr. Absolute Zero a few seconds ago"
-                android:textSize="13dp"
+                android:text="by Mr. Absolute Zero a few seconds ago"
+                android:textColor="@color/colorSecondaryText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
@@ -49,7 +50,6 @@
         <TextView
             android:id="@+id/content"
             android:text="this post is all about test and this is the content part"
-            android:textSize="14dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 

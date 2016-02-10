@@ -8,7 +8,6 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.SystemClock;
-import android.util.Log;
 import android.widget.RemoteViews;
 
 import com.lipi.notifica.database.DbHelper;
@@ -23,28 +22,32 @@ public class PeriodWidgetProvider extends AppWidgetProvider {
         // Update widget
         DbHelper dbHelper = new DbHelper(context);
         Calendar cal = Calendar.getInstance();
-        int currentTime = cal.get(Calendar.HOUR_OF_DAY) * 60 + cal.get(Calendar.MINUTE);
 
+        // Get current time and day of week
+        int currentTime = cal.get(Calendar.HOUR_OF_DAY) * 60 + cal.get(Calendar.MINUTE);
         int day = cal.get(Calendar.DAY_OF_WEEK) - 1;
 
+        // Get current next periods
         Period current = Period.get(Period.class, dbHelper, "start_time<=? AND end_time>? AND day=?", new String[]{""+currentTime, ""+currentTime, ""+day}, "start_time");
-        Period period = Period.get(Period.class, dbHelper, "start_time>? AND day=?", new String[]{"" + currentTime, "" + day}, "start_time");
+        Period next = Period.get(Period.class, dbHelper, "start_time>? AND day=?", new String[]{"" + currentTime, "" + day}, "start_time");
 
+        // If next period isn't today, get tomorrow's period and so on
         int count = 0;
-        while (period==null && count < 7) {
+        while (next==null && count < 7) {
             day = (day+1)%7;
-            period = Period.get(Period.class, dbHelper, "day=?", new String[]{""+day}, "start_time");
+            next = Period.get(Period.class, dbHelper, "day=?", new String[]{""+day}, "start_time");
             count++;
         }
 
         int remaining;
 
-        if (period != null) {
-            remaining = period.start_time - currentTime;
+        if (next != null) {
+            // Find remaining time to next period
+            remaining = next.start_time - currentTime;
             if (count > 0)
-                remaining = 24*60 - currentTime + (count-1) * 24 + period.start_time;
+                remaining = 24*60 - currentTime + (count-1) * 24 + next.start_time;
 
-            Subject subject = Subject.get(Subject.class, dbHelper, period.subject);
+            Subject subject = Subject.get(Subject.class, dbHelper, next.subject);
 
             // Show current period if exists
             String text = "";
@@ -62,7 +65,7 @@ public class PeriodWidgetProvider extends AppWidgetProvider {
                 text += DbHelper.DAYS[day] + " ";
             }
 
-            text += period.getStartTime() + " - " + period.getEndTime() + ")";
+            text += next.getStartTime() + " - " + next.getEndTime() + ")";
             remoteViews.setTextViewText(R.id.widget_period_text, text);
         }
 
@@ -86,7 +89,7 @@ public class PeriodWidgetProvider extends AppWidgetProvider {
 
         for (int widgetId : allWidgetIds) {
 
-            RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.layout_period_widget);
+            RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_period);
 
             // Register an onClickListener to launch MainActivity
             Intent intent1 = new Intent(context, MainActivity.class);

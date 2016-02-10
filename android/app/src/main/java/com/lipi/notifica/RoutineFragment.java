@@ -61,12 +61,6 @@ public class RoutineFragment extends Fragment {
         tabs.setViewPager(viewPager);
 
         viewPager.setCurrentItem(Calendar.getInstance().get(Calendar.DAY_OF_WEEK) - 1);
-
-        //TabLayout tabLayout = (TabLayout) getActivity().findViewById(R.id.tabs_days);
-        //tabLayout.setupWithViewPager(viewPager);
-        //viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-
-
     }
 
     public class DaysTabsPagerAdapter extends FragmentStatePagerAdapter {

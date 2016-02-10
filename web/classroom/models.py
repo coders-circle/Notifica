@@ -41,8 +41,6 @@ class Profile(models.Model):
 
 class Organization(models.Model):
     name = models.CharField(max_length=50)
-    admins = models.ManyToManyField(User)
-    profile = models.OneToOneField(Profile)
 
     def __str__(self):
         return self.name
@@ -50,6 +48,7 @@ class Organization(models.Model):
 
 class Department(models.Model):
     name = models.CharField(max_length=50)
+    admins = models.ManyToManyField(User)
     organization = models.ForeignKey(Organization)
     profile = models.OneToOneField(Profile)
 

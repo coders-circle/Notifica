@@ -22,13 +22,14 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".SubjectDetailsActivity"/>
         <activity android:name=".SettingsActivity" android:theme="@style/ForSettings"/>
+        <activity android:name=".PostDetailActivity" android:theme="@style/AppTheme"/>
 
         <receiver android:name="com.lipi.notifica.RoutineWidgetProvider" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
             <meta-data android:name="android.appwidget.provider"
-                android:resource="@xml/routine_appwidget_info" />
+                android:resource="@xml/widget_routine_info" />
         </receiver>
 
         <receiver android:name=".PeriodWidgetProvider" >

@@ -32,7 +32,7 @@ def getElectives(user):
     # for student, check if period is attended by the student
     students = getStudents(user)
     for student in students:
-        qset = qset | Elective.objects.filter(routine__p_class__pk=student.group.p_class.pk, students__pk=student.pk)
+        qset = qset | Elective.objects.filter(p_group__routine__p_class__pk=student.group.p_class.pk, students__pk=student.pk)
 
     return qset
 

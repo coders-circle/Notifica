@@ -1,5 +1,9 @@
 package com.lipi.notifica.database;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+
 import org.json.JSONObject;
 
 public class User extends Model {
@@ -18,5 +22,19 @@ public class User extends Model {
         username = json.optString("username");
         email = json.optString("email");
         profile = json.optLong("profile");
+    }
+
+    public String getName() {
+        if (first_name.equals(""))
+            return username;
+        else
+            return first_name + " " + last_name;
+    }
+
+    // Get the logged in user
+    public static User getLoggedInUser(Context context) {
+        DbHelper helper = new DbHelper(context);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return User.get(User.class, helper, "username=?", new String[]{preferences.getString("username", "")}, null);
     }
 }

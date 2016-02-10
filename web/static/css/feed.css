@@ -92,6 +92,9 @@ hr {
     font-size: 0.88em;
     color: #969696;
 }
+.userpost .info a{
+    margin-right: 20px;
+}
 .userpost .content{
     padding: 20px 50px;
 }

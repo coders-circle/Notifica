@@ -48,8 +48,30 @@ class Period(models.Model):
         ordering = ["day", "start_time"]
 
 
-class Elective(Period):
-    students = models.ManyToManyField(Student, blank=True)
+class ElectiveGroup(models.Model):
+    name = models.CharField(max_length=15)
+    routine = models.ForeignKey(Routine)
+
+    def __str__(self):
+        return str(self.name) + " " + str(self.routine.p_class)
+
+
+class Elective(models.Model):
+    p_group = models.ForeignKey(ElectiveGroup)
+    subject = models.ForeignKey(Subject)
+    teachers = models.ManyToManyField(Teacher, blank=True)
+    start_time = models.IntegerField()
+    end_time = models.IntegerField()
+    day = models.IntegerField(choices=DAYS)
+    period_type = models.IntegerField(choices=PERIOD_TYPES, default=0)
+    remarks = models.TextField(blank=True)
+    students = models.ManyToManyField(Student)
+
+    def get_day_display(self):
+        return DAYS[self.day][1]
+
+    def __str__(self):
+        return str(self.subject) + " " + self.get_day_display() + " " + str(self.start_time) + "-" + str(self.end_time) + " (" + str(self.p_group.routine.p_class) + ")"
 
     class Meta:
         ordering = ["day", "start_time"]

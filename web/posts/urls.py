@@ -13,6 +13,7 @@ router.register(r'submissions', rest_views.SubmissionViewSet, base_name='submiss
 
 urlpatterns = [
     url(r'^$', views.FeedView.as_view(), name='feed'),
+    url(r'^post/(?P<post_id>\d+)/$', views.PostView.as_view(), name='post'),
 
     url(r'^api/v1/', include(router.urls)),
 ]

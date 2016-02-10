@@ -1,9 +1,11 @@
 package com.lipi.notifica;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +28,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         mPosts = posts;
     }
 
+    public void setPosts(List<Post> posts) {
+        mPosts = posts;
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getItemCount() {
         return mPosts.size();
@@ -46,20 +53,21 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
         DbHelper helper = new DbHelper(mContext);
         User poster = User.get(User.class, helper, post.posted_by);
+        Bitmap avatar = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_default_avatar);
 
         String info= "";
         if (poster != null) {
             Profile posterProfile = Profile.get(Profile.class, helper, poster.profile);
-            if (poster.first_name.equals(""))
-                info = "posted by " + poster.username;
-            else
-                info = "posted by " + poster.first_name;
+            info = "by " + poster.getName() + ", ";
 
-            if (posterProfile != null)
-            if (posterProfile.getAvatar() != null)
-                holder.avatar.setImageBitmap(posterProfile.getAvatar());
+            if (posterProfile != null && posterProfile.getAvatar() != null)
+                avatar = posterProfile.getAvatar();
         }
-        ((GradientDrawable)holder.avatar.getBackground()).setColor(PeriodAdapter.returnColor(post.posted_by));
+        info += Utilities.getTimeAgo(post.modified_at);
+
+        holder.avatar.setImageBitmap(avatar);
+        ((GradientDrawable)holder.avatar.getBackground()).setColor(Utilities.returnColor(post.posted_by));
+
         holder.info.setText(info);
     }
 
@@ -77,9 +85,13 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             info = (TextView)v.findViewById(R.id.info);
             avatar = (ImageView)v.findViewById(R.id.avatar);
         }
+
         @Override
         public void onClick(View view) {
-            int pos = getAdapterPosition();
+            long postId = mPosts.get(getAdapterPosition())._id;
+            Intent intent = new Intent(mContext, PostDetailActivity.class);
+            intent.putExtra("post_id", postId);
+            mContext.startActivity(intent);
         }
     }
 }

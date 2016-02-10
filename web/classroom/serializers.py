@@ -11,14 +11,13 @@ class ProfileSerializer(serializers.ModelSerializer):
 class OrganizationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Organization
-        fields = ('id', 'name', 'admins', 'profile')
-#        read_only_fields = ('admins',)
+        fields = ('id', 'name')
 
 
 class DepartmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Department
-        fields = ('id', 'name', 'organization', 'profile')
+        fields = ('id', 'name', 'admins', 'organization', 'profile')
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -79,3 +78,9 @@ class StudentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Student
         fields = ('id', 'user', 'group', 'user_id')
+
+
+class RequestSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Request
+        fields = ('id', 'sender', 'sender_type', 'status', 'request_type', 'to')

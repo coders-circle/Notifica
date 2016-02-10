@@ -1,37 +1,22 @@
-jQuery(document).ready(function($) {
-    var defaultPosts = [];
-    var queryPosts = [];
+$(document).ready(function(){
+    var posts = [];
+    var query = "?count=5";
 
-    var typewatch = (function(){
-        var timer = 0;
-        return function(callback, ms){
-            clearTimeout (timer);
-            timer = setTimeout(callback, ms);
-        };
-    })();
-    function removeOldPosts(){
-        var old_posts = $('.userpost');
-        if(old_posts){
-            old_posts.remove();
-            $('.posts hr').remove();
-        }
-        var msg = $('.posts .msg');
-        if(msg){
-            msg.remove();
-        }
-    }
-    function renderPosts(posts){
+    function renderPosts(){
+        clearPostsView();
         var posts_container = $('.posts');
         var post_template = $('.template-userpost').clone();
         var tag_template = $('<span class="tag"></span>');
         for(var i = 0; i < posts.length; i++){
             var post = post_template.clone();
             post.find('.num').text(posts[i].num_comments);
-            post.find('.user-avatar').attr('src', '/static/img/ninja.png');
+            post.find('.user-avatar').attr('src', posts[i].posted_by.avatar);
             post.find('.title').text(posts[i].title);
+            post.find('.title').attr('href', '/feed/post/'+posts[i].id);
             post.find('.user-name').text(
                 posts[i].posted_by.first_name?
-                    posts[i].posted_by.first_name :
+                    posts[i].posted_by.first_name
+                        + ' ' + posts[i].posted_by.last_name:
                     posts[i].posted_by.username
                 );
             var posted_at = new Date(posts[i].posted_at);
@@ -57,13 +42,34 @@ jQuery(document).ready(function($) {
             }
         }
     }
-    function onSuccess(res){
-        if(res.length > 0){
-            renderPosts(res);
+
+    function clearPostsView(){
+        var old_posts = $('.userpost');
+        if(old_posts){
+            old_posts.remove();
+            $('.posts hr').remove();
+        }
+        var msg = $('.posts .msg');
+        if(msg){
+            msg.remove();
+        }
+    }
+
+    function clearPosts(){
+        posts = [];
+        clearPostsView();
+    }
+
+    function onSuccess(result){
+        if(result.length > 0){
+             Array.prototype.push.apply(posts, result);
+             renderPosts();
         } else {
-            var empty_msg = $('#empty-msg').clone();
-            empty_msg.removeClass('hidden');
-            empty_msg.appendTo($('.posts'));
+            if(posts.length == 0){
+                var empty_msg = $('#empty-msg').clone();
+                empty_msg.removeClass('hidden');
+                empty_msg.appendTo($('.posts'));
+            }
         }
         $('#posts-loading-animation').fadeOut();
     }
@@ -73,44 +79,53 @@ jQuery(document).ready(function($) {
         error_msg.appendTo($('.posts'));
         $('#posts-loading-animation').fadeOut();
     }
-    function onLoad(){
-        $('#posts-loading-animation').show();
+
+    var async_event_count = 0;
+    function loadPosts(){
+        var event_number = ++async_event_count;
         $.ajax({
-            url: '/feed/api/v1/posts/',
+            url: '/feed/api/v1/posts/'+query,
             type: 'GET',
-            error: function() {
-                onFailure();
-            },
-            success: function(res) {
-                onSuccess(res);
+            error: function() { onFailure(); },
+            success: function(result) {
+                if( event_number >= async_event_count ) {
+                    onSuccess(result);
+                }
+                --async_event_count;
             }
         });
     }
 
-    var last_search_str = "";
+    var typewatch = (function(){
+        var timer = 0;
+        return function(callback, ms){
+            clearTimeout (timer);
+            timer = setTimeout(callback, ms);
+            searching = true;
+            loadPosts();
+        };
+    })();
+
+    var last_search_string = "";
     var search_event_count = 0;
     $("#search-post-input").keyup(function(){
-        var search_str = $("#search-post-input").val();
-        if( search_str != last_search_str){
-            last_search_str = search_str;
+        var search_string = $("#search-post-input").val();
+        if( search_string != last_search_string ){
+            last_search_string = search_string;
             typewatch(function(){
-                var current_search_event_count = ++search_event_count;
-                removeOldPosts();
                 $('#posts-loading-animation').fadeIn();
-                $.ajax({
-                    url: '/feed/api/v1/posts/?q='+$("#search-post-input").val(),
-                    type: 'GET',
-                    error: function() { onFailure(); },
-                    success: function(res) {
-                        if( current_search_event_count >= search_event_count ) {
-                            onSuccess(res);
-                        }
-                        --search_event_count;
-                    }
-                });
+                clearPosts();
+                query += "&q="+encodeURIComponent(search_string);
+                loadPosts();
             }, 500);
         }
     });
 
-    onLoad();
+    $("#more-post-btn").click(function(){
+        query += "&offset="+posts.length;
+        $('#posts-loading-animation').fadeIn();
+        loadPosts();
+    });
+
+    loadPosts();
 });
