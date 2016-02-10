@@ -87,22 +87,21 @@ public class MainActivity extends AppCompatActivity {
 
         // Initialize the swap button in the drawer
         View headerView = navigationView.getHeaderView(0);
-        final ImageButton swapClasses = (ImageButton) headerView.findViewById(R.id.class_select);
-        swapClasses.setBackgroundResource(R.mipmap.swap_class);
-        swapClasses.setOnClickListener(new View.OnClickListener() {
+        final ImageView swapClasses = (ImageView) headerView.findViewById(R.id.class_select);
+        swapClasses.setImageResource(R.mipmap.swap_class);
+        ((View)swapClasses.getParent()).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                isVisible=!isVisible;
-                if(swap){
-                    swapClasses.setBackgroundResource(R.mipmap.close);
+                isVisible = !isVisible;
+                if (swap) {
+                    swapClasses.setImageResource(R.mipmap.close);
                     swap = false;
-                }
-                else{
-                    swapClasses.setBackgroundResource(R.mipmap.swap_class);
+                } else {
+                    swapClasses.setImageResource(R.mipmap.swap_class);
                     swap = true;
                 }
-                defaultMenu.setGroupVisible(R.id.basic_group,isVisible);
-                defaultMenu.setGroupVisible(R.id.settings_group,isVisible);
-                defaultMenu.setGroupVisible(R.id.classes_group,!isVisible);
+                defaultMenu.setGroupVisible(R.id.basic_group, isVisible);
+                defaultMenu.setGroupVisible(R.id.settings_group, isVisible);
+                defaultMenu.setGroupVisible(R.id.classes_group, !isVisible);
             }
         });
     }
