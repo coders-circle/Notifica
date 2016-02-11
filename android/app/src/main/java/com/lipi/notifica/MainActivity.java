@@ -105,7 +105,6 @@ public class MainActivity extends AppCompatActivity {
         addMenuItem(R.id.classes_group, R.id.add_class, "Add Class", R.mipmap.ic_launcher);
 
         // Get classes
-        // TODO: get classes from routine and students accounts
         List<PClass> classes = PClass.getAll(PClass.class, new DbHelper(this));
 
         // Add menu item for each class
@@ -113,6 +112,25 @@ public class MainActivity extends AppCompatActivity {
             addMenuItem(R.id.classes_group, 0, pClass.class_id, R.mipmap.ic_launcher);
         }
 
+        mMenu.setGroupVisible(R.id.basic_group, isVisible);
+        mMenu.setGroupVisible(R.id.settings_group, isVisible);
+        mMenu.setGroupVisible(R.id.classes_group, !isVisible);
+    }
+
+    private void swapMenu() {
+        final View headerView = navigationView.getHeaderView(0);
+        final ImageView swapClasses = (ImageView) headerView.findViewById(R.id.class_select);
+
+        isVisible = !isVisible;
+        if (swap) {
+            swapClasses.setImageResource(R.mipmap.close);
+            swap = false;
+        } else {
+            swapClasses.setImageResource(R.mipmap.swap_class);
+            swap = true;
+        }
+        mMenu.setGroupVisible(R.id.basic_group, isVisible);
+        mMenu.setGroupVisible(R.id.settings_group, isVisible);
         mMenu.setGroupVisible(R.id.classes_group, !isVisible);
     }
 
@@ -133,17 +151,7 @@ public class MainActivity extends AppCompatActivity {
         swapClasses.setImageResource(R.mipmap.swap_class);
         ((View)swapClasses.getParent()).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                isVisible = !isVisible;
-                if (swap) {
-                    swapClasses.setImageResource(R.mipmap.close);
-                    swap = false;
-                } else {
-                    swapClasses.setImageResource(R.mipmap.swap_class);
-                    swap = true;
-                }
-                mMenu.setGroupVisible(R.id.basic_group, isVisible);
-                mMenu.setGroupVisible(R.id.settings_group, isVisible);
-                mMenu.setGroupVisible(R.id.classes_group, !isVisible);
+                swapMenu();
             }
         });
     }
@@ -201,9 +209,11 @@ public class MainActivity extends AppCompatActivity {
                         startActivityForResult(intent, 1);
                         return false;
                     case R.id.add_class:
+                        swapMenu();
                         drawerLayout.closeDrawers();
                         return false;
                     default:
+                        swapMenu();
                         drawerLayout.closeDrawers();
                         String class_id = menuItem.getTitle().toString();
                         Intent intent1 = new Intent(MainActivity.this, ClassActivity.class);

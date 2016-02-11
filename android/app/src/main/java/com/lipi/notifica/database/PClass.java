@@ -12,7 +12,13 @@ public class PClass extends Model {
     public PClass(JSONObject json) {
         _id = json.optLong("id", -1);
         class_id = json.optString("class_id");
-        department = json.optLong("department");
+        department = json.optLong("department", -1);
         profile = json.optLong("profile");
+    }
+
+    public Department getDepartment(DbHelper dbHelper) {
+        if (department < 0)
+            return null;
+        return Department.get(Department.class, dbHelper, department);
     }
 }

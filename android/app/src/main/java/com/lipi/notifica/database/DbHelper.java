@@ -15,7 +15,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
     // Database name and version
     public static final String DB_NAME = "Notifica.db";
-    public static final int DB_VERSION = 8;
+    public static final int DB_VERSION = 10;
     private final Context mContext;
 
     // Create the helper object
@@ -53,7 +53,12 @@ public class DbHelper extends SQLiteOpenHelper {
     // Destroy and re-create all tables
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        // Backup current user's profile
+        User user = User.getLoggedInUser(mContext, db);
+        Profile profile = Profile.get(Profile.class, db, user.profile);
         deleteAll(db);
+        user.save(this);
+        profile.save(this);
     }
 
     public void deleteAll(SQLiteDatabase db) {
@@ -186,8 +191,7 @@ public class DbHelper extends SQLiteOpenHelper {
     public void deleteProfiles(int keep) {
         List<Profile> profiles = Profile.getAll(Profile.class, this, "downloaded_at");
 
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
-        long myId = User.get(User.class, this, "username=?", new String[]{preferences.getString("username", "")}, null).profile;
+        long myId = User.getLoggedInUser(mContext).profile;
 
         String plist = "(";
         for (int i=keep;i<profiles.size(); ++i) {

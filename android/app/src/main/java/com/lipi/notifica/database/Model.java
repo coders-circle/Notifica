@@ -22,7 +22,7 @@ public class Model {
 
         // Parse each field and get the equivalent SQLite type
         String cols = "";
-        for (Field field: fields) {
+        for (Field field : fields) {
             String sqlType = "";
             String typeName = field.getType().getSimpleName();
 
@@ -79,7 +79,7 @@ public class Model {
         ContentValues values = new ContentValues();
 
         // Parse each field and put values for each field
-        for (Field field: fields) {
+        for (Field field : fields) {
 
             // We won't set the _id field if it is -1
             if (!(field.getName().equals("_id")) || this._id >= 0) {
@@ -105,7 +105,7 @@ public class Model {
                             values.put(field.getName(), field.getDouble(this));
                             break;
                         case "byte[]":
-                            values.put(field.getName(), (byte[])field.get(this));
+                            values.put(field.getName(), (byte[]) field.get(this));
                             break;
                     }
                 } catch (IllegalAccessException e) {
@@ -145,7 +145,7 @@ public class Model {
                 T object = myClass.newInstance();
 
                 // For each field, set the value from the cursor
-                for (Field field: fields) {
+                for (Field field : fields) {
                     String typeName = field.getType().getSimpleName();
                     switch (typeName) {
                         case "String":
@@ -182,9 +182,10 @@ public class Model {
         db.close();
         return list;
     }
-
     public static <T extends Model> T get(Class<T> myClass, SQLiteOpenHelper helper, String selection, String[] args, String order_by) {
-        SQLiteDatabase db = helper.getReadableDatabase();
+        return get(myClass, helper.getReadableDatabase(), selection, args, order_by);
+    }
+    public static <T extends Model> T get(Class<T> myClass, SQLiteDatabase db, String selection, String[] args, String order_by) {
         Field[] fields = myClass.getFields();
 
         // query
@@ -236,6 +237,10 @@ public class Model {
 
     public static <T extends Model> T get(Class<T> myClass, SQLiteOpenHelper helper, long id) {
         return get(myClass, helper, "_id=?", new String[]{id+""}, null);
+    }
+
+    public static <T extends Model> T get(Class<T> myClass, SQLiteDatabase db, long id) {
+        return get(myClass, db, "_id=?", new String[]{id+""}, null);
     }
 
     // Get the number of rows with given query

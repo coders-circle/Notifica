@@ -2,6 +2,7 @@ package com.lipi.notifica.database;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.preference.PreferenceManager;
 
 import org.json.JSONObject;
@@ -36,5 +37,10 @@ public class User extends Model {
         DbHelper helper = new DbHelper(context);
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         return User.get(User.class, helper, "username=?", new String[]{preferences.getString("username", "")}, null);
+    }
+
+    public static User getLoggedInUser(Context context, SQLiteDatabase db) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return User.get(User.class, db, "username=?", new String[]{preferences.getString("username", "")}, null);
     }
 }

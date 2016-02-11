@@ -3,6 +3,10 @@ package com.lipi.notifica;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.io.ByteArrayOutputStream;
 import java.text.ParseException;
@@ -97,5 +101,38 @@ public class Utilities {
         } else {
             return diff / DAY_MILLIS + " days ago";
         }
+    }
+
+
+    public static void fillProfileView(View view, long uniqueId, Bitmap avatar, String title, String subTitle, String details) {
+        ImageView avatarView = (ImageView)view.findViewById(R.id.avatar);
+        TextView titleView = (TextView)view.findViewById(R.id.title);
+        TextView subTitleView = (TextView)view.findViewById(R.id.subtitle);
+        TextView detailsView = (TextView)view.findViewById(R.id.details);
+
+        if (avatar != null){
+            avatarView.setImageBitmap(avatar);
+            ((GradientDrawable)avatarView.getBackground()).setColor(Utilities.returnColor(uniqueId));
+            avatarView.setVisibility(View.VISIBLE);
+        } else
+            avatarView.setVisibility(View.GONE);
+
+        if (title != null) {
+            titleView.setText(title);
+            titleView.setVisibility(View.VISIBLE);
+        } else
+            titleView.setVisibility(View.GONE);
+
+        if (subTitle != null) {
+            subTitleView.setText(subTitle);
+            subTitleView.setVisibility(View.VISIBLE);
+        } else
+            subTitleView.setVisibility(View.GONE);
+
+        if (details != null) {
+            detailsView.setText(details);
+            detailsView.setVisibility(View.VISIBLE);
+        } else
+            detailsView.setVisibility(View.GONE);
     }
 }

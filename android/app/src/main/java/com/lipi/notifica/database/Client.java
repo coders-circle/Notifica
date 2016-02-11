@@ -115,9 +115,17 @@ public class Client {
     private void addClass(JSONObject json, ClientListener clientListener) {
         PClass c = new PClass(json);
         c.save(mDbHelper);
-        // TODO: getDepartment(c.p_class);
+        getDepartment(c.department, clientListener);
 
         getProfile(c.profile, clientListener);
+    }
+
+    private void addDepartment(JSONObject json, ClientListener clientListener) {
+        Department d = new Department(json);
+        d.save(mDbHelper);
+        // TODO: getOrganization(d.department, clientListener);
+
+        getProfile(d.profile, clientListener);
     }
 
     private void addPost(JSONObject json, ClientListener clientListener) throws JSONException {
@@ -315,6 +323,16 @@ public class Client {
                 });
     }
 
+    // Get a class
+    public void getDepartment(final long id, final ClientListener clientListener) {
+        get(clientListener, "department", id, "classroom/api/v1/departments/" + id + "/",
+                new Callback() {
+                    @Override
+                    public void callback(JSONObject json) throws JSONException {
+                        addDepartment(json, clientListener);
+                    }
+                });
+    }
 
     private static class TempClass {
         public Object object;
