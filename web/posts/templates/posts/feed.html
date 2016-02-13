@@ -43,40 +43,28 @@ Notifica: News feed
                 </div>
             </div>
             <div id="quick-links-block" class="col-md-4">
-                <div class="block-list" id="class-list">
+                <div class="card card-class-list" id="class-list">
                     <a href="#" class="title">Classes</a>
-                    <div class="card card-class">
-                        <div class="info">
-                            <a href="{% url 'classroom:class' 1 %}" class="name">069-BCT</a>
-                            <div class="department">Department of Electronics &amp; Computer Engineering</div>
-                        </div>
+                    <div class="class">
+                        <a href="{% url 'classroom:class' 1 %}" class="name">069-BCT</a>
+                        <div class="extra">Department of Electronics &amp; Computer Engineering</div>
                     </div>
-                    <div class="card card-class">
-                        <div class="info">
-                            <a href="#" class="name">069-BCE</a>
-                            <div class="department">Department of Civil Engineering</div>
-                        </div>
+                    <hr>
+                    <div class="class">
+                        <a href="#" class="name">069-BCE</a>
+                        <div class="extra">Department of Civil Engineering</div>
                     </div>
-                    <div class="card card-class">
-                        <div class="info">
-                            <a href="#" class="name">069-BEX</a>
-                            <div class="department">Department of Electronics &amp; Computer Engineering</div>
-                        </div>
+                    <hr>
+                    <div class="class">
+                        <a href="#" class="name">069-BEX</a>
+                        <div class="extra">Department of Electronics &amp; Computer Engineering</div>
                     </div>
                 </div>
-                <div class="block-list" id="department-list">
-                    <a href="#" class="title">Departments</a>
-                    <div class="card card-department">
-                        <div class="info">
-                            <div class="name">Department of Electronics &amp; Computer Engineering</div>
-                            <div class="organization">Institute of Engineering</div>
-                        </div>
-                    </div>
-                    <div class="card card-department">
-                        <div class="info">
-                            <div class="name">Department of Civil Engineering</div>
-                            <div class="organization">Institute of Engineering</div>
-                        </div>
+                <div class="card card-organization-list" id="organization-list">
+                    <a href="#" class="title">Organizations</a>
+                    <div class="organization">
+                        <a href="#" class="name">Institute of Engineering</a>
+                        <div class="extra"></div>
                     </div>
                 </div>
             </div>

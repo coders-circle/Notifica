@@ -97,6 +97,7 @@ hr {
 }
 .userpost .content{
     padding: 20px 50px;
+    text-align: justify;
 }
 .userpost .tags{
     display: block;
@@ -150,31 +151,26 @@ hr {
 }
 #quick-links-block .title{
     font-size: 0.88em;
-    margin-bottom: 10px;
 }
 .card{
     background-color: #fff;
     color: #646464;
     box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.2);
-    padding: 10px 20px;
+    padding: 16px 20px;
     margin: 4px 0px;
 }
-.card-class .avatar{
-    width: 40px;
-    height: 40px;
-    background-color: #e0e0e0;
-    border-radius: 50%;
-    float:left;
-    margin-right: 20px;
+.card .title{
+    display: block;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    color: #c0392b;
 }
-.card-class .info .name{
-    font-family: "Open Sans";
-    font-weight: 400;
-    font-size: 1.23em;
+
+.card-class-list hr, .card-organization-list hr{
+    margin: 10px 2px;
 }
-.card-department .info .organization,
-.card-class .info .department{
+
+.class .extra, .organization .extra{
     font-size: 0.88em;
-    font-weight: bold;
     color: #a2a2a2;
 }
