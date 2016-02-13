@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-{% load tz %}
 {% load classroom_tags %}
 {% load staticfiles %}
 
@@ -44,7 +43,7 @@ Notifica: {{ post.title }}
                             {% endif %}
                         </span>
                         <span id="post-date">
-                            <i class="fa fa-calendar"></i> {{ post.modified_at }}
+                            <i class="fa fa-calendar"></i> <time class="timeago timeago-comment" datetime="{{ post.modified_at|to_iso }}"></time>
                         </span>
                     </div>
                     <div class="content">{{post.body}}</div>
