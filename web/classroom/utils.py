@@ -46,7 +46,12 @@ def get_classes(user):
     for student in students:
         result.append(student.group.p_class)
 
-    return [r.pk for r in result]
+    # admins as well
+    admin_classes = Class.objects.filter(admins__pk=user.pk)
+    for c in admin_classes:
+        result.append(c)
+
+    return list(set([r.pk for r in result]))
 
 
 def get_departments(user):

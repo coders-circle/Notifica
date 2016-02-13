@@ -20,11 +20,3 @@ class PeriodViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         return getPeriods(self.request.user)
-
-
-class ElectiveViewSet(viewsets.ModelViewSet):
-    serializer_class = ElectiveSerializer
-    perimission_classes = (permissions.IsAuthenticatedOrReadOnly, IsAdminOrReadOnly,)
-
-    def get_queryset(self):
-        return getElectives(self.request.user)

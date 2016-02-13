@@ -6,7 +6,6 @@ from routine import views, rest_views
 router = DefaultRouter()
 router.register(r'routines', rest_views.RoutineViewSet)
 router.register(r'periods', rest_views.PeriodViewSet, base_name='period')
-router.register(r'electives', rest_views.ElectiveViewSet, base_name='elective')
 
 
 urlpatterns = [

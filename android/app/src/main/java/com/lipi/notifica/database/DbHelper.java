@@ -92,13 +92,19 @@ public class DbHelper extends SQLiteOpenHelper {
     public void deleteUseless() {
         // We should be careful of the order
 
+        User me = User.getLoggedInUser(mContext);
+
         // Students
         // TODO
 
         // Teachers
         String tlist = "(";
-        boolean first = true;
 
+        Teacher meTeacher = Teacher.get(Teacher.class, this, "user=?", new String[]{""+me._id}, null);
+        if (meTeacher != null)
+            tlist += meTeacher._id + ", ";
+
+        boolean first = true;
         List<PeriodTeacher> periodTeachers = PeriodTeacher.getAll(PeriodTeacher.class, this);
         for (PeriodTeacher pt: periodTeachers) {
             if (first) {

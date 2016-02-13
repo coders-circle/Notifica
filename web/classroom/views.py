@@ -27,6 +27,16 @@ class ClassView(View):
         return render(request, "classroom/class.html", context)
 
 
+class AddClassView(View):
+    def get(self, request):
+        if not isValidUser(request.user):
+            return redirect("home")
+        
+        context = {}
+        request.user.profile = UserProfile.objects.get(user=request.user).profile
+        return render(request, "classroom/add_class.html", context)
+
+
 class DepartmentView(View):
     def get(self, request, id):
         if not isValidUser(request.user):
@@ -47,3 +57,13 @@ class OrganizationView(View):
         context["organization"] = Organization.objects.get(pk=id)
         request.user.profile = UserProfile.objects.get(user=request.user).profile
         return render(request, "classroom/organization.html", context)
+
+
+class SearchView(View):
+    def get(self, request):
+        if not isValidUser(request.user):
+            return redirect("home")
+
+        context = {}
+        request.user.profile = UserProfile.objects.get(user=request.user).profile
+        return render(request, "classroom/search.html", context)

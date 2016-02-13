@@ -68,11 +68,7 @@ class RoutineAdminView(View):
 
             for d, day in enumerate(routine):
                 for period in day:
-                    is_elective = "is_elective" in period and period["is_elective"]
-                    if is_elective:
-                        p = Elective()
-                    else:
-                        p = Period()
+                    p = Period()
                     p.routine = r
                     p.subject = self.getSubject(period["subject"])
                     p.start_time = period["start_time"]
@@ -81,10 +77,6 @@ class RoutineAdminView(View):
                     p.remarks = period["remarks"]
                     p.save()
                     p.teachers.add(*self.getTeachers(period["teachers"]))
-
-                    if is_elective:
-                        # TODO: Support students of this class only
-                        p.students.add(*self.getStudents(period["students"]))
 
                     if "groups" in period:
                         p.groups.add(*getGroups(period["groups"]))

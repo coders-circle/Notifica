@@ -47,11 +47,15 @@ class RegisterView(View):
             email = request.POST['email']
             username = request.POST['username']
             password = request.POST['password']
+            first_name = request.POST['first-name']
+            last_name = request.POST['last-name']
 
             if User.objects.filter(username=username).exists():
                 raise ValueError("That username is already taken")
 
             user = User.objects.create_user(username, email, password)
+            user.first_name = first_name
+            user.last_name = last_name
             user.save()
 
             user = authenticate(username=username, password=password)
@@ -61,3 +65,14 @@ class RegisterView(View):
         except Exception as e:
             context = {"error":str(e)}
             return render(request, "main/register.html", context)
+
+
+class SettingsView(View):
+    def get(self, request):
+        if not isValidUser(request.user):
+            return redirect("home")
+
+        context = {}
+        context["settings"] = "Settings"
+        request.user.profile = UserProfile.objects.get(user=request.user).profile
+        return render(request, "main/settings.html", context)
