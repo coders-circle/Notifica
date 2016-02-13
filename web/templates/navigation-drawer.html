@@ -21,7 +21,7 @@
         <a class="item {% if current_page == 'Routine' %}active{% endif %}" href="{% url 'routine:routine' %}"><i class="fa fa-clock-o"></i> Routine</a>
         <a class="item {% if current_page == 'Assignments' %}active{% endif %}" href="#"><i class="fa fa-edit"></i> Assignments</a>
         <hr>
-        <a class="item" href="#"><i class="fa fa-cog"></i> Settings</a>
+        <a class="item" {% if current_page == 'Settings' %}active{% endif %}" href="{% url 'settings' %}"><i class="fa fa-cog"></i> Settings</a>
         <a class="item" href="{% url 'signout' %}"><i class="fa fa-sign-out"></i> Sign out</a>
     </div>
 </div>

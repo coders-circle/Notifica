@@ -10,5 +10,7 @@ urlpatterns = [
     url(r'^signout/$', views.SignoutView.as_view(), name='signout'),
     url(r'^register/$', views.RegisterView.as_view(), name='register'),
 
+    url(r'^settings/$', views.SettingsView.as_view(), name='settings'),
+
     # url(r'^api/v1/', include('rest_framework.urls')),
 ]
