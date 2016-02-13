@@ -29,7 +29,9 @@ $(document).ready(function(){
                         comment.find('.timeago-comment').attr('datetime', result[i].posted_at);
                         //comment.find('.time').text(posted_at.toLocaleString());
                         //datetime.timeago();
-                        comment.find('.content').text(result[i].body);
+                        var content = comment.find('.content');
+                        content.text(result[i].body);
+                        content.smilify();
                         comment.appendTo(container);
                         comment.removeClass('hidden');
                     }
