@@ -1,9 +1,28 @@
 $(document).ready(function(){
     loadComments();
     var dateContainer = $('#post-date span');
-    var postDate = new Date(dateContainer.data('iso'));
-    //console.log(postDate.getDate());
-    dateContainer.text(postDate.toLocaleString());
+    dateContainer.text(getFormattedDate(dateContainer.data('iso')));
+
+    function getFormattedDate(isoDateStr){
+        var monthNames = ["January", "February", "March", "April",
+            "May", "June", "July", "August",
+            "September", "October", "November", "December"];
+
+            var date = new Date(isoDateStr);
+            var dateStr = "" + date.getDate();
+
+            if(!dateStr.startsWith('1')){
+                if(dateStr.endsWith('1')) dateStr += "st";
+                else if (dateStr.endsWith('2')) dateStr += "nd";
+                else if (dateStr.endsWith('3')) dateStr += "rd";
+                else dateStr += "th";
+            } else if(dateStr.length == 1) dateStr += "st";
+            else dateStr += "th";
+            dateStr += " " + monthNames[date.getMonth()];
+            dateStr += " " + date.getFullYear() + ", ";
+            dateStr += date.getHours() + ":" + date.getMinutes();
+            return dateStr;
+    }
 
     function loadComments(){
         $.ajax({

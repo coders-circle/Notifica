@@ -1,5 +1,6 @@
 $(document).ready(function(){
     var posts = [];
+    var defaultQuery = "?count=5";
     var query = "?count=5";
 
     function renderPosts(){
