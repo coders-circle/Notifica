@@ -91,6 +91,7 @@ class Subject(models.Model):
 
 class Class(models.Model):
     class_id = models.CharField(max_length=30)
+    description = models.CharField(max_length=300, blank=True, default="")
     department = models.ForeignKey(Department, null=True, blank=True)
     admins = models.ManyToManyField(User)
     profile = models.OneToOneField(Profile)

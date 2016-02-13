@@ -24,12 +24,12 @@ Notifica: Add Class
     <div class="container">
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
-                <form id="add-class-form">
+                <form method="post" id="add-class-form">
                     {% csrf_token %}
                     {% if error %}
                     <div class="error"><i class="fa fa-exclamation-circle"></i> {{ error }}</div>
                     {% endif %}
-                    <input class="input-neat" name="class-name" type="text" placeholder="Name">
+                    <input class="input-neat" name="class-name" type="text" placeholder="Name" required>
                     <input class="input-neat" name="description" type="text" placeholder="Description">
                     <input class="btn btn-default" type="submit">
                 </form>

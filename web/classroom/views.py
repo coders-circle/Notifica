@@ -27,16 +27,6 @@ class ClassView(View):
         return render(request, "classroom/class.html", context)
 
 
-class AddClassView(View):
-    def get(self, request):
-        if not isValidUser(request.user):
-            return redirect("home")
-
-        context = {}
-        request.user.profile = UserProfile.objects.get(user=request.user).profile
-        return render(request, "classroom/add-class.html", context)
-
-
 class DepartmentView(View):
     def get(self, request, id):
         if not isValidUser(request.user):
@@ -67,3 +57,34 @@ class SearchView(View):
         context = {}
         request.user.profile = UserProfile.objects.get(user=request.user).profile
         return render(request, "classroom/search.html", context)
+
+
+class AddClassView(View):
+    def get(self, request):
+        if not isValidUser(request.user):
+            return redirect("home")
+
+        context = {}
+        request.user.profile = UserProfile.objects.get(user=request.user).profile
+        return render(request, "classroom/add-class.html", context)
+
+    def post(self, request):
+        if not isValidUser(request.user):
+            return redirect("home")
+
+        try:
+            class_name = request.POST['class-name']
+            description = request.POST['description']
+
+            new_class = Class(class_id=class_name, description=description)
+            new_profile = Profile()
+            new_profile.save()
+            new_class.profile = new_profile
+            new_class.save()
+            new_class.admins.add(request.user)
+
+            return redirect('classroom:class', id=new_class.pk)
+
+        except Exception as e:
+            context = {"error":str(e)}
+            return render(request, "classroom/add-class.html", context)

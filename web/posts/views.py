@@ -13,6 +13,13 @@ class FeedView(View):
         if isValidUser(request.user):
             context = {}
             context["current_page"] = "News feed"
+
+            classes = Class.objects.filter(pk__in=get_classes(request.user))
+            context["classes"] = classes
+
+            departments = Department.objects.filter(pk__in=get_departments(request.user))
+            context["departments"] = departments
+
             request.user.profile = UserProfile.objects.get(user=request.user).profile
             return render(request, "posts/feed.html", context)
         return redirect("home")

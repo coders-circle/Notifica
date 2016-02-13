@@ -69,4 +69,8 @@ def get_departments(user):
         if student.group.p_class.department:
             result.append(student.group.p_class.department)
 
-    return [r.pk for r in result]
+    admin_ds = Department.objects.filter(admins__pk=user.pk)
+    for d in admin_ds:
+        result(append(d))
+
+    return list(set([r.pk for r in result]))

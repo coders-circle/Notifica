@@ -45,30 +45,27 @@ Notifica: News feed
             <div id="quick-links-block" class="col-md-4">
                 <div class="card card-class-list" id="class-list">
                     <a href="#" class="title">Classes</a>
+                    {% for p_class in classes %}
                     <div class="class">
-                        <a href="{% url 'classroom:class' 1 %}" class="name">069-BCT</a>
-                        <div class="extra">Department of Electronics &amp; Computer Engineering</div>
+                        <a href="{% url 'classroom:class' p_class.pk %}" class="name">{{p_class.class_id}}</a>
+                        {% if p_class.department %}
+                            <div class="extra">{{p_class.department.name}}</div>
+                        {% endif %}
                     </div>
-                    <hr>
-                    <div class="class">
-                        <a href="#" class="name">069-BCE</a>
-                        <div class="extra">Department of Civil Engineering</div>
-                    </div>
-                    <hr>
-                    <div class="class">
-                        <a href="#" class="name">069-BEX</a>
-                        <div class="extra">Department of Electronics &amp; Computer Engineering</div>
-                    </div>
+                    {% if not forloop.last %}<hr>{% endif %}
+                    {% endfor %}
                     <div class="bottom-link">
                         <a id="add-class-link" href="{% url 'classroom:add-class' %}" class="name"><i class="fa fa-plus"></i> Add class</a>
                     </div>
                 </div>
                 <div class="card card-organization-list" id="organization-list">
-                    <a href="#" class="title">Organizations</a>
-                    <div class="organization">
-                        <a href="#" class="name">Institute of Engineering</a>
-                        <div class="extra"></div>
+                    <a href="#" class="title">Departments</a>
+                    {% for department in departments %}
+                    <div class="department">
+                        <a href="{% url 'classroom:department' department.pk %}" class="name">{{department.name}}</a>
+                        <div class="extra">{{department.organization.name}}</div>
                     </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>
