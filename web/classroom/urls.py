@@ -22,7 +22,7 @@ urlpatterns = [
     url(r'^department/(?P<id>\d+)/$', views.DepartmentView.as_view(), name='department'),
     url(r'^organization/(?P<id>\d+)/$', views.OrganizationView.as_view(), name='organization'),
 
-    url(r'^add_class/$', views.AddClassView.as_view(), name='add_class'),
+    url(r'^add-class/$', views.AddClassView.as_view(), name='add-class'),
     url(r'^search/$', views.SearchView.as_view(), name='search'),
 
     url(r'^api/v1/', include(router.urls)),

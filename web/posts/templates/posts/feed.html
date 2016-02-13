@@ -39,7 +39,7 @@ Notifica: News feed
                 </div>
                 <div class="bottom-control-container">
                     <div id="posts-loading-animation"></div>
-                    <button class="input-neat" id="more-post-btn">load more posts</button>
+                    <button class="input-neat" id="more-post-btn"><i class="fa fa-refresh"></i> Load more posts</button>
                 </div>
             </div>
             <div id="quick-links-block" class="col-md-4">
@@ -59,10 +59,8 @@ Notifica: News feed
                         <a href="#" class="name">069-BEX</a>
                         <div class="extra">Department of Electronics &amp; Computer Engineering</div>
                     </div>
-
-                    <hr>
-                    <div class="class">
-                        <a href="{% url 'classroom:add_class' %}" class="name">Add Class</a>
+                    <div class="bottom-link">
+                        <a id="add-class-link" href="{% url 'classroom:add-class' %}" class="name"><i class="fa fa-plus"></i> Add class</a>
                     </div>
                 </div>
                 <div class="card card-organization-list" id="organization-list">

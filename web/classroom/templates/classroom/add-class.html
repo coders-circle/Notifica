@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+Notifica: Add Class
+{% endblock %}
+
+{% block head %}
+<link href="{% static 'css/add-class.css' %}" type="text/css" rel="stylesheet">
+<!-- <script src="{% static 'js/add-class.js' %}"></script> -->
+{% endblock %}
+
+{% block body %}
+<div class="block" id="title-block">
+    <div class="container">
+        <div class="app-info">
+            <img class="logo" src="{% static 'img/logo.png' %}">
+            <a href="{% url 'home' %}" class="app-name">Notifica</a>
+        </div>
+    </div>
+    <div class="title">Add Class</div>
+</div>
+<div class="block" id="body-block">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <form id="add-class-form">
+                    {% csrf_token %}
+                    {% if error %}
+                    <div class="error"><i class="fa fa-exclamation-circle"></i> {{ error }}</div>
+                    {% endif %}
+                    <input class="input-neat" name="class-name" type="text" placeholder="Name">
+                    <input class="input-neat" name="description" type="text" placeholder="Description">
+                    <input class="btn btn-default" type="submit">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% include 'footer.html' %}
+{% endblock %}
