@@ -51,6 +51,8 @@ Notifica: News feed
                         <a href="{% url 'classroom:class' p_class.pk %}" class="name">{{p_class.class_id}}</a>
                         {% if p_class.department %}
                             <div class="extra">{{p_class.department.name}}</div>
+                        {% else %}
+                            <div class="extra">{{p_class.description}}</div>
                         {% endif %}
                     </div>
                     {% if not forloop.last %}<hr>{% endif %}
@@ -59,12 +61,15 @@ Notifica: News feed
                         <a id="add-class-link" href="{% url 'classroom:add-class' %}" class="name"><i class="fa fa-plus"></i> Add class</a>
                     </div>
                 </div>
-                <div class="card card-organization-list" id="organization-list">
+                <div class="card card-department-list" id="department-list">
                     <a href="#" class="title">Departments</a>
                     {% for department in departments %}
                     <div class="department">
                         <a href="{% url 'classroom:department' department.pk %}" class="name">{{department.name}}</a>
                         <div class="extra">{{department.organization.name}}</div>
+                    </div>
+                    <div class="bottom-link">
+                        <a id="add-department-link" href="{% url 'classroom:add-class' %}" class="name"><i class="fa fa-plus"></i> Add department</a>
                     </div>
                     {% endfor %}
                 </div>

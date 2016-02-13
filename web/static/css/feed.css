@@ -166,16 +166,16 @@ hr {
     color: #c0392b;
 }
 
-.card-class-list hr, .card-organization-list hr{
+.card-class-list hr, .card-department-list hr{
     margin: 10px 2px;
 }
 
-.class .extra, .organization .extra{
+.class .extra, .department .extra{
     font-size: 0.88em;
     color: #bbb;
 }
 
-.card-class-list .bottom-link{
+.card-class-list .bottom-link, .card-department-list .bottom-link{
     margin-top: 30px;
     text-align: right;
 }

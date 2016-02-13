@@ -9,6 +9,9 @@
 {% block head %}
 <link href="{% static 'css/class.css' %}" type="text/css" rel="stylesheet">
 <script src="{% static 'js/class.js' %}"></script>
+<script>
+    var class_profile = {{class.profile.pk}};
+</script>
 {% endblock %}
 
 {% block body %}
@@ -40,11 +43,15 @@
                     </div>
                     <div id="tab-contents">
                         <div class="tab-content active" id="news-feed">
-                            <form class="form-add-post">
-                                <input type="text" class="input-neat" name="title" placeholder="Title">
-                                <textarea class="input-neat" name="content" rows="10" placeholder="Content"></textarea>
-                                <input type="submit" class="btn btn-default">
-                            </form>
+                            <div class="card card-post-form">
+                                <div class="title">Add new post</div>
+                                <form id="add-post-form" class="form-add-post">
+                                    {% csrf_token %}
+                                    <input type="text" class="input-neat" id="post-title" placeholder="Title">
+                                    <textarea class="input-neat" id="post-content" rows="3" placeholder="Content"></textarea>
+                                    <input type="submit" class="btn btn-default">
+                                </form>
+                            </div>
                         </div>
                         <div class="tab-content hidden" id="teachers">
                             <div class="row">
@@ -71,8 +78,8 @@
             </div>
             <div class="col-md-4">
                 <div id="quick-task-block">
-                    <div class="title">Quick Tasks</div>
                     <div id="tasks">
+                        <div class="title">Quick Tasks</div>
                         <a href="#" class="task"><i class="fa fa-calendar-check-o"></i> Take Attendence</a>
                         <a href="#" class="task"><i class="fa fa-plus"></i> Add an Assignment</a>
                         <a href="#" class="task"><i class="fa fa-user-plus"></i> Add a Student</a>

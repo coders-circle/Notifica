@@ -10,8 +10,11 @@ $(document).ready(function(){
             current.removeClass('active');
             target.addClass('active');
             current_container.removeClass('active');
-            current_container.addClass('hidden');
+            current_container.fadeOut();
+            setTimeout(current_container.addClass('hidden'), 500);
+            target_container.hide();
             target_container.removeClass('hidden');
+            target_container.fadeIn();
             target_container.addClass('active');
         }
     });
@@ -125,4 +128,48 @@ $(document).ready(function(){
             }
         });
     }
+
+    function addPost(){
+        $.ajax({
+            url: '/feed/api/v1/posts/',
+            type: 'POST',
+            data:{
+                title:$("#post-title").val(),
+                body: $("#post-content").val(),
+                profile: class_profile
+            },
+            success: function(e){
+                $("#post-title").val("");
+                $("#post-title").blur();
+                $("#post-content").val("");
+                $("#post-content").blur();
+                alert("successful!");
+            },
+            error: function(e){
+                alert(e.responseText);
+            }
+        });
+    }
+
+    $("#add-post-form").submit(function(e){
+        e.preventDefault();
+        if($("#post-title").val().length == 0){
+            $("#post-title").focus();
+        } else if($("#post-content").val().length == 0){
+            $("#post-content").focus();
+        } else{
+            addPost();
+        }
+    });
+
+    function csrfSafeMethod(method) {
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+    $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", $('[name="csrfmiddlewaretoken"]').val());
+            }
+        }
+    });
 });
