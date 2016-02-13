@@ -25,12 +25,15 @@ $(document).ready(function(){
                                     + ' ' + result[i].posted_by.last_name:
                                 result[i].posted_by.username
                         );
-                        var posted_at = new Date(result[i].posted_at);
-                        comment.find('.time').text(posted_at.toLocaleString());
+                        //var posted_at = new Date(result[i].posted_at);
+                        comment.find('.timeago-comment').attr('datetime', result[i].posted_at);
+                        //comment.find('.time').text(posted_at.toLocaleString());
+                        //datetime.timeago();
                         comment.find('.content').text(result[i].body);
                         comment.appendTo(container);
                         comment.removeClass('hidden');
                     }
+                    $(".timeago-comment").timeago();
                 }
 
             }

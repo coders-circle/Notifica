@@ -8,6 +8,7 @@ Notifica: {{ post.title }}
 
 {% block head %}
 <link href="{% static 'css/post.css' %}" type="text/css" rel="stylesheet">
+<script src="{% static 'js/jquery.timeago.js' %}"></script>
 <script src="{% static 'js/post.js' %}"></script>
 <script>
     var post_id = {{post.pk}};

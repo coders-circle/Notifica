@@ -91,9 +91,10 @@
 .card-comment .user-name{
     font-weight: bold;
 }
-.card-comment .time{
+.card-comment time{
     color: #a2a2a2;
     font-size: 0.88em;
+    display: block;
 }
 
 .card-comment .content{

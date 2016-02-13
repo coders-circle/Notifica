@@ -20,7 +20,8 @@ $(document).ready(function(){
                     posts[i].posted_by.username
                 );
             var posted_at = new Date(posts[i].posted_at);
-            post.find('.time').text(posted_at.toLocaleString());
+            //post.find('.time').text(posted_at.toLocaleString());
+            post.find('.timeago-post').attr('datetime', posts[i].posted_at);
             var tags_container = post.find('.tags');
                 if(posts[i].tags){
                 var tags = $.parseJSON(posts[i].tags);
@@ -41,6 +42,7 @@ $(document).ready(function(){
                 posts_container.append('<hr>');
             }
         }
+        $('.timeago-post').timeago();
     }
 
     function clearPostsView(){
