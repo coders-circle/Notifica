@@ -1,5 +1,9 @@
 $(document).ready(function(){
     loadComments();
+    var dateContainer = $('#post-date span');
+    var postDate = new Date(dateContainer.data('iso'));
+    //console.log(postDate.getDate());
+    dateContainer.text(postDate.toLocaleString());
 
     function loadComments(){
         $.ajax({
