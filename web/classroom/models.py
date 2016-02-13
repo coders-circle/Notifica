@@ -6,22 +6,18 @@ import random
 
 def getProfileObject(profile):
     try:
-        o = Organization.objects.get(profile=profile)
-        return o, "Organization"
+        c = Class.objects.get(profile=profile)
+        return c, "Class"
     except:
         try:
-            c = Class.objects.get(profile=profile)
-            return c, "Class"
+            d = Department.objects.get(profile=profile)
+            return d, "Department"
         except:
             try:
-                d = Department.objects.get(profile=profile)
-                return d, "Department"
+                u = UserProfile.objects.get(profile=profile)
+                return u, "User"
             except:
-                try:
-                    u = UserProfile.objects.get(profile=profile)
-                    return u, "User"
-                except:
-                    return None, "None"
+                return None, "None"
 
 
 class Profile(models.Model):

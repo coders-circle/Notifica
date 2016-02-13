@@ -13,4 +13,3 @@ class RoutineAdmin(admin.ModelAdmin):
 
 admin.site.register(Routine, RoutineAdmin)
 admin.site.register(Period)
-admin.site.register(Elective)
