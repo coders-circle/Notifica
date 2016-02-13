@@ -24,16 +24,11 @@ def getPeriods(user):
 def getRoutine(user):
     routine = {}
     periods = getPeriods(user)
-    electives = getElectives(user)
 
     for d in range(7):
         routine[d] = []
     for p in periods:
-        p.is_elective = False
         routine[p.day].append(p)
-    for e in electives:
-        p.is_elective = True
-        routine[p.day].append(e)
     return routine
 
 
@@ -44,6 +39,5 @@ def getRoutineForAdmin(user):
     for d in range(7):
         routine[d] = []
     for p in periods:
-        p.is_elective = False
         routine[p.day].append(p)
     return routine

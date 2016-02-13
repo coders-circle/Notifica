@@ -45,7 +45,7 @@ public class ClassActivity extends AppCompatActivity {
         // Set the profile view
         Utilities.fillProfileView(findViewById(R.id.profile), mProfile._id,
                 mProfile.getAvatar(), mClass.class_id,
-                (department!=null)?department.name:null, null);
+                mClass.description, null);
 
         // Initialize the tabs
         ClassTabsPagerAdapter adapter = new ClassTabsPagerAdapter(getSupportFragmentManager());

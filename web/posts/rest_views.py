@@ -33,9 +33,10 @@ class PostViewSet(viewsets.ModelViewSet):
         if profile:
             queryset = queryset.filter(profile__pk=profile)
 
-        # Filter queryset for those posted for classes and organizations user belongs to.
+        # Filter queryset for those posted for classes and departments user belongs to
+        # and those posted by user
         myprofiles = get_profiles(self.request.user)
-        queryset = queryset.filter(profile__pk__in=myprofiles)
+        queryset = queryset.filter(Q(profile__pk__in=myprofiles) | Q(posted_by__pk=self.request.user.pk))
 
         # recent query set for posts later than given time
         timequery = self.request.GET.get("time")

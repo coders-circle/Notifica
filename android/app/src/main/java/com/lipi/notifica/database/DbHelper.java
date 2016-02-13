@@ -53,12 +53,7 @@ public class DbHelper extends SQLiteOpenHelper {
     // Destroy and re-create all tables
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // Backup current user's profile
-        User user = User.getLoggedInUser(mContext, db);
-        Profile profile = Profile.get(Profile.class, db, user.profile);
         deleteAll(db);
-        user.save(this);
-        profile.save(this);
     }
 
     public void deleteAll(SQLiteDatabase db) {

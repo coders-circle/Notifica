@@ -93,7 +93,7 @@ public class PostDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                     avatar = posterProfile.getAvatar();
             }
 
-            info += Utilities.getTimeAgo(mPost.modified_at);
+            info += Utilities.getDateTimeString(mPost.modified_at);
 
             // holder.avatar.setImageBitmap(avatar);
             // ((GradientDrawable)holder.avatar.getBackground()).setColor(PeriodAdapter.returnColor(post.posted_by));

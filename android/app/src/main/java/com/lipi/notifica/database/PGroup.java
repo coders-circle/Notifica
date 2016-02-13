@@ -13,4 +13,8 @@ public class PGroup extends Model {
         group_id = json.optString("group_id");
         p_class = json.optLong("p_class");
     }
+
+    public PClass getPClass(DbHelper dbHelper) {
+        return PClass.get(PClass.class, dbHelper, p_class);
+    }
 }

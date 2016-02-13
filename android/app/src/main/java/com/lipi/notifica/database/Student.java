@@ -13,4 +13,8 @@ public class Student extends Model {
         user = json.optLong("user_id", -1);
         p_group = json.optLong("group", -1);
     }
+
+    public PGroup getGroup(DbHelper dbHelper) {
+        return PGroup.get(PGroup.class, dbHelper, p_group);
+    }
 }

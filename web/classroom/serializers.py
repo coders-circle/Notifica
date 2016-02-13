@@ -61,7 +61,7 @@ class SubjectSerializer(serializers.ModelSerializer):
 class ClassSerializer(serializers.ModelSerializer):
     class Meta:
         model = Class
-        fields = ('id', 'class_id', 'department', 'admins', 'profile')
+        fields = ('id', 'class_id', 'description', 'department', 'admins', 'profile')
 #        read_only_fields = ('admins',)
 
 

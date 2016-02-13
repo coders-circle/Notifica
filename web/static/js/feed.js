@@ -19,9 +19,9 @@ $(document).ready(function(){
                         + ' ' + posts[i].posted_by.last_name:
                     posts[i].posted_by.username
                 );
-            var posted_at = new Date(posts[i].posted_at);
-            //post.find('.time').text(posted_at.toLocaleString());
-            post.find('.timeago-post').attr('datetime', posts[i].posted_at);
+            var modified_at = new Date(posts[i].modified_at);
+            //post.find('.time').text(modified_at.toLocaleString());
+            post.find('.timeago-post').attr('datetime', posts[i].modified_at);
             var tags_container = post.find('.tags');
                 if(posts[i].tags){
                 var tags = $.parseJSON(posts[i].tags);

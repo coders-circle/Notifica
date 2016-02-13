@@ -67,15 +67,20 @@ public class Utilities {
 
     }
 
-
+    public static String getDateTimeString(long modified_at) {
+        SimpleDateFormat df = new SimpleDateFormat("MMM dd, yyyy, hh:mm a", Locale.getDefault());
+        return df.format(new Date(modified_at));
+    }
 
     // From a Google I/O app
 
 
-    private static final int SECOND_MILLIS = 1000;
-    private static final int MINUTE_MILLIS = 60 * SECOND_MILLIS;
-    private static final int HOUR_MILLIS = 60 * MINUTE_MILLIS;
-    private static final int DAY_MILLIS = 24 * HOUR_MILLIS;
+    private static final long SECOND_MILLIS = 1000;
+    private static final long MINUTE_MILLIS = 60 * SECOND_MILLIS;
+    private static final long HOUR_MILLIS = 60 * MINUTE_MILLIS;
+    private static final long DAY_MILLIS = 24 * HOUR_MILLIS;
+    private static final long MONTH_MILLIS = 30 * DAY_MILLIS;
+    private static final long YEAR_MILLIS = 12 * MONTH_MILLIS;
 
 
     public static String getTimeAgo(long time) {
@@ -98,8 +103,16 @@ public class Utilities {
             return diff / HOUR_MILLIS + " hours ago";
         } else if (diff < 48 * HOUR_MILLIS) {
             return "yesterday";
-        } else {
+        } else if (diff < 21 * DAY_MILLIS) {
             return diff / DAY_MILLIS + " days ago";
+        } else if (diff < 31 * DAY_MILLIS) {
+            return "a month ago";
+        } else if (diff < 10 * MONTH_MILLIS) {
+            return diff / MONTH_MILLIS + " months ago";
+        } else if (diff < 12 * MONTH_MILLIS) {
+            return "a year ago";
+        } else {
+            return diff / YEAR_MILLIS + " years ago";
         }
     }
 

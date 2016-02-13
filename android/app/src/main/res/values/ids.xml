@@ -5,7 +5,6 @@
     <item name="routine" type="id"/>
     <item name="assignment" type="id"/>
     <item name="settings" type="id"/>
-    <item name="add_class" type="id"/>
     <item name="basic_group" type="id"/>
     <item name="settings_group" type="id"/>
     <item name="classes_group" type="id"/>

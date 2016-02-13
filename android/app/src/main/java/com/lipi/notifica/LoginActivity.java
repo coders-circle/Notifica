@@ -190,6 +190,11 @@ public class LoginActivity extends AppCompatActivity {
                                 preferences.edit()
                                         .putString("username", username)
                                         .putString("password", password)
+                                        .putString("first_name", user.optString("first_name"))
+                                        .putString("last_name", user.optString("last_name"))
+                                        .putLong("profile", user.getLong("profile"))
+                                        .putString("email", user.optString("email"))
+                                        .putLong("id", user.getLong("id"))
                                         .putBoolean("logged_in", true)
                                         .apply();
 

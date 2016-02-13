@@ -90,20 +90,32 @@ public class RegisterActivity extends AppCompatActivity {
                 }
 
                 if (result.success) {
-                    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(RegisterActivity.this);
-                    preferences.edit()
-                            .putString("username", username)
-                            .putString("password", password)
-                            .putBoolean("logged_in", true)
-                            .apply();
+                    try {
+                        JSONObject user = new JSONObject(result.result);
 
-                    Toast.makeText(RegisterActivity.this, "Successfully registered. You are now logged in as " + username, Toast.LENGTH_SHORT).show();
+                        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(RegisterActivity.this);
+                        preferences.edit()
+                                .putString("username", username)
+                                .putString("password", password)
+                                .putString("first_name", user.optString("first_name"))
+                                .putString("last_name", user.optString("last_name"))
+                                .putLong("profile", user.getLong("profile"))
+                                .putString("email", user.optString("email"))
+                                .putLong("id", user.getLong("id"))
+                                .putBoolean("logged_in", true)
+                                .apply();
 
-                    Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
-                    startActivity(intent);
+                        Toast.makeText(RegisterActivity.this, "Successfully registered. You are now logged in as " + username, Toast.LENGTH_SHORT).show();
 
-                    setResult(-1);
-                    finish();
+                        Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                        startActivity(intent);
+
+                        setResult(-1);
+                        finish();
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 } else if (result.code==400) {
                     try {
                         JSONObject error = new JSONObject(result.result);

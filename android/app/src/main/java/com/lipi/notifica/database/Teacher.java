@@ -17,4 +17,8 @@ public class Teacher extends Model {
             username = json.optString("username");
         department = json.optLong("department", -1);
     }
+
+    public Department getDepartment(DbHelper dbHelper) {
+        return Department.get(Department.class, dbHelper, department);
+    }
 }

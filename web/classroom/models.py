@@ -57,9 +57,6 @@ class Teacher(models.Model):
     username = models.CharField(max_length=50, null=True, blank=True)
     department = models.ForeignKey(Department, null=True, blank=True)
 
-    class Meta:
-        verbose_name = "teacher"
-
     def __str__(self):
         if self.user:
             return self.user.first_name + " " + self.user.last_name
