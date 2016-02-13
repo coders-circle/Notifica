@@ -98,30 +98,24 @@ $(document).ready(function(){
         });
     }
 
-    var typewatch = (function(){
-        var timer = 0;
-        return function(callback, ms){
-            clearTimeout (timer);
-            timer = setTimeout(callback, ms);
-            searching = true;
-            loadPosts();
-        };
-    })();
-
     var last_search_string = "";
     var search_event_count = 0;
-    $("#search-post-input").keyup(function(){
-        var search_string = $("#search-post-input").val();
-        if( search_string != last_search_string ){
-            last_search_string = search_string;
-            typewatch(function(){
+    var typeWatchConfig = {
+        callback: function (value) {
+            var search_string = value;
+            if( search_string != last_search_string ){
+                last_search_string = search_string;
                 $('#posts-loading-animation').fadeIn();
                 clearPosts();
                 query = "?count=5&q="+encodeURIComponent(search_string);
                 loadPosts();
-            }, 500);
-        }
-    });
+            }
+        },
+        wait: 750,
+        highlight: true,
+        captureLength: 2
+    }
+    $("#search-post-input").typeWatch(typeWatchConfig);
 
     $("#more-post-btn").click(function(){
         query += "&offset="+posts.length;
