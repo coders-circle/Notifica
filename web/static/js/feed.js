@@ -1,6 +1,5 @@
 $(document).ready(function(){
     var posts = [];
-    var defaultQuery = "?count=5";
     var query = "?count=5";
 
     function renderPosts(){
@@ -118,7 +117,7 @@ $(document).ready(function(){
             typewatch(function(){
                 $('#posts-loading-animation').fadeIn();
                 clearPosts();
-                query += "&q="+encodeURIComponent(search_string);
+                query = "?count=5&q="+encodeURIComponent(search_string);
                 loadPosts();
             }, 500);
         }
