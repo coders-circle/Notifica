@@ -18,5 +18,7 @@ urlpatterns = [
 
     url(r'^settings/$', views.SettingsView.as_view(), name='settings'),
 
+    url(r'^notify/$', views.NotifyView.as_view(), name='notify'),
+
     url(r'^api/v1/', include(router.urls)),
 ]

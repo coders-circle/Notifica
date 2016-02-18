@@ -5,6 +5,9 @@ from django.contrib.auth.models import User
 
 from classroom.models import *
 from classroom.utils import *
+from main.models import *
+
+from main.notify import *
 
 
 class HomeView(TemplateView):
@@ -76,3 +79,34 @@ class SettingsView(View):
         context["settings"] = "Settings"
         request.user.profile = UserProfile.objects.get(user=request.user).profile
         return render(request, "main/settings.html", context)
+
+
+class NotifyView(View):
+    def get(self, request):
+        if not request.user or not request.user.is_superuser:
+            return redirect("home")
+
+        context = {}
+        context["users"] = User.objects.filter(pk__in=GcmRegistration.objects.all().values_list('user', flat=True))
+        request.user.profile = UserProfile.objects.get(user=request.user).profile
+        return render(request, "main/notify.html", context)
+
+    def post(self, request):
+        context = {}
+        context["users"] = User.objects.filter(pk__in=GcmRegistration.objects.all().values_list('user', flat=True))
+        request.user.profile = UserProfile.objects.get(user=request.user).profile
+
+        try:
+            title = request.POST['title']
+            message = request.POST['message']
+
+            user = request.POST['user']
+            tokens = GcmRegistration.objects.filter(user__pk=user).values_list('token', flat=True)
+
+            notify(tokens, title, message)
+
+        except Exception as e:
+            context["error"] = str(e)
+
+        return render(request, "main/notify.html", context)
+        

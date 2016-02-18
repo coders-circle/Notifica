@@ -2,7 +2,7 @@
 {% load staticfiles %}
 
 {% block title %}
-Notifica: Sign in
+Notifica: Push Notification
 {% endblock %}
 
 {% block head %}
@@ -18,7 +18,7 @@ Notifica: Sign in
         <div class="app-info">
             <img class="logo" src="{% static 'img/logo.png' %}">
             <h1 class="app-name">Notifica</h1>
-            <p class="extra">Sign in with your account</p>
+            <p class="extra">Send push notifications to devices</p>
         </div>
     </div>
 </div>
@@ -33,13 +33,17 @@ Notifica: Sign in
                     <div class="error"><i class="fa fa-exclamation-circle"></i> {{ error }}</div>
                     {% endif %}
 
-                    <input name="username" type="text" placeholder="Username" required>
-                    <input name="password" type="password" placeholder="Password" required>
-                    <input type="submit" value="Sign in">
+                    &nbsp; &nbsp; &nbsp; To: &nbsp; &nbsp;
+                    <select name="user" required>
+                        {% for u in users %}
+                        <option value="{{u.pk}}">{{u}}</option>
+                        {% endfor %}
+                    </select>
+
+                    <input name="title" type="text" placeholder="Title" required>
+                    <input name="message" type="text" placeholder="Message" required>
+                    <input type="submit" value="Send">
                 </form>
-                <div id="register-link">
-                    Don't have a Notifica account? <a href="/register">Register</a> to get one.
-                </div>
             </div>
         </div>
     </div>

@@ -39,4 +39,4 @@ class GcmRegistration(models.Model):
     token = models.TextField()
 
     def __str__(self):
-        return self.user.username + ":" + self.token
+        return self.user.username + " : " + self.device_id
