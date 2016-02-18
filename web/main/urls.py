@@ -1,6 +1,12 @@
 from django.conf.urls import url, include
 from django.views.generic import RedirectView
-from main import views
+from rest_framework.routers import DefaultRouter
+from main import views, rest_views
+
+
+router = DefaultRouter()
+router.register(r'requests', rest_views.RequestViewSet, base_name='request')
+router.register(r'gcm-registrations', rest_views.GcmRegistrationViewSet, base_name='gcm_registration')
 
 
 urlpatterns = [
@@ -12,5 +18,5 @@ urlpatterns = [
 
     url(r'^settings/$', views.SettingsView.as_view(), name='settings'),
 
-    # url(r'^api/v1/', include('rest_framework.urls')),
+    url(r'^api/v1/', include(router.urls)),
 ]

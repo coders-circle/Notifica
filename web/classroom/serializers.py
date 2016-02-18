@@ -78,9 +78,3 @@ class StudentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Student
         fields = ('id', 'user', 'group', 'user_id')
-
-
-class RequestSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Request
-        fields = ('id', 'sender', 'sender_type', 'status', 'request_type', 'to')

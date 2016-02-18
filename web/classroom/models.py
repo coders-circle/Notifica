@@ -142,28 +142,4 @@ class UserProfile(models.Model):
         return self.user.username
 
 
-REQUEST_STATUS = (
-    (0, 'Unaccepted'),      # when sender requests
-    (1, 'Accepted'),        # when receiver accepts
-    (2, 'Acknowledged'),    # when sender knows acceptance
-)
-
-REQUEST_TYPES = (
-    (0, 'JOIN_CLASS'),
-    (1, 'JOIN_DEPARTMENT'),
-)
-
-SENDER_TYPES = (
-    (0, 'USER'),
-    (1, 'CLASS'),
-)
-
-class Request(models.Model):
-    sender = models.IntegerField()
-    sender_type = models.IntegerField(choices=SENDER_TYPES)
-    status = models.IntegerField(default=0, choices=REQUEST_STATUS)
-    request_type = models.IntegerField(choices=REQUEST_TYPES)
-    to = models.IntegerField()
-
-
 from classroom import signals

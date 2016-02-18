@@ -1,9 +1,11 @@
 package com.lipi.notifica;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.drawable.GradientDrawable;
 import android.os.PersistableBundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
@@ -23,7 +25,6 @@ import com.lipi.notifica.database.PClass;
 import com.lipi.notifica.database.PGroup;
 import com.lipi.notifica.database.Profile;
 import com.lipi.notifica.database.Student;
-import com.lipi.notifica.database.Teacher;
 import com.lipi.notifica.database.User;
 
 import java.util.List;
@@ -44,7 +45,9 @@ public class MainActivity extends AppCompatActivity {
 
     NavigationView.OnNavigationItemSelectedListener mNavigationItemSelectedListener;
 
-    public void initDb() {
+    public void initializeApp() {
+        // Initialize database
+
         // Clean up unnecessary cache data
         mDbHelper.clean();
 
@@ -75,6 +78,20 @@ public class MainActivity extends AppCompatActivity {
                 client.getAssociated("teacher", user._id, refreshCallback);
             }
         }).run();
+
+        // Get GCM token if not available
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String token = preferences.getString("gcm_token", "");
+        if (token.equals("")) {
+            Intent intent = new Intent(this, GcmRegisterService.class);
+            startService(intent);
+        }
+
+        // Send GCM token to server if not already sent
+        token = preferences.getString("gcm_token", "");
+        if (!token.equals(""))
+            if (!preferences.getBoolean("gcm_token_sent", false))
+                GcmRegisterService.sendRegistrationToServer(this,  token);
     }
 
     // Set user profile data in header
@@ -203,7 +220,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mDbHelper = new DbHelper(this);
-        initDb();
+        initializeApp();
 
         // Create the fragments once
         mRoutineFragment = new RoutineFragment();

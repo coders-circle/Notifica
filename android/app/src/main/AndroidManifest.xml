@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.lipi.notifica" >
+
+    <permission android:name="com.lipi.notifica.permission.C2D_MESSAGE"
+        android:protectionLevel="signature"/>
+
     <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
+    <uses-permission android:name="com.lipi.notifica.permission.C2D_MESSAGE"/>
 
     <application
         android:allowBackup="true"
@@ -11,6 +17,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
+
+        <!-- Activities -->
 
         <activity android:name=".LoginActivity" android:theme="@style/ForLogin">
             <intent-filter>
@@ -24,6 +32,8 @@
         <activity android:name=".SubjectDetailsActivity"/>
         <activity android:name=".SettingsActivity" android:theme="@style/ForSettings"/>
         <activity android:name=".PostDetailActivity" android:theme="@style/AppTheme"/>
+
+        <!-- Widget providers -->
 
         <receiver android:name="com.lipi.notifica.RoutineWidgetProvider" >
             <intent-filter>
@@ -41,6 +51,38 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget_period_info" />
         </receiver>
+
+
+        <!-- GCM receivers and services -->
+
+        <receiver
+            android:name="com.google.android.gms.gcm.GcmReceiver"
+            android:exported="true"
+            android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION"/>
+                <category android:name="com.lipi.notifica"/>
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name=".MyGcmListenerService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
+            </intent-filter>
+        </service>
+
+        <service
+            android:name=".MyInstanceIdListenerService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.android.gms.iid.InstanceID"/>
+            </intent-filter>
+        </service>
+
+        <service android:name=".GcmRegisterService" android:exported="false"/>
     </application>
 
 </manifest>
