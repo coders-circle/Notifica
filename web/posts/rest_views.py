@@ -66,13 +66,12 @@ class PostViewSet(viewsets.ModelViewSet):
 
         result = []
         for x in queryset:
-            if x not in result:
-                result.append(x)
+            result.append(x.pk)
 
         for y in queryset:
-            if y not in result:
-                result.append(y)
-        return result
+            result.append(y.pk)
+
+        return Post.objects.filter(pk__in=list(set(result)))
 
 
 class CommentViewSet(viewsets.ModelViewSet):

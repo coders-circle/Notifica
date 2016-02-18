@@ -57,3 +57,6 @@ class Submission(Content):
 
     def __str__(self):
         return self.body[:10]
+
+
+from posts import signals

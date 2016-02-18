@@ -3,6 +3,13 @@ from routine.models import *
 import json
 
 
+def getUserName(user):
+    if user.first_name != "":
+        return user.first_name + " " + user.last_name
+    else:
+        return user.username
+
+
 def isValidUser(user):
     return user and user.is_authenticated and user.is_active
 
@@ -60,6 +67,9 @@ def get_departments(user):
 
     teachers = getTeachers(user)
     for teacher in teachers:
+        if teacher.department:
+            result.append(teacher.department)
+
         periods = Period.objects.filter(teachers__pk=teacher.pk)
         for p in periods:
             if p.routine.p_class.department:
