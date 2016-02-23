@@ -16,6 +16,7 @@ import com.lipi.notifica.database.DbHelper;
 import com.lipi.notifica.database.Department;
 import com.lipi.notifica.database.PClass;
 import com.lipi.notifica.database.Profile;
+
 public class ClassActivity extends AppCompatActivity {
 
     private PClass mClass;

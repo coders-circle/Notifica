@@ -112,6 +112,30 @@ class SubjectViewSet(viewsets.ModelViewSet):
         return queryset
 
 
+class ElectiveViewSet(viewsets.ModelViewSet):
+    serializer_class = ElectiveSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsAdminOrReadOnly,)
+
+    def perform_create(self, serializer):
+        p_class = serializer.validated_data['p_class']
+        if self.request.user not in p_class.admins.all():
+            raise serializers.ValidationError("You have not permission to add elective to this class")
+        serializer.save()
+
+    def get_queryset(self):
+        subject = self.request.GET.get('subject')
+        if subject:
+            queryset = Elective.objects.filter(subject__pk=subject)
+        else:
+            queryset = Elective.objects.all()
+
+        p_class = self.request.GET.get('class')
+        if p_class:
+            queryset = queryset.filter(p_class__pk=p_class)
+
+        return queryset
+
+
 class ClassViewSet(viewsets.ModelViewSet):
     serializer_class = ClassSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsAdminOrReadOnly,)
@@ -160,7 +184,7 @@ class StudentViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         group = serializer.validated_data["group"]
         if self.request.user not in group.p_class.admins.all():
-            raise serializers.ValidationError("You have not permission to add group to this class")
+            raise serializers.ValidationError("You have not permission to add student to this class")
         serializer.save()
 
     def get_queryset(self):

@@ -53,9 +53,27 @@ class TeacherSerializer(serializers.ModelSerializer):
 
 
 class SubjectSerializer(serializers.ModelSerializer):
+    electives = serializers.SerializerMethodField()
+
     class Meta:
         model = Subject
-        fields = ('id', 'name', 'short_name', 'department', 'color')
+        fields = ('id', 'name', 'short_name', 'department', 'color', 'electives')
+
+    def get_electives(self, subject):
+        electives = Elective.objects.filter(subject__pk=subject.pk)
+
+        result = []
+        for elective in electives:
+            result.append(elective.pk)
+
+        return result
+
+
+class ElectiveSerializer(serializers.ModelSerializer):
+    elective_group = serializers.CharField(source='group')
+    class Meta:
+        model = Elective
+        fields = ('id', 'elective_group', 'subject', 'p_class', 'students')
 
 
 class ClassSerializer(serializers.ModelSerializer):
