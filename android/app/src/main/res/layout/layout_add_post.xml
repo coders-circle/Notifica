@@ -2,9 +2,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="24dp"
-    android:theme="@style/AppTheme"
-    android:layout_margin="@dimen/login_padding">
+    android:padding="15dp"
+    android:theme="@style/AppTheme">
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

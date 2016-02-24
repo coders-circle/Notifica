@@ -6,7 +6,7 @@
     <string name="notice">Notice</string>
     <string name="add_post_details">Post Details</string>
     <string name="title">Title</string>
-    <string name="add_post_description">Description</string>
+    <string name="add_post_description">Content</string>
     <string name="add_post_submit">Submit</string>
     <string name="cancel">Cancel</string>
     <string name="settings">Settings</string>

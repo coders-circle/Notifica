@@ -494,6 +494,41 @@ public class Client {
         });
     }
 
+    // Post post
+    public void postPost(final String title, final String content,
+                         final long profile, final ClientListener clientListener) {
+
+        JSONObject data = new JSONObject();
+        try {
+            data.put("title", title);
+            data.put("body", content);
+            data.put("tags", "");
+            data.put("links", "[]");
+            data.put("profile", profile);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return;
+        }
+
+        NetworkHandler handler = new NetworkHandler(mContext, mUsername, mPassword, true);
+        handler.post("feed/api/v1/posts/", data.toString(), new NetworkHandler.NetworkListener() {
+            @Override
+            public void onComplete(NetworkHandler.Result result) {
+                if (result.success) {
+                    try {
+                        addPost(new JSONObject(result.result), clientListener);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    clientListener.refresh();
+                } else {
+                    Toast.makeText(mContext, "Couldn't add post."+
+                                    "\nCheck internet connection and try again.",
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
 
     public void getAssociated(final String type, long userId, final ClientListener clientListener) {
         NetworkHandler handler = new NetworkHandler(mContext, mUsername, mPassword, true);

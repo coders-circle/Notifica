@@ -44,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
     boolean isVisible = true;
     boolean swap = true;
 
+    public PClass getPClass() { return mClass; }
+
     NavigationView.OnNavigationItemSelectedListener mNavigationItemSelectedListener;
 
     public void initializeApp() {

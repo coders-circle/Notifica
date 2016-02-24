@@ -1,5 +1,6 @@
 package com.lipi.notifica;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Canvas;
@@ -15,10 +16,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.lipi.notifica.database.Client;
 import com.lipi.notifica.database.DbHelper;
+import com.lipi.notifica.database.PClass;
 import com.lipi.notifica.database.Post;
+import com.lipi.notifica.database.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +38,7 @@ public class NewsFeedFragment extends Fragment {
     private long mProfileId = -1;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
         if (getArguments() != null)
             mProfileId = getArguments().getLong("profile_id", -1);
 
@@ -53,6 +58,8 @@ public class NewsFeedFragment extends Fragment {
 
         getPosts();
 
+        final PClass pClass = ((MainActivity)getActivity()).getPClass();
+
         addPostButton = (FloatingActionButton) rootView.findViewById(R.id.addPostButton);
         addPostButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,22 +67,60 @@ public class NewsFeedFragment extends Fragment {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setView(R.layout.layout_add_post);
-                builder.setPositiveButton("Okay Dood",
+                builder.setPositiveButton("Post", null);
+                builder.setNegativeButton("Cancel",
                         new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        // FIRE ZE MISSILES!
-                    }
-                });
-                builder.setNegativeButton("Nokay Dood",
-                        new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        // User cancelled the dialog
-                    }
-                });
+                            public void onClick(DialogInterface dialog, int id) {
+                                // User cancelled the dialog
+                            }
+                        });
 
-                // Create the AlertDialog object and return it
-                builder.create();
-                builder.show();
+                // Create the AlertDialog object and show it
+                final AlertDialog dialog = builder.create();
+                dialog.show();
+
+
+
+                // We need to override onClick listener for OK some other way so that
+                // we do not always need to close the dialog
+
+                dialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener(
+                        new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                // Post new content
+                                if (pClass != null) {
+                                    TextView titleTV = ((TextView) dialog.findViewById(R.id.title));
+                                    TextView contentTV = ((TextView) dialog
+                                            .findViewById(R.id.description));
+
+                                    String title = titleTV.getText().toString();
+                                    String content = contentTV.getText().toString();
+
+                                    if (title.equals("")) {
+                                        titleTV.setError("You must enter a title");
+                                        return;
+                                    }
+
+                                    if (content.equals("")) {
+                                        contentTV.setError("You must enter content for the post");
+                                        return;
+                                    }
+
+                                    Client client = new Client(getContext());
+                                    client.postPost(title, content, pClass.profile,
+                                            new Client.ClientListener() {
+                                                @Override
+                                                public void refresh() {
+                                                    // Dismiss only when posted
+                                                    dialog.dismiss();
+                                                    getPosts();
+                                                }
+                                            });
+                                }
+                            }
+                        }
+                );
             }
         });
 
