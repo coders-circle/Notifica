@@ -86,15 +86,7 @@ public class PeriodAdapter extends RecyclerView.Adapter<PeriodAdapter.PeriodView
         String teacher_str = "";
 
         for(int i = 0; i < teachers.size(); i++) {
-            // Teacher may or may not have a user account
-            if(teachers.get(i).user != -1) {
-                User usr = User.get(User.class, helper, teachers.get(i).user);
-                teacher_str += usr.getName();
-            }
-            else{
-                teacher_str += teachers.get(i).username;
-            }
-
+            teacher_str += teachers.get(i).getUsername(helper);
             if (i != teachers.size() - 1) {
                 teacher_str += ", ";
             }
@@ -107,6 +99,7 @@ public class PeriodAdapter extends RecyclerView.Adapter<PeriodAdapter.PeriodView
         holder.subShortName.setText(subShortName);
         holder.subShortName.setBackgroundResource(R.drawable.border_circle);
         GradientDrawable shortNameBackground = (GradientDrawable) holder.subShortName.getBackground();
+        shortNameBackground.setColor(Color.parseColor(subject.color));
 
         String timeText = period.getStartTime() + " - " + period.getEndTime();
         holder.time.setText(timeText);
@@ -127,10 +120,6 @@ public class PeriodAdapter extends RecyclerView.Adapter<PeriodAdapter.PeriodView
         else{
             holder.remarks.setVisibility(View.VISIBLE);
         }
-
-        shortNameBackground.setColor(
-                Color.parseColor(subject.color)
-        );
     }
 
     public class PeriodViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{

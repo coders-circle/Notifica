@@ -2,6 +2,8 @@ package com.lipi.notifica.database;
 
 import org.json.JSONObject;
 
+import java.util.List;
+
 public class PClass extends Model {
     public String class_id;
     public String description;
@@ -22,5 +24,10 @@ public class PClass extends Model {
         if (department < 0)
             return null;
         return Department.get(Department.class, dbHelper, department);
+    }
+
+    public List<Routine> getRoutines(DbHelper dbHelper) {
+        return Routine.query(Routine.class, dbHelper, "p_class=?", new String[]{_id+""},
+                null, null, null);
     }
 }

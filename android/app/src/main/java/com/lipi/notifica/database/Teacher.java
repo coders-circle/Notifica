@@ -21,4 +21,19 @@ public class Teacher extends Model {
     public Department getDepartment(DbHelper dbHelper) {
         return Department.get(Department.class, dbHelper, department);
     }
+
+    public User getUser(DbHelper dbHelper) {
+        if (user < 0)
+            return null;
+        return User.get(User.class, dbHelper, user);
+    }
+
+    public String getUsername(DbHelper dbHelper) {
+        // Teacher may or may not have a user account
+        User user = getUser(dbHelper);
+
+        if(user != null)
+            return user.getName();
+        return username;
+    }
 }

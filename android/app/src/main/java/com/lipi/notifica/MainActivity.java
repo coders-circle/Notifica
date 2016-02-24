@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private Menu mMenu;
     private DbHelper mDbHelper;
+    private PClass mClass = null;
 
     private RoutineFragment mRoutineFragment;
     private NewsFeedFragment mNewsFeedFragment;
@@ -113,19 +114,10 @@ public class MainActivity extends AppCompatActivity {
         // If student set "class (group)" as info text
         if (student != null) {
             PGroup myGroup = student.getGroup(mDbHelper);
-            final PClass myClass = myGroup.getPClass(mDbHelper);
+            mClass = myGroup.getPClass(mDbHelper);
 
-            String infoText = myClass.class_id + " (" + myGroup.group_id + ")";
+            String infoText = mClass.class_id + " (" + myGroup.group_id + ")";
             info.setText(infoText);
-            info.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mDrawerLayout.closeDrawers();
-                    Intent intent1 = new Intent(MainActivity.this, ClassActivity.class);
-                    intent1.putExtra("class_id", myClass.class_id);
-                    startActivity(intent1);
-                }
-            });
         }
         // else set email as info text
         else
@@ -209,7 +201,15 @@ public class MainActivity extends AppCompatActivity {
         swapClasses.setImageResource(R.mipmap.swap_class);
         ((View)swapClasses.getParent()).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                swapMenu();
+                mDrawerLayout.closeDrawers();
+
+                if (mClass != null) {
+                    Intent intent1 = new Intent(MainActivity.this, ClassActivity.class);
+                    intent1.putExtra("class_id", mClass.class_id);
+                    startActivity(intent1);
+                }
+
+                // swapMenu();
             }
         });
     }

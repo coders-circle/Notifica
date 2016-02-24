@@ -52,6 +52,10 @@ public class User extends Model {
     }
 
     public List<Teacher> getTeachers(DbHelper dbHelper) {
-        return Teacher.query(Teacher.class, dbHelper, "user=?", new String[]{""+_id}, null, null, null);
+        return Teacher.query(Teacher.class, dbHelper, "user=?", new String[]{"" + _id}, null, null, null);
+    }
+
+    public Profile getProfile(DbHelper dbHelper) {
+        return Profile.get(Profile.class, dbHelper, profile);
     }
 }

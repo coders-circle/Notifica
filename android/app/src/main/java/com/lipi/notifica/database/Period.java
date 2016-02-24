@@ -49,6 +49,10 @@ public class Period extends Model {
         return teachers;
     }
 
+    public Subject getSubject(DbHelper helper) {
+        return Subject.get(Subject.class, helper, subject);
+    }
+
     public String getStartTime() {
         return Utilities.formatMinutes(start_time);
     }

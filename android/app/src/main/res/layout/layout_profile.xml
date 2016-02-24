@@ -10,6 +10,16 @@
         android:layout_gravity="center"
         android:background="@drawable/border_circle" />
 
+    <TextView
+        android:id="@+id/shortName"
+        android:visibility="gone"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="start"
+        android:padding="8dp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="12sp" />
 
     <TextView
         android:id="@+id/title"
@@ -20,6 +30,7 @@
         android:gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+
     <TextView
         android:id="@+id/subtitle"
         android:text="Department of Electronics and Computer Engineering"

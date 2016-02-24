@@ -109,7 +109,7 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             // Show current period if exists
             if (current != null) {
                 Subject sub = Subject.get(Subject.class, dbHelper, current.subject);
-                String text = sub.name + " " + current.getStartTime() + " - " + current.getEndTime();
+                String text = "Current: " + sub.name + "\n" + current.getStartTime() + " - " + current.getEndTime();
 
                 holder.textView1.setVisibility(View.VISIBLE);
                 holder.textView1.setText(text);
@@ -117,7 +117,7 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 holder.textView1.setVisibility(View.GONE);
 
             // Show next period
-            String text = "Next " + subject.name + " in " + Utilities.formatMinutes(remaining) + " (";
+            String text = "Next: " + subject.name + " in " + Utilities.formatMinutes(remaining) + "\n(";
 
             if (count == 1)
                 text += "Tomorrow ";

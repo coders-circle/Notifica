@@ -117,18 +117,30 @@ public class Utilities {
     }
 
 
-    public static void fillProfileView(View view, long uniqueId, Bitmap avatar, String title, String subTitle, String details) {
+    public static void fillProfileView(View view, int color, Bitmap avatar,
+                                       String title, String subTitle, String details, String shortName) {
+
         ImageView avatarView = (ImageView)view.findViewById(R.id.avatar);
         TextView titleView = (TextView)view.findViewById(R.id.title);
         TextView subTitleView = (TextView)view.findViewById(R.id.subtitle);
         TextView detailsView = (TextView)view.findViewById(R.id.details);
+        TextView shortNameView = (TextView)view.findViewById(R.id.shortName);
 
         if (avatar != null){
             avatarView.setImageBitmap(avatar);
-            ((GradientDrawable)avatarView.getBackground()).setColor(Utilities.returnColor(uniqueId));
+            ((GradientDrawable)avatarView.getBackground()).setColor(color);
             avatarView.setVisibility(View.VISIBLE);
         } else
             avatarView.setVisibility(View.GONE);
+
+        if (shortName != null) {
+            shortNameView.setText(shortName);
+            shortNameView.setBackgroundResource(R.drawable.border_circle);
+            ((GradientDrawable) shortNameView.getBackground()).setColor(color);
+
+            shortNameView.setVisibility(View.VISIBLE);
+        } else
+            shortNameView.setVisibility(View.GONE);
 
         if (title != null) {
             titleView.setText(title);

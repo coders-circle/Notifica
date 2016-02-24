@@ -12,7 +12,13 @@ import android.view.View;
 
 import com.lipi.notifica.database.DbHelper;
 import com.lipi.notifica.database.PClass;
+import com.lipi.notifica.database.Period;
 import com.lipi.notifica.database.Profile;
+import com.lipi.notifica.database.Routine;
+import com.lipi.notifica.database.Subject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ClassActivity extends AppCompatActivity {
 
@@ -23,6 +29,8 @@ public class ClassActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_class);
+
+        // Get class profile
 
         DbHelper dbHelper = new DbHelper(this);
         String class_id = getIntent().getExtras().getString("class_id");
@@ -39,21 +47,22 @@ public class ClassActivity extends AppCompatActivity {
             actionBar.setHomeButtonEnabled(true);
         }
 
-
         CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         collapsingToolbarLayout.setTitle(mClass.class_id);
 
         // Set the profile view
+
         View profileView = findViewById(R.id.profile);
-        Utilities.fillProfileView(profileView, mProfile._id,
+        Utilities.fillProfileView(profileView, Utilities.returnColor(mProfile._id),
                 mProfile.getAvatar(), mClass.class_id,
-                mClass.description, null);
+                mClass.description, null, null);
 
         profileView.findViewById(R.id.title).setVisibility(View.INVISIBLE);
 
+        // Set the recycler view
 
         RecyclerView recyclerView = (RecyclerView)findViewById(R.id.classRecyclerView);
-        ClassAdapter adapter = new ClassAdapter();
+        ClassAdapter adapter = new ClassAdapter(this, mClass);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
