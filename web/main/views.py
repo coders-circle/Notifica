@@ -109,4 +109,3 @@ class NotifyView(View):
             context["error"] = str(e)
 
         return render(request, "main/notify.html", context)
-        

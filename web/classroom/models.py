@@ -119,6 +119,16 @@ class Student(models.Model):
         return self.user.username
 
 
+class Elective(models.Model):
+    group = models.CharField(max_length=30, default="A")
+    p_class = models.ForeignKey(Class, verbose_name="class")
+    subject = models.ForeignKey(Subject)
+    students = models.ManyToManyField(Student, blank=True)
+
+    def __str__(self):
+        return str(self.subject) + " (" + self.group + ") - " + str(self.p_class)
+
+
 class UserProfile(models.Model):
     user = models.OneToOneField(User, primary_key=True)
     profile = models.OneToOneField(Profile, blank=True)

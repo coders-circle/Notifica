@@ -26,4 +26,8 @@
         <item name="android:listDivider">@color/listDivider</item>
     </style>
 
+    <style name="ExpandedToolbarText">
+        <item name="android:textSize">18sp</item>
+    </style>
+
 </resources>
