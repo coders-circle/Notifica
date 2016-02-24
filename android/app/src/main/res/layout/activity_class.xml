@@ -1,50 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
 
-    <include
-        android:id="@+id/tool_bar"
-        layout="@layout/layout_toolbar"
-        android:layout_height="wrap_content"
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        />
+        android:layout_height="160dp"
+        android:fitsSystemWindows="true">
 
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary">
-        <include
-            android:id="@+id/profile"
-            layout="@layout/layout_profile"
-            android:layout_height="wrap_content"
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/collapsing_toolbar"
             android:layout_width="match_parent"
-            android:layout_margin="10dp"
-            />
-    </FrameLayout>
+            android:layout_height="match_parent"
+            app:contentScrim="?attr/colorPrimary"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+            app:expandedTitleGravity="center"
+            app:expandedTitleMarginBottom="70dp"
+            app:expandedTitleTextAppearance="@style/ExpandedToolbarText"
+            android:fitsSystemWindows="true">
 
+            <FrameLayout
+                app:layout_collapseMode="parallax"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:minHeight="100dp"
+                android:animateLayoutChanges="true">
+                <include
+                    android:id="@+id/profile"
+                    layout="@layout/layout_profile"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"/>
+            </FrameLayout>
 
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/tool_bar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"/>
 
-    <com.lipi.notifica.SlidingTabLayout
-        android:id="@+id/class_tabs"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:elevation="0dp"
-        android:background="@color/colorPrimary"/>
+        </android.support.design.widget.CollapsingToolbarLayout>
+    </android.support.design.widget.AppBarLayout>
 
-
-    <android.support.v4.view.ViewPager
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/class_pager"
-        android:background="@color/colorPrimaryDark"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
-    <!--FrameLayout
-        android:id="@+id/frame_content"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/classRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:elevation="4dp"/-->
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
-</LinearLayout>
+</android.support.design.widget.CoordinatorLayout>
