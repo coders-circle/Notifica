@@ -38,7 +38,10 @@ function getNameString(arr){
     return formattedStr;
 }
 function getFormattedTimeString(mins){
-    return (Math.floor(mins/60)).toString() + ':' + (mins%60).toString();
+    var f_hrs = Math.floor(mins/60).toString();
+    var f_mins = (mins%60).toString();
+    if(f_mins.length == 1) f_mins = '0'+f_mins;
+    return (f_hrs + ':' + f_mins);
 }
 function calculateMinMaxTime(){
     min_time = 9999;
@@ -83,13 +86,16 @@ function renderTimeLine(){
     }
     var time_line = $('#time-line');
     var total_duration = max_time-min_time;
-    var time_stop_template = $('<div class="time-stop"></div>');
+    var time_stop_template = $('<input class="time-stop">');
     timestops = getTimeStops();
     for(var i=0; i < timestops.length; i++){
         var time_stop = time_stop_template.clone();
-        time_stop.text(getFormattedTimeString(timestops[i]));
+        time_stop.attr('value', getFormattedTimeString(timestops[i]));
+        if(edit_routine != "true"){
+            time_stop.attr('disabled', true);
+        }
         time_stop.appendTo(time_line);
-        time_stop.css('padding-left', (100*(timestops[i]-min_time)/total_duration).toString()+'%');
+        time_stop.css('margin-left', (100*(timestops[i]-min_time)/total_duration-i*0.6).toString()+'%');
     }
 }
 function renderPeriods(){

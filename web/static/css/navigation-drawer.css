@@ -2,6 +2,7 @@
     position: fixed;
     z-index: 99;
     left: 0px;
+    top:0px;
     width: 300px;
     height: 100%;
     margin-left: -350px;
@@ -95,5 +96,5 @@
     font-size: 2em;
     vertical-align: middle;
     color: #eee;
-    font-weight: bold;
+    font-weight: 300;
 }

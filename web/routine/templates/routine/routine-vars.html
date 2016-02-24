@@ -14,4 +14,5 @@
                 groups:[{% for group in p.groups.all %}{name: "{{group}}", id: "{{group.id}}"},{% endfor %}]
             },{% endfor %}],{% endfor %}];
     var group_list = [{% for group in groups.all %}{id: "{{ group.id }}",name: "{{ group }}"},{% endfor %}];
+    var edit_routine = "{{ edit_routine }}";
 </script>

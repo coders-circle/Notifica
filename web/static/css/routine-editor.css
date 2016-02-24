@@ -1,10 +1,7 @@
 #title-block{
     display: block;
-    color: #a2a2a2;
 }
 #save-btn{
-    font-family: "Open Sans Condensed", "Ubuntu Condensed";
-    text-transform: uppercase;
     float:right;
 }
 #save-btn:hover{
@@ -30,9 +27,8 @@
     padding: 10px;
 }
 .btn-add-period{
-    font-size:0.9em;
-    font-family: "Open Sans Condensed", "Ubuntu Condensed";
-    text-transform: uppercase;
+    padding: 0px;
+    font-size:0.77em;
     background-color: transparent;
     border: none;
     outline:none;

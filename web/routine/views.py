@@ -29,6 +29,7 @@ class RoutineView(View):
         r = getRoutine(request.user)
         context = {"days_short": days_short, "days": days, "routine": r}
         context["current_page"] = "Routine"
+        context["edit_routine"] = "false"
         request.user.profile = UserProfile.objects.get(user=request.user).profile
         return render(request, 'routine/routine.html', context)
 
@@ -48,6 +49,7 @@ class RoutineAdminView(View):
         groups = Group.objects.filter(p_class__pk=student.group.p_class.pk)
         context["groups"] = groups
         context["student"] = student
+        context["edit_routine"] = "true"
         request.user.profile = UserProfile.objects.get(user=request.user).profile
         return render(request, 'routine/routine-admin.html', context)
 

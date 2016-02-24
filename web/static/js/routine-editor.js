@@ -216,8 +216,23 @@ $(document).ready(function(){
 		add_subject_dialog.modal('hide');
 	});
 
-	$('#group-select select').change(function(){
-		renderSelectedRoutine();
-	});
+    $('body').on('change', '#group-select select', function(e){
+        renderSelectedRoutine();
+    });
 
+    $('body').on('change', '.time-stop', function(e){
+        old_time = getMinutes(this.defaultValue);
+        for(var i=0; i < routine.length; i++){
+            var periods = routine[i];
+            for(var j=0; j < periods.length; j++){
+                if(periods[j].start_time == old_time){
+                    periods[j].start_time = getMinutes($(this).val());
+                }
+                else if(periods[j].end_time == old_time){
+                    periods[j].end_time = getMinutes($(this).val());
+                }
+            }
+        }
+        renderSelectedRoutine();
+    });
 });

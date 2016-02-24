@@ -78,8 +78,7 @@ hr {
     margin-bottom: 20px;
 }
 #post-block .bottom-control-container button{
-    font-family: "Cabin Condensed", "Ubuntu Condensed";
-    text-transform: uppercase;
+    
     color: #969696;
 }
 #post-block .bottom-control-container button:hover{

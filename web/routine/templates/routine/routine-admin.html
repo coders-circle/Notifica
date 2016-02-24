@@ -33,7 +33,7 @@
             <i class="fa fa-bars"></i>
         </button>
         <span class="title">Weekly Routine</span>
-        <button class="input-neat" id="save-btn" onclick="saveRoutine()">Save changes</button>
+        <button class="input-neat" id="save-btn" onclick="saveRoutine()"><i class="fa fa-save"></i> &nbsp; Save changes</button>
         {% if groups.all %}
         <div id="group-select">
             Group:
@@ -50,10 +50,10 @@
 
 <div class="block" id="routine-block">
     <div class="container">
-        <div class="row row-heading">
-            <div class="col-md-1">
+        <div class="row" id="title-row">
+            <div class="col-xs-1">
             </div>
-            <div class="col-md-11" id="time-line">
+            <div class="col-xs-11" id="time-line">
                 <div class="ghost">time-line</div>
             </div>
         </div>
