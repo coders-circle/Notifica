@@ -12,38 +12,34 @@
     background-color: transparent;
 }
 
+#footer-block{
+    padding-top: 20px;
+}
 #footer-block #about{
     text-align: center;
     padding: 10px;
 }
-
-
 #footer-block .logo{
     width: 40px;
 }
-
 #footer-block .logo-container{
     margin-right: 10px;
 }
-
 #footer-block .app-name{
     font-size: 3em;
     font-family: "Raleway", "Open Sans";
     vertical-align: middle;
 }
-
 #footer-block .slogan{
     color: #727272;
 }
-
 #footer-block #links{
     text-align: center;
 }
-
 #footer-block #links a{
     display: inline-block;
     margin: 10px;
-    font-weight: bold;
+    font-weight: 600;
 }
 
 .btn-default{

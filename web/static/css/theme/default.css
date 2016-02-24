@@ -4,7 +4,7 @@ body {
     font-family: 'Open Sans', sans-serif;
 }
 a, a:focus, a:active {
-    font-family: "Cabin Condensed", "Ubuntu Condensed";
+    font-family: "Josefin Sans", "Ubuntu";
     color: #808080;
     transition: 0.5s;
 }

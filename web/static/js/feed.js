@@ -10,6 +10,7 @@ $(document).ready(function(){
         for(var i = 0; i < posts.length; i++){
             var post = post_template.clone();
             post.find('.num').text(posts[i].num_comments);
+            post.find('.num-comments').attr('href', '/feed/post/'+posts[i].id);
             post.find('.user-avatar').attr('src', posts[i].posted_by.avatar);
             post.find('.title').text(posts[i].title);
             post.find('.title').attr('href', '/feed/post/'+posts[i].id);

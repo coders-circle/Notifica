@@ -20,22 +20,28 @@ Notifica: News feed
 {% include 'posts/userpost-template.html' %}
 <div class="msg hidden" id="empty-msg">Sorry, no result found</div>
 <div class="msg hidden" id="error-msg">Oops! Something went wrong</div>
-<div class="block" id="title-block">
+<div class="navigation-bar">
     <div class="container">
-        <button class="input-neat" id="drawer-open-btn">
-            <i class="fa fa-bars"></i>
-        </button>
-        <span class="title">News feed</span>
+        <div class="row">
+            <div class="col-sm-6">
+                <button class="input-neat" id="drawer-open-btn">
+                    <i class="fa fa-bars"></i>
+                </button>
+                <span class="title">News feed</span>
+            </div>
+            <div class="col-sm-6">
+                <div class="search-input-container">
+                    <i class="fa fa-search"></i>
+                    <input class="input-neat" id="search-post-input" type="text" placeholder="search for posts by title, content, tag">
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <div class="block" id="content-block">
     <div class="container">
         <div class="row">
             <div id="post-block" class="col-md-8">
-                <div class="search-input-container">
-                    <i class="fa fa-search"></i>
-                    <input class="input-neat" id="search-post-input" type="text" placeholder="search for posts by title, content, tag">
-                </div>
                 <div class="posts">
                 </div>
                 <div class="bottom-control-container">
@@ -44,34 +50,40 @@ Notifica: News feed
                 </div>
             </div>
             <div id="quick-links-block" class="col-md-4">
-                <div class="card card-class-list" id="class-list">
-                    <a href="#" class="title">Classes</a>
-                    {% for p_class in classes %}
-                    <div class="class">
-                        <a href="{% url 'classroom:class' p_class.pk %}" class="name">{{p_class.class_id}}</a>
-                        {% if p_class.department %}
-                            <div class="extra">{{p_class.department.name}}</div>
-                        {% else %}
-                            <div class="extra">{{p_class.description}}</div>
-                        {% endif %}
+                <div class="row">
+                    <div class="col-md-12 col-sm-6">
+                        <div class="card card-class-list" id="class-list">
+                            <a href="#" class="title">Classes</a>
+                            {% for p_class in classes %}
+                            <div class="class">
+                                <a href="{% url 'classroom:class' p_class.pk %}" class="name">{{p_class.class_id}}</a>
+                                {% if p_class.department %}
+                                    <div class="extra">{{p_class.department.name}}</div>
+                                {% else %}
+                                    <div class="extra">{{p_class.description}}</div>
+                                {% endif %}
+                            </div>
+                            {% if not forloop.last %}<hr>{% endif %}
+                            {% endfor %}
+                            <div class="bottom-link">
+                                <a id="add-class-link" href="{% url 'classroom:add-class' %}" class="name"><i class="fa fa-plus"></i> Add class</a>
+                            </div>
+                        </div>
                     </div>
-                    {% if not forloop.last %}<hr>{% endif %}
-                    {% endfor %}
-                    <div class="bottom-link">
-                        <a id="add-class-link" href="{% url 'classroom:add-class' %}" class="name"><i class="fa fa-plus"></i> Add class</a>
+                    <div class="col-md-12 col-sm-6">
+                        <div class="card card-department-list" id="department-list">
+                            <a href="#" class="title">Departments</a>
+                            {% for department in departments %}
+                            <div class="department">
+                                <a href="{% url 'classroom:department' department.pk %}" class="name">{{department.name}}</a>
+                                <div class="extra">{{department.organization.name}}</div>
+                            </div>
+                            <div class="bottom-link">
+                                <a id="add-department-link" href="{% url 'classroom:add-class' %}" class="name"><i class="fa fa-plus"></i> Add department</a>
+                            </div>
+                            {% endfor %}
+                        </div>
                     </div>
-                </div>
-                <div class="card card-department-list" id="department-list">
-                    <a href="#" class="title">Departments</a>
-                    {% for department in departments %}
-                    <div class="department">
-                        <a href="{% url 'classroom:department' department.pk %}" class="name">{{department.name}}</a>
-                        <div class="extra">{{department.organization.name}}</div>
-                    </div>
-                    <div class="bottom-link">
-                        <a id="add-department-link" href="{% url 'classroom:add-class' %}" class="name"><i class="fa fa-plus"></i> Add department</a>
-                    </div>
-                    {% endfor %}
                 </div>
             </div>
         </div>
