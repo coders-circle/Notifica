@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NewsFeedFragment extends Fragment {
-    private PostAdapter mAdapter;
+    private NewsFeedAdapter mAdapter;
     private SwipeRefreshLayout mSwipeRefreshLayout;
 
     private List<Post> mPosts = new ArrayList<>();
@@ -37,14 +37,14 @@ public class NewsFeedFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_newsfeed, container, false);
 
-        RecyclerView recyclerView = (RecyclerView)rootView.findViewById(R.id.recycler_view_posts);
+        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_posts);
         recyclerView.addItemDecoration(new PostDivider(rootView.getContext()));
         recyclerView.setHasFixedSize(true);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(rootView.getContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        mAdapter = new PostAdapter(getActivity(), mPosts);
+        mAdapter = new NewsFeedAdapter(getActivity(), mPosts);
         recyclerView.setAdapter(mAdapter);
 
         getPosts();
@@ -59,13 +59,16 @@ public class NewsFeedFragment extends Fragment {
 
         recyclerView.addOnScrollListener(new VerticalScrollListener() {
             @Override
-            public void onScrolledUp() {}
+            public void onScrolledUp() {
+            }
 
             @Override
-            public void onScrolledDown() {}
+            public void onScrolledDown() {
+            }
 
             @Override
-            public void onScrolledToTop() {}
+            public void onScrolledToTop() {
+            }
 
             @Override
             public void onScrolledToBottom() {
@@ -151,6 +154,7 @@ public class NewsFeedFragment extends Fragment {
             for (int i = 0; i < childCount-1; i++) {
                 View child = parent.getChildAt(i);
                 RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
+
                 int top = child.getBottom() + params.bottomMargin;
                 int bottom = top + mDivider.getIntrinsicHeight();
                 mDivider.setBounds(left, top, right, bottom);
