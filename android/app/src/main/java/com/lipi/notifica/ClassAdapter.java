@@ -6,7 +6,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -180,8 +179,9 @@ public class ClassAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 List<Elective> electives = mElectives.get(group);
 
                 if (origin == position) {
-                    HeaderViewHolder holder = (HeaderViewHolder)viewHolder;
-                    holder.header.setText("Elective " + group);
+                    HeaderViewHolder holder = (HeaderViewHolder) viewHolder;
+                    String electiveHeader = "Elective " + group;
+                    holder.header.setText(electiveHeader);
                 }
                 else if (position - origin-1 < electives.size()) {
                     final Elective elective = electives.get(position-origin-1);
@@ -189,11 +189,17 @@ public class ClassAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
                     ViewHolder holder = (ViewHolder) viewHolder;
 
-                    Utilities.fillProfileView(holder.view,
-                            Color.parseColor(subject.color),
-                            null, subject.name, null, null, subject.getShortName());
+                    if (!elective.selected)
+                        Utilities.fillProfileView(holder.view,
+                                Color.parseColor(subject.color),
+                                null, subject.name, null, null, subject.getShortName());
+                    else
+                        Utilities.fillProfileView(holder.view,
+                                Color.parseColor(subject.color),
+                                BitmapFactory.decodeResource(mContext.getResources(),
+                                        R.drawable.ic_check),
+                                subject.name, null, null, null);
 
-                    holder.view.setSelected(elective.selected);
 
                     // Select new elective
                     if (!elective.selected)

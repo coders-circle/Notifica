@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:clickable="true"
     android:focusable="true"
-    android:background="@drawable/selector"
+    android:background="?selectableItemBackground"
     android:padding="10dp">
 
     <RelativeLayout

@@ -12,18 +12,9 @@ import android.view.View;
 
 import com.lipi.notifica.database.DbHelper;
 import com.lipi.notifica.database.PClass;
-import com.lipi.notifica.database.Period;
 import com.lipi.notifica.database.Profile;
-import com.lipi.notifica.database.Routine;
-import com.lipi.notifica.database.Subject;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class ClassActivity extends AppCompatActivity {
-
-    private PClass mClass;
-    private Profile mProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,10 +25,11 @@ public class ClassActivity extends AppCompatActivity {
 
         DbHelper dbHelper = new DbHelper(this);
         String class_id = getIntent().getExtras().getString("class_id");
-        mClass = PClass.get(PClass.class, dbHelper, "class_id=?", new String[]{class_id}, null);
-        mProfile = Profile.get(Profile.class, dbHelper, mClass.profile);
+        PClass pClass = PClass.get(PClass.class, dbHelper, "class_id=?", new String[]{class_id}, null);
+        Profile profile = Profile.get(Profile.class, dbHelper, pClass.profile);
 
         // Set the toolbar
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
 
@@ -48,21 +40,21 @@ public class ClassActivity extends AppCompatActivity {
         }
 
         CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-        collapsingToolbarLayout.setTitle(mClass.class_id);
+        collapsingToolbarLayout.setTitle(pClass.class_id);
 
         // Set the profile view
 
         View profileView = findViewById(R.id.profile);
-        Utilities.fillProfileView(profileView, Utilities.returnColor(mProfile._id),
-                mProfile.getAvatar(), mClass.class_id,
-                mClass.description, null, null);
+        Utilities.fillProfileView(profileView, Utilities.returnColor(profile._id),
+                profile.getAvatar(), pClass.class_id,
+                pClass.description, null, null);
 
         profileView.findViewById(R.id.title).setVisibility(View.INVISIBLE);
 
         // Set the recycler view
 
         RecyclerView recyclerView = (RecyclerView)findViewById(R.id.classRecyclerView);
-        ClassAdapter adapter = new ClassAdapter(this, mClass);
+        ClassAdapter adapter = new ClassAdapter(this, pClass);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }

@@ -1,6 +1,5 @@
 package com.lipi.notifica;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Canvas;
@@ -16,14 +15,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.lipi.notifica.database.Client;
 import com.lipi.notifica.database.DbHelper;
 import com.lipi.notifica.database.PClass;
 import com.lipi.notifica.database.Post;
-import com.lipi.notifica.database.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +28,6 @@ import java.util.List;
 public class NewsFeedFragment extends Fragment {
     private NewsFeedAdapter mAdapter;
     private SwipeRefreshLayout mSwipeRefreshLayout;
-    private FloatingActionButton addPostButton;
 
     private List<Post> mPosts = new ArrayList<>();
     private DbHelper mDbHelper;
@@ -60,7 +56,7 @@ public class NewsFeedFragment extends Fragment {
 
         final PClass pClass = ((MainActivity)getActivity()).getPClass();
 
-        addPostButton = (FloatingActionButton) rootView.findViewById(R.id.addPostButton);
+        FloatingActionButton addPostButton = (FloatingActionButton) rootView.findViewById(R.id.addPostButton);
         addPostButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,7 +74,6 @@ public class NewsFeedFragment extends Fragment {
                 // Create the AlertDialog object and show it
                 final AlertDialog dialog = builder.create();
                 dialog.show();
-
 
 
                 // We need to override onClick listener for OK some other way so that
