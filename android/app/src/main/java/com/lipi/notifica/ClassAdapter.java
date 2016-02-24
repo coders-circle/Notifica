@@ -1,16 +1,19 @@
 package com.lipi.notifica;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.lipi.notifica.database.DbHelper;
+import com.lipi.notifica.database.Elective;
 import com.lipi.notifica.database.PClass;
 import com.lipi.notifica.database.Period;
 import com.lipi.notifica.database.Profile;
@@ -20,6 +23,7 @@ import com.lipi.notifica.database.Teacher;
 import com.lipi.notifica.database.User;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class ClassAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -27,6 +31,8 @@ public class ClassAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private Context mContext;
     private List<Subject> mSubjects;
     private List<Teacher> mTeachers;
+    private HashMap<String, List<Elective>> mElectives;
+    private List<String> mElectiveGroups;
     private PClass mClass;
     private DbHelper mDbHelper;
 
@@ -35,11 +41,16 @@ public class ClassAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         mClass = pClass;
 
         mDbHelper = new DbHelper(context);
+        refreshData();
+    }
 
-        // Get subjects and teachers list
+    public void refreshData() {
+        // Get subjects, electives and teachers list
 
         mSubjects = new ArrayList<>();
         mTeachers = new ArrayList<>();
+        mElectives = new HashMap<>();
+        mElectiveGroups = new ArrayList<>();
 
         List<Long> sids = new ArrayList<>();
         List<Long> tids = new ArrayList<>();
@@ -51,7 +62,19 @@ public class ClassAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
                 if (!sids.contains(p.subject)) {
                     sids.add(p.subject);
-                    mSubjects.add(p.getSubject(mDbHelper));
+                    Subject s = p.getSubject(mDbHelper);
+
+                    Elective elective = s.getElective(mDbHelper);
+                    if (elective == null)
+                        mSubjects.add(s);
+                    else if (elective.p_class == mClass._id) {
+                        if (mElectives.get(elective.p_group) == null) {
+                            mElectives.put(elective.p_group, new ArrayList<Elective>());
+                            mElectiveGroups.add(elective.p_group);
+                        }
+
+                        mElectives.get(elective.p_group).add(elective);
+                    }
                 }
 
                 List<Teacher> teachers = p.getTeachers(mDbHelper);
@@ -67,11 +90,29 @@ public class ClassAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public int getItemCount() {
-        return mSubjects.size() + 1 + mTeachers.size() + 1;
+        int electivesSize = 0;
+        for (String group: mElectiveGroups) {
+            List<Elective> list = mElectives.get(group);
+            electivesSize += list.size()+1;
+        }
+
+        return mSubjects.size() + 1
+                + mTeachers.size() + 1
+                + electivesSize;
     }
 
     @Override
     public int getItemViewType(int position) {
+        int origin = mSubjects.size() + 1 + mTeachers.size()+1;
+        for (String group: mElectiveGroups) {
+            if (position == origin)
+                return 0;
+            else if (position < origin)
+                break;
+
+            origin += mElectives.get(group).size()+1;
+        }
+
         if (position == 0 || position == mSubjects.size()+1)
             return 0;
         else
@@ -92,6 +133,8 @@ public class ClassAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
+
+        // Subject
         if (position == 0) {
             HeaderViewHolder holder = (HeaderViewHolder)viewHolder;
             holder.header.setText("Subjects");
@@ -99,11 +142,15 @@ public class ClassAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         else if (position-1 < mSubjects.size()) {
             Subject subject = mSubjects.get(position - 1);
 
-            Utilities.fillProfileView(((ViewHolder) viewHolder).view,
+            ViewHolder holder = (ViewHolder) viewHolder;
+            Utilities.fillProfileView(holder.view,
                     Color.parseColor(subject.color),
                     null, subject.name, null, null, subject.getShortName());
+            holder.view.setSelected(false);
+            holder.view.setOnClickListener(null);
         }
 
+        // Teacher
         else if (position-1-mSubjects.size() == 0) {
             HeaderViewHolder holder = (HeaderViewHolder)viewHolder;
             holder.header.setText("Teachers");
@@ -120,9 +167,57 @@ public class ClassAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                     avatar = profile.getAvatar();
             }
 
-            Utilities.fillProfileView(((ViewHolder) viewHolder).view,
+            ViewHolder holder = (ViewHolder) viewHolder;
+            Utilities.fillProfileView(holder.view,
                     Utilities.returnColor(teacher._id),
                     avatar, teacher.getUsername(mDbHelper), null, null, null);
+            holder.view.setSelected(false);
+            holder.view.setOnClickListener(null);
+        }
+        else {
+            int origin = mSubjects.size() + 1 + mTeachers.size()+1;
+            for (String group: mElectiveGroups) {
+                List<Elective> electives = mElectives.get(group);
+
+                if (origin == position) {
+                    HeaderViewHolder holder = (HeaderViewHolder)viewHolder;
+                    holder.header.setText("Elective " + group);
+                }
+                else if (position - origin-1 < electives.size()) {
+                    final Elective elective = electives.get(position-origin-1);
+                    Subject subject = elective.getSubject(mDbHelper);
+
+                    ViewHolder holder = (ViewHolder) viewHolder;
+
+                    Utilities.fillProfileView(holder.view,
+                            Color.parseColor(subject.color),
+                            null, subject.name, null, null, subject.getShortName());
+
+                    holder.view.setSelected(elective.selected);
+
+                    // Select new elective
+                    if (!elective.selected)
+                        holder.view.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                final ProgressDialog dialog = new ProgressDialog(mContext);
+                                dialog.setMessage("Selecting new elective");
+                                dialog.show();
+
+                                elective.select(mContext, new Elective.SelectCallback() {
+                                    @Override
+                                    public void onSelectionComplete() {
+                                        refreshData();
+                                        notifyDataSetChanged();
+                                        dialog.dismiss();
+                                    }
+                                });
+                            }
+                        });
+                }
+
+                origin += electives.size() + 1;
+            }
         }
     }
 

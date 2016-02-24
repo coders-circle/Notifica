@@ -137,7 +137,6 @@ public class PeriodAdapter extends RecyclerView.Adapter<PeriodAdapter.PeriodView
             subject = (TextView)v.findViewById(R.id.subject);
             teachers = (TextView)v.findViewById(R.id.teachers);
             remarks = (TextView)v.findViewById(R.id.remarks);
-
         }
 
         @Override

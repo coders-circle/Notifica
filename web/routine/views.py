@@ -107,11 +107,12 @@ class RoutineAdminView(View):
             if tid < 0:
                 if tid in self.tempTids:
                     ts.append(Teacher.objects.get(pk=self.tempTids[tid]))
-                teacher = Teacher()
-                teacher.username = t["name"]
-                teacher.save()
-                self.tempTids[tid] = teacher.pk
-                ts.append(teacher)
+                else:
+                    teacher = Teacher()
+                    teacher.username = t["name"]
+                    teacher.save()
+                    self.tempTids[tid] = teacher.pk
+                    ts.append(teacher)
             else:
                 ts.append(Teacher.objects.get(pk=tid))
         return ts

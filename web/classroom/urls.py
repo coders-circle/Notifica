@@ -25,5 +25,7 @@ urlpatterns = [
     url(r'^add-class/$', views.AddClassView.as_view(), name='add-class'),
     url(r'^search/$', views.SearchView.as_view(), name='search'),
 
+    url(r'^elective/select/(?P<id>\d+)/$', views.SelectElectiveView.as_view(), name='select_elective'),
+
     url(r'^api/v1/', include(router.urls)),
 ]

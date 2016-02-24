@@ -1,4 +1,5 @@
 from django.db.models import Q
+from django.views.generic import View
 
 from rest_framework import viewsets, permissions
 from rest_framework.views import APIView
@@ -11,7 +12,6 @@ from classroom.permissions import *
 from routine.models import *
 
 from main.search import *
-
 
 class ProfileViewSet(viewsets.ModelViewSet):
     queryset = Profile.objects.all()

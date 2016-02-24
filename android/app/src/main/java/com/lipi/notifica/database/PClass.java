@@ -2,6 +2,7 @@ package com.lipi.notifica.database;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PClass extends Model {
@@ -27,7 +28,25 @@ public class PClass extends Model {
     }
 
     public List<Routine> getRoutines(DbHelper dbHelper) {
-        return Routine.query(Routine.class, dbHelper, "p_class=?", new String[]{_id+""},
+        return Routine.query(Routine.class, dbHelper, "p_class=?", new String[]{_id + ""},
                 null, null, null);
+    }
+
+    public List<Subject> getSubjects(DbHelper dbHelper) {
+        List<Long> sids = new ArrayList<>();
+        List<Routine> routines = getRoutines(dbHelper);
+        List<Subject> subjects = new ArrayList<>();
+
+        for (Routine r: routines) {
+            List<Period> periods = r.getPeriods(dbHelper);
+            for (Period p: periods) {
+                if (!sids.contains(p.subject)) {
+                    sids.add(p.subject);
+                    Subject s = p.getSubject(dbHelper);
+                        subjects.add(s);
+                }
+            }
+        }
+        return subjects;
     }
 }

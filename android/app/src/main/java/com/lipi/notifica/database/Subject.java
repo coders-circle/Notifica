@@ -2,6 +2,8 @@ package com.lipi.notifica.database;
 
 import org.json.JSONObject;
 
+import java.util.List;
+
 public class Subject extends Model {
     public String name;
     public String short_name;
@@ -29,5 +31,9 @@ public class Subject extends Model {
             }
         }
         return subShortName;
+    }
+
+    public Elective getElective(DbHelper dbHelper) {
+        return Elective.get(Elective.class, dbHelper, "subject=?", new String[]{_id + ""}, null);
     }
 }

@@ -1,9 +1,13 @@
 from django.shortcuts import render, redirect
 from django.views.generic import View, TemplateView
 from django.contrib.auth import authenticate, logout
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
+from django.http import Http404, JsonResponse
 
 from classroom.models import *
 from classroom.utils import *
+from main.decorators import *
 
 
 class UserView(View):
@@ -88,3 +92,37 @@ class AddClassView(View):
         except Exception as e:
             context = {"error":str(e)}
             return render(request, "classroom/add-class.html", context)
+
+
+class SelectElectiveView(View):
+
+    @method_decorator(csrf_exempt)
+    @method_decorator(basicauth)
+    def dispatch(self, *args, **kwargs):
+        return super(SelectElectiveView, self).dispatch(*args, **kwargs)
+
+    def get(self, request, id=-1):
+        Http404("Invalid page for GET request")
+
+    def post(self, request, id):
+        if not isValidUser(request.user):
+            raise Http404("Invalid user")
+
+        students = Student.objects.filter(user__pk=self.request.user.pk)
+        elective = Elective.objects.get(pk=id)
+
+        # Remove student from all other electives in same group
+        others = Elective.objects.filter(p_class__pk=elective.p_class.pk,
+                                         group=elective.group)
+
+        for e in others:
+            for s in students:
+                if s in e.students.all():
+                    e.students.remove(s)
+
+        # Select student for this elective
+        for s in students:
+            if s not in elective.students.all():
+                elective.students.add(s)
+
+        return JsonResponse({"result": "success"})

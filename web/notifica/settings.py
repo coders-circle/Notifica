@@ -40,7 +40,7 @@ INSTALLED_APPS = [
 
     'rest_framework',
 
-    'main', 
+    'main',
     'classroom',
     'routine',
     'posts',

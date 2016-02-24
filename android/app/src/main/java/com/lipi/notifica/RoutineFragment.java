@@ -39,9 +39,22 @@ public class RoutineFragment extends Fragment {
         // Use routine from database
         routine = new ArrayList<>();
         DbHelper helper = new DbHelper(getContext());
-        for( int i = 0; i < NUM_DAYS; i++) {
+        for(int i = 0; i < NUM_DAYS; i++) {
             // Get periods for current day, ordered by start_time
-            routine.add(Period.query(Period.class, helper, "day=?", new String[]{i+""}, null, null, "start_time"));
+            List<Period> periods = Period.query(Period.class, helper, "day=?", new String[]{i + ""}, null, null, "start_time");
+
+            // Remove electives that user hasn't selected
+            for (int j=0; j<periods.size(); ++j) {
+                Elective elective = periods.get(j).getSubject(helper).getElective(helper);
+                if (elective == null)
+                    continue;
+
+                if (!elective.selected) {
+                    periods.remove(j);
+                    --j;
+                }
+            }
+            routine.add(periods);
         }
 
         DaysTabsPagerAdapter adapter = new DaysTabsPagerAdapter(getChildFragmentManager());

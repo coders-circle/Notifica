@@ -1,14 +1,11 @@
 package com.lipi.notifica;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Handler;
-import android.os.SystemClock;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -97,7 +94,6 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
 
         int remaining;
-
         if (next != null) {
             // Find remaining time to next period
             remaining = next.start_time - currentTime;
@@ -109,15 +105,19 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             // Show current period if exists
             if (current != null) {
                 Subject sub = Subject.get(Subject.class, dbHelper, current.subject);
-                String text = "Current: " + sub.name + "\n" + current.getStartTime() + " - " + current.getEndTime();
-
-                holder.textView1.setVisibility(View.VISIBLE);
-                holder.textView1.setText(text);
+                if (sub != null) {
+                    String text = "Current: " + sub.name + "\n" + current.getStartTime() + " - " + current.getEndTime();
+                    holder.textView1.setVisibility(View.VISIBLE);
+                    holder.textView1.setText(text);
+                } else
+                    holder.textView1.setVisibility(View.GONE);
             } else
                 holder.textView1.setVisibility(View.GONE);
 
             // Show next period
-            String text = "Next: " + subject.name + " in " + Utilities.formatMinutes(remaining) + "\n(";
+            String text = "";
+            if (subject!=null)
+                text = "Next: " + subject.name + " in " + Utilities.formatMinutes(remaining) + "\n(";
 
             if (count == 1)
                 text += "Tomorrow ";

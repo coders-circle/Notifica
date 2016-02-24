@@ -164,7 +164,10 @@ public class MainActivity extends AppCompatActivity {
 
 
         // Set the drawer header contents from the user profile
-        setHeaderView();
+        try {
+            setHeaderView();
+        }
+        catch (Exception ignored) {}
     }
 
     private void swapMenu() {

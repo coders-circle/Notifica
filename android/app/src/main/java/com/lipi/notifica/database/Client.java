@@ -80,6 +80,8 @@ public class Client {
         Subject s = new Subject(json);
         s.save(mDbHelper);
         // getDepartment(s.department);
+
+        getElectives(s._id, clientListener);
     }
 
     private void addTeacher(JSONObject json, ClientListener clientListener) throws JSONException {
@@ -378,8 +380,11 @@ public class Client {
 
     // Get posts from server, offset, count and time can be -1 if not needed
     public void getPosts(long offset, long count, long time, long profile, final ClientListener clientListener) {
-        if (clientListener != null)
+        if (clientListener != null) {
+            if (clientListener.queue.contains("posts"))
+                return;
             clientListener.queue.add("posts");
+        }
 
         // Get posts
         String query = "";
@@ -424,8 +429,11 @@ public class Client {
 
     // Get comments from server
     public void getComments(final long postId, final ClientListener clientListener) {
-        if (clientListener != null)
-            clientListener.queue.add("comments:"+postId);
+        if (clientListener != null) {
+            if (clientListener.queue.contains("comments:"+postId))
+                return;
+            clientListener.queue.add("comments:" + postId);
+        }
 
         // Get comments
         NetworkHandler handler = new NetworkHandler(mContext, mUsername, mPassword, true);
@@ -495,7 +503,7 @@ public class Client {
                 if (result.success) {
                     try {
                         JSONArray list = new JSONArray(result.result);
-                        for (int i=0; i<list.length(); ++i) {
+                        for (int i = 0; i < list.length(); ++i) {
                             if (type.equals("teacher"))
                                 addTeacher(list.getJSONObject(i), clientListener);
                             else if (type.equals("student"))
@@ -505,6 +513,76 @@ public class Client {
                         e.printStackTrace();
                     }
                 }
+                clientListener.refresh();
+            }
+        });
+    }
+
+    public void getElectives(final long subject, final ClientListener clientListener) {
+        if (clientListener != null) {
+            if (clientListener.queue.contains("electives:" + subject))
+                return;
+            clientListener.queue.add("electives:" + subject);
+        }
+
+        Student student = User.getLoggedInUser(mContext).getStudent(mDbHelper);
+        final long studentId = (student!=null)?student._id:-1;
+
+        NetworkHandler handler = new NetworkHandler(mContext, mUsername, mPassword, true);
+        handler.get("classroom/api/v1/electives/?subject=" + subject, new NetworkHandler.NetworkListener() {
+            @Override
+            public void onComplete(NetworkHandler.Result result) {
+                if (result.success) {
+                    try {
+                        JSONArray list = new JSONArray(result.result);
+                        for (int i=0; i<list.length(); ++i) {
+                            JSONObject electiveJson = list.getJSONObject(i);
+                            Elective elective = new Elective(electiveJson, studentId);
+                            elective.save(mDbHelper);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                if (clientListener != null) {
+                    clientListener.queue.remove("electives:"+subject);
+                    clientListener.refresh();
+                }
+            }
+        });
+    }
+
+    public void selectElective(final Elective elective, final ClientListener clientListener) {
+        NetworkHandler handler = new NetworkHandler(mContext, mUsername, mPassword, true);
+        handler.post("classroom/elective/select/"+elective._id+"/", "",
+                new NetworkHandler.NetworkListener() {
+            @Override
+            public void onComplete(NetworkHandler.Result result) {
+                if (result.success) {
+                    try {
+                        Log.d("result", result.result);
+                        JSONObject message = new JSONObject(result.result);
+                        if (message.has("result") &&
+                                message.getString("result").equals("success")) {
+
+                            // On success refresh the electives for this class
+                            List<Subject> subjects = PClass.get(PClass.class,
+                                    mDbHelper, elective.p_class).getSubjects(mDbHelper);
+                            for (Subject s: subjects)
+                                getElectives(s._id, clientListener);
+
+                            clientListener.refresh();
+                            return;
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                Toast.makeText(mContext, "Couldn't connect to server.\n"+
+                        "Make sure you are connected to internet to perform this action.",
+                        Toast.LENGTH_SHORT).show();
                 clientListener.refresh();
             }
         });
