@@ -2,10 +2,25 @@
 }
 #title-block{
     padding: 10px 0px;
-    color: #a2a2a2;
+    color: #969696;
     background-color: #fff;
 }
 #title-block .app-info{
+}
+#join-request{
+    text-align: center;
+}
+#join-request button{
+    color: #727272;
+}
+#join-request .info{
+    color: #bbb;
+    font-size: 1.5em;
+    margin-bottom: 50px;
+    margin-top: 30px;
+}
+#join-request form{
+    margin-bottom: 80px;
 }
 #title-block .app-name{
     font-family: "Raleway", "Open Sans";
