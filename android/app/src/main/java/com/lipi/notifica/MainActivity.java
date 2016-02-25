@@ -377,7 +377,7 @@ public class MainActivity extends AppCompatActivity {
             count++;
         }
 
-        int remaining;
+        int remaining = 60;
         if (next != null) {
             // Find remaining time to next period
             remaining = next.start_time - currentTime;
@@ -391,7 +391,7 @@ public class MainActivity extends AppCompatActivity {
                 Subject sub = Subject.get(Subject.class, dbHelper, current.subject);
                 if (sub != null) {
                     Utilities.fillProfileView(
-                            view1, Color.parseColor(sub.color), null, "Now",
+                            view1, Color.parseColor(sub.color), null, "Current class",
                             sub.name, current.getStartTime() + " - " + current.getEndTime(),
                             null, sub.getShortName()
                     );
@@ -410,14 +410,14 @@ public class MainActivity extends AppCompatActivity {
             }
             text += next.getStartTime() + " - " + next.getEndTime();
 
-            String text2 = "Next in " + Utilities.formatMinutes(remaining);
+            //String text2 = "Next in " + Utilities.formatMinutes(remaining);
             Utilities.fillProfileView(
-                    view2, Color.parseColor(subject.color), null, text2, subject.name,
+                    view2, Color.parseColor(subject.color), null, "Next class", subject.name,
                     text, null, subject.getShortName()
             );
         }
 
-        int nextMinute = (60-cal.get(Calendar.SECOND))*1000;
+        int nextMinute = remaining*60*1000; //(60-cal.get(Calendar.SECOND))*1000;
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override

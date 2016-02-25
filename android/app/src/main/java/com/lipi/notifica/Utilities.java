@@ -131,7 +131,7 @@ public class Utilities {
         if (header != null) {
             ((TextView)headerView.findViewById(R.id.header)).setText(header);
             headerView.setVisibility(View.VISIBLE);
-        } else
+        } else if (headerView != null)
             headerView.setVisibility(View.GONE);
 
         if (avatar != null){
