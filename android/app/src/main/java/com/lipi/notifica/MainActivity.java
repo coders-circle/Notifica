@@ -408,11 +408,11 @@ public class MainActivity extends AppCompatActivity {
             else if (count > 1) {
                 text += DbHelper.DAYS[day] + " ";
             }
-            text += next.getStartTime() + " - " + next.getEndTime() + ")";
+            text += next.getStartTime() + " - " + next.getEndTime();
 
-            String text2 = "In " + Utilities.formatMinutes(remaining);
+            String text2 = "Next in " + Utilities.formatMinutes(remaining);
             Utilities.fillProfileView(
-                    view2, Color.parseColor(subject.color), null, "Next", subject.name,
+                    view2, Color.parseColor(subject.color), null, text2, subject.name,
                     text, null, subject.getShortName()
             );
         }

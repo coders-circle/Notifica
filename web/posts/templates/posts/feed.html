@@ -50,7 +50,26 @@ Notifica: News feed
                 </div>
             </div>
             <div id="quick-links-block" class="col-md-4">
+                {# if notifications #}
                 <div class="row">
+                    <div class="col-md-12 col-sm-6">
+                        <div class="card " id="notification-list">
+                            <a href="#" class="title">Notifications</a>
+                            {# for notification in notifications #}
+                            {% for p_class in classes %}
+                            <div class="class">
+                                <!-- <a href="{# url 'classroom:class' notification.class.pk #}" class="name">{# notification.class_id #}</a> -->
+                                <a href="{% url 'classroom:class' p_class.pk %}" class="name">{{p_class.class_id}}</a>
+                                <div class="extra">
+                                    {# notification.message #}
+                                    Aditya Khatri sent a join request
+                                </div>
+                            </div>
+                            {% if not forloop.last %}<hr>{% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {# endif #}
                     <div class="col-md-12 col-sm-6">
                         <div class="card card-class-list" id="class-list">
                             <a href="#" class="title">Classes</a>
@@ -78,9 +97,9 @@ Notifica: News feed
                                 <a href="{% url 'classroom:department' department.pk %}" class="name">{{department.name}}</a>
                                 <div class="extra">{{department.organization.name}}</div>
                             </div>
-                            <div class="bottom-link">
+                            <!-- <div class="bottom-link">
                                 <a id="add-department-link" href="{% url 'classroom:add-class' %}" class="name"><i class="fa fa-plus"></i> Add department</a>
-                            </div>
+                            </div> -->
                             {% endfor %}
                         </div>
                     </div>
