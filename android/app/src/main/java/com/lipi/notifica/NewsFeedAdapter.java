@@ -39,41 +39,22 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public int getItemCount() {
-        return mPosts.size() + 1;
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        if (position == 0)
-            return 0;   // header
-        else
-            return 1;   // posts
+        return mPosts.size();
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == 0)
-            return new HeaderViewHolder(LayoutInflater.
-                    from(parent.getContext()).
-                    inflate(R.layout.layout_feed_header, parent, false));
-        else
-            return new PostViewHolder(LayoutInflater.
+       return new PostViewHolder(LayoutInflater.
                     from(parent.getContext()).
                     inflate(R.layout.layout_post, parent, false));
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
-
-        // Header
-        if (position == 0)
-            fillHeader((HeaderViewHolder) viewHolder);
-        // Posts
-        else
-            fillPosts((PostViewHolder) viewHolder, position-1);
+        fillPosts((PostViewHolder) viewHolder, position);
     }
 
-    public void fillHeader(HeaderViewHolder holder) {
+    /*public void fillHeader(HeaderViewHolder holder) {
         DbHelper dbHelper = new DbHelper(mContext);
         Calendar cal = Calendar.getInstance();
 
@@ -137,7 +118,7 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 notifyDataSetChanged();
             }
         }, nextMinute);
-    }
+    }*/
 
     public void fillPosts(PostViewHolder holder, int position) {
         Post post = mPosts.get(position);
@@ -182,7 +163,7 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         @Override
         public void onClick(View view) {
-            long postId = mPosts.get(getAdapterPosition()-1)._id;
+            long postId = mPosts.get(getAdapterPosition())._id;
             Intent intent = new Intent(mContext, PostDetailActivity.class);
             intent.putExtra("post_id", postId);
             mContext.startActivity(intent);
@@ -190,7 +171,7 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
 
-    public class HeaderViewHolder extends RecyclerView.ViewHolder {
+    /*public class HeaderViewHolder extends RecyclerView.ViewHolder {
         protected TextView textView1;
         protected TextView textView2;
 
@@ -200,5 +181,5 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             textView1 = (TextView)v.findViewById(R.id.currentPeriod);
             textView2 = (TextView)v.findViewById(R.id.nextPeriod);
         }
-    }
+    }*/
 }

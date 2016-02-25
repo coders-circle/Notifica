@@ -143,7 +143,7 @@ public class ClassAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
             ViewHolder holder = (ViewHolder) viewHolder;
             Utilities.fillProfileView(holder.view,
-                    Color.parseColor(subject.color),
+                    Color.parseColor(subject.color), null,
                     null, subject.name, null, null, subject.getShortName());
             holder.view.setSelected(false);
             holder.view.setOnClickListener(null);
@@ -169,7 +169,7 @@ public class ClassAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             ViewHolder holder = (ViewHolder) viewHolder;
             Utilities.fillProfileView(holder.view,
                     Utilities.returnColor(teacher._id),
-                    avatar, teacher.getUsername(mDbHelper), null, null, null);
+                    avatar, null, teacher.getUsername(mDbHelper), null, null, null);
             holder.view.setSelected(false);
             holder.view.setOnClickListener(null);
         }
@@ -191,13 +191,13 @@ public class ClassAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
                     if (!elective.selected)
                         Utilities.fillProfileView(holder.view,
-                                Color.parseColor(subject.color),
+                                Color.parseColor(subject.color), null,
                                 null, subject.name, null, null, subject.getShortName());
                     else
                         Utilities.fillProfileView(holder.view,
                                 Color.parseColor(subject.color),
                                 BitmapFactory.decodeResource(mContext.getResources(),
-                                        R.drawable.ic_check),
+                                        R.drawable.ic_check), null,
                                 subject.name, null, null, null);
 
 

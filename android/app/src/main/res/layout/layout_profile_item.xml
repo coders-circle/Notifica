@@ -8,6 +8,13 @@
     android:background="?selectableItemBackground"
     android:padding="10dp">
 
+    <include
+        android:id="@+id/headerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        layout="@layout/layout_item_header"/>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

@@ -46,7 +46,7 @@ public class ClassActivity extends AppCompatActivity {
 
         View profileView = findViewById(R.id.profile);
         Utilities.fillProfileView(profileView, Utilities.returnColor(profile._id),
-                profile.getAvatar(), pClass.class_id,
+                profile.getAvatar(), null, pClass.class_id,
                 pClass.description, null, null);
 
         profileView.findViewById(R.id.title).setVisibility(View.INVISIBLE);

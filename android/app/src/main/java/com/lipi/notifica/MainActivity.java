@@ -3,11 +3,16 @@ package com.lipi.notifica;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
+import android.os.Handler;
 import android.os.PersistableBundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -17,16 +22,20 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lipi.notifica.database.Client;
 import com.lipi.notifica.database.DbHelper;
 import com.lipi.notifica.database.PClass;
 import com.lipi.notifica.database.PGroup;
+import com.lipi.notifica.database.Period;
 import com.lipi.notifica.database.Profile;
 import com.lipi.notifica.database.Student;
+import com.lipi.notifica.database.Subject;
 import com.lipi.notifica.database.User;
 
+import java.util.Calendar;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -35,6 +44,9 @@ public class MainActivity extends AppCompatActivity {
     private Menu mMenu;
     private DbHelper mDbHelper;
     private PClass mClass = null;
+
+    private AppBarLayout mAppBarLayout;
+    private LinearLayout mFragmentContainer;
 
     private RoutineFragment mRoutineFragment;
     private NewsFeedFragment mNewsFeedFragment;
@@ -164,7 +176,6 @@ public class MainActivity extends AppCompatActivity {
         mMenu.setGroupVisible(R.id.settings_group, isVisible);
         mMenu.setGroupVisible(R.id.classes_group, !isVisible);
 
-
         // Set the drawer header contents from the user profile
         try {
             setHeaderView();
@@ -235,6 +246,10 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
 
+        mAppBarLayout = (AppBarLayout) findViewById(R.id.appbar);
+        mFragmentContainer = (LinearLayout) findViewById(R.id.fragment_container);
+        fillHeader();
+
         // Initialize the navigation drawer
         mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
 
@@ -250,9 +265,11 @@ public class MainActivity extends AppCompatActivity {
                 switch (menuItem.getItemId()){
                     case R.id.news_feed:
                         selectedFragment = mNewsFeedFragment;
+                        activateCollapsingToolbar();
                         break;
                     case R.id.routine:
                         selectedFragment = mRoutineFragment;
+                        deactivateCollapsingToolbar();
                         break;
                     case R.id.assignment:
                         break;
@@ -327,6 +344,87 @@ public class MainActivity extends AppCompatActivity {
         // Settings activity telling us to close
         if(requestCode == 1 && resultCode == -1)
             finish();
+    }
+
+    public void activateCollapsingToolbar() {
+        mAppBarLayout.setExpanded(true, true);
+    }
+
+    public void deactivateCollapsingToolbar() {
+        mAppBarLayout.setExpanded(false, true);
+    }
+
+    public void fillHeader() {
+        DbHelper dbHelper = new DbHelper(this);
+        Calendar cal = Calendar.getInstance();
+
+        View view1 = findViewById(R.id.now);
+        View view2 = findViewById(R.id.next);
+
+        // Get current time and day of week
+        int currentTime = cal.get(Calendar.HOUR_OF_DAY) * 60 + cal.get(Calendar.MINUTE);
+        int day = cal.get(Calendar.DAY_OF_WEEK) - 1;
+
+        // Get current and next periods
+        Period current = Period.get(Period.class, dbHelper, "start_time<=? AND end_time>? AND day=?", new String[]{"" + currentTime, "" + currentTime, "" + day}, "start_time");
+        Period next = Period.get(Period.class, dbHelper, "start_time>? AND day=?", new String[]{"" + currentTime, "" + day}, "start_time");
+
+        // If next period isn't today, get tomorrow's period and so on
+        int count = 0;
+        while (next == null && count < 7) {
+            day = (day + 1) % 7;
+            next = Period.get(Period.class, dbHelper, "day=?", new String[]{"" + day}, "start_time");
+            count++;
+        }
+
+        int remaining;
+        if (next != null) {
+            // Find remaining time to next period
+            remaining = next.start_time - currentTime;
+            if (count > 0)
+                remaining = 24 * 60 - currentTime + (count - 1) * 24 + next.start_time;
+
+            Subject subject = Subject.get(Subject.class, dbHelper, next.subject);
+
+            // Show current period if exists
+            if (current != null) {
+                Subject sub = Subject.get(Subject.class, dbHelper, current.subject);
+                if (sub != null) {
+                    Utilities.fillProfileView(
+                            view1, Color.parseColor(sub.color), null, "Now",
+                            sub.name, current.getStartTime() + " - " + current.getEndTime(),
+                            null, sub.getShortName()
+                    );
+                } else
+                    view1.setVisibility(View.GONE);
+            } else
+                view1.setVisibility(View.GONE);
+
+            // Show next period
+
+            String text = "";
+            if (count == 1)
+                text += "Tomorrow ";
+            else if (count > 1) {
+                text += DbHelper.DAYS[day] + " ";
+            }
+            text += next.getStartTime() + " - " + next.getEndTime() + ")";
+
+            String text2 = "In " + Utilities.formatMinutes(remaining);
+            Utilities.fillProfileView(
+                    view2, Color.parseColor(subject.color), null, "Next", subject.name,
+                    text, null, subject.getShortName()
+            );
+        }
+
+        int nextMinute = (60-cal.get(Calendar.SECOND))*1000;
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                fillHeader();
+            }
+        }, nextMinute);
     }
 }
 
