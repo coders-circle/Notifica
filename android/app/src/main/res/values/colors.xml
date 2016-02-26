@@ -49,6 +49,6 @@
     <color name="colorPrimaryText">#ffffff</color>
     <color name="colorSecondaryText">#99ffffff</color>
 
-    <color name="colorSelection">#8829B6F6</color>
+    <color name="colorSelection">#888</color>
 </resources>
 

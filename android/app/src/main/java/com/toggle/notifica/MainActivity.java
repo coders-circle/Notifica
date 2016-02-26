@@ -69,9 +69,10 @@ public class MainActivity extends AppCompatActivity {
                 Client.ClientListener refreshCallback = new Client.ClientListener() {
                     @Override
                     public void refresh() {
-                        if (queue.size() == 0) {
+                        // if (queue.size() == 0) {
+                        if (mMenu != null)
                             refreshMenuItems();
-                        }
+                        // }
                     }
                 };
 
@@ -178,7 +179,9 @@ public class MainActivity extends AppCompatActivity {
         try {
             setHeaderView();
         }
-        catch (Exception ignored) {}
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void swapMenu() {

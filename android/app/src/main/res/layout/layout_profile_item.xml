@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:clickable="true"
     android:focusable="true"
-    android:background="?selectableItemBackground"
+    android:background="@drawable/selector_background"
     android:padding="10dp">
 
     <include
