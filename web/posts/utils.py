@@ -9,12 +9,15 @@ def get_post_users(post):
 
     if ptype == "Class":
         users1 = User.objects.filter(student__group__p_class__pk=profile.pk)
-        users2 = User.objects.filter(teacher__period__routine__p_class__pk=profile.pk)
+        users2 = User.objects.filter(
+            teacher__period__routine__p_class__pk=profile.pk)
         return users1 | users2
 
     elif ptype == "Department":
-        users1 = User.objects.filter(student__group__p_class__department__pk=profile.pk)
-        users2 = User.objects.filter(teacher__period__routine__p_class__department__pk=profile.pk)
+        users1 = User.objects.filter(
+            student__group__p_class__department__pk=profile.pk)
+        users2 = User.objects.filter(
+            teacher__period__routine__p_class__department__pk=profile.pk)
         users3 = User.objects.filter(teacher__department__pk=profile.pk)
         return users1 | users2 | users3
 
@@ -23,4 +26,3 @@ def get_post_users(post):
 
     else:
         return User.objects.none()
-        

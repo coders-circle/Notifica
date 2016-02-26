@@ -7,7 +7,8 @@ from django.contrib.auth.models import User, UserManager
 REQUEST_STATUS = (
     (0, 'Unaccepted'),      # when sender requests
     (1, 'Accepted'),        # when receiver accepts
-    (2, 'Acknowledged'),    # when sender knows acceptance
+    (2, 'Rejected'),        # when receiver rejects
+    (3, 'Acknowledged'),    # when sender knows acceptance/rejection
 )
 
 REQUEST_TYPES = (

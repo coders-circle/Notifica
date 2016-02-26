@@ -4,7 +4,6 @@ from rest_framework import viewsets, permissions
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
-
 from main.models import *
 from main.permissions import *
 from main.serializers import *
@@ -30,7 +29,7 @@ class RequestViewSet(viewsets.ModelViewSet):
         filtered = []
 
         for p in queryset:
-            if FilterRequest(p, self.request.user):
+            if filter_request(p, self.request.user):
                 filtered.append(p.pk)
 
         return Request.objects.filter(pk__in=filtered)

@@ -50,26 +50,29 @@ Notifica: News feed
                 </div>
             </div>
             <div id="quick-links-block" class="col-md-4">
-                {# if notifications #}
+                {% if notifications %}
                 <div class="row">
                     <div class="col-md-12 col-sm-6">
                         <div class="card " id="notification-list">
                             <a href="#" class="title">Notifications</a>
-                            {# for notification in notifications #}
-                            {% for p_class in classes %}
-                            <div class="class">
-                                <!-- <a href="{# url 'classroom:class' notification.class.pk #}" class="name">{# notification.class_id #}</a> -->
-                                <a href="{% url 'classroom:class' p_class.pk %}" class="name">{{p_class.class_id}}</a>
-                                <div class="extra">
-                                    {# notification.message #}
-                                    Aditya Khatri sent a join request
+                            {% for notification in notifications %}
+                                {% if notification.type == "request" and notification.request.request_type == 0 %}
+                                <div class="class">
+                                    <a href="{% url 'classroom:class' notification.class.pk %}" class="name">{{ notification.class.class_id }}</a>
+                                    <div class="extra">
+                                        {{ notification.sender_name }} sent a join request
+                                    </div>
+                                    <div class="extra" style="float: right;">
+                                        <a href="#">Accept</a> &nbsp; &nbsp;
+                                        <a href="#">Reject</a>
+                                    </div>
                                 </div>
-                            </div>
+                                {% endif %}
                             {% if not forloop.last %}<hr>{% endif %}
                             {% endfor %}
                         </div>
                     </div>
-                    {# endif #}
+                    {% endif %}
                     <div class="col-md-12 col-sm-6">
                         <div class="card card-class-list" id="class-list">
                             <a href="#" class="title">Classes</a>

@@ -21,11 +21,12 @@ def getProfileObject(profile):
 
 
 class Profile(models.Model):
-    avatar = models.ImageField(upload_to='avatars/', default='avatars/ninja.png', blank=True)
+    avatar = models.ImageField(upload_to='avatars/',
+                               default='avatars/ninja.png', blank=True)
 
     def __str__(self):
         obj, kind = getProfileObject(self)
-        if kind == "Organization" or kind =="Department":
+        if kind == "Organization" or kind == "Department":
             return obj.name
         elif kind == "Class":
             return obj.class_id
@@ -66,9 +67,12 @@ class Teacher(models.Model):
             return "unnamed"
 
 
+def temp():
+    random.randint(0, 255)
+
+
 def get_random_color():
-    r = lambda: random.randint(0,255)
-    return('#%02X%02X%02X'%(r(), r(), r()))
+    return('#%02X%02X%02X' % (temp(), temp(), temp()))
 
 
 class Subject(models.Model):
@@ -126,7 +130,8 @@ class Elective(models.Model):
     students = models.ManyToManyField(Student, blank=True)
 
     def __str__(self):
-        return str(self.subject) + " (" + self.group + ") - " + str(self.p_class)
+        return str(self.subject) + " (" + self.group + ") - " + \
+            str(self.p_class)
 
 
 class UserProfile(models.Model):
@@ -147,7 +152,7 @@ class UserProfile(models.Model):
             p.save()
             self.profile = p
         super(UserProfile, self).save(*args, **kwargs)
-        
+
     def __str__(self):
         return self.user.username
 

@@ -16,6 +16,7 @@ class HomeView(TemplateView):
             return redirect("posts:feed")
         return render(request, "main/home.html")
 
+
 class SigninView(View):
     def get(self, request):
         if isValidUser(request.user):
@@ -31,7 +32,7 @@ class SigninView(View):
             login(request, user)
             return redirect('posts:feed')
 
-        context = {"error":"Invalid username or password."}
+        context = {"error": "Invalid username or password."}
         return render(request, "main/signin.html", context)
 
 
@@ -66,7 +67,7 @@ class RegisterView(View):
             return redirect('posts:feed')
 
         except Exception as e:
-            context = {"error":str(e)}
+            context = {"error": str(e)}
             return render(request, "main/register.html", context)
 
 
@@ -77,7 +78,8 @@ class SettingsView(View):
 
         context = {}
         context["settings"] = "Settings"
-        request.user.profile = UserProfile.objects.get(user=request.user).profile
+        request.user.profile = UserProfile.objects.get(
+            user=request.user).profile
         return render(request, "main/settings.html", context)
 
 
@@ -87,21 +89,28 @@ class NotifyView(View):
             return redirect("home")
 
         context = {}
-        context["users"] = User.objects.filter(pk__in=GcmRegistration.objects.all().values_list('user', flat=True))
-        request.user.profile = UserProfile.objects.get(user=request.user).profile
+        context["users"] = User.objects.filter(
+            pk__in=GcmRegistration.objects.all().values_list(
+                'user', flat=True))
+        request.user.profile = UserProfile.objects.get(
+            user=request.user).profile
         return render(request, "main/notify.html", context)
 
     def post(self, request):
         context = {}
-        context["users"] = User.objects.filter(pk__in=GcmRegistration.objects.all().values_list('user', flat=True))
-        request.user.profile = UserProfile.objects.get(user=request.user).profile
+        context["users"] = User.objects.filter(
+            pk__in=GcmRegistration.objects.all().values_list(
+                'user', flat=True))
+        request.user.profile = UserProfile.objects.get(
+            user=request.user).profile
 
         try:
             title = request.POST['title']
             message = request.POST['message']
 
             user = request.POST['user']
-            tokens = GcmRegistration.objects.filter(user__pk=user).values_list('token', flat=True)
+            tokens = GcmRegistration.objects.filter(
+                user__pk=user).values_list('token', flat=True)
 
             notify(tokens, title, message)
 

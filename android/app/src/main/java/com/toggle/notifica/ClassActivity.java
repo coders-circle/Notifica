@@ -81,7 +81,7 @@ public class ClassActivity extends AppCompatActivity {
         profileView.findViewById(R.id.title).setVisibility(View.INVISIBLE);
 
         // Create the data for fragments
-        
+
         refreshData();
 
         // Initialize the tabs
