@@ -1,4 +1,4 @@
-package com.lipi.notifica;
+package com.toggle.notifica;
 
 import org.junit.Test;
 

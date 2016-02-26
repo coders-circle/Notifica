@@ -96,10 +96,14 @@
                 <div class="info">
                     To see the content of this classroom, you must be a member.
                 </div>
-                <form>
+                {% if request_sent %}
+                <div>You have already sent join request to this class. Please await your response.</div>
+                {% else %}
+                <form method="post">
                     {% csrf_token %}
-                    <input class="btn btn-default" type="submit" value="Send a join request">
+                    <input class="btn btn-default" name="join-request" type="submit" value="Send a join request">
                 </form>
+                {% endif %}
             </div>
         </div>
     {% endif %}

@@ -20,6 +20,7 @@ SENDER_TYPES = (
     (1, 'CLASS'),
 )
 
+
 class Request(models.Model):
     sender = models.IntegerField()
     sender_type = models.IntegerField(choices=SENDER_TYPES)
@@ -28,7 +29,8 @@ class Request(models.Model):
     to = models.IntegerField()
 
     def __str__(self):
-        return REQUEST_TYPES[self.request_type][1] + " from " + str(self.sender) + " to " + str(self.to)
+        return REQUEST_TYPES[self.request_type][1] + " from " + \
+            str(self.sender) + " to " + str(self.to)
 
 
 # GCM Registrations

@@ -9,6 +9,7 @@
         <item name="android:textColor">#FFF</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:listDivider">@color/listDivider</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
     </style>
 
     <style name="ForSettings" parent="Theme.AppCompat.NoActionBar">
@@ -26,5 +27,4 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:listDivider">@color/listDivider</item>
     </style>
-
 </resources>

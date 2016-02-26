@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.lipi.notifica" >
+    package="com.toggle.notifica" >
 
-    <permission android:name="com.lipi.notifica.permission.C2D_MESSAGE"
+    <permission android:name="com.toggle.notifica.permission.C2D_MESSAGE"
         android:protectionLevel="signature"/>
 
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -20,22 +20,22 @@
 
         <!-- Activities -->
 
-        <activity android:name=".LoginActivity" android:theme="@style/ForLogin">
+        <activity android:name="com.toggle.notifica.LoginActivity" android:theme="@style/ForLogin">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RegisterActivity" android:theme="@style/ForLogin"/>
-        <activity android:name=".MainActivity" />
-        <activity android:name=".ClassActivity" />
-        <activity android:name=".SubjectDetailsActivity"/>
-        <activity android:name=".SettingsActivity" android:theme="@style/ForSettings"/>
-        <activity android:name=".PostDetailActivity" android:theme="@style/AppTheme"/>
+        <activity android:name="com.toggle.notifica.RegisterActivity" android:theme="@style/ForLogin"/>
+        <activity android:name="com.toggle.notifica.MainActivity" />
+        <activity android:name="com.toggle.notifica.ClassActivity" />
+        <activity android:name="com.toggle.notifica.SubjectDetailsActivity"/>
+        <activity android:name="com.toggle.notifica.SettingsActivity" android:theme="@style/ForSettings"/>
+        <activity android:name="com.toggle.notifica.PostDetailActivity" android:theme="@style/AppTheme"/>
 
         <!-- Widget providers -->
 
-        <receiver android:name="com.lipi.notifica.RoutineWidgetProvider" >
+        <receiver android:name="com.toggle.notifica.RoutineWidgetProvider" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -43,7 +43,7 @@
                 android:resource="@xml/widget_routine_info" />
         </receiver>
 
-        <receiver android:name=".PeriodWidgetProvider" >
+        <receiver android:name="com.toggle.notifica.PeriodWidgetProvider" >
             <intent-filter >
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -68,7 +68,7 @@
         </receiver>
 
         <service
-            android:name=".MyGcmListenerService"
+            android:name="com.toggle.notifica.MyGcmListenerService"
             android:exported="false" >
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
@@ -76,14 +76,14 @@
         </service>
 
         <service
-            android:name=".MyInstanceIdListenerService"
+            android:name="com.toggle.notifica.MyInstanceIdListenerService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.android.gms.iid.InstanceID"/>
             </intent-filter>
         </service>
 
-        <service android:name=".GcmRegisterService" android:exported="false"/>
+        <service android:name="com.toggle.notifica.GcmRegisterService" android:exported="false"/>
     </application>
 
 </manifest>

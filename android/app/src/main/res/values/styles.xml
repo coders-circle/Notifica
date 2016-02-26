@@ -27,7 +27,7 @@
     </style>
 
     <style name="ExpandedToolbarText">
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">26sp</item>
     </style>
 
 </resources>

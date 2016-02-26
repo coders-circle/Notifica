@@ -1,0 +1,3 @@
+<resources>
+    <dimen name="header_padding">75dp</dimen>
+</resources>

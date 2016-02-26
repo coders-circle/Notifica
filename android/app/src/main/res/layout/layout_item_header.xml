@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:textColor="?colorAccent"
         android:textStyle="bold"
+        android:textAllCaps="true"
         android:text="item_header"/>
 
     <View

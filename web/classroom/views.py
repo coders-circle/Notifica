@@ -6,6 +6,7 @@ from django.utils.decorators import method_decorator
 from django.http import Http404, JsonResponse
 
 from classroom.models import *
+from main.models import *
 from classroom.utils import *
 from main.decorators import *
 
@@ -16,19 +17,63 @@ class UserView(View):
             return redirect("home")
 
         context = {}
-        request.user.profile = UserProfile.objects.get(user=request.user).profile
+        request.user.profile = \
+            UserProfile.objects.get(user=request.user).profile
         return render(request, "classroom/user.html", context)
 
 
 class ClassView(View):
+    def is_user_in_class(self, request, id):
+        try:
+            students = Student.objects.filter(user__pk=request.user.pk)
+            for s in students:
+                if s.group.p_class.pk == int(id):
+                    return True
+            return False
+        except:
+            return False
+
     def get(self, request, id):
         if not isValidUser(request.user):
             return redirect("home")
 
         context = {}
         context["class"] = Class.objects.get(pk=id)
-        request.user.profile = UserProfile.objects.get(user=request.user).profile
+        request.user.profile = \
+            UserProfile.objects.get(user=request.user).profile
+
+        # Check if user is in class and if not
+        # check if join request has already been sent
+        in_class = self.is_user_in_class(request, id)
+        context["user_in_class"] = in_class
+        requests = Request.objects.filter(sender=request.user.pk,
+                                          sender_type=0, status=0,
+                                          request_type=0, to=id)
+
+        if not in_class and requests.count() > 0:
+                context["request_sent"] = True
+
         return render(request, "classroom/class.html", context)
+
+    def post(self, request, id):
+        if not isValidUser(request.user):
+            return redirect("home")
+
+        in_class = self.is_user_in_class(request, id)
+        if not in_class and request.POST.get("join-request"):
+
+            # Send a join request if not already sent
+            if Request.objects.filter(sender=request.user.pk,
+                                      sender_type=0, status=0, request_type=0,
+                                      to=id).count() == 0:
+                new_request = Request()
+                new_request.sender = request.user.pk
+                new_request.sender_type = 0
+                new_request.status = 0
+                new_request.request_type = 0
+                new_request.to = id
+                new_request.save()
+        return self.get(request, id)
 
 
 class DepartmentView(View):
@@ -38,7 +83,8 @@ class DepartmentView(View):
 
         context = {}
         context["department"] = Department.objects.get(pk=id)
-        request.user.profile = UserProfile.objects.get(user=request.user).profile
+        request.user.profile = \
+            UserProfile.objects.get(user=request.user).profile
         return render(request, "classroom/department.html", context)
 
 
@@ -49,7 +95,8 @@ class OrganizationView(View):
 
         context = {}
         context["organization"] = Organization.objects.get(pk=id)
-        request.user.profile = UserProfile.objects.get(user=request.user).profile
+        request.user.profile = \
+            UserProfile.objects.get(user=request.user).profile
         return render(request, "classroom/organization.html", context)
 
 
@@ -59,7 +106,8 @@ class SearchView(View):
             return redirect("home")
 
         context = {}
-        request.user.profile = UserProfile.objects.get(user=request.user).profile
+        request.user.profile = \
+            UserProfile.objects.get(user=request.user).profile
         return render(request, "classroom/search.html", context)
 
 
@@ -69,7 +117,8 @@ class AddClassView(View):
             return redirect("home")
 
         context = {}
-        request.user.profile = UserProfile.objects.get(user=request.user).profile
+        request.user.profile = \
+            UserProfile.objects.get(user=request.user).profile
         return render(request, "classroom/add-class.html", context)
 
     def post(self, request):
@@ -90,7 +139,7 @@ class AddClassView(View):
             return redirect('classroom:class', id=new_class.pk)
 
         except Exception as e:
-            context = {"error":str(e)}
+            context = {"error": str(e)}
             return render(request, "classroom/add-class.html", context)
 
 

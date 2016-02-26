@@ -18,8 +18,11 @@ class RequestViewSet(viewsets.ModelViewSet):
         sender_type = serializer.validated_data["sender_type"]
         sender = serializer.validated_data["sender"]
 
-        if sender_type==1 and self.request.user not in Class.objects.get(pk=sender).admins.all():
-            raise serializers.ValidationError("You have not permission to send request on behalf of this class")
+        if sender_type == 1 and self.request.user not in \
+                Class.objects.get(pk=sender).admins.all():
+            raise serializers.ValidationError("You have not permission " +
+                                              "to send request on behalf of " +
+                                              "this class")
         serializer.save()
 
     def get_queryset(self):
@@ -41,7 +44,9 @@ class GcmRegistrationViewSet(viewsets.ModelViewSet):
         serializer.save(user=self.request.user)
 
     def get_queryset(self):
-        queryset = GcmRegistration.objects.filter(user__pk=self.request.user.pk)
+        queryset = GcmRegistration.objects.filter(
+            user__pk=self.request.user.pk
+        )
 
         device_id = self.request.GET.get("device")
         if device_id:
