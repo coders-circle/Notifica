@@ -3,6 +3,7 @@ package com.toggle.notifica;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -64,6 +65,7 @@ public class PeriodAdapter extends RecyclerView.Adapter<PeriodAdapter.PeriodView
             holder.teachers.setVisibility(View.GONE);
             holder.subShortName.setVisibility(View.GONE);
             holder.subject.setGravity(Gravity.CENTER);
+            holder.practicalMark.setVisibility(View.GONE);
             return;
         }
 
@@ -77,6 +79,17 @@ public class PeriodAdapter extends RecyclerView.Adapter<PeriodAdapter.PeriodView
         }
 
         Period period = mPeriods.get(pPosition);
+
+        /*boolean alternate = false;
+        if (pPosition > 0) {
+            Period lastPeriod = mPeriods.get(pPosition - 1);
+            if (lastPeriod.start_time == period.start_time &&
+                    lastPeriod.end_time == period.end_time)
+                alternate = true;
+        }
+
+        // for alternate period hide the time
+        holder.time.setVisibility(alternate?View.GONE:View.VISIBLE);*/
 
         // Get the subject and teachers
         DbHelper helper = new DbHelper(mContext);
@@ -96,29 +109,22 @@ public class PeriodAdapter extends RecyclerView.Adapter<PeriodAdapter.PeriodView
         // Set the period view contents
 
         holder.subShortName.setText(subShortName);
-        holder.subShortName.setBackgroundResource(R.drawable.border_circle);
+        holder.subShortName.setBackgroundResource(R.drawable.circle_filled);
         GradientDrawable shortNameBackground = (GradientDrawable) holder.subShortName.getBackground();
         shortNameBackground.setColor(Color.parseColor(subject.color));
 
         String timeText = period.getStartTime() + " - " + period.getEndTime();
         holder.time.setText(timeText);
-        holder.subject.setText(subject.name);
-        holder.teachers.setText(teacher_str);
 
-        if(teacher_str.length() == 0){
-            holder.teachers.setVisibility(View.GONE);
-        }
-        else{
-            holder.teachers.setVisibility(View.VISIBLE);
-        }
+        holder.subject.setText(subject.name);
+
+        holder.teachers.setText(teacher_str);
+        holder.teachers.setVisibility(teacher_str.length()==0?View.GONE:View.VISIBLE);
 
         holder.remarks.setText(period.remarks);
-        if(period.remarks.length() == 0){
-            holder.remarks.setVisibility(View.GONE);
-        }
-        else{
-            holder.remarks.setVisibility(View.VISIBLE);
-        }
+        holder.remarks.setVisibility(period.remarks.length()==0?View.GONE:View.VISIBLE);
+
+        holder.practicalMark.setVisibility(period.period_type==1?View.VISIBLE:View.GONE);
     }
 
     public class PeriodViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -127,6 +133,7 @@ public class PeriodAdapter extends RecyclerView.Adapter<PeriodAdapter.PeriodView
         protected TextView subject;
         protected TextView teachers;
         protected TextView remarks;
+        protected View practicalMark;
 
         public PeriodViewHolder(View v){
             super(v);
@@ -136,6 +143,7 @@ public class PeriodAdapter extends RecyclerView.Adapter<PeriodAdapter.PeriodView
             subject = (TextView)v.findViewById(R.id.subject);
             teachers = (TextView)v.findViewById(R.id.teachers);
             remarks = (TextView)v.findViewById(R.id.remarks);
+            practicalMark = v.findViewById(R.id.mark_practical);
         }
 
         @Override

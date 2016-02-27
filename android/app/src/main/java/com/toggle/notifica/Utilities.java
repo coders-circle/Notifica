@@ -143,7 +143,7 @@ public class Utilities {
 
         if (shortName != null) {
             shortNameView.setText(shortName);
-            shortNameView.setBackgroundResource(R.drawable.border_circle);
+            shortNameView.setBackgroundResource(R.drawable.circle_filled);
             ((GradientDrawable) shortNameView.getBackground()).setColor(color);
 
             shortNameView.setVisibility(View.VISIBLE);

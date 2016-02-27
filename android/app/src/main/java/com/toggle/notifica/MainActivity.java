@@ -265,11 +265,10 @@ public class MainActivity extends AppCompatActivity {
                 switch (menuItem.getItemId()){
                     case R.id.news_feed:
                         selectedFragment = mNewsFeedFragment;
-                        activateCollapsingToolbar();
                         break;
                     case R.id.routine:
                         selectedFragment = mRoutineFragment;
-                        deactivateCollapsingToolbar();
+                        mAppBarLayout.setExpanded(false, true);
                         break;
                     case R.id.assignment:
                         break;
@@ -346,14 +345,6 @@ public class MainActivity extends AppCompatActivity {
             finish();
     }
 
-    public void activateCollapsingToolbar() {
-        mAppBarLayout.setExpanded(true, true);
-    }
-
-    public void deactivateCollapsingToolbar() {
-        mAppBarLayout.setExpanded(false, true);
-    }
-
     public void fillHeader() {
         DbHelper dbHelper = new DbHelper(this);
         Calendar cal = Calendar.getInstance();
@@ -396,6 +387,8 @@ public class MainActivity extends AppCompatActivity {
                             null, sub.getShortName()
                     );
                     view1.setVisibility(View.VISIBLE);
+                    findViewById(R.id.now_practical).setVisibility(
+                            current.period_type==1?View.VISIBLE:View.GONE);
                 } else
                     view1.setVisibility(View.GONE);
             } else
@@ -417,6 +410,8 @@ public class MainActivity extends AppCompatActivity {
                     text, null, subject.getShortName()
             );
             view2.setVisibility(View.VISIBLE);
+            findViewById(R.id.next_practical).setVisibility(
+                    next.period_type == 1 ? View.VISIBLE : View.GONE);
         } else {
             view1.setVisibility(View.GONE);
             view2.setVisibility(View.GONE);

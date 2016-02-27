@@ -68,7 +68,7 @@
         </receiver>
 
         <service
-            android:name="com.toggle.notifica.MyGcmListenerService"
+            android:name=".NotificaGcmListenerService"
             android:exported="false" >
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
@@ -76,7 +76,7 @@
         </service>
 
         <service
-            android:name="com.toggle.notifica.MyInstanceIdListenerService"
+            android:name=".NotificaInstanceIdListenerService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.android.gms.iid.InstanceID"/>

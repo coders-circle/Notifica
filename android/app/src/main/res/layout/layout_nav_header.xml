@@ -36,7 +36,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginBottom="16dp"
-        android:background="@drawable/border_circle"
+        android:background="@drawable/circle_filled"
         android:layout_above="@+id/username"/>
 
     <TextView

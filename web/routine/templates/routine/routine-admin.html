@@ -17,7 +17,7 @@
 <script src="{% static 'js/selectize.js' %}"></script>
 <script>
     function saveRoutine() {
-        document.forms['routineform'].routine.value = JSON.stringify(routine);
+        document.forms['routineform'].routine.value = JSON.stringify(routine_all);
         document.forms['routineform'].submit();
     }
 </script>

@@ -13,7 +13,7 @@
         android:id="@+id/img_avatar"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:background="@drawable/border_circle"
+        android:background="@drawable/circle_filled"
         android:src="@drawable/ic_default_avatar"
         android:tint="@color/colorPrimaryDark"
         android:layout_marginRight="20dp"

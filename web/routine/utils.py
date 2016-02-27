@@ -13,10 +13,10 @@ def getPeriods(user):
     for teacher in teachers:
         qset = qset | Period.objects.filter(teachers=teacher)
 
-    # for student, the class must match the routine's class
+    # for student, the group must match with the period
     students = getStudents(user)
     for student in students:
-        qset = qset | Period.objects.filter(routine__p_class__pk=student.group.p_class.pk)
+        qset = qset | Period.objects.filter(Q(groups__pk=student.group.pk) | Q(groups=None))
 
     return qset
 

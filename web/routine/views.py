@@ -31,6 +31,11 @@ class RoutineView(View):
         context["current_page"] = "Routine"
         context["edit_routine"] = "false"
         request.user.profile = UserProfile.objects.get(user=request.user).profile
+
+        students = getStudents(request.user)
+        student = None if len(students)==0 else students[0]
+        context["student"] = student
+
         return render(request, 'routine/routine.html', context)
 
 

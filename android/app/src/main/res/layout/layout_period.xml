@@ -16,10 +16,24 @@
         android:gravity="center"
         android:textStyle="bold"
         android:textSize="12sp"
+        android:background="@drawable/circle_filled"
         android:text="X"
         android:textColor="@color/textPrimaryHeading"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"/>
+
+    <TextView
+        android:id="@+id/mark_practical"
+        android:layout_margin="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:gravity="center"
+        android:textSize="12sp"
+        android:textColor="@color/colorAccent"
+        android:text="Practical"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

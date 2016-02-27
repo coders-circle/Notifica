@@ -4,7 +4,7 @@ import android.content.Intent;
 
 import com.google.android.gms.iid.InstanceIDListenerService;
 
-public class MyInstanceIdListenerService extends InstanceIDListenerService {
+public class NotificaInstanceIdListenerService extends InstanceIDListenerService {
 
     @Override
     public void onTokenRefresh() {
