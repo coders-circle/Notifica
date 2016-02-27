@@ -60,4 +60,8 @@ public class Period extends Model {
     public String getEndTime() {
         return Utilities.formatMinutes(end_time);
     }
+
+    public String getPeriodString() {
+        return getStartTime() + " - " + getEndTime();
+    }
 }

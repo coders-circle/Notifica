@@ -7,10 +7,15 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Handler;
 import android.os.SystemClock;
+import android.util.Log;
+import android.view.View;
 import android.widget.RemoteViews;
 
 import com.toggle.notifica.database.DbHelper;
+import com.toggle.notifica.database.NextPeriodFinder;
 import com.toggle.notifica.database.Period;
 import com.toggle.notifica.database.Subject;
 
@@ -19,62 +24,42 @@ import java.util.Calendar;
 public class PeriodWidgetProvider extends AppWidgetProvider {
 
     public static void updateWidget(Context context, RemoteViews remoteViews) {
-        // Update widget
+
+        Log.d("updating widget", "updating");
         DbHelper dbHelper = new DbHelper(context);
-        Calendar cal = Calendar.getInstance();
+        NextPeriodFinder finder = new NextPeriodFinder(dbHelper);
 
-        // Get current time and day of week
-        int currentTime = cal.get(Calendar.HOUR_OF_DAY) * 60 + cal.get(Calendar.MINUTE);
-        int day = cal.get(Calendar.DAY_OF_WEEK) - 1;
+        if (finder.current != null) {
+            Subject sub = finder.currentSubject;
+            Utilities.fillCurrentPeriod(remoteViews, "Current class",
+                    sub.name, finder.current.getPeriodString()
+            );
+            remoteViews.setViewVisibility(R.id.now, View.VISIBLE);
+            remoteViews.setViewVisibility(R.id.now_practical,
+                    finder.current.period_type == 1 ? View.VISIBLE : View.GONE);
+        } else
+            remoteViews.setViewVisibility(R.id.now, View.GONE);
 
-        // Get current next periods
-        Period current = Period.get(Period.class, dbHelper, "start_time<=? AND end_time>? AND day=?", new String[]{""+currentTime, ""+currentTime, ""+day}, "start_time");
-        Period next = Period.get(Period.class, dbHelper, "start_time>? AND day=?", new String[]{"" + currentTime, "" + day}, "start_time");
+        if (finder.next != null) {
+            Subject sub = finder.nextSubject;
+            Utilities.fillNextPeriod(remoteViews, "Next class", sub.name,
+                    finder.nextDay + " " + finder.next.getPeriodString()
+            );
+            remoteViews.setViewVisibility(R.id.next, View.VISIBLE);
+            remoteViews.setViewVisibility(R.id.next_practical,
+                    finder.next.period_type == 1 ? View.VISIBLE : View.GONE);
+        } else
+            remoteViews.setViewVisibility(R.id.next, View.GONE);
 
-        // If next period isn't today, get tomorrow's period and so on
-        int count = 0;
-        while (next==null && count < 7) {
-            day = (day+1)%7;
-            next = Period.get(Period.class, dbHelper, "day=?", new String[]{""+day}, "start_time");
-            count++;
-        }
 
-        int remaining;
+        int nextMinute = finder.remaining*60*1000; //(60-cal.get(Calendar.SECOND))*1000;
 
-        if (next != null) {
-            // Find remaining time to next period
-            remaining = next.start_time - currentTime;
-            if (count > 0)
-                remaining = 24*60 - currentTime + (count-1) * 24 + next.start_time;
-
-            Subject subject = Subject.get(Subject.class, dbHelper, next.subject);
-
-            // Show current period if exists
-            String text = "";
-            if (current != null) {
-                Subject sub = Subject.get(Subject.class, dbHelper, current.subject);
-                text += sub.name + " " + current.getStartTime() + " - " + current.getEndTime() + "\n";
-            }
-
-            // Show next period
-            text += "Next " + subject.name + " in " + Utilities.formatMinutes(remaining) + " (";
-
-            if (count == 1)
-                text += "Tomorrow ";
-            else if (count > 1) {
-                text += DbHelper.DAYS[day] + " ";
-            }
-
-            text += next.getStartTime() + " - " + next.getEndTime() + ")";
-            remoteViews.setTextViewText(R.id.widget_period_text, text);
-        }
-
-        // Set alarm for update in next minute
+        // Set alarm for update in next period
         Intent intent = new Intent(context, PeriodWidgetProvider.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
         AlarmManager alarm = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarm.cancel(pendingIntent);
-        alarm.set(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() + 60000, pendingIntent);
+        alarm.set(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() + nextMinute, pendingIntent);
     }
 
 

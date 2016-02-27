@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RemoteViews;
 import android.widget.TextView;
 
 import java.io.ByteArrayOutputStream;
@@ -167,5 +168,19 @@ public class Utilities {
             detailsView.setVisibility(View.VISIBLE);
         } else
             detailsView.setVisibility(View.GONE);
+    }
+
+    public static void fillCurrentPeriod(RemoteViews remoteViews, String header,
+                                       String title, String subTitle) {
+        remoteViews.setTextViewText(R.id.headerNow, header);
+        remoteViews.setTextViewText(R.id.titleNow, title);
+        remoteViews.setTextViewText(R.id.subtitleNow, subTitle);
+    }
+
+    public static void fillNextPeriod(RemoteViews remoteViews, String header,
+                                         String title, String subTitle) {
+        remoteViews.setTextViewText(R.id.headerNext, header);
+        remoteViews.setTextViewText(R.id.titleNext, title);
+        remoteViews.setTextViewText(R.id.subtitleNext, subTitle);
     }
 }

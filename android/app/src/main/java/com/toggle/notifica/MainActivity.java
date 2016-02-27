@@ -24,6 +24,7 @@ import android.widget.TextView;
 
 import com.toggle.notifica.database.Client;
 import com.toggle.notifica.database.DbHelper;
+import com.toggle.notifica.database.NextPeriodFinder;
 import com.toggle.notifica.database.PClass;
 import com.toggle.notifica.database.PGroup;
 import com.toggle.notifica.database.Period;
@@ -347,77 +348,38 @@ public class MainActivity extends AppCompatActivity {
 
     public void fillHeader() {
         DbHelper dbHelper = new DbHelper(this);
-        Calendar cal = Calendar.getInstance();
+        NextPeriodFinder finder = new NextPeriodFinder(dbHelper);
 
         View view1 = findViewById(R.id.now);
         View view2 = findViewById(R.id.next);
 
-        // Get current time and day of week
-        int currentTime = cal.get(Calendar.HOUR_OF_DAY) * 60 + cal.get(Calendar.MINUTE);
-        int day = cal.get(Calendar.DAY_OF_WEEK) - 1;
-
-        // Get current and next periods
-        Period current = Period.get(Period.class, dbHelper, "start_time<=? AND end_time>? AND day=?", new String[]{"" + currentTime, "" + currentTime, "" + day}, "start_time");
-        Period next = Period.get(Period.class, dbHelper, "start_time>? AND day=?", new String[]{"" + currentTime, "" + day}, "start_time");
-
-        // If next period isn't today, get tomorrow's period and so on
-        int count = 0;
-        while (next == null && count < 7) {
-            day = (day + 1) % 7;
-            next = Period.get(Period.class, dbHelper, "day=?", new String[]{"" + day}, "start_time");
-            count++;
-        }
-
-        int remaining = 60;
-        if (next != null) {
-            // Find remaining time to next period
-            remaining = next.start_time - currentTime;
-            if (count > 0)
-                remaining = 24 * 60 - currentTime + (count - 1) * 24 + next.start_time;
-
-            Subject subject = Subject.get(Subject.class, dbHelper, next.subject);
-
-            // Show current period if exists
-            if (current != null) {
-                Subject sub = Subject.get(Subject.class, dbHelper, current.subject);
-                if (sub != null) {
-                    Utilities.fillProfileView(
-                            view1, Color.parseColor(sub.color), null, "Current class",
-                            sub.name, current.getStartTime() + " - " + current.getEndTime(),
-                            null, sub.getShortName()
-                    );
-                    view1.setVisibility(View.VISIBLE);
-                    findViewById(R.id.now_practical).setVisibility(
-                            current.period_type==1?View.VISIBLE:View.GONE);
-                } else
-                    view1.setVisibility(View.GONE);
-            } else
-                view1.setVisibility(View.GONE);
-
-            // Show next period
-
-            String text = "";
-            if (count == 1)
-                text += "Tomorrow ";
-            else if (count > 1) {
-                text += DbHelper.DAYS[day] + " ";
-            }
-            text += next.getStartTime() + " - " + next.getEndTime();
-
-            //String text2 = "Next in " + Utilities.formatMinutes(remaining);
+        if (finder.current != null) {
+            Subject sub = finder.currentSubject;
             Utilities.fillProfileView(
-                    view2, Color.parseColor(subject.color), null, "Next class", subject.name,
-                    text, null, subject.getShortName()
+                    view1, Color.parseColor(sub.color), null, "Current class",
+                    sub.name, finder.current.getPeriodString(),
+                    null, sub.getShortName()
+            );
+            view1.setVisibility(View.VISIBLE);
+            findViewById(R.id.now_practical).setVisibility(
+                    finder.current.period_type == 1 ? View.VISIBLE : View.GONE);
+        } else
+            view1.setVisibility(View.GONE);
+
+        if (finder.next != null) {
+            Subject sub = finder.nextSubject;
+            Utilities.fillProfileView(
+                    view2, Color.parseColor(sub.color), null, "Next class", sub.name,
+                    finder.nextDay + " " + finder.next.getPeriodString(), null, sub.getShortName()
             );
             view2.setVisibility(View.VISIBLE);
             findViewById(R.id.next_practical).setVisibility(
-                    next.period_type == 1 ? View.VISIBLE : View.GONE);
-        } else {
-            view1.setVisibility(View.GONE);
+                    finder.next.period_type == 1 ? View.VISIBLE : View.GONE);
+        } else
             view2.setVisibility(View.GONE);
-        }
 
-        int nextMinute = remaining*60*1000; //(60-cal.get(Calendar.SECOND))*1000;
+
+        int nextMinute = finder.remaining*60*1000; //(60-cal.get(Calendar.SECOND))*1000;
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_period"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:background="#8000">
+
+
+    <RelativeLayout
+        android:id="@+id/now"
+        android:layout_margin="8dp"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/headerNow"
+            android:layout_width="match_parent"
+            android:layout_height="18dp"
+            android:textColor="@color/colorAccent"
+            android:textStyle="bold"
+            android:textSize="12sp"
+            android:textAllCaps="true"
+            android:background="@drawable/border_bottom"
+            android:text="item_header"/>
+
+            <LinearLayout
+                android:layout_below="@id/headerNow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
+                android:gravity="center_vertical"
+                android:layout_centerInParent="true">
+
+                <TextView
+                    android:id="@+id/titleNow"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="title"/>
+                <TextView
+                    android:id="@+id/subtitleNow"
+                    android:textColor="@color/colorSecondaryText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="subtitle"/>
+            </LinearLayout>
+
+        <TextView
+            android:id="@+id/now_practical"
+            android:layout_alignParentRight="true"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:textColor="?android:attr/textColorTertiary"
+            android:text="Practical"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_margin="8dp"
+        android:id="@+id/next"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/headerNext"
+            android:layout_width="match_parent"
+            android:layout_height="18dp"
+            android:textColor="@color/colorAccent"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textAllCaps="true"
+            android:background="@drawable/border_bottom"
+            android:text="item_header"/>
+
+        <LinearLayout
+            android:layout_below="@id/headerNext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
+            android:gravity="center_vertical"
+            android:layout_centerInParent="true">
+
+            <TextView
+                android:id="@+id/titleNext"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="title"/>
+            <TextView
+                android:id="@+id/subtitleNext"
+                android:textColor="@color/colorSecondaryText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="subtitle"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/next_practical"
+            android:layout_alignParentRight="true"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:textColor="?android:attr/textColorTertiary"
+            android:text="Practical"/>
+    </RelativeLayout>
+</LinearLayout>

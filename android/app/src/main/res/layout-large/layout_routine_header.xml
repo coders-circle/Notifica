@@ -5,19 +5,49 @@
     android:layout_height="match_parent"
     android:padding="20dp">
 
-    <include
+    <RelativeLayout
         android:id="@+id/now"
         android:layout_width="0dp"
         android:layout_weight="1"
-        android:layout_height="match_parent"
-        layout="@layout/layout_profile_item"/>
+        android:layout_height="wrap_content">
 
-    <include
+        <include
+            android:id="@+id/now_profile"
+            layout="@layout/layout_profile_item"/>
+
+        <TextView
+            android:id="@+id/now_practical"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_alignBottom="@id/now_profile"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:textColor="?android:attr/textColorTertiary"
+            android:text="Practical"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
         android:id="@+id/next"
         android:layout_width="0dp"
         android:layout_weight="1"
-        android:layout_height="match_parent"
-        layout="@layout/layout_profile_item"/>
-
+        android:layout_height="wrap_content">
+        <include
+            android:id="@+id/next_profile"
+            layout="@layout/layout_profile_item"/>
+        <TextView
+            android:id="@+id/next_practical"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_alignBottom="@id/next_profile"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:textColor="?android:attr/textColorTertiary"
+            android:text="Practical"/>
+    </RelativeLayout>
 
 </LinearLayout>
