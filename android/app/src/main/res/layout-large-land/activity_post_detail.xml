@@ -1,32 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout  xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    android:id="@+id/coordinator_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark">
+    android:layout_height="match_parent">
 
-    <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/toolbar_post_detail"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorPrimary"
-        android:fitsSystemWindows="true"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark"
-        app:navigationIcon="?attr/homeAsUpIndicator"
-        app:title="@string/header_post_detail"
-        android:elevation="4dp">
-    </android.support.v7.widget.Toolbar>
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimaryDark">
 
-    <android.support.v7.widget.RecyclerView
-        android:padding="10dp"
-        android:id="@+id/recycler_view_post_details"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="150dp"
-        android:layout_marginRight="150dp"
-        android:elevation="2dp">
-    </android.support.v7.widget.RecyclerView>
+        <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/toolbar_post_detail"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary"
+            android:fitsSystemWindows="true"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark"
+            app:navigationIcon="?attr/homeAsUpIndicator"
+            app:title="@string/header_post_detail"
+            android:elevation="4dp">
+        </android.support.v7.widget.Toolbar>
 
-</LinearLayout>
+        <android.support.v7.widget.RecyclerView
+            android:padding="10dp"
+            android:id="@+id/recycler_view_post_details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="150dp"
+            android:layout_marginRight="150dp"
+            android:elevation="2dp">
+        </android.support.v7.widget.RecyclerView>
+
+    </LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

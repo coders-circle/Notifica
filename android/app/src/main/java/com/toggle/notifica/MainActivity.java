@@ -109,6 +109,9 @@ public class MainActivity extends AppCompatActivity {
 
     // Set user profile data in header
     private void setHeaderView() {
+        // Also set routine header
+        fillRoutineHeader();
+
         // Get views
         View headerView = mNavigationView.getHeaderView(0);
         TextView username = (TextView)headerView.findViewById(R.id.username);
@@ -142,8 +145,6 @@ public class MainActivity extends AppCompatActivity {
             avatar.setBackgroundResource(R.drawable.ic_default_avatar);
         }
 
-        // Also set routine header
-        fillRoutineHeader();
     }
 
     // Add a menu item to a group with given id, name and icon

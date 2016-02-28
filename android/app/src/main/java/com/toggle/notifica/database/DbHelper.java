@@ -13,7 +13,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
     // Database name and version
     public static final String DB_NAME = "Notifica.db";
-    public static final int DB_VERSION = 15;    // 12
+    public static final int DB_VERSION = 16;
     private final Context mContext;
 
     // Create the helper object
@@ -37,6 +37,7 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL(new User().getCreateTableSql());
         db.execSQL(new Profile().getCreateTableSql());
         db.execSQL(new Elective().getCreateTableSql());
+        db.execSQL(new ClassAdmin().getCreateTableSql());
 
         // Routine
         db.execSQL(new Period().getCreateTableSql());
@@ -67,6 +68,7 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL(new User().getDestroyTableSql());
         db.execSQL(new Profile().getDestroyTableSql());
         db.execSQL(new Elective().getDestroyTableSql());
+        db.execSQL(new ClassAdmin().getDestroyTableSql());
 
         // Routine
         db.execSQL(new Period().getDestroyTableSql());
@@ -179,10 +181,14 @@ public class DbHelper extends SQLiteOpenHelper {
         }
 
         cList += ")";
-        if (cList.equals("()"))
+        if (cList.equals("()")) {
             PClass.deleteAll(PClass.class, this);
-        else
+            ClassAdmin.deleteAll(ClassAdmin.class, this);
+        }
+        else {
             PClass.delete(PClass.class, this, "_id NOT IN " + cList, null);
+            ClassAdmin.delete(ClassAdmin.class, this, "p_class NOT IN " + cList, null);
+        }
 
 
         // TODO: Users

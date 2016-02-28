@@ -3,8 +3,6 @@ package com.toggle.notifica.database;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.toggle.notifica.Utilities;
 
@@ -109,11 +107,16 @@ public class Client {
         getClass(g.p_class, clientListener);
     }
 
-    private void addClass(JSONObject json, ClientListener clientListener) {
+    private void addClass(JSONObject json, ClientListener clientListener) throws JSONException {
         PClass c = new PClass(json);
         c.save(mDbHelper);
-        getDepartment(c.department, clientListener);
 
+        JSONArray admins = json.getJSONArray("admins");
+        for (int i=0; i<admins.length(); ++i) {
+            new ClassAdmin(c._id, admins.getLong(i)).save(mDbHelper);
+        }
+
+        getDepartment(c.department, clientListener);
         getProfile(c.profile, clientListener);
     }
 
@@ -210,7 +213,7 @@ public class Client {
                     }
 
                     if (clientListener != null) {
-                        clientListener.queue.remove(name+":"+id);
+                        clientListener.queue.remove(name + ":" + id);
                         clientListener.refresh();
                     }
                 }
@@ -432,12 +435,12 @@ public class Client {
 
         // Get comments
         NetworkHandler handler = new NetworkHandler(mContext, mUsername, mPassword, true);
-        handler.get("feed/api/v1/comments/?postid="+postId, new NetworkHandler.NetworkListener() {
+        handler.get("feed/api/v1/comments/?postid=" + postId, new NetworkHandler.NetworkListener() {
             @Override
             public void onComplete(NetworkHandler.Result result) {
                 if (result.success) {
                     // Delete previous comments for this post
-                    Comment.delete(Comment.class, mDbHelper, "post=?", new String[]{""+postId});
+                    Comment.delete(Comment.class, mDbHelper, "post=?", new String[]{"" + postId});
 
                     // Now add each comment fetched from server
                     try {
@@ -451,7 +454,7 @@ public class Client {
                 }
 
                 if (clientListener != null) {
-                    clientListener.queue.remove("comments:"+postId);
+                    clientListener.queue.remove("comments:" + postId);
                     clientListener.refresh();
                 }
             }
@@ -482,8 +485,8 @@ public class Client {
                     }
                     clientListener.refresh();
                 } else {
-                    Toast.makeText(mContext, "Couldn't post comment.\nCheck internet connection and try again.",
-                            Toast.LENGTH_SHORT).show();
+                    Utilities.showError(mContext, "Couldn't post comment. " +
+                            "Check internet connection and try again.");
                 }
             }
         });
@@ -517,9 +520,8 @@ public class Client {
                     }
                     clientListener.refresh();
                 } else {
-                    Toast.makeText(mContext, "Couldn't add post."+
-                                    "\nCheck internet connection and try again.",
-                            Toast.LENGTH_SHORT).show();
+                    Utilities.showError(mContext, "Couldn't add post. " +
+                            "Check internet connection and try again.");
                 }
             }
         });
@@ -565,7 +567,7 @@ public class Client {
                 if (result.success) {
                     try {
                         JSONArray list = new JSONArray(result.result);
-                        for (int i=0; i<list.length(); ++i) {
+                        for (int i = 0; i < list.length(); ++i) {
                             JSONObject electiveJson = list.getJSONObject(i);
                             Elective elective = new Elective(electiveJson, studentId);
                             elective.save(mDbHelper);
@@ -576,7 +578,7 @@ public class Client {
                 }
 
                 if (clientListener != null) {
-                    clientListener.queue.remove("electives:"+subject);
+                    clientListener.queue.remove("electives:" + subject);
                     clientListener.refresh();
                 }
             }
@@ -585,36 +587,34 @@ public class Client {
 
     public void selectElective(final Elective elective, final ClientListener clientListener) {
         NetworkHandler handler = new NetworkHandler(mContext, mUsername, mPassword, true);
-        handler.post("classroom/elective/select/"+elective._id+"/", "",
+        handler.post("classroom/elective/select/" + elective._id + "/", "",
                 new NetworkHandler.NetworkListener() {
-            @Override
-            public void onComplete(NetworkHandler.Result result) {
-                if (result.success) {
-                    try {
-                        Log.d("result", result.result);
-                        JSONObject message = new JSONObject(result.result);
-                        if (message.has("result") &&
-                                message.getString("result").equals("success")) {
+                    @Override
+                    public void onComplete(NetworkHandler.Result result) {
+                        if (result.success) {
+                            try {
+                                JSONObject message = new JSONObject(result.result);
+                                if (message.has("result") &&
+                                        message.getString("result").equals("success")) {
 
-                            // On success refresh the electives for this class
-                            List<Subject> subjects = PClass.get(PClass.class,
-                                    mDbHelper, elective.p_class).getSubjects(mDbHelper);
-                            for (Subject s: subjects)
-                                getElectives(s._id, clientListener);
+                                    // On success refresh the electives for this class
+                                    List<Subject> subjects = PClass.get(PClass.class,
+                                            mDbHelper, elective.p_class).getSubjects(mDbHelper);
+                                    for (Subject s : subjects)
+                                        getElectives(s._id, clientListener);
 
-                            clientListener.refresh();
-                            return;
+                                    clientListener.refresh();
+                                    return;
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                         }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
 
-                Toast.makeText(mContext, "Couldn't connect to server.\n"+
-                        "Make sure you are connected to internet to perform this action.",
-                        Toast.LENGTH_SHORT).show();
-                clientListener.refresh();
-            }
-        });
+                        Utilities.showError(mContext, "Couldn't connect to server. Make sure " +
+                                        "you are connected to internet.");
+                        clientListener.refresh();
+                    }
+                });
     }
 }

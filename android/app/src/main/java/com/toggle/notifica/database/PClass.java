@@ -49,4 +49,9 @@ public class PClass extends Model {
         }
         return subjects;
     }
+
+    public boolean checkIfAdmin(DbHelper dbHelper, long userId) {
+        return ClassAdmin.count(ClassAdmin.class, dbHelper, "p_class=? AND user=?",
+                new String[]{_id+"", userId+""}) > 0;
+    }
 }

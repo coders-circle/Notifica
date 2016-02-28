@@ -27,6 +27,7 @@
             </intent-filter>
         </activity>
         <activity android:name="com.toggle.notifica.RegisterActivity" android:theme="@style/ForLogin"/>
+        <activity android:name="com.toggle.notifica.ClassSearchActivity"/>
         <activity android:name="com.toggle.notifica.MainActivity" />
         <activity android:name="com.toggle.notifica.ClassActivity" />
         <activity android:name="com.toggle.notifica.SubjectDetailsActivity"/>

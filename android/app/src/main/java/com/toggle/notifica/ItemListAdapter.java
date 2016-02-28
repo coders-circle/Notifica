@@ -21,10 +21,20 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ViewHo
         public boolean selected = false;
     }
 
+    public interface Listener {
+        void onSelect(int position, Item item);
+    }
+
     private List<Item> mItems;
+    private Listener mListener;
 
     public ItemListAdapter(List<Item> items) {
         mItems = items;
+    }
+
+    public ItemListAdapter(List<Item> items, Listener listener) {
+        mItems = items;
+        mListener = listener;
     }
 
     @Override
@@ -40,13 +50,21 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-            Item item = mItems.get(position );
-            Utilities.fillProfileView(holder.view, item.color, item.avatar,
-                    null, item.title, item.subTitle, item.details, item.shortName);
+    public void onBindViewHolder(ViewHolder holder, final int position) {
+        final Item item = mItems.get(position );
+        Utilities.fillProfileView(holder.view, item.color, item.avatar,
+                null, item.title, item.subTitle, item.details, item.shortName);
+
+        holder.view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mListener != null)
+                    mListener.onSelect(position, item);
+            }
+        });
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         protected View view;
 
         public ViewHolder(View itemView) {

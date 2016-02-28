@@ -1,13 +1,18 @@
 package com.toggle.notifica;
 
+import android.app.Activity;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RemoteViews;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
 import java.text.ParseException;
@@ -182,5 +187,19 @@ public class Utilities {
         remoteViews.setTextViewText(R.id.headerNext, header);
         remoteViews.setTextViewText(R.id.titleNext, title);
         remoteViews.setTextViewText(R.id.subtitleNext, subTitle);
+    }
+
+    public static void showError(Context context, String message) {
+        Activity activity = (Activity)context;
+        CoordinatorLayout coordinatorLayout = null;
+        if (activity != null) {
+            coordinatorLayout = (CoordinatorLayout)activity.findViewById(R.id.coordinator_layout);
+        }
+
+        if (coordinatorLayout != null) {
+            Snackbar.make(coordinatorLayout, message, Snackbar.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+        }
     }
 }

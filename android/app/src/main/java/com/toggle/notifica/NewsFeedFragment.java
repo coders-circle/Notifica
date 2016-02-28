@@ -21,6 +21,7 @@ import com.toggle.notifica.database.Client;
 import com.toggle.notifica.database.DbHelper;
 import com.toggle.notifica.database.PClass;
 import com.toggle.notifica.database.Post;
+import com.toggle.notifica.database.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +57,13 @@ public class NewsFeedFragment extends Fragment {
 
         final PClass pClass = ((MainActivity)getActivity()).getPClass();
 
-        FloatingActionButton addPostButton = (FloatingActionButton) rootView.findViewById(R.id.addPostButton);
+        FloatingActionButton addPostButton =
+                (FloatingActionButton) rootView.findViewById(R.id.addPostButton);
+        if (!pClass.checkIfAdmin(mDbHelper, User.getLoggedInUser(getContext())._id))
+            addPostButton.setVisibility(View.GONE);
+        else
+            addPostButton.setVisibility(View.VISIBLE);
+
         addPostButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
