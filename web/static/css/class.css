@@ -59,14 +59,13 @@
 }
 #content-block #tabs .tab{
     transition: none;
-    font-size: 0.88em;
     padding: 0px 8px;
     color: rgba(100, 100, 100, 0.5);
-    text-transform: uppercase;
+
 }
 #content-block #tabs .active{
     color: rgba(100, 100, 100, 1);
-    border-bottom: 2px solid #e74c3c;
+    border-bottom: 1px solid #e74c3c;
 }
 #content-block #content{
     padding: 0px 10px;
@@ -85,7 +84,6 @@
 
 #quick-task-block #tasks{
     background-color: #fff;
-    box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.1);
     padding: 10px 30px;
 }
 
@@ -113,7 +111,7 @@
     margin:10px 0px;
     border-radius: 3px;
     color: #646464;
-    box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.1);
+
 }
 
 .card-teacher .avatar{

@@ -94,10 +94,13 @@
         <div class="container">
             <div id="join-request">
                 <div class="info">
+                    {% if request_sent %}
+                    Join request has been sent. Please await your response.
+                    {% else %}
                     To see the content of this classroom, you must be a member.
+                    {% endif %}
                 </div>
                 {% if request_sent %}
-                <div>You have already sent join request to this class. Please await your response.</div>
                 {% else %}
                 <form method="post">
                     {% csrf_token %}
