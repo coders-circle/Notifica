@@ -49,10 +49,11 @@ public class NextPeriodFinder {
                     remaining = 24 * 60 - currentTime + (count - 1) * 24 + next.start_time;
 
                 if (count == 1)
-                    nextDay = "Tomorrow";
+                    nextDay = "Tomorrow ";
                 else if (count > 1) {
-                    nextDay = DbHelper.DAYS[day];
-                }
+                    nextDay = DbHelper.DAYS[day] + " ";
+                } else
+                    nextDay = "";
             }
         }
     }

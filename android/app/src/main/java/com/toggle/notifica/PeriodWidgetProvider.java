@@ -43,7 +43,7 @@ public class PeriodWidgetProvider extends AppWidgetProvider {
         if (finder.next != null) {
             Subject sub = finder.nextSubject;
             Utilities.fillNextPeriod(remoteViews, "Next class", sub.name,
-                    finder.nextDay + " " + finder.next.getPeriodString()
+                    finder.nextDay + finder.next.getPeriodString()
             );
             remoteViews.setViewVisibility(R.id.next, View.VISIBLE);
             remoteViews.setViewVisibility(R.id.next_practical,

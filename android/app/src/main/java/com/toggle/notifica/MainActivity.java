@@ -27,13 +27,11 @@ import com.toggle.notifica.database.DbHelper;
 import com.toggle.notifica.database.NextPeriodFinder;
 import com.toggle.notifica.database.PClass;
 import com.toggle.notifica.database.PGroup;
-import com.toggle.notifica.database.Period;
 import com.toggle.notifica.database.Profile;
 import com.toggle.notifica.database.Student;
 import com.toggle.notifica.database.Subject;
 import com.toggle.notifica.database.User;
 
-import java.util.Calendar;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -52,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
 
     boolean isVisible = true;
     boolean swap = true;
+
+    private int mCurrentPage = R.id.news_feed;
 
     public PClass getPClass() { return mClass; }
 
@@ -143,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // Also set routine header
-        fillHeader();
+        fillRoutineHeader();
     }
 
     // Add a menu item to a group with given id, name and icon
@@ -249,7 +249,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         mAppBarLayout = (AppBarLayout) findViewById(R.id.appbar);
-        fillHeader();
+        fillRoutineHeader();
 
         // Initialize the navigation drawer
         mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
@@ -262,7 +262,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
                 Fragment selectedFragment = null;
-
+                mCurrentPage = menuItem.getItemId();
                 switch (menuItem.getItemId()){
                     case R.id.news_feed:
                         selectedFragment = mNewsFeedFragment;
@@ -289,7 +289,8 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 if(selectedFragment != null){
-                    getSupportFragmentManager().beginTransaction().replace(R.id.frame_content, selectedFragment).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.frame_content,
+                            selectedFragment).commit();
                     menuItem.setChecked(true);
                 }
                 mDrawerLayout.closeDrawers();
@@ -300,7 +301,8 @@ public class MainActivity extends AppCompatActivity {
 
         // Initialize Drawer Layout and ActionBarToggle
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar,R.string.openDrawer, R.string.closeDrawer);
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar,
+                R.string.openDrawer, R.string.closeDrawer);
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
         // Sync-ing is necessary to show the hamburger icon
@@ -329,14 +331,21 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
 
         // Start from new feed page by default
-        int startPage = R.id.news_feed;
+        mCurrentPage = R.id.news_feed;
         // Start from intended page if passed through intent
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            startPage = extras.getInt("start_page", R.id.news_feed);
+            mCurrentPage = extras.getInt("start_page", R.id.news_feed);
         }
 
-        mNavigationItemSelectedListener.onNavigationItemSelected(mNavigationView.getMenu().findItem(startPage));
+        mNavigationItemSelectedListener.onNavigationItemSelected(
+                mNavigationView.getMenu().findItem(mCurrentPage));
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        getIntent().putExtra("start_page", mCurrentPage);
     }
 
     @Override
@@ -346,7 +355,7 @@ public class MainActivity extends AppCompatActivity {
             finish();
     }
 
-    public void fillHeader() {
+    public void fillRoutineHeader() {
         DbHelper dbHelper = new DbHelper(this);
         NextPeriodFinder finder = new NextPeriodFinder(dbHelper);
 
@@ -370,7 +379,7 @@ public class MainActivity extends AppCompatActivity {
             Subject sub = finder.nextSubject;
             Utilities.fillProfileView(
                     view2, Color.parseColor(sub.color), null, "Next class", sub.name,
-                    finder.nextDay + " " + finder.next.getPeriodString(), null, sub.getShortName()
+                    finder.nextDay + finder.next.getPeriodString(), null, sub.getShortName()
             );
             view2.setVisibility(View.VISIBLE);
             findViewById(R.id.next_practical).setVisibility(
@@ -384,7 +393,7 @@ public class MainActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                fillHeader();
+                fillRoutineHeader();
             }
         }, nextMinute);
     }
