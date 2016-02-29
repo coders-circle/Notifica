@@ -7,6 +7,7 @@
                 subject:{ name: "{{ p.subject|safe }}", id: {{ p.subject.id }} },
                 teachers:[{% for t in p.teachers.all %}{name: "{{ t }}", id: {{ t.id }}}, {% endfor %}],
                 remarks:"{{p.remarks}}",
+                period_type:{{p.period_type}},
                 start_time:{{p.start_time}},
                 end_time:{{p.end_time}},
                 is_elective:{% if p.is_elective %}true{%else%}false{%endif%},

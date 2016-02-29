@@ -26,6 +26,13 @@
 #add-period-dialog .group-selection label{
   display: inline-block;
 }
+
+#add-period-dialog #subject-type-input .radio-label{
+    margin-right: 20px;
+    font-weight: normal;
+    vertical-align: middle;
+}
+
 .btn-dlg-ok{
     color: #2ecc71;
 }

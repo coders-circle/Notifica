@@ -77,6 +77,7 @@ class RoutineAdminView(View):
                 for period in day:
                     p = Period()
                     p.routine = r
+                    p.period_type = period["period_type"]
                     p.subject = self.getSubject(period["subject"])
                     p.start_time = period["start_time"]
                     p.end_time = period["end_time"]

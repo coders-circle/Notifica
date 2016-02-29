@@ -69,7 +69,7 @@
         {% endfor %}
     </div>
 </div>
-
+{% include 'footer.html' %}
 <form name="routineform" method="post">
     {% csrf_token %}
     <input name="routine" value="" type="hidden">
