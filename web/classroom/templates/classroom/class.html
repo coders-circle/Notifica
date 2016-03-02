@@ -46,7 +46,9 @@
                         <div id="tab-contents">
                             <div class="tab-content active" id="news-feed">
                                 <div class="card card-post-form">
-                                    <div class="title">Add new post</div>
+                                    <div class="header">
+                                        <span class="header-label">Add new post</span><i class="fa fa-chevron-down"></i>
+                                    </div>
                                     <form id="add-post-form" class="form-add-post">
                                         {% csrf_token %}
                                         <input type="text" class="input-neat" id="post-title" placeholder="Title">

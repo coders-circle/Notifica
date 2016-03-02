@@ -95,9 +95,50 @@
     width: 24px;
     margin-right: 6px;
 }
+.card-post-form form{
+    margin-top: 30px;
+}
+.card-post-form .header-label{
+    position: relative;
+}
+.expanded .header-label{
+    color: #da4453;
+}
+.header .fa{
+    transition: 0.5s;
+}
+.expanded .header .fa{
+    transform: rotate(180deg);
+}
 
-#content-block{
+.card-post-form .header{
+    width: 100%;
+    cursor: pointer;
+    text-transform: uppercase;
+    text-align: right;
+}
+.card-post-form .header:hover{
+    color: #da4453;
+}
 
+.card-post-form .fa{
+    margin-left: 20px;
+}
+
+.card-post-form #toggle-add-post-btn{
+
+    text-align: right;
+}
+.expanded #toggle-add-post-btn{
+    text-align: left;
+}
+.expanded #toggle-add-post-btn i{
+    text-align: right;
+}
+
+
+.card-post-form form{
+    display: none;
 }
 
 .tab-content{
@@ -111,7 +152,6 @@
     margin:10px 0px;
     border-radius: 3px;
     color: #646464;
-
 }
 
 .card-teacher .avatar{

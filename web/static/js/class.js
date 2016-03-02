@@ -151,6 +151,30 @@ $(document).ready(function(){
         });
     }
 
+    $(".card-post-form .header").click(function(e){
+        var container = $(this).parent();
+        var expanded =  container.data('expanded');
+        if(expanded){
+            container.data('expanded', false);
+            container.find('form').slideUp();
+            container.removeClass('expanded');
+            var label =  $(this).find('.header-label');
+            label.animate({
+                right: 0,
+                fontSize: '1em'
+            });
+        } else {
+            container.data('expanded', true);
+            container.addClass('expanded');
+            container.find('form').slideDown();
+            var label =  $(this).find('.header-label');
+            label.animate({
+                right: $(this).width() - label.width() - 34,
+                fontSize: '0.88em'
+            });
+        }
+    });
+
     $("#add-post-form").submit(function(e){
         e.preventDefault();
         if($("#post-title").val().length == 0){
