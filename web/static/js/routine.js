@@ -155,6 +155,7 @@ function renderPeriods(){
                     period.children(".subject").text(period_data.subject.name);
                     period.children(".teachers").text(getNameString(period_data.teachers));
                     period.children(".remarks").text(period_data.remarks);
+                    period.children(".type").text(period_data.period_type==1?'P':'T');
                     period.appendTo(period_container);
                     prev_time = period_data.end_time;
                 }

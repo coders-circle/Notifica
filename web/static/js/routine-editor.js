@@ -1,6 +1,7 @@
 var routine_dirty = false;
 var newID = -1;
 selected_group = $('#group-select select');
+
 function getNewID(){
 	return newID--;
 }
@@ -22,6 +23,7 @@ function renderSelectedRoutine(){
 }
 
 $(document).ready(function(){
+    $('#group-select select').trigger('change');
 	subject_select = $('#subject-input').selectize({
 		placeholder: 'Subject',
 		valueField: 'id',
@@ -107,20 +109,25 @@ $(document).ready(function(){
 	teachers_control = teachers_select[0].selectize;
 	subject_control = subject_select[0].selectize;
 	$('body').on( 'click', '.period', function(e){
-		var add_subject_dialog = $('body').find("#add-period-dialog");
-		add_subject_dialog.data("new-period", false);
-		add_subject_dialog.data("id-period", $(this).data('id'));
+		var add_period_dialog = $('body').find("#add-period-dialog");
+        add_period_dialog.find(".modal-title").text("Edit Period");
+		add_period_dialog.data("new-period", false);
+		add_period_dialog.data("id-period", $(this).data('id'));
 		var day_index = $(this).parent().parent().parent().data('index-day');
-		add_subject_dialog.data("index-day", day_index);
+		add_period_dialog.data("index-day", day_index);
 		var periods = routine[day_index];
 		var period = $(this);
 		var period_data = $.grep(periods, function(item){
 			return item.id == period.data('id');
 		})[0];
 
-		var ip_start_time = add_subject_dialog.find(".input-start-time");
-		var ip_end_time = add_subject_dialog.find(".input-end-time");
-		var ip_remarks = add_subject_dialog.find(".input-remarks");
+		var ip_start_time = add_period_dialog.find(".input-start-time");
+		var ip_end_time = add_period_dialog.find(".input-end-time");
+		var ip_remarks = add_period_dialog.find(".input-remarks");
+
+        add_period_dialog.find("input[type=radio]").prop('checked', false);
+        add_period_dialog.find("input[name=subject-type][value=" + period_data.period_type + "]").prop('checked', true);
+        //add_period_dialog.find("input[name=subject-type]").val(period_data.period_type);
 
 		ip_start_time.val(getFormattedTimeString(period_data.start_time));
 		ip_end_time.val(getFormattedTimeString(period_data.end_time));
@@ -133,20 +140,25 @@ $(document).ready(function(){
 		}
 		subject_control.addOption(period_data.subject);
 		subject_control.addItem(period_data.subject.id);
-		var group_selection_container = add_subject_dialog.find(".group-selection");
+		var group_selection_container = add_period_dialog.find(".group-selection");
 		for(var i=0; i<group_list.length; i++){
 			group_selection_container.find('#'+group_list[i].id).prop('checked', false);
 		}
 		for(var i=0; i<period_data.groups.length; i++){
 			group_selection_container.find('#'+period_data.groups[i].id).prop('checked', true);
 		}
-		add_subject_dialog.modal('show');
+		add_period_dialog.modal('show');
 	});
 	$('body').on( 'click', '.btn-add-period', function(e){
-		var add_subject_dialog = $('body').find("#add-period-dialog");
-		var start_time = add_subject_dialog.find(".input-start-time");
-		var end_time = add_subject_dialog.find(".input-end-time");
-		var remarks = add_subject_dialog.find(".input-remarks");
+		var add_period_dialog = $('body').find("#add-period-dialog");
+        add_period_dialog.find(".modal-title").text("Add Period");
+		var start_time = add_period_dialog.find(".input-start-time");
+		var end_time = add_period_dialog.find(".input-end-time");
+		var remarks = add_period_dialog.find(".input-remarks");
+
+        add_period_dialog.find("input[type=radio]").prop('checked', false);
+        add_period_dialog.find("input[name=subject-type][value=0]").prop('checked', true);
+        //add_period_dialog.find("input[name=subject-type]").val(0);
 
 		start_time.val("");
 		end_time.val("");
@@ -155,17 +167,17 @@ $(document).ready(function(){
 		teachers_control.clear();
 		subject_control.clear();
 
-		var group_selection_container = add_subject_dialog.find(".group-selection");
+		var group_selection_container = add_period_dialog.find(".group-selection");
 		for(var i=0; i<group_list.length; i++){
 			group_selection_container.find('#'+group_list[i].id).prop('checked', true);
 		}
-		add_subject_dialog.data("new-period", true);
-		add_subject_dialog.data("index-day", $(this).parent().parent().data('index-day'));
-		add_subject_dialog.modal('show');
+		add_period_dialog.data("new-period", true);
+		add_period_dialog.data("index-day", $(this).parent().parent().data('index-day'));
+		add_period_dialog.modal('show');
 	});
 
 	$('body').on( 'click', '.btn-dlg-ok', function(e){
-		var add_subject_dialog = $('body').find("#add-period-dialog");
+		var add_period_dialog = $('body').find("#add-period-dialog");
 		var arr_teachers = [];
 		for(var i=0; i < teachers_control.items.length; i++){
 			arr_teachers.push({
@@ -177,43 +189,45 @@ $(document).ready(function(){
 			id: subject_control.items[0],
 			name: subject_control.getItem(subject_control.items[0]).text()
 		};
-		var day_index = add_subject_dialog.data('index-day');
+		var day_index = add_period_dialog.data('index-day');
 		var checked_groups = [];
-		var group_selection_container = add_subject_dialog.find(".group-selection");
+		var group_selection_container = add_period_dialog.find(".group-selection");
 		for(var i=0; i<group_list.length; i++){
 			if(group_selection_container.find('#'+group_list[i].id).is(':checked')){
 				checked_groups.push(group_list[i]);
 			}
 		}
-		if(add_subject_dialog.data("new-period")){
+		if(add_period_dialog.data("new-period")){
 			var new_period = {
 				id: periodsCount++,
 				subject: obj_subject,
 				teachers: arr_teachers,
-				start_time: getMinutes(add_subject_dialog.find(".input-start-time").val()),
-				end_time: getMinutes(add_subject_dialog.find(".input-end-time").val()),
-				remarks: add_subject_dialog.find(".input-remarks").val(),
+                period_type: add_period_dialog.find("input[type=radio][name=subject-type]:checked").val(),
+				start_time: getMinutes(add_period_dialog.find(".input-start-time").val()),
+				end_time: getMinutes(add_period_dialog.find(".input-end-time").val()),
+				remarks: add_period_dialog.find(".input-remarks").val(),
 				groups: checked_groups
 			};
 			routine_all[day_index].push(new_period);
 		}else{
-			var period_data = $.grep(routine[add_subject_dialog.data('index-day')], function(item){
-				return item.id == add_subject_dialog.data('id-period');
+			var period_data = $.grep(routine[add_period_dialog.data('index-day')], function(item){
+				return item.id == add_period_dialog.data('id-period');
 			})[0];
 			period_data.subject = obj_subject;
 			period_data.teachers = arr_teachers;
-			period_data.start_time = getMinutes(add_subject_dialog.find(".input-start-time").val());
-			period_data.end_time = getMinutes(add_subject_dialog.find(".input-end-time").val());
-			period_data.remarks = add_subject_dialog.find(".input-remarks").val();
+            period_data.period_type = add_period_dialog.find("input[type=radio][name=subject-type]:checked").val();
+			period_data.start_time = getMinutes(add_period_dialog.find(".input-start-time").val());
+			period_data.end_time = getMinutes(add_period_dialog.find(".input-end-time").val());
+			period_data.remarks = add_period_dialog.find(".input-remarks").val();
 			period_data.groups = checked_groups;
 		}
 		renderSelectedRoutine();
-		add_subject_dialog.modal('hide');
+		add_period_dialog.modal('hide');
 	});
 
 	$('body').on( 'click', '.btn-dlg-cancel', function(e){
-		var add_subject_dialog = $('body').find("#add-period-dialog");
-		add_subject_dialog.modal('hide');
+		var add_period_dialog = $('body').find("#add-period-dialog");
+		add_period_dialog.modal('hide');
 	});
 
     $('body').on('change', '#group-select select', function(e){
