@@ -5,6 +5,6 @@
     android:minHeight="80dp"
     android:initialLayout="@layout/widget_period"
     android:updatePeriodMillis="60000"
-    android:widgetCategory="home_screen" >
+    android:widgetCategory="home_screen|keyguard" >
 
 </appwidget-provider>

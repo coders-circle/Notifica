@@ -109,6 +109,12 @@ class SubjectViewSet(viewsets.ModelViewSet):
         else:
             queryset = Subject.objects.all()
 
+        p_class = self.request.GET.get("class")
+        if p_class:
+            periods = Period.objects.filter(routine__p_class__pk=p_class)
+            subjects = periods.values_list("subject", flat=True)
+            queryset = queryset.filter(pk__in=subjects)
+
         return queryset
 
 

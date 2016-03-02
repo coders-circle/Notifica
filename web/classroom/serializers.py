@@ -71,9 +71,12 @@ class SubjectSerializer(serializers.ModelSerializer):
 
 class ElectiveSerializer(serializers.ModelSerializer):
     elective_group = serializers.CharField(source='group')
+    subject = SubjectSerializer(read_only=True)
+    subject_id = serializers.PrimaryKeyRelatedField(source='subject', queryset=Subject.objects.all())
+
     class Meta:
         model = Elective
-        fields = ('id', 'elective_group', 'subject', 'p_class', 'students')
+        fields = ('id', 'elective_group', 'subject', 'subject_id', 'p_class', 'students')
 
 
 class ClassSerializer(serializers.ModelSerializer):
