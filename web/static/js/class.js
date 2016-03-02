@@ -26,7 +26,7 @@ $(document).ready(function(){
 
     function loadTeachers(){
         $.ajax({
-            url: '/classroom/api/v1/teachers',
+            url: '/classroom/api/v1/teachers/?class='+class_pk,
             type: 'GET',
             error: function() {
                 alert('failed to fetch teachers :/');
@@ -63,7 +63,7 @@ $(document).ready(function(){
 
     function loadStudents(){
         $.ajax({
-            url: '/classroom/api/v1/students',
+            url: '/classroom/api/v1/students/?class='+class_pk,
             type: 'GET',
             error: function() {
                 alert('failed to fetch students :/');
@@ -99,7 +99,7 @@ $(document).ready(function(){
 
     function loadSubjects(){
         $.ajax({
-            url: '/classroom/api/v1/subjects',
+            url: '/classroom/api/v1/subjects/?class='+class_pk,
             type: 'GET',
             error: function() {
                 alert('failed to fetch subjects :/');

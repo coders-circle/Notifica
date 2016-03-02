@@ -59,7 +59,8 @@ public class NewsFeedFragment extends Fragment {
 
         FloatingActionButton addPostButton =
                 (FloatingActionButton) rootView.findViewById(R.id.addPostButton);
-        if (!pClass.checkIfAdmin(mDbHelper, User.getLoggedInUser(getContext())._id))
+        if (pClass == null ||
+                !pClass.checkIfAdmin(mDbHelper, User.getLoggedInUser(getContext())._id))
             addPostButton.setVisibility(View.GONE);
         else
             addPostButton.setVisibility(View.VISIBLE);
