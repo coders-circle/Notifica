@@ -13,6 +13,13 @@
         android:padding="10dp"
         android:background="#8000">
 
+        <TextView
+            android:id="@+id/widget_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:visibility="gone"/>
+
         <RelativeLayout
             android:id="@+id/now"
             android:layout_width="match_parent"

@@ -37,6 +37,9 @@ public class User extends Model {
     public static User getLoggedInUser(Context context) {
         //DbHelper helper = new DbHelper(context);
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        if (!preferences.getBoolean("logged_in", false))
+            return null;
+
         User user = new User();
         user._id = preferences.getLong("id", -1);
         user.first_name = preferences.getString("first_name", "");
