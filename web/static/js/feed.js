@@ -1,29 +1,33 @@
 function acceptRequest(id){
     $.ajax({
-        url: '/api/v1/requests/'+id+'/',
-        type: 'GET',
-        error: function() { onFailure(); },
-        success: function(result) {
-            result.status=1;
-            $.ajax({
-                url: '/api/v1/requests/'+id+'/',
-                type: 'PUT',
-                data:result,
-                success: function(e){
-                    alert("successful!");
-                    $("#request-"+id).remove();
-                },
-                error: function(e){
-                    alert(e.responseText);
-                }
-            });
-            //console.log(result);
+        url: '/request-response/'+id+'/1/',
+        type: 'POST',
+        data: {
+            // "group" : xx,
+            // "roll" : yy,
+        },
+        success: function(e){
+            alert("successful!");
+            $("#request-"+id).remove();
+        },
+        error: function(e){
+            alert(e.responseText);
         }
     });
 }
 
 function rejectRequest(id){
-
+    $.ajax({
+        url: '/request-response/'+id+'/2/',
+        type: 'POST',
+        success: function(e){
+            alert("successful!");
+            $("#request-"+id).remove();
+        },
+        error: function(e){
+            alert(e.responseText);
+        }
+    });
 }
 
 $(document).ready(function(){

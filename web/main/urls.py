@@ -6,7 +6,8 @@ from main import views, rest_views
 
 router = DefaultRouter()
 router.register(r'requests', rest_views.RequestViewSet, base_name='request')
-router.register(r'gcm-registrations', rest_views.GcmRegistrationViewSet, base_name='gcm_registration')
+router.register(r'gcm-registrations', rest_views.GcmRegistrationViewSet,
+                base_name='gcm_registration')
 
 
 urlpatterns = [
@@ -17,8 +18,12 @@ urlpatterns = [
     url(r'^register/$', views.RegisterView.as_view(), name='register'),
 
     url(r'^settings/$', views.SettingsView.as_view(), name='settings'),
-
     url(r'^notify/$', views.NotifyView.as_view(), name='notify'),
 
+    url(r'^request-response/(?P<id>\d+)/(?P<status>\d+)/$',
+        views.RequestResponseView.as_view(), name="request_response"),
+
+    url(r'^api/v1/notifications/$', rest_views.NotificationView.as_view(),
+        name="notifications"),
     url(r'^api/v1/', include(router.urls)),
 ]

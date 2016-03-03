@@ -10,6 +10,8 @@ from main.models import *
 from classroom.utils import *
 from main.decorators import *
 
+import json
+
 
 class UserView(View):
     def get(self, request):
@@ -151,7 +153,7 @@ class SelectElectiveView(View):
         return super(SelectElectiveView, self).dispatch(*args, **kwargs)
 
     def get(self, request, id=-1):
-        Http404("Invalid page for GET request")
+        raise Http404("Invalid page for GET request")
 
     def post(self, request, id):
         if not isValidUser(request.user):
