@@ -76,14 +76,17 @@ public class PeriodWidgetProvider extends AppWidgetProvider {
     public void onReceive(Context context, Intent intent)
     {
         super.onReceive(context, intent);
+        updateAllWidgets(context);
+    }
 
+    public static void updateAllWidgets(final Context context)
+    {
         ComponentName thisWidget = new ComponentName(context, PeriodWidgetProvider.class);
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         int[] allWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget);
+        RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_period);
 
         for (int widgetId : allWidgetIds) {
-
-            RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_period);
 
             // Register an onClickListener to launch MainActivity or LoginActivity
             Intent intent1;

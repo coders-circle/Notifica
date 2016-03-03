@@ -70,10 +70,11 @@ public class MainActivity extends AppCompatActivity {
                 Client.ClientListener refreshCallback = new Client.ClientListener() {
                     @Override
                     public void refresh() {
-                        // if (queue.size() == 0) {
                         if (mMenu != null)
                             refreshMenuItems();
-                        // }
+
+                        // refresh widgets
+                        PeriodWidgetProvider.updateAllWidgets(MainActivity.this);
                     }
                 };
 
@@ -263,12 +264,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
                 Fragment selectedFragment = null;
-                mCurrentPage = menuItem.getItemId();
                 switch (menuItem.getItemId()){
                     case R.id.news_feed:
+                        mCurrentPage = menuItem.getItemId();
                         selectedFragment = mNewsFeedFragment;
                         break;
                     case R.id.routine:
+                        mCurrentPage = menuItem.getItemId();
                         selectedFragment = mRoutineFragment;
                         mAppBarLayout.setExpanded(false, true);
                         break;

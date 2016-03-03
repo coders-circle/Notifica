@@ -27,7 +27,7 @@ public class SettingsFragment extends PreferenceFragment {
                 // Show warning before logging out
                 Snackbar.make(getActivity().findViewById(R.id.coordinator_layout),
                         "You are going to logout.",
-                        Snackbar.LENGTH_SHORT)
+                        Snackbar.LENGTH_INDEFINITE)
                         .setAction("LOGOUT", new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -43,6 +43,9 @@ public class SettingsFragment extends PreferenceFragment {
                                 // Start login activity
                                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                                 startActivity(intent);
+
+                                // refresh widgets
+                                PeriodWidgetProvider.updateAllWidgets(getActivity());
 
                                 // Finish the activities
                                 getActivity().setResult(-1);
