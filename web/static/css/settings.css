@@ -1,0 +1,23 @@
+#title-block{
+    background-color: #f5f5f5;
+    color: #646464;
+}
+#title-block .links{
+    text-align: right;
+    text-transform: uppercase;
+}
+#title-block .app-name{
+    font-family: "Raleway";
+    font-weight: 100;
+    font-size: 4em;
+    display: inline-block;
+    vertical-align: middle;
+}
+#title-block .logo{
+    width: 40px;
+    margin-right: 20px;
+}
+#title-block .extra{
+    font-size: 1.6em;
+    text-align: center;
+}

@@ -1,1 +1,44 @@
-HELLO SETTINGS
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+Notifica: Settings
+{% endblock %}
+
+{% block head %}
+<link href="{% static 'css/settings.css' %}" type="text/css" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+<div class="block" id="title-block">
+    <div class="block" id="title-block">
+        <div class="container">
+            <div class="links">
+                <a href="{% url 'home' %}">Home</a>
+            </div>
+            <div class="app-info">
+                <img class="logo" src="{% static 'img/logo.png' %}">
+                <h1 class="app-name">Notifica</h1>
+                <p class="extra">Settings</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="block" id="body-block">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2">
+                <div class="headers">
+                    <a class="settings-header" id="account">Account</a>
+                    <a class="settings-header" id="user">user</a>
+                </div>
+            </div>
+            <div class="col-md-10">
+                ok dood
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include 'footer.html' %}
+{% endblock %}
