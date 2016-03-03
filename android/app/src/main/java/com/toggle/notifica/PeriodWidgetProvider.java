@@ -18,14 +18,23 @@ import com.toggle.notifica.database.DbHelper;
 import com.toggle.notifica.database.NextPeriodFinder;
 import com.toggle.notifica.database.Period;
 import com.toggle.notifica.database.Subject;
+import com.toggle.notifica.database.User;
 
 import java.util.Calendar;
 
 public class PeriodWidgetProvider extends AppWidgetProvider {
 
     public static void updateWidget(Context context, RemoteViews remoteViews) {
+        if (User.getLoggedInUser(context) == null) {
+            remoteViews.setViewVisibility(R.id.now, View.GONE);
+            remoteViews.setViewVisibility(R.id.next, View.GONE);
+            remoteViews.setViewVisibility(R.id.widget_message, View.VISIBLE);
+            remoteViews.setTextViewText(R.id.widget_message, "Please log in to view routine");
+            return;
+        }
 
-        Log.d("updating widget", "updating");
+        remoteViews.setViewVisibility(R.id.widget_message, View.GONE);
+
         DbHelper dbHelper = new DbHelper(context);
         NextPeriodFinder finder = new NextPeriodFinder(dbHelper);
 
@@ -67,18 +76,26 @@ public class PeriodWidgetProvider extends AppWidgetProvider {
     public void onReceive(Context context, Intent intent)
     {
         super.onReceive(context, intent);
+        updateAllWidgets(context);
+    }
 
+    public static void updateAllWidgets(final Context context)
+    {
         ComponentName thisWidget = new ComponentName(context, PeriodWidgetProvider.class);
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         int[] allWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget);
+        RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_period);
 
         for (int widgetId : allWidgetIds) {
 
-            RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_period);
-
-            // Register an onClickListener to launch MainActivity
-            Intent intent1 = new Intent(context, MainActivity.class);
-            intent1.putExtra("start_page", R.id.routine);
+            // Register an onClickListener to launch MainActivity or LoginActivity
+            Intent intent1;
+            if (User.getLoggedInUser(context) == null)
+                intent1 = new Intent(context, LoginActivity.class);
+            else {
+                intent1 = new Intent(context, MainActivity.class);
+                intent1.putExtra("start_page", R.id.routine);
+            }
             PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
             remoteViews.setOnClickPendingIntent(R.id.widget_period, pendingIntent);
 

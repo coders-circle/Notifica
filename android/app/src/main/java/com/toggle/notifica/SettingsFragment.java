@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.support.design.widget.Snackbar;
+import android.view.View;
 
 import com.toggle.notifica.database.DbHelper;
 
@@ -22,22 +24,34 @@ public class SettingsFragment extends PreferenceFragment {
         logout.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                // Clear log-in preferences
-                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-                preferences.edit()
-                        .putString("username", "")
-                        .putString("password", "")
-                        .putBoolean("logged_in", false).apply();
-                DbHelper dbHelper = new DbHelper(getActivity());
-                dbHelper.deleteAll(dbHelper.getWritableDatabase());
+                // Show warning before logging out
+                Snackbar.make(getActivity().findViewById(R.id.coordinator_layout),
+                        "You are going to logout.",
+                        Snackbar.LENGTH_INDEFINITE)
+                        .setAction("LOGOUT", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                // Clear log-in preferences
+                                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                                preferences.edit()
+                                        .putString("username", "")
+                                        .putString("password", "")
+                                        .putBoolean("logged_in", false).apply();
+                                DbHelper dbHelper = new DbHelper(getActivity());
+                                dbHelper.deleteAll(dbHelper.getWritableDatabase());
 
-                // Start login activity
-                Intent intent = new Intent(getActivity(), LoginActivity.class);
-                startActivity(intent);
+                                // Start login activity
+                                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                                startActivity(intent);
 
-                // Finish the activities
-                getActivity().setResult(-1);
-                getActivity().finish();
+                                // refresh widgets
+                                PeriodWidgetProvider.updateAllWidgets(getActivity());
+
+                                // Finish the activities
+                                getActivity().setResult(-1);
+                                getActivity().finish();
+                            }
+                        }).show();
                 return true;
             }
         });
