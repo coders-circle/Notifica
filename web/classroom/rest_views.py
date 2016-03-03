@@ -13,6 +13,7 @@ from routine.models import *
 
 from main.search import *
 
+
 class ProfileViewSet(viewsets.ModelViewSet):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
@@ -21,7 +22,8 @@ class ProfileViewSet(viewsets.ModelViewSet):
 
 class OrganizationViewSet(viewsets.ModelViewSet):
     serializer_class = OrganizationSerializer
-    perimission_classes = (permissions.IsAuthenticatedOrReadOnly, IsAdminOrReadOnly,)
+    perimission_classes = (permissions.IsAuthenticatedOrReadOnly,
+                           IsAdminOrReadOnly,)
 
     def get_queryset(self):
         searchstring = self.request.GET.get("q")
@@ -36,12 +38,15 @@ class OrganizationViewSet(viewsets.ModelViewSet):
 
 class DepartmentViewSet(viewsets.ModelViewSet):
     serializer_class = DepartmentSerializer
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsAdminOrReadOnly,)
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,
+                          IsAdminOrReadOnly,)
 
     def perform_create(self, serializer):
         organization = serializer.validated_data["organization"]
         if self.request.user not in organization.admins.all():
-            raise serializers.ValidationError("You have not permission to add department to this organization")
+            raise serializers.ValidationError(
+                "You have not permission to add department to this" +
+                "organization")
         serializer.save()
 
     def get_queryset(self):
@@ -55,26 +60,33 @@ class DepartmentViewSet(viewsets.ModelViewSet):
         # get departments that user belongs to
         user = self.request.GET.get("user")
         if user:
-            queryset = queryset.filter(pk__in=get_departments(User.objects.get(pk=user)))
+            queryset = queryset.filter(
+                pk__in=get_departments(User.objects.get(pk=user)))
 
         return queryset
 
 
 class TeacherViewSet(viewsets.ModelViewSet):
     serializer_class = TeacherSerializer
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsAdminOrReadOnly,)
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,
+                          IsAdminOrReadOnly,)
 
     def perform_create(self, serializer):
         department = serializer.validated_data["department"]
         if self.request.user not in department.organization.admins.all():
-            raise serializers.ValidationError("You have not permission to add teacher to this department")
+            raise serializers.ValidationError(
+                "You have not permission to add teacher to this department")
         serializer.save()
 
     def get_queryset(self):
         searchstring = self.request.GET.get("q")
         if searchstring and searchstring != "":
             regexstring = get_regex(searchstring)
-            queryset = Teacher.objects.filter(Q(user__first_name__iregex=regexstring) | Q(user__last_name__iregex=regexstring) | Q(user__username__iregex=regexstring) | Q(username__iregex=regexstring))
+            queryset = Teacher.objects.filter(
+                Q(user__first_name__iregex=regexstring) |
+                Q(user__last_name__iregex=regexstring) |
+                Q(user__username__iregex=regexstring) |
+                Q(username__iregex=regexstring))
         else:
             queryset = Teacher.objects.all()
 
@@ -93,12 +105,14 @@ class TeacherViewSet(viewsets.ModelViewSet):
 
 class SubjectViewSet(viewsets.ModelViewSet):
     serializer_class = SubjectSerializer
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsAdminOrReadOnly,)
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,
+                          IsAdminOrReadOnly,)
 
     def perform_create(self, serializer):
         department = serializer.validated_data["department"]
         if self.request.user not in department.organization.admins.all():
-            raise serializers.ValidationError("You have not permission to add subject to this department")
+            raise serializers.ValidationError(
+                "You have not permission to add subject to this department")
         serializer.save()
 
     def get_queryset(self):
@@ -120,12 +134,14 @@ class SubjectViewSet(viewsets.ModelViewSet):
 
 class ElectiveViewSet(viewsets.ModelViewSet):
     serializer_class = ElectiveSerializer
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsAdminOrReadOnly,)
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,
+                          IsAdminOrReadOnly,)
 
     def perform_create(self, serializer):
         p_class = serializer.validated_data['p_class']
         if self.request.user not in p_class.admins.all():
-            raise serializers.ValidationError("You have not permission to add elective to this class")
+            raise serializers.ValidationError(
+                "You have not permission to add elective to this class")
         serializer.save()
 
     def get_queryset(self):
@@ -144,7 +160,8 @@ class ElectiveViewSet(viewsets.ModelViewSet):
 
 class ClassViewSet(viewsets.ModelViewSet):
     serializer_class = ClassSerializer
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsAdminOrReadOnly,)
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,
+                          IsAdminOrReadOnly,)
 
     def get_queryset(self):
         searchstring = self.request.GET.get("q")
@@ -157,19 +174,22 @@ class ClassViewSet(viewsets.ModelViewSet):
         # get classes that a user belongs to
         user = self.request.GET.get("user")
         if user:
-            queryset = queryset.filter(pk__in=get_classes(User.objects.get(pk=user)))
+            queryset = queryset.filter(
+                pk__in=get_classes(User.objects.get(pk=user)))
 
         return queryset
 
 
 class GroupViewSet(viewsets.ModelViewSet):
     serializer_class = GroupSerializer
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsAdminOrReadOnly)
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,
+                          IsAdminOrReadOnly)
 
     def perform_create(self, serializer):
         pclass = serializer.validated_data["p_class"]
         if self.request.user not in pclass.admins.all():
-            raise serializers.ValidationError("You have not permission to add group to this class")
+            raise serializers.ValidationError(
+                "You have not permission to add group to this class")
         serializer.save()
 
     def get_queryset(self):
@@ -185,19 +205,24 @@ class GroupViewSet(viewsets.ModelViewSet):
 
 class StudentViewSet(viewsets.ModelViewSet):
     serializer_class = StudentSerializer
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsAdminOrReadOnly,)
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,
+                          IsAdminOrReadOnly,)
 
     def perform_create(self, serializer):
         group = serializer.validated_data["group"]
         if self.request.user not in group.p_class.admins.all():
-            raise serializers.ValidationError("You have not permission to add student to this class")
+            raise serializers.ValidationError(
+                "You have not permission to add student to this class")
         serializer.save()
 
     def get_queryset(self):
         searchstring = self.request.GET.get("q")
         if searchstring and searchstring != "":
             regexstring = get_regex(searchstring)
-            queryset = Student.objects.filter(Q(user__first_name__iregex=regexstring) | Q(user__last_name__iregex=regexstring) | Q(user__username__iregex=regexstring))
+            queryset = Student.objects.filter(
+                Q(user__first_name__iregex=regexstring) |
+                Q(user__last_name__iregex=regexstring) |
+                Q(user__username__iregex=regexstring))
         else:
             queryset = Student.objects.all()
 
@@ -220,7 +245,10 @@ class UserViewSet(viewsets.ModelViewSet):
         searchstring = self.request.GET.get("q")
         if searchstring and searchstring != "":
             regexstring = get_regex(searchstring)
-            queryset = User.objects.filter(Q(first_name__iregex=regexstring) | Q(last_name__iregex=regexstring) | Q(username__iregex=regexstring))
+            queryset = User.objects.filter(
+                Q(first_name__iregex=regexstring) |
+                Q(last_name__iregex=regexstring) |
+                Q(username__iregex=regexstring))
         else:
             queryset = User.objects.all()
 

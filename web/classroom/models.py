@@ -111,6 +111,8 @@ class Group(models.Model):
     def __str__(self):
         return self.p_class.class_id + "(" + self.group_id + ")"
 
+    # ORDERING requrired for default group
+
 
 class Student(models.Model):
     user = models.ForeignKey(User)
