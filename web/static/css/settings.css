@@ -1,23 +1,68 @@
 #title-block{
-    background-color: #f5f5f5;
+    background-color: #fafafa;
     color: #646464;
-}
-#title-block .links{
-    text-align: right;
-    text-transform: uppercase;
+    padding: 5px 0px;
 }
 #title-block .app-name{
     font-family: "Raleway";
-    font-weight: 100;
-    font-size: 4em;
+    font-size: 3em;
     display: inline-block;
     vertical-align: middle;
 }
 #title-block .logo{
-    width: 40px;
+    width: 30px;
     margin-right: 20px;
 }
 #title-block .extra{
-    font-size: 1.6em;
+    font-size: 1.5em;
     text-align: center;
+}
+#title-block .extra .fa{
+    margin-right: 10px;
+}
+
+#body-block{
+    padding: 20px 0px;
+}
+
+.headers{
+    padding-right: 20px;
+    border-right: 1px solid #ddd;
+}
+.settings-header{
+    display: block;
+    text-transform: uppercase;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 4px;
+    font-weight: bold;
+    color: #bbb;
+}
+@media(max-width:991px){
+    .settings-header{
+        display: inline-block;
+        text-transform: uppercase;
+        margin: inherit;
+    }
+    .headers{
+        padding-right: inherit;
+        border-right: none;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+
+}
+
+.headers .active{
+    border-bottom: 1px solid #c0392b;
+    color: #646464;
+}
+
+.settings-content{
+    display: none;
+}
+.contents .active{
+    display: block;
 }
