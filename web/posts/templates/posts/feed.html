@@ -39,6 +39,7 @@ Notifica: News feed
     </div>
 </div>
 <div class="block" id="content-block">
+    {% csrf_token %}
     <div class="container">
         <div class="row">
             <div id="post-block" class="col-md-8">
@@ -50,29 +51,33 @@ Notifica: News feed
                 </div>
             </div>
             <div id="quick-links-block" class="col-md-4">
-                {% if notifications %}
                 <div class="row">
+
                     <div class="col-md-12 col-sm-6">
                         <div class="card " id="notification-list">
                             <a href="#" class="title">Notifications</a>
                             {% for notification in notifications %}
                                 {% if notification.type == "request" and notification.request.request_type == 0 %}
-                                <div class="class">
+                                <div class="class" id="request-{{ notification.class.pk }}">
                                     <a href="{% url 'classroom:class' notification.class.pk %}" class="name">{{ notification.class.class_id }}</a>
                                     <div class="extra">
                                         {{ notification.sender_name }} sent a join request
                                     </div>
                                     <div class="bottom-link">
-                                        <a href="#"><i class="fa fa-times"></i> Reject</a>
-                                        <a href="#"><i class="fa fa-check"></i> Accept</a>
+                                        <a href="#" onclick="rejectRequest({{notification.request.pk}});"><i class="fa fa-times"></i> Reject</a>
+                                        <a href="#" onclick="acceptRequest({{notification.request.pk}});"><i class="fa fa-check"></i> Accept</a>
                                     </div>
                                 </div>
                                 {% endif %}
                             {% if not forloop.last %}<hr>{% endif %}
+                            {% empty %}
+                            <div class="class" id="empty">
+                                <p>No notifications</p>
+                            </div>
                             {% endfor %}
                         </div>
                     </div>
-                    {% endif %}
+
                     <div class="col-md-12 col-sm-6">
                         <div class="card card-class-list" id="class-list">
                             <a href="#" class="title">Classes</a>

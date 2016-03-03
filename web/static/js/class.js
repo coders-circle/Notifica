@@ -1,3 +1,5 @@
+
+
 $(document).ready(function(){
     $('body').on( 'click', '.tab', function(e){
         var current = $('#tabs .active');
@@ -22,7 +24,6 @@ $(document).ready(function(){
     loadTeachers();
     loadStudents();
     loadSubjects();
-
 
     function loadTeachers(){
         $.ajax({

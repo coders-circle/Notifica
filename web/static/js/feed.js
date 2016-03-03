@@ -1,3 +1,31 @@
+function acceptRequest(id){
+    $.ajax({
+        url: '/api/v1/requests/'+id+'/',
+        type: 'GET',
+        error: function() { onFailure(); },
+        success: function(result) {
+            result.status=1;
+            $.ajax({
+                url: '/api/v1/requests/'+id+'/',
+                type: 'PUT',
+                data:result,
+                success: function(e){
+                    alert("successful!");
+                    $("#request-"+id).remove();
+                },
+                error: function(e){
+                    alert(e.responseText);
+                }
+            });
+            //console.log(result);
+        }
+    });
+}
+
+function rejectRequest(id){
+
+}
+
 $(document).ready(function(){
     var posts = [];
     var query = "?count=5";
@@ -125,4 +153,15 @@ $(document).ready(function(){
     });
 
     loadPosts();
+    function csrfSafeMethod(method) {
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+    $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", $('[name="csrfmiddlewaretoken"]').val());
+            }
+        }
+    });
+
 });
