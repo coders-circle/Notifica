@@ -7,9 +7,17 @@
     android:padding="10dp"
     android:background="#8000">
 
+    <TextView
+        android:id="@+id/widget_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Loading widget"
+        android:visibility="visible"/>
 
     <RelativeLayout
         android:id="@+id/now"
+        android:visibility="gone"
         android:layout_margin="8dp"
         android:layout_width="0dp"
         android:layout_weight="1"
@@ -67,6 +75,7 @@
     <RelativeLayout
         android:layout_margin="8dp"
         android:id="@+id/next"
+        android:visibility="gone"
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="wrap_content">

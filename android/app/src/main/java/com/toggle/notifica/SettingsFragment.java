@@ -31,18 +31,7 @@ public class SettingsFragment extends PreferenceFragment {
                         .setAction("LOGOUT", new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                // Clear log-in preferences
-                                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-                                preferences.edit()
-                                        .putString("username", "")
-                                        .putString("password", "")
-                                        .putBoolean("logged_in", false).apply();
-                                DbHelper dbHelper = new DbHelper(getActivity());
-                                dbHelper.deleteAll(dbHelper.getWritableDatabase());
-
-                                // Start login activity
-                                Intent intent = new Intent(getActivity(), LoginActivity.class);
-                                startActivity(intent);
+                               Utilities.logout(getActivity());
 
                                 // refresh widgets
                                 PeriodWidgetProvider.updateAllWidgets(getActivity());

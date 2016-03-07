@@ -15,6 +15,8 @@ class RequestViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticated, IsRequestOwner)
 
     def perform_create(self, serializer):
+        # TODO Check if request already exists
+
         sender_type = serializer.validated_data["sender_type"]
         sender = serializer.validated_data["sender"]
 
@@ -33,7 +35,29 @@ class RequestViewSet(viewsets.ModelViewSet):
             if filter_request(p, self.request.user):
                 filtered.append(p.pk)
 
-        return Request.objects.filter(pk__in=filtered)
+        queryset = Request.objects.filter(pk__in=filtered)
+
+        sender = self.request.GET.get("sender")
+        if sender:
+            queryset = queryset.filter(sender=sender)
+
+        sender_type = self.request.GET.get("sender_type")
+        if sender_type:
+            queryset = queryset.filter(sender_type=sender_type)
+
+        status = self.request.GET.get("status")
+        if status:
+            queryset = queryset.filter(status=status)
+
+        request_type = self.request.GET.get("request_type")
+        if request_type:
+            queryset = queryset.filter(request_type=request_type)
+
+        to = self.request.GET.get("to")
+        if to:
+            queryset = queryset.filter(to=to)
+
+        return queryset
 
 
 class GcmRegistrationViewSet(viewsets.ModelViewSet):

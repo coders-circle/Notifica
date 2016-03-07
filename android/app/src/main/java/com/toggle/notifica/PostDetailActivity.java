@@ -50,7 +50,7 @@ public class PostDetailActivity extends AppCompatActivity{
             public void onAdd(String comment) {
                 mClient.postComment(comment, mPostId, new Client.ClientListener() {
                     @Override
-                    public void refresh() {
+                    public void refresh(boolean success) {
                         refreshComments();
 
                         // TODO: Check for error
@@ -68,7 +68,7 @@ public class PostDetailActivity extends AppCompatActivity{
 
         mClient.getComments(mPostId, new Client.ClientListener() {
             @Override
-            public void refresh() {
+            public void refresh(boolean success) {
                 refreshComments();
             }
         });

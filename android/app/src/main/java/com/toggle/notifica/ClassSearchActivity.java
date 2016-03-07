@@ -1,8 +1,11 @@
 package com.toggle.notifica;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.view.MenuItemCompat;
@@ -14,9 +17,12 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.toggle.notifica.database.NetworkHandler;
+import com.toggle.notifica.database.User;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,6 +38,8 @@ public class ClassSearchActivity extends AppCompatActivity implements ItemListAd
     private List<ItemListAdapter.Item> mClasses = new ArrayList<>();
     private List<Long> mClassIds = new ArrayList<>();
     private ItemListAdapter mAdapter;
+    private TextView mTextView;
+    private RecyclerView mRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,47 +52,81 @@ public class ClassSearchActivity extends AppCompatActivity implements ItemListAd
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
+        setTitle("Search class...");
 
-        RecyclerView recyclerView = (RecyclerView)findViewById(R.id.recycler_view_classes);
+        mRecyclerView = (RecyclerView)findViewById(R.id.recycler_view_classes);
         mAdapter = new ItemListAdapter(mClasses, this);
-        recyclerView.setAdapter(mAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         getClasses(null);
+
+        mTextView = (TextView)findViewById(R.id.new_class_text_view);
+        mTextView.setVisibility(View.VISIBLE);
+        mTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = getString(R.string.base_url) + "classroom/add-class/";
+                Intent viewIntent = new Intent("android.intent.action.VIEW", Uri.parse(url));
+                startActivity(viewIntent);
+            }
+        });
+        mRecyclerView.setVisibility(View.GONE);
     }
 
-
+    private int mSearching = 0;
     public void getClasses(String query) {
-        // TODO: mutual exclusion
+        String qUrl = "";
+        if (query == null || query.equals(""))
+            return;
+
+        mTextView.setVisibility(View.VISIBLE);
+        mRecyclerView.setVisibility(View.GONE);
+        mTextView.setText("Searching...");
+
+        mSearching++;
+        final int mySearch = mSearching;
+
         mClasses.clear();
         mClassIds.clear();
         mAdapter.notifyDataSetChanged();
 
-        String qUrl = "";
-        if (query != null && !query.equals(""))
-            try {
-                qUrl = "?q=" + URLEncoder.encode(query, "utf-8");
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
+        try {
+            qUrl = "?q=" + URLEncoder.encode(query, "utf-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
 
         NetworkHandler handler = new NetworkHandler(this, mUsername, mPassword, true);
         handler.get("classroom/api/v1/classes/"+qUrl, new NetworkHandler.NetworkListener() {
             @Override
             public void onComplete(NetworkHandler.Result result) {
-                if (result.success) {
-                    try {
-                        JSONArray classes = new JSONArray(result.result);
-                        for (int i = 0; i < classes.length(); ++i)
-                            addClass(classes.getJSONObject(i));
-                        return;
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                if (mSearching <= mySearch) {
+                    boolean error = true;
+                    if (result.success) {
+                        try {
+                            JSONArray classes = new JSONArray(result.result);
+                            for (int i = 0; i < classes.length(); ++i)
+                                addClass(classes.getJSONObject(i));
+                            error = false;
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
+                    if (error)
+                        Utilities.showMessage(ClassSearchActivity.this,
+                                "Server connection failed. No internet?");
                 }
-                Toast.makeText(ClassSearchActivity.this, "Couldn't get class list.\n" +
-                                "Make sure you are connected to internet and try again",
-                        Toast.LENGTH_SHORT).show();
+
+                if (mClasses.size() > 0) {
+                    mTextView.setVisibility(View.GONE);
+                    mRecyclerView.setVisibility(View.VISIBLE);
+                } else {
+                    mTextView.setVisibility(View.VISIBLE);
+                    mRecyclerView.setVisibility(View.GONE);
+                    mTextView.setText("No results found\nClick here to create a new class");
+                }
+
             }
         });
     }
@@ -162,6 +204,18 @@ public class ClassSearchActivity extends AppCompatActivity implements ItemListAd
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_logout:
+                Utilities.logout(this);
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
     public void onSelect(final int position, ItemListAdapter.Item item) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
@@ -184,12 +238,72 @@ public class ClassSearchActivity extends AppCompatActivity implements ItemListAd
         dialog.show();
     }
 
-    public void sendJoinRequest(long id) {
+    public void sendJoinRequest(final long classId) {
+        final User user = User.getLoggedInUser(this);
+        if (user == null)
+            return;
+
         // Progress dialog
+        final ProgressDialog dialog = new ProgressDialog(this);
+        dialog.setMessage("Selecting new elective");
+        dialog.show();
+
+        final NetworkHandler handler = new NetworkHandler(this, mUsername, mPassword, true);
 
         // Check if request already exists
+        String queryString = "sender=" + user._id
+                + "&sender_type=" + 0 + "&status=" + 0
+                + "&request_type=" + 0 + "&to=" + classId;
+        handler.get("api/v1/requests/?" + queryString, new NetworkHandler.NetworkListener() {
+            @Override
+            public void onComplete(NetworkHandler.Result result) {
+                if (!result.success) {
+                    dialog.dismiss();
+                    Utilities.showMessage(ClassSearchActivity.this,
+                            "Connection error while sending request.");
+                    return;
+                }
 
-        // Post request
+                try {
+                    if (new JSONArray(result.result).length() > 0) {
+                        dialog.dismiss();
+                        Utilities.showMessage(ClassSearchActivity.this,
+                                "You have already sent request to this class.");
+                        return;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                // Post request
+                JSONObject request = new JSONObject();
+                try {
+                    request.put("sender", user._id);
+                    request.put("sender_type", 0);
+                    request.put("status", 0);
+                    request.put("request_type", 0);
+                    request.put("to", classId);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                handler.post("api/v1/requests/", request.toString(), new NetworkHandler.NetworkListener() {
+                    @Override
+                    public void onComplete(NetworkHandler.Result result) {
+                        if (!result.success) {
+                            dialog.dismiss();
+                            Utilities.showMessage(ClassSearchActivity.this,
+                                    "Connection error while sending request.");
+                            return;
+                        }
+
+                        dialog.dismiss();
+                        Utilities.showMessage(ClassSearchActivity.this,
+                                "Join request sent");
+                    }
+                });
+            }
+        });
 
     }
 }

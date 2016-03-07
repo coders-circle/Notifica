@@ -42,7 +42,7 @@ public class Elective extends Model {
     public void select(Context context, final SelectCallback callback) {
         new Client(context).selectElective(this, new Client.ClientListener() {
             @Override
-            public void refresh() {
+            public void refresh(boolean success) {
                 if (queue.size() == 0) {
                     callback.onSelectionComplete();
                 }

@@ -20,7 +20,7 @@ public class Client {
 
     public static abstract class ClientListener {
         public List<String> queue = new ArrayList<>();  // Queue of current being fetched objects
-        public abstract void refresh();
+        public abstract void refresh(boolean success);
     }
 
     private final DbHelper mDbHelper;
@@ -179,6 +179,11 @@ public class Client {
                         e.printStackTrace();
                     }
                 }
+
+                if (clientListener != null) {
+                    clientListener.queue.remove("routine");
+                    clientListener.refresh(result.success);
+                }
             }
         });
     }
@@ -211,11 +216,11 @@ public class Client {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                }
 
-                    if (clientListener != null) {
-                        clientListener.queue.remove(name + ":" + id);
-                        clientListener.refresh();
-                    }
+                if (clientListener != null) {
+                    clientListener.queue.remove(name + ":" + id);
+                    clientListener.refresh(result.success);
                 }
             }
         });
@@ -327,7 +332,7 @@ public class Client {
         if (Profile.count(Profile.class, mDbHelper, "_id=?", new String[]{id+""}) > 0) {
             oldAvatar.object = Profile.get(Profile.class, mDbHelper, id).avatar_data;
             if (clientListener != null)
-                clientListener.refresh();
+                clientListener.refresh(true);
         }
 
         // Also get new one from server and refresh again
@@ -358,7 +363,7 @@ public class Client {
                                 p.save(mDbHelper);
                                 if (clientListener != null) {
                                     clientListener.queue.remove("profile_avatar:" + p.avatar);
-                                    clientListener.refresh();
+                                    clientListener.refresh(result.success);
                                 }
                             }
                         });
@@ -370,7 +375,7 @@ public class Client {
 
                 if (clientListener != null) {
                     clientListener.queue.remove("profile:" + id);
-                    clientListener.refresh();
+                    clientListener.refresh(result.success);
                 }
             }
         });
@@ -417,7 +422,7 @@ public class Client {
 
                 if (clientListener != null) {
                     clientListener.queue.remove("posts");
-                    clientListener.refresh();
+                    clientListener.refresh(result.success);
                 }
             }
         });
@@ -455,7 +460,7 @@ public class Client {
 
                 if (clientListener != null) {
                     clientListener.queue.remove("comments:" + postId);
-                    clientListener.refresh();
+                    clientListener.refresh(result.success);
                 }
             }
         });
@@ -483,9 +488,9 @@ public class Client {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    clientListener.refresh();
+                    clientListener.refresh(result.success);
                 } else {
-                    Utilities.showError(mContext, "Couldn't post comment. " +
+                    Utilities.showMessage(mContext, "Couldn't post comment. " +
                             "Check internet connection and try again.");
                 }
             }
@@ -518,9 +523,9 @@ public class Client {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    clientListener.refresh();
+                    clientListener.refresh(result.success);
                 } else {
-                    Utilities.showError(mContext, "Couldn't add post. " +
+                    Utilities.showMessage(mContext, "Couldn't add post. " +
                             "Check internet connection and try again.");
                 }
             }
@@ -545,7 +550,7 @@ public class Client {
                         e.printStackTrace();
                     }
                 }
-                clientListener.refresh();
+                clientListener.refresh(result.success);
             }
         });
     }
@@ -579,7 +584,7 @@ public class Client {
 
                 if (clientListener != null) {
                     clientListener.queue.remove("electives:" + subject);
-                    clientListener.refresh();
+                    clientListener.refresh(result.success);
                 }
             }
         });
@@ -603,7 +608,7 @@ public class Client {
                                     for (Subject s : subjects)
                                         getElectives(s._id, clientListener);
 
-                                    clientListener.refresh();
+                                    clientListener.refresh(result.success);
                                     return;
                                 }
                             } catch (JSONException e) {
@@ -611,9 +616,9 @@ public class Client {
                             }
                         }
 
-                        Utilities.showError(mContext, "Couldn't connect to server. Make sure " +
-                                        "you are connected to internet.");
-                        clientListener.refresh();
+                        Utilities.showMessage(mContext, "Couldn't connect to server. Make sure " +
+                                "you are connected to internet.");
+                        clientListener.refresh(result.success);
                     }
                 });
     }
