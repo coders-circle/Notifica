@@ -13,11 +13,11 @@ Notifica: Sign in
 <div class="block" id="title-block">
     <div class="container">
         <div class="links">
-            <a href="{% url 'home' %}">Home</a>
+            <a href="{% url 'home' %}"><i class="fa fa-home"></i>Home</a>
         </div>
         <div class="app-info">
             <img class="logo" src="{% static 'img/logo.png' %}">
-            <h1 class="app-name">Notifica</h1>
+            <a class="title">Notifica</a>
             <p class="extra">Sign in with your account</p>
         </div>
     </div>
@@ -33,9 +33,9 @@ Notifica: Sign in
                     <div class="error"><i class="fa fa-exclamation-circle"></i> {{ error }}</div>
                     {% endif %}
 
-                    <input name="username" type="text" placeholder="Username" required>
+                    <input name="username" type="text" placeholder="Username" required autofocus>
                     <input name="password" type="password" placeholder="Password" required>
-                    <input type="submit" value="Sign in">
+                    <input class="input-neat" type="submit" value="Sign in">
                 </form>
                 <div id="register-link">
                     Don't have a Notifica account? <a href="/register">Register</a> to get one.

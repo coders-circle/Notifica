@@ -1,10 +1,10 @@
 /*******************************
  feed.css
- contains styles for feeds page
+ contains styles for feed page
 *******************************/
 
 body{
-    background-color: #ccc;
+    background-color: #fafafa !important;
 }
 hr {
     margin: 6px;
@@ -27,33 +27,38 @@ hr {
     top: 0px;
     right: 0px;
     z-index: 1;
-    color: #646464;
     background-color: #fafafa;
     padding: 16px;
-    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+    
 }
 #drawer-open-btn{
     font-size: 1.5em;
     margin-right: 10px;
     padding: 0px;
+    color: #aaa;
 }
 #drawer-open-btn:hover{
-    color: #969696;
+    color: #717171;
 }
 .navigation-bar .title{
     font-size: 1.6em;
+    font-weight: bold;
+    color: #aaa;
 }
 #search-post-input{
     padding-left: 30px;
     width: 100%;
+    outline-style: none;
 }
 .search-input-container{
     position: relative;
-    font-size: 1.2em;
+    font-size: 1.11em;
+    padding: 6px 0px;
 }
 .search-input-container i{
     position: absolute;
-    bottom: 3px;
+    bottom: 9px;
+    color: #aaa;
 }
 
 /***********************
@@ -65,11 +70,8 @@ hr {
     margin-top: 80px;
     min-height: 300px;
 }
-#post-block {
-    color: #727272;
-}
 #post-block hr{
-    margin: 2px 0px;
+    margin: 1px 0px;
     border-color: transparent;
 }
 #post-block .bottom-control-container{
@@ -79,14 +81,6 @@ hr {
     margin-top: 10px;
     margin-bottom: 20px;
 }
-#post-block .bottom-control-container button{
-
-    color: #969696;
-}
-#post-block .bottom-control-container button:hover{
-    color: #da4453;
-}
-
 .userpost{
     background-color: #fff;
     padding: 24px;
@@ -96,7 +90,7 @@ hr {
     height: 48px;
     padding: 4px;
     border-radius: 50%;
-    background-color: #e0e0e0;
+    background-color: #f0f0f0;
 }
 .userpost .user-avatar-container{
     text-align: center;
@@ -106,32 +100,38 @@ hr {
 }
 .userpost .info{
     font-size: 0.88em;
-    color: #969696;
+    padding: 10px 0px;
 }
 .userpost .info a{
+    color: #aaa;
     margin-right: 20px;
 }
 .userpost .content{
     padding-top: 20px;
     text-align: justify;
+    color: #303030;
 }
 .userpost .tags{
     display: block;
     text-align: center;
+    margin-top: 10px;
 }
 .userpost .tag{
-    color: #a2a2a2;
+    color: #aaa;
     font-size: 0.88em;
     font-weight: bold;
     border-radius: 16px;
-    border: 1px solid #e0e0e0;
+    border: 1px solid #eee;
     padding: 4px 10px;
     margin-right: 12px;
 }
 .userpost .num-comments{
     display: block;
     text-align: right;
+    font-size: 0.88em;
+    color: #aaa;
 }
+
 #posts-loading-animation {
     position: absolute;
     left: 0px;
@@ -161,23 +161,23 @@ hr {
 .card .title{
     display: block;
     margin-bottom: 10px;
-    text-transform: uppercase;
-    color: #c0392b;
 }
 
 .card-class-list hr, .card-department-list hr{
     margin: 10px 2px;
 }
 
+.class .name, .department .name{
+    color: #717171;
+}
+
 .class .extra, .department .extra{
     font-size: 0.88em;
-    color: #bbb;
 }
 
 .card .bottom-link{
     margin-top: 30px;
     text-align: right;
-    text-transform: uppercase;
     font-size: 0.88em;
 }
 .card .bottom-link a{
@@ -186,8 +186,4 @@ hr {
 
 #add-class-link i{
     font-size: 0.88em;
-}
-
-i.fa{
-    margin-right: 10px;
 }

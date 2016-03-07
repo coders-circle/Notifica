@@ -1,52 +1,23 @@
-#title-block{
-    background-color: #f5f5f5;
-    color: #646464;
-    padding: 30px 0px;
-}
-#title-block .links{
-    text-align: right;
-    text-transform: uppercase;
-}
-#title-block .app-name{
-    font-family: "Raleway";
-    font-size: 4em;
-    display: inline-block;
-    vertical-align: middle;
-}
-#title-block .logo{
-    width: 40px;
-    margin-right: 20px;
-}
-#title-block .extra{
-    font-size: 1.6em;
-}
-
-
 #register-block{
-    padding-top: 20px;
-    padding-bottom: 30px;
+    padding: 20px 0px;
 }
 
 .error{
-    font-family: "Open Sans";
     color: #e74c3c;
     text-align: center;
     margin-bottom: 30px;
     font-size: 1.23em;
 }
 
-
 form  input[type="text"],
 form  input[type="password"]{
-    font-weight: 300;
-    width: calc(100% - 20px);
+    width: calc(100% - 40px);
     margin:20px;
     padding: 0px 20px 10px 20px;
     border: none;
     border-bottom: solid 1px #dcd;
     background-color: transparent;
     outline: none;
-    font-size: 1.6em;
     transition: 0.2s;
 }
 form  input[type="text"]:focus,
@@ -57,19 +28,10 @@ form  input[type="password"]:focus{
 
 form  input[type="submit"]{
     float: right;
-    font-family: "Cabin Condensed", "Ubuntu Condensed";
-    text-transform: uppercase;
     margin-top: 20px;
-    margin-right: 0px;
-    font-size: 1.6em;
-    border: none;
-    background-color: transparent;
-    color: #27ae60;
-    outline: none;
+    margin-right: 20px;
     transition: 0.2s;
-}
-form  input[type="submit"]:hover{
-    color:#2ecc71;
+    font-size: 1.11em;
 }
 
 #agreement-input{
@@ -77,20 +39,11 @@ form  input[type="submit"]:hover{
     padding-left: 40px;
     padding-top: 20px;
 }
-#agreement-input a{
-    font-weight: bold;
-    font-size: 1.2em;
-}
 
 #signin-link{
     color: #646464;
     text-align: center;
     margin-top: 30px;
-}
-
-#signin-link a{
-    font-weight: bold;
-    font-size: 1.2em;
 }
 
 .modal-body{

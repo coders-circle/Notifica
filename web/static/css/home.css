@@ -2,40 +2,6 @@
     margin-bottom: 50px;
 }
 
-#title-block{
-    background-color: #f5f5f5;
-    color: #646464;
-    padding: 30px 0px;
-}
-#title-block a{
-    color: #646464;
-    font-size: 1.23em;
-}
-#title-block a:hover{
-    color:#c0392b;
-}
-#title-block .links{
-    text-align: right;
-    text-transform: uppercase;
-}
-
-#title-block .app-info{
-
-}
-#title-block .app-info .logo{
-    width: 50px;
-    display: inline-block;
-    margin-right: 20px;
-}
-#title-block .app-info .app-name{
-    display: inline-block;
-    vertical-align: middle;
-    font-family: "Raleway", "Open Sans";
-    font-size: 4em;
-}
-#title-block .app-info .slogan{
-    font-size: 1.2em;
-}
 .container-download-btn{
     margin-top: 50px;
     display: block;
@@ -49,48 +15,26 @@
     border-radius: 50%;
 }
 .app-download-link{
-
     border-radius: 6px;
     padding: 16px 50px;
 }
 .app-download-link:hover i{
     color: #646464;
 }
-
-#feature-block{
-    font-family: "Open Sans";
-    font-weight: 300;
+#feature-block a{
+    font-size: 1.5em;
 }
-
-#feature-block h2{
-    font-weight: 300;
-    font-size: 2em;
-    text-align: center;
-    margin-bottom: 30px;
-    color: #e74c3c;
-}
-
 #feature-block p{
-    font-size: 1.2em;
-    line-height: 1.5em;
+    margin-top: 20px;
+    font-size: 1.11em;
+    line-height: 1.6em;
     text-align: justify;
 }
 #feature-block{
-    padding-top: 20px;
+    text-align: center;
+    padding-top: 40px;
     padding-bottom: 20px;
 }
 #feature-block .app-download-link{
     font-size: 1.23em;
-}
-
-.feature-img{
-    text-align: center;
-    display: block;
-    vertical-align: middle;
-    height: 100%;
-}
-.feature-img > img{
-    width: 100%;
-    display: block;
-    vertical-align: middle;
 }

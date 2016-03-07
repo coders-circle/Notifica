@@ -1,3 +1,35 @@
+body {
+    color: #717171;
+    background-color: #fff;
+    font-family: 'Open Sans', sans-serif;
+}
+a, a:focus, a:active,
+button, button:focus, button:active,
+input[type="submit"], input[type="submit"]:focus, input[type="submit"]:active{
+    font-family: 'Voltaire', 'Ubuntu';
+    text-transform: uppercase;
+    color: #cf605f;
+    transition: 0.5s;
+}
+a:hover, button:hover, input[type="submit"]:hover {
+    color: #aa4c3c;
+}
+a:hover, a:link, a:visited {
+    text-decoration: none;
+}
+
+.shadow{
+    box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.2);
+}
+
+.color-bg{
+    background-color: #fafafa;
+}
+.color-bg-dark{
+    background-color: #f5f5f5;
+}
+
+
 .hidden{
     display: none;
 }
@@ -8,10 +40,36 @@
 
 .input-neat{
     border: none;
-    outline: none;
     background-color: transparent;
 }
 
+#title-block{
+    background-color: #fafafa;
+    padding: 20px 0px;
+}
+#title-block .links{
+    text-align: right;
+    text-transform: uppercase;
+}
+#title-block .app-info .logo{
+    width: 28px;
+    height: 36px;
+    display: inline-block;
+    margin-right: 20px;
+}
+#title-block .app-info .title{
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 3em;
+    letter-spacing: 0.1em;
+    color: #aaa;
+}
+#title-block .app-info .extra{
+    font-size: 1.11em;
+    margin-left: 56px;
+    font-weight: bold;
+    color: #ccc;
+}
 #footer-block{
     padding-top: 20px;
 }
@@ -20,18 +78,17 @@
     padding: 10px;
 }
 #footer-block .logo{
-    width: 40px;
+    width: 30px;
 }
 #footer-block .logo-container{
     margin-right: 10px;
+    margin-bottom: 16px;
 }
 #footer-block .app-name{
-    font-size: 3em;
-    font-family: "Raleway", "Open Sans";
+    font-size: 2em;
     vertical-align: middle;
-}
-#footer-block .slogan{
-    color: #727272;
+    letter-spacing: 0.1em;
+    color: #aaa;
 }
 #footer-block #links{
     text-align: center;
@@ -39,9 +96,10 @@
 #footer-block #links a{
     display: inline-block;
     margin: 10px;
-    font-weight: 600;
 }
-
 .btn-default{
     color: #727272;
+}
+.fa{
+    margin-right: 10px;
 }
