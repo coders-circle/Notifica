@@ -7,14 +7,14 @@
     height: 100%;
     margin-left: -350px;
     transition: 0.5s;
-    font-family: "Open Sans", sans-serif;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
     color: #fff;
 }
 .navigation-drawer .header{
     background-image: url('/static/img/drawer-header-bg.jpg');
     background-position: center;
-    background-size: contain;
+    height: 200px;
+    background-size: cover;
 }
 .backdrop{
     display: none;
@@ -50,9 +50,12 @@
     padding-top: 8px;
 }
 .navigation-drawer .menu .item{
+    font-family: "Open Sans";
     display: block;
     width: 100%;
     padding: 8px 16px;
+    text-transform: none;
+    color: #717171;
 }
 .navigation-drawer .menu .item > i{
     width: 24px;
@@ -62,7 +65,7 @@
     background-color: rgba(0, 0, 0, 0.05);
 }
 .active{
-    color: #c0392b;
+    font-weight: bold;
     background-color: rgba(0, 0, 0, 0.08);
 }
 .navigation-drawer .menu hr{
@@ -87,14 +90,13 @@
 }
 
 .app-info .logo{
-    width: 18px;
+    width: 22px;
     margin-right: 10px;
 }
 
 .app-info .app-name{
-    font-family: "Raleway", "Open Sans";
     font-size: 2em;
     vertical-align: middle;
     color: #eee;
-    font-weight: 300;
+    letter-spacing: 0.1em;
 }

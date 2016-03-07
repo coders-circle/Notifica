@@ -1,5 +1,7 @@
 var min_time = 9999;
 var max_time = 0;
+var period_start_pos_x = 0;
+var period_col_width = 0;
 
 function renderRoutine(){
     filterRoutine(user_group_id);
@@ -88,6 +90,10 @@ function renderTimeLine(){
     var total_duration = max_time-min_time;
     var time_stop_template = $('<input class="time-stop">');
     timestops = getTimeStops();
+
+    $('#time-line').css('left', period_start_pos_x);
+    $('#time-line').css('width', period_col_width);
+
     for(var i=0; i < timestops.length; i++){
         var time_stop = time_stop_template.clone();
         time_stop.attr('value', getFormattedTimeString(timestops[i]));
@@ -95,7 +101,8 @@ function renderTimeLine(){
             time_stop.attr('disabled', true);
         }
         time_stop.appendTo(time_line);
-        time_stop.css('margin-left', (100*(timestops[i]-min_time)/total_duration-i*0.6).toString()+'%');
+        time_stop.css('margin-left', (100*(timestops[i]-min_time)/total_duration).toString()+'%');
+
     }
 }
 function renderPeriods(){
@@ -148,9 +155,9 @@ function renderPeriods(){
                     var period_duration = period_data.end_time - period_data.start_time;
                     var time_gap = (period_data.start_time - prev_time);
                     if( time_gap > 0 ){
-                        period.css('margin-left', Math.floor(100*time_gap/total_duration).toString()+'%');
+                        period.css('margin-left', (100*time_gap/total_duration).toString()+'%');
                     }
-                    period.css('width', Math.floor(100*period_duration/total_duration).toString()+'%');
+                    period.css('width', (100*period_duration/total_duration).toString()+'%');
                     period.data('id', period_data.id);
                     period.children(".subject").text(period_data.subject.name);
                     period.children(".teachers").text(getNameString(period_data.teachers));
@@ -166,5 +173,7 @@ function renderPeriods(){
 }
 
 $(document).ready(function(){
+    period_start_pos_x = $('.col-periods').offset().left-20;
+    period_col_width = $('.col-periods').innerWidth();
     renderRoutine();
 });
