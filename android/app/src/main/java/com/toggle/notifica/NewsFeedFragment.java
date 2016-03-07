@@ -114,7 +114,7 @@ public class NewsFeedFragment extends Fragment {
                                     client.postPost(title, content, pClass.profile,
                                             new Client.ClientListener() {
                                                 @Override
-                                                public void refresh() {
+                                                public void refresh(boolean success) {
                                                     // Dismiss only when posted
                                                     dialog.dismiss();
                                                     getPosts();
@@ -171,7 +171,7 @@ public class NewsFeedFragment extends Fragment {
                 Client client = new Client(getContext());
                 client.getPosts(-1, 5, -1, mProfileId, new Client.ClientListener() {
                     @Override
-                    public void refresh() {
+                    public void refresh(boolean success) {
                         changeData();
                         refreshView();
                     }
@@ -188,7 +188,7 @@ public class NewsFeedFragment extends Fragment {
                 Client client = new Client(getContext());
                 client.getPosts(mPosts.size(), 5, -1, mProfileId, new Client.ClientListener() {
                     @Override
-                    public void refresh() {
+                    public void refresh(boolean success) {
                         changeData();
                         refreshView();
                     }

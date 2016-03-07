@@ -25,7 +25,8 @@ import java.util.Calendar;
 public class PeriodWidgetProvider extends AppWidgetProvider {
 
     public static void updateWidget(Context context, RemoteViews remoteViews) {
-        if (User.getLoggedInUser(context) == null) {
+        User me = User.getLoggedInUser(context);
+        if (me == null) {
             remoteViews.setViewVisibility(R.id.now, View.GONE);
             remoteViews.setViewVisibility(R.id.next, View.GONE);
             remoteViews.setViewVisibility(R.id.widget_message, View.VISIBLE);
@@ -33,11 +34,20 @@ public class PeriodWidgetProvider extends AppWidgetProvider {
             return;
         }
 
+        DbHelper dbHelper = new DbHelper(context);
+
+        if (me.getStudent(dbHelper) == null) {
+            remoteViews.setViewVisibility(R.id.now, View.GONE);
+            remoteViews.setViewVisibility(R.id.next, View.GONE);
+            remoteViews.setViewVisibility(R.id.widget_message, View.VISIBLE);
+            remoteViews.setTextViewText(R.id.widget_message,
+                    "You have to join a class to view routine");
+            return;
+        }
+
         remoteViews.setViewVisibility(R.id.widget_message, View.GONE);
 
-        DbHelper dbHelper = new DbHelper(context);
         NextPeriodFinder finder = new NextPeriodFinder(dbHelper);
-
         if (finder.current != null) {
             Subject sub = finder.currentSubject;
             Utilities.fillCurrentPeriod(remoteViews, "Current class",

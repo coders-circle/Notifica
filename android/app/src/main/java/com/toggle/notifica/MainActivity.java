@@ -24,6 +24,7 @@ import android.widget.TextView;
 
 import com.toggle.notifica.database.Client;
 import com.toggle.notifica.database.DbHelper;
+import com.toggle.notifica.database.NetworkHandler;
 import com.toggle.notifica.database.NextPeriodFinder;
 import com.toggle.notifica.database.PClass;
 import com.toggle.notifica.database.PGroup;
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private Menu mMenu;
     private DbHelper mDbHelper;
     private PClass mClass = null;
+    private User mUser = null;
 
     private AppBarLayout mAppBarLayout;
 
@@ -57,6 +59,38 @@ public class MainActivity extends AppCompatActivity {
 
     NavigationView.OnNavigationItemSelectedListener mNavigationItemSelectedListener;
 
+    public boolean getFirstTimeData() {
+        if (!NetworkHandler.isNetworkAvailable(this))
+            return false;
+
+        // Also get all student and teacher profiles associated with the account
+        Client client = new Client(this);
+        client.getAssociated("student", mUser._id, new Client.ClientListener() {
+            @Override
+            public void refresh(boolean success) {
+                if (queue.size() == 0) {
+                    if (!success) {
+                        ((TextView)findViewById(R.id.wait_textview))
+                                .setText("Sorry couldn't connect to server.\nTry again later.");
+                        return;
+
+                    }
+
+                    // if still no student data, open class search activity
+                    // else reopen main activity
+                    Intent intent;
+                    if (mUser.getStudent(mDbHelper) == null)
+                        intent = new Intent(MainActivity.this, ClassSearchActivity.class);
+                    else
+                        intent = new Intent(MainActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+            }
+        });
+        return true;
+    }
+
     public void initializeApp() {
         // Initialize database
 
@@ -69,12 +103,13 @@ public class MainActivity extends AppCompatActivity {
 
                 Client.ClientListener refreshCallback = new Client.ClientListener() {
                     @Override
-                    public void refresh() {
-                        if (mMenu != null)
-                            refreshMenuItems();
-
-                        // refresh widgets
-                        PeriodWidgetProvider.updateAllWidgets(MainActivity.this);
+                    public void refresh(boolean success) {
+                        if (queue.size() == 0) {
+                            if (mMenu != null)
+                                refreshMenuItems();
+                            // refresh widgets
+                            PeriodWidgetProvider.updateAllWidgets(MainActivity.this);
+                        }
                     }
                 };
 
@@ -83,29 +118,15 @@ public class MainActivity extends AppCompatActivity {
                 client.getRoutine(refreshCallback);
 
                 // Get the latest profile for logged in user
-                User user = User.getLoggedInUser(MainActivity.this);
-                client.getUser(user._id, refreshCallback);
-                client.getProfile(user.profile, refreshCallback);
+                client.getUser(mUser._id, refreshCallback);
+                client.getProfile(mUser.profile, refreshCallback);
 
                 // Also get all student and teacher profiles associated with the account
-                client.getAssociated("student", user._id, refreshCallback);
-                client.getAssociated("teacher", user._id, refreshCallback);
+                client.getAssociated("student", mUser._id, refreshCallback);
+                client.getAssociated("teacher", mUser._id, refreshCallback);
             }
         }).run();
 
-        // Get GCM token if not available
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String token = preferences.getString("gcm_token", "");
-        if (token.equals("")) {
-            Intent intent = new Intent(this, GcmRegisterService.class);
-            startService(intent);
-        }
-
-        // Send GCM token to server if not already sent
-        token = preferences.getString("gcm_token", "");
-        if (!token.equals(""))
-            if (!preferences.getBoolean("gcm_token_sent", false))
-                GcmRegisterService.sendRegistrationToServer(this,  token);
     }
 
     // Set user profile data in header
@@ -120,12 +141,11 @@ public class MainActivity extends AppCompatActivity {
         ImageView avatar = (ImageView)headerView.findViewById(R.id.avatar);
 
         // Get user profile
-        User user = User.getLoggedInUser(this);
-        Profile profile = Profile.get(Profile.class, mDbHelper, user.profile);
-        Student student = user.getStudent(mDbHelper);
+        Profile profile = Profile.get(Profile.class, mDbHelper, mUser.profile);
+        Student student = mUser.getStudent(mDbHelper);
 
         // Set header data
-        username.setText(user.getName());
+        username.setText(mUser.getName());
 
         // If student set "class (group)" as info text
         if (student != null) {
@@ -137,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
         }
         // else set email as info text
         else
-            info.setText(user.email);
+            info.setText(mUser.email);
 
         if (profile != null) {
             avatar.setImageBitmap(profile.getAvatar());
@@ -237,9 +257,37 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mDbHelper = new DbHelper(this);
+
+        // Get GCM token if not available
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String token = preferences.getString("gcm_token", "");
+        if (token.equals("")) {
+            Intent intent = new Intent(this, GcmRegisterService.class);
+            startService(intent);
+        }
+
+        // Send GCM token to server if not already sent
+        token = preferences.getString("gcm_token", "");
+        if (!token.equals(""))
+            if (!preferences.getBoolean("gcm_token_sent", false))
+                GcmRegisterService.sendRegistrationToServer(this,  token);
+
+        // If first time, that is without any class data
+        // get some data
+        mUser = User.getLoggedInUser(this);
+        if (mUser == null || mUser.getStudent(mDbHelper) == null) {
+            boolean gotData = getFirstTimeData();
+            setContentView(R.layout.activity_main_no_class);
+            if (!gotData) {
+                ((TextView)findViewById(R.id.wait_textview))
+                        .setText("Sorry couldn't connect to internet.\nTry again later.");
+            }
+            return;
+        }
+
         setContentView(R.layout.activity_main);
 
-        mDbHelper = new DbHelper(this);
         initializeApp();
 
         // Create the fragments once
@@ -341,8 +389,9 @@ public class MainActivity extends AppCompatActivity {
             mCurrentPage = extras.getInt("start_page", R.id.news_feed);
         }
 
-        mNavigationItemSelectedListener.onNavigationItemSelected(
-                mNavigationView.getMenu().findItem(mCurrentPage));
+        if (mNavigationItemSelectedListener != null && mNavigationView != null)
+            mNavigationItemSelectedListener.onNavigationItemSelected(
+                    mNavigationView.getMenu().findItem(mCurrentPage));
     }
 
     @Override

@@ -18,12 +18,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:visibility="gone"/>
+            android:text="Loading widget"
+            android:visibility="visible"/>
 
         <RelativeLayout
             android:id="@+id/now"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/headerNow"
@@ -79,7 +81,8 @@
             android:layout_marginTop="8dp"
             android:id="@+id/next"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/headerNext"

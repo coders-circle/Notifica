@@ -2,10 +2,13 @@ package com.toggle.notifica;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
+import android.preference.PreferenceManager;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.view.View;
@@ -13,6 +16,8 @@ import android.widget.ImageView;
 import android.widget.RemoteViews;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.toggle.notifica.database.DbHelper;
 
 import java.io.ByteArrayOutputStream;
 import java.text.ParseException;
@@ -189,7 +194,7 @@ public class Utilities {
         remoteViews.setTextViewText(R.id.subtitleNext, subTitle);
     }
 
-    public static void showError(Context context, String message) {
+    public static void showMessage(Context context, String message) {
         Activity activity = (Activity)context;
         CoordinatorLayout coordinatorLayout = null;
         if (activity != null) {
@@ -201,5 +206,22 @@ public class Utilities {
         } else {
             Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public static void logout(Context context) {
+        // Clear log-in preferences
+        SharedPreferences preferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        preferences.edit()
+                .putString("username", "")
+                .putString("password", "")
+                .putBoolean("logged_in", false).apply();
+        DbHelper dbHelper = new DbHelper(context);
+        dbHelper.deleteAll(dbHelper.getWritableDatabase());
+
+
+        // Start login activity
+        Intent intent = new Intent(context, LoginActivity.class);
+        context.startActivity(intent);
     }
 }

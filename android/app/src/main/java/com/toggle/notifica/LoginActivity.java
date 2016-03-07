@@ -203,7 +203,7 @@ public class LoginActivity extends AppCompatActivity {
                                 Client client = new Client(LoginActivity.this, username, password);
                                 client.addUser(user, new Client.ClientListener() {
                                     @Override
-                                    public void refresh() {
+                                    public void refresh(boolean success) {
                                         if (this.queue.size() == 0)
                                             listener.onResult(0);
                                     }
