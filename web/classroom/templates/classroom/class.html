@@ -20,12 +20,12 @@
     <div class="container">
         <div class="app-info">
             <img class="logo" src="{% static 'img/logo.png' %}">
-            <a href="{% url 'home' %}" class="app-name">Notifica</a>
+            <a href="{% url 'home' %}" class="title">Notifica</a>
         </div>
         <div id="class-info">
             <img class="avatar" src="/media/{{class.profile.avatar}}">
             <div class="title">{{class.class_id}}</div>
-            <div class="subtitle">{{class.description}}</div>
+            <div class="extra">{{class.description}}</div>
         </div>
     </div>
 </div>
@@ -46,10 +46,10 @@
                         </div>
                         <div id="tab-contents">
                             <div class="tab-content active" id="news-feed">
-                                <div class="card card-post-form">
-                                    <div class="header">
+                                <div id="add-post-form-container">
+                                    <a class="header" href="#">
                                         <span class="header-label">Add new post</span><i class="fa fa-chevron-down"></i>
-                                    </div>
+                                    </a>
                                     <form id="add-post-form" class="form-add-post">
                                         {% csrf_token %}
                                         <input type="text" class="input-neat" id="post-title" placeholder="Title">
@@ -84,7 +84,7 @@
                 <div class="col-md-4">
                     <div id="quick-task-block">
                         <div id="tasks">
-                            <div class="title">Quick Tasks</div>
+                            <a class="title">Quick Tasks</a>
                             <a href="#" class="task"><i class="fa fa-calendar-check-o"></i> Take Attendence</a>
                             <a href="#" class="task"><i class="fa fa-plus"></i> Add an Assignment</a>
                             <a href="#" class="task"><i class="fa fa-user-plus"></i> Add a Student</a>

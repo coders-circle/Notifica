@@ -99,11 +99,17 @@ $(document).ready(function(){
         if(result.length > 0){
              Array.prototype.push.apply(posts, result);
              renderPosts();
+             if(result.length > 5 && result.length%5 == 0){
+                 $('#more-post-btn').show();
+             } else {
+                 $('#more-post-btn').hide();
+             }
         } else {
             if(posts.length == 0){
                 var empty_msg = $('#empty-msg').clone();
                 empty_msg.removeClass('hidden');
                 empty_msg.appendTo($('.posts'));
+                $('#more-post-btn').hide();
             }
         }
         $('#posts-loading-animation').fadeOut();
@@ -156,7 +162,6 @@ $(document).ready(function(){
         loadPosts();
     });
 
-    loadPosts();
     function csrfSafeMethod(method) {
         return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
     }
@@ -168,4 +173,7 @@ $(document).ready(function(){
         }
     });
 
+    if(!classless){
+        loadPosts();
+    }
 });

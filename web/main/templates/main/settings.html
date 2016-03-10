@@ -12,33 +12,139 @@ Notifica: Settings
 
 {% block body %}
 <div class="block" id="title-block">
-    <div class="block" id="title-block">
-        <div class="container">
-            <div class="app-info">
-                <img class="logo" src="{% static 'img/logo.png' %}">
-                <a href="{% url 'home' %}" class="app-name">Notifica</a>
-                <div class="extra"><i class="fa fa-cog"></i> Settings</div>
-            </div>
+
+    <div class="container">
+        <div class="app-info">
+            <img class="logo" src="{% static 'img/logo.png' %}">
+            <a href="{% url 'home' %}" class="title">Notifica</a>
+        </div>
+        <div class="page-info">
+            <div class="title">Settings</div>
         </div>
     </div>
+
 </div>
 <div class="block" id="body-block">
     <div class="container">
         <div class="row">
             <div class="col-md-2">
                 <div class="headers">
-                    <a href="#" class="active settings-header" data-target="account-settings-content" id="account">Account</a>
-                    <a href="#" class="settings-header" id="user" data-target="user-settings-content">User</a>
+                    <a href="#" class="active settings-header" data-target="personal-info" id="personal-info-tab">Personal info</a>
+                    <a href="#" class="settings-header" id="account-preference-tab" data-target="account-preferences">Account preferences</a>
+                    <a href="#" class="settings-header" id="about-tab" data-target="about-notifica">About Notifica</a>
+
                 </div>
             </div>
             <div class="col-md-10">
                 <div class="contents">
-                    <div class="active settings-content" id="account-settings-content">
-                        Account Settings
+                    <div class="active settings-content" id="personal-info">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div id="profile-image">
+                                    <img src="/media/{{ user.profile.avatar }}">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="expandable-menu">
+                                    <div class="visible-content">
+                                        <div class="btn-container">
+                                            <button class="edit-btn input-neat"><i class="fa fa-edit"></i></button>
+                                        </div>
+                                        <a class="title">Name</a>
+                                        <div class="summary">{{user.first_name}} {{user.last_name}}</div>
+                                    </div>
+                                    <div class="hidden-content">
+                                        <form>
+                                            <a class="input-label">First name</a>
+                                            <input type="text" value="{{ user.first_name }}" placeholder="First name">
+                                            <a class="input-label">Last name</a>
+                                            <input type="text" value="{{ user.last_name }}" placeholder="Last name">
+                                            <input type="button" class="btn btn-default" value="Cancel">
+                                            <input type=submit class="btn btn-default">
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="expandable-menu">
+                                    <div class="visible-content">
+                                        <div class="btn-container">
+                                            <button class="edit-btn input-neat"><i class="fa fa-edit"></i></button>
+                                        </div>
+                                        <a class="title">Email</a>
+                                        <div class="summary">{{ user.email }}</div>
+                                    </div>
+                                    <div class="hidden-content">
+                                        <form>
+                                            <a class="input-label">Email</a>
+                                            <input type="text" value="{{ user.email }}" placeholder="Email">
+                                            <input type="button" class="btn btn-default" value="Cancel">
+                                            <input type=submit class="btn btn-default">
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="expandable-menu">
+                                    <div class="visible-content">
+                                        <div class="btn-container">
+                                            <button class="edit-btn input-neat"><i class="fa fa-edit"></i></button>
+                                        </div>
+                                        <a class="title">Username</a>
+                                        <div class="summary">fhx</div>
+                                    </div>
+                                    <div class="hidden-content">
+                                        <form>
+                                            <a class="input-label">Username</a>
+                                            <input type="text" value="fhx" placeholder="Username">
+                                            <input type="button" class="btn btn-default" value="Cancel">
+                                            <input type=submit class="btn btn-default">
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="expandable-menu">
+                                    <div class="visible-content">
+                                        <div class="btn-container">
+                                            <button class="edit-btn input-neat"><i class="fa fa-edit"></i></button>
+                                        </div>
+                                        <a class="title">Password</a>
+                                        <div class="summary">********</div>
+                                    </div>
+                                    <div class="hidden-content">
+                                        <form>
+                                            <a class="input-label">Old Password</a>
+                                            <input type="text"  placeholder="unchanged">
+                                            <a class="input-label">New Password</a>
+                                            <input type="text"  placeholder="New password">
+                                            <input type="button" class="btn btn-default" value="Cancel">
+                                            <input type=submit class="btn btn-default">
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="settings-content" id="user-settings-content">
-                        User Settings
+                    <div class="settings-content" id="account-preferences">
+                        <div class="row">
+                            <div class="col-md-8 col-md-offset-1">
+                                <div class="list">
+                                    <div class="list-item">
+                                        <a class="title" href="#">Sign out</a>
+                                        <div class="info">Sign out from Notifica</div>
+                                    </div>
+                                    <div class="list-item">
+                                        <a href="#">Delete account &amp; data</a>
+                                        <div class="info">
+                                            Delete this account and all data associated with it.
+                                            This process is irreversible.
+                                            Please be certain before performing this action.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
+                    <div class="settings-content" id="about-notifica">
+                        About
+                    </div>
+
                 </div>
             </div>
         </div>

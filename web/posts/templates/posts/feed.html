@@ -14,6 +14,12 @@ Notifica: News feed
 <script src="{% static 'js/jquery.typewatch.js' %}"></script>
 <script src="{% static 'js/feed.js' %}"></script>
 <script src="{% static 'js/navigation-drawer.js' %}"></script>
+<script>
+var classless = true;
+{% if classes %}
+classless = false;
+{% endif %}
+</script>
 {% endblock %}
 
 {% block body %}
@@ -30,12 +36,14 @@ Notifica: News feed
                 </button>
                 <span class="title">News feed</span>
             </div>
+            {% if classes %}
             <div class="col-sm-6">
                 <div class="search-input-container">
                     <i class="fa fa-search"></i>
                     <input class="input-neat" id="search-post-input" type="text" placeholder="search for posts by title, content, tag">
                 </div>
             </div>
+            {% endif %}
         </div>
     </div>
 </div>
@@ -44,16 +52,22 @@ Notifica: News feed
     <div class="container">
         <div class="row">
             <div id="post-block" class="col-md-8">
+                {% if classes %}
                 <div class="posts">
                 </div>
                 <div class="bottom-control-container">
                     <div id="posts-loading-animation"></div>
                     <button class="input-neat" id="more-post-btn"><i class="fa fa-refresh"></i> Load more posts</button>
                 </div>
+                {% else %}
+                <div id="classless">
+                    <div>Your are not assigned to any class. Join a class to view news feed</div>
+                    <button class="btn btn-default">Join a class</button>
+                </div>
+                {% endif %}
             </div>
             <div id="quick-links-block" class="col-md-4">
                 <div class="row">
-
                     <div class="col-md-12 col-sm-6">
                         <div class="card " id="notification-list">
                             <a href="#" class="title">Notifications</a>
@@ -72,7 +86,7 @@ Notifica: News feed
                                 {% endif %}
                             {% if not forloop.last %}<hr>{% endif %}
                             {% empty %}
-                            <div class="class" id="empty">
+                            <div class="item item-empty" >
                                 <p>No notifications</p>
                             </div>
                             {% endfor %}
@@ -92,6 +106,10 @@ Notifica: News feed
                                 {% endif %}
                             </div>
                             {% if not forloop.last %}<hr>{% endif %}
+                            {% empty %}
+                            <div class="item item-empty" >
+                                <p>No classes</p>
+                            </div>
                             {% endfor %}
                             <div class="bottom-link">
                                 <a id="add-class-link" href="{% url 'classroom:add-class' %}" class="name"><i class="fa fa-plus"></i> Add class</a>
@@ -109,6 +127,10 @@ Notifica: News feed
                             <!-- <div class="bottom-link">
                                 <a id="add-department-link" href="{% url 'classroom:add-class' %}" class="name"><i class="fa fa-plus"></i> Add department</a>
                             </div> -->
+                            {% empty %}
+                            <div class="item item-empty" >
+                                <p>No department</p>
+                            </div>
                             {% endfor %}
                         </div>
                     </div>

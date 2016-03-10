@@ -152,7 +152,7 @@ $(document).ready(function(){
         });
     }
 
-    $(".card-post-form .header").click(function(e){
+    $("#add-post-form-container .header").click(function(e){
         var container = $(this).parent();
         var expanded =  container.data('expanded');
         if(expanded){
@@ -162,7 +162,7 @@ $(document).ready(function(){
             var label =  $(this).find('.header-label');
             label.animate({
                 right: 0,
-                fontSize: '1em'
+                fontSize: '1em',
             });
         } else {
             container.data('expanded', true);
@@ -170,8 +170,8 @@ $(document).ready(function(){
             container.find('form').slideDown();
             var label =  $(this).find('.header-label');
             label.animate({
-                right: $(this).width() - label.width() - 34,
-                fontSize: '0.88em'
+                right: $(this).width() - label.width() - 30,
+                fontSize: '0.88em',
             });
         }
     });

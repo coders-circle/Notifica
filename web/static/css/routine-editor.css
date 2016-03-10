@@ -4,9 +4,6 @@
 #save-btn{
     float:right;
 }
-#save-btn:hover{
-    color: #da4453;
-}
 #group-select{
     display: inline-block;
     margin-right:30px;
@@ -19,7 +16,7 @@
     padding: 2px 6px;
     margin-left: 10px;
     border: none;
-    border-bottom: 1px solid #c2c2c2;
+    border-bottom: 1px solid #ccc;
     background-color: transparent;
     transition: 0.2s;
 }
@@ -34,15 +31,16 @@
     outline:none;
 }
 .period:hover{
-    color: #fff;
-    background-color: #fc6e51;
+
+    background-color: #f5f5f5;
 }
 .period{
     cursor: pointer;
+    transition: 0.2s;
 }
 .period:hover .remarks,
 .period:hover .teachers{
-    color: #eee;
+
 }
 .fa{
     margin-right: 0px!important;

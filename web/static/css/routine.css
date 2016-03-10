@@ -19,13 +19,6 @@ body{
     text-align: left;
 }
 
-#routine-block #title-row{
-    color: #e74c3c;
-    display: block;
-    min-height: auto;
-    padding-top: 20px;
-}
-
 #time-line-wrapper{
     position:fixed;
     top: 60px;
@@ -80,7 +73,8 @@ body{
     float: right;
     font-size: 0.7em;
     color: #fff;
-    background-color: #969696;
+    background-color: #717171;
+    font-weight: bold;
     padding: 0px 3px;
 }
 .period p{
@@ -92,7 +86,7 @@ body{
 .period .teachers,
 .period .remarks{
     transition: 0.2s;
-    color: #969696;
+    color: #717171;
     font-size: 0.88em;
 }
 .period .teachers{

@@ -22,14 +22,14 @@
         	background: url("{% static 'img/preload.gif' %}") center no-repeat #fff;
             text-align: center;
         }
-        .pre-load .app-title{
+        .pre-load .title{
             font-weight: 300;
             color:#ccd1d9;
             margin-top:50px;
             font-size: 3em;
             display: block;
         }
-        .pre-load .message{
+        .pre-load .extra{
             margin-top:20px;
             color:#ccd1d9;
             font-size: 1.23em;
@@ -47,14 +47,14 @@
     {% endblock %}
 <body>
     <div id="loader" class="pre-load">
-        <span class="app-title">Notifica</span>
-        <span class="message">A must have Routine app</span>
+        <span class="title">Notifica</span>
+        <span class="extra">A must have Routine app</span>
     </div>
     {% block body %}
     {% endblock %}
     <link href="{% static 'css/bootstrap.min.css' %}" type="text/css" rel="stylesheet">
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,600' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Voltaire' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link href="{% static 'css/common.css' %}" type="text/css" rel="stylesheet">
     <script src="{% static 'js/bootstrap.min.js' %}"></script>

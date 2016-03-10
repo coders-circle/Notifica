@@ -163,3 +163,17 @@ hr {
 #add-class-link i{
     font-size: 0.88em;
 }
+
+.item-empty{
+    color: #aaa;   
+}
+
+#classless button{
+    margin-top: 50px;
+}
+#classless{
+    padding: 50px 30px;
+    font-size: 2em;
+    color: #aaa;
+    text-align: center;
+}

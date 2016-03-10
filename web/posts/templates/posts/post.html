@@ -23,7 +23,7 @@ Notifica: {{ post.title }}
     <div class="container">
         <div class="app-info">
             <img class="logo" src="{% static 'img/logo.png' %}">
-            <a href="{% url 'home' %}" class="app-name">Notifica</a>
+            <a href="{% url 'home' %}" class="title">Notifica</a>
         </div>
     </div>
 </div>
@@ -32,7 +32,7 @@ Notifica: {{ post.title }}
         <div class="row">
             <div class="col-md-8">
                 <div class="card card-post">
-                    <div class="title">{{post.title}}</div>
+                    <a class="title">{{post.title}}</a>
                     <div class="extra">
                         <span id="user-info">
                             <i class="fa fa-user"></i>
@@ -60,9 +60,9 @@ Notifica: {{ post.title }}
             </div>
             <div class="col-md-4">
                 <div class="card card-quick-tasks">
-                    <div class="card-title">Quick Tasks</div>
-                    <a href="#"><i class="fa fa-edit"></i> Edit Post</a>
-                    <a href="#"><i class="fa fa-exclamation-circle"></i> Report abuse</a>
+                    <a class="card-title">Quick Tasks</a>
+                    <a class="menu-item" href="#"><i class="fa fa-edit"></i> Edit Post</a>
+                    <a class="menu-item" href="#"><i class="fa fa-exclamation-circle"></i> Report abuse</a>
                 </div>
             </div>
         </div>

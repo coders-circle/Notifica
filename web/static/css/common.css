@@ -2,11 +2,13 @@ body {
     color: #717171;
     background-color: #fff;
     font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
 }
 a, a:focus, a:active,
 button, button:focus, button:active,
 input[type="submit"], input[type="submit"]:focus, input[type="submit"]:active{
-    font-family: 'Voltaire', 'Ubuntu';
+    font-family: 'Open Sans Condensed', 'Ubuntu Condensed';
+    font-weight: 700;
     text-transform: uppercase;
     color: #cf605f;
     transition: 0.5s;

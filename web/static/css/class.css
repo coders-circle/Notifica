@@ -1,12 +1,7 @@
-.block{
+body{
+    background-color: #f5f5f5!important;
 }
-#title-block{
-    padding: 10px 0px;
-    color: #969696;
-    background-color: #fff;
-}
-#title-block .app-info{
-}
+
 #join-request{
     text-align: center;
 }
@@ -22,34 +17,29 @@
 #join-request form{
     margin-bottom: 80px;
 }
-#title-block .app-name{
-    font-family: "Raleway", "Open Sans";
-    font-size: 3em;
-    vertical-align: middle;
-}
-#title-block .logo{
-    width: 40px;
-    margin-right: 20px;
-}
-#title-block .title{
-    font-size: 1.6em;
-}
-#title-block #class-info{
-    text-align: center;
-}
-#title-block .avatar{
+#class-info .avatar{
     width: 50px;
     height: 50px;
     padding:4px;
     margin-bottom: 10px;
+    margin-right: 20px;
 }
-
+#class-info {
+    text-align: center;
+}
+#class-info .title{
+    display: inline-block;
+    color: #aaa;
+    font-weight: bold;
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+#class-info .extra{
+    font-weight: bold;
+    color: #aaa;
+}
 #body-block{
-    padding-top: 20px;
-}
-
-#content-block{
-    border-radius: 4px;
+    padding-top: 10px;
 }
 #content-block #tabs{
     border-top-left-radius: 4px;
@@ -58,6 +48,7 @@
     text-align: center;
 }
 #content-block #tabs .tab{
+    font-size: 0.88em;
     transition: none;
     padding: 0px 8px;
     color: rgba(100, 100, 100, 0.5);
@@ -65,21 +56,21 @@
 }
 #content-block #tabs .active{
     color: rgba(100, 100, 100, 1);
-    border-bottom: 1px solid #e74c3c;
+    border-bottom: 2px solid #cf605f;
 }
 #content-block #content{
     padding: 0px 10px;
 }
 
 #quick-task-block{
-    margin-top: 50px;
+    margin-top: 40px;
 }
 
 #quick-task-block .title{
+    display: block;
+    margin-bottom: 10px;
     font-size: 0.88em;
     margin: 10px 4px;
-    text-transform: uppercase;
-    color: #c0392b;
 }
 
 #quick-task-block #tasks{
@@ -88,6 +79,8 @@
 }
 
 #quick-task-block #tasks .task{
+    text-transform: none;
+    color: #717171;
     display: block;
     padding:8px 0px;
 }
@@ -95,38 +88,59 @@
     width: 24px;
     margin-right: 6px;
 }
-.card-post-form form{
-    margin-top: 30px;
+
+/**********************
+    Add post form
+**********************/
+#add-post-form-container{
+    display: block;
+    text-align: right;
+    padding: 0px;
+    margin-top: 10px;
 }
-.card-post-form .header-label{
+#add-post-form-container i{
+    margin-left: 10px;
+    margin-right: 0px;
+    transition: 0.2s;
+}
+.expanded i{
+    transition: 0.5s;
+    transform: rotate(180deg);
+}
+@keyframes fadeIn {
+  0%   { background-color: transparent}
+  100% { background-color: #fff }
+}
+.expanded{
+    animation: fadeIn 0.5s ease-in;
+}
+#add-post-form-container .header{
+    color: #717171;
+}
+.expanded .header{
+    display: block;
+}
+.header-label{
     position: relative;
 }
 .expanded .header-label{
-    color: #da4453;
+    color: #cf605f;
 }
-.header .fa{
-    transition: 0.5s;
+.expanded{
+    background-color: #fff;
 }
-.expanded .header .fa{
-    transform: rotate(180deg);
+#add-post-form{
+    margin-top: 30px;
 }
-
-.card-post-form .header{
-    width: 100%;
-    cursor: pointer;
-    text-transform: uppercase;
+#add-post-form .header{
+    display: block;
     text-align: right;
 }
-.card-post-form .header:hover{
-    color: #da4453;
+#add-post-form .header-label{
+    position: relative;
 }
 
-.card-post-form .fa{
-    margin-left: 20px;
-}
-
-.card-post-form #toggle-add-post-btn{
-
+#add-post-form-container #toggle-add-post-btn{
     text-align: right;
 }
 .expanded #toggle-add-post-btn{
@@ -135,14 +149,13 @@
 .expanded #toggle-add-post-btn i{
     text-align: right;
 }
-
-
-.card-post-form form{
+#add-post-form{
     display: none;
 }
 
+
 .tab-content{
-    padding: 20px;
+    padding-top:10px;
     display: block;
 }
 
@@ -151,7 +164,7 @@
     padding: 10px 12px;
     margin:10px 0px;
     border-radius: 3px;
-    color: #646464;
+    color: #717171;
 }
 
 .card-teacher .avatar{
@@ -168,18 +181,10 @@
     font-weight: bold;
     font-size: 0.88em;
 }
-.card-post-form{
+#add-post-form-container{
     padding: 20px 30px;
 }
-.card-post-form .title{
-    color: #e74c3c;
-    text-transform: uppercase;
-    font-size: 0.88em;
-    margin-bottom: 20px;
-    margin-left: 4px;
-}
 .form-add-post input[type="text"]{
-    color: 646464;
     width: 100%;
     border-bottom: 1px solid #eee;
     border-radius: 0px;
@@ -187,7 +192,7 @@
     padding: 4px 10px;
 }
 .form-add-post input[type="text"]:focus{
-    border-color: #a2a2a2;
+    border-color: #aaa;
 }
 
 .form-add-post{
@@ -205,7 +210,7 @@
     resize: vertical;
 }
 .form-add-post textarea:focus{
-    border-color: #a2a2a2;
+    border-color: #aaa;
 }
 
 .table-students{

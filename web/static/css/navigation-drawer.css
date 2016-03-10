@@ -9,6 +9,7 @@
     transition: 0.5s;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
     color: #fff;
+    background-color: #fff;
 }
 .navigation-drawer .header{
     background-image: url('/static/img/drawer-header-bg.jpg');
