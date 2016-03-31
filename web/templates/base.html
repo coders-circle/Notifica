@@ -10,7 +10,7 @@
     <link rel="shortcut icon" href="{% static 'favicon.png' %}" />
     <title>{% block title %}Notifica{% endblock %}</title>
     <style type="text/css">
-        .no-js #loader { display: none;  }
+        .no-js #loader { display: none; }
         .js #loader { display: block; position: absolute; left: 100px; top: 0; }
         .pre-load {
         	position: fixed;
@@ -24,16 +24,15 @@
         }
         .pre-load .title{
             font-weight: 300;
-            color:#ccd1d9;
+            color:#aaa;
             margin-top:50px;
             font-size: 3em;
             display: block;
         }
         .pre-load .extra{
-            margin-top:20px;
-            color:#ccd1d9;
+            margin-top:10px;
+            color:#aaa;
             font-size: 1.23em;
-            font-weight: bold;
             display: block;
         }
     </style>
@@ -48,7 +47,7 @@
 <body>
     <div id="loader" class="pre-load">
         <span class="title">Notifica</span>
-        <span class="extra">A must have Routine app</span>
+        <span class="extra">A must have routine app</span>
     </div>
     {% block body %}
     {% endblock %}

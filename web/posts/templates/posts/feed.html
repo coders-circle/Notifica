@@ -47,7 +47,7 @@ classless = false;
         </div>
     </div>
 </div>
-<div class="block" id="content-block">
+<div class="section" id="body-section">
     {% csrf_token %}
     <div class="container">
         <div class="row">
@@ -57,7 +57,7 @@ classless = false;
                 </div>
                 <div class="bottom-control-container">
                     <div id="posts-loading-animation"></div>
-                    <button class="input-neat" id="more-post-btn"><i class="fa fa-refresh"></i> Load more posts</button>
+                    <button class="btn btn-default" id="more-post-btn"><i class="fa fa-refresh"></i> Load more posts</button>
                 </div>
                 {% else %}
                 <div id="classless">
@@ -70,7 +70,7 @@ classless = false;
                 <div class="row">
                     <div class="col-md-12 col-sm-6">
                         <div class="card " id="notification-list">
-                            <a href="#" class="title">Notifications</a>
+                            <a class="title">Notifications</a>
                             {% for notification in notifications %}
                                 {% if notification.type == "request" and notification.request.request_type == 0 %}
                                 <div class="class" id="request-{{ notification.class.pk }}">
@@ -95,7 +95,7 @@ classless = false;
 
                     <div class="col-md-12 col-sm-6">
                         <div class="card card-class-list" id="class-list">
-                            <a href="#" class="title">Classes</a>
+                            <a class="title">Classes</a>
                             {% for p_class in classes %}
                             <div class="class">
                                 <a href="{% url 'classroom:class' p_class.pk %}" class="name">{{p_class.class_id}}</a>
@@ -118,7 +118,7 @@ classless = false;
                     </div>
                     <div class="col-md-12 col-sm-6">
                         <div class="card card-department-list" id="department-list">
-                            <a href="#" class="title">Departments</a>
+                            <a class="title">Departments</a>
                             {% for department in departments %}
                             <div class="department">
                                 <a href="{% url 'classroom:department' department.pk %}" class="name">{{department.name}}</a>

@@ -10,22 +10,42 @@ Notifica: Home
 {% endblock %}
 
 {% block body %}
-<div class="block" id="title-block">
+<div class="section" id="header-section">
     <div class="container">
-        <div class="links">
+        <div class="menu">
             <a href="{% url 'signin' %}"><i class="fa fa-sign-in"></i>Sign in</a>
         </div>
         <div class="app-info">
             <img class="logo" src="{% static 'img/logo.png' %}">
-            <a class="title">Notifica</a>
-            <p class="extra">A must have routine app</p>
+            <div class="title">Notifica</div>
+            <div class="extra">A must have routine app</div>
         </div>
-        <div class="container-download-btn">
-            <a class="app-download-link" href="#"><i class="fa fa-download"></i> Download Android App</a>
+        <div id="app-download-link">
+            <a href="#"><i class="fa fa-download"></i> Download android app</a>
         </div>
     </div>
 </div>
-<div class="block" id="feature-block">
+<div class="section" id="info-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-md-offset-1">
+                <p>
+                    Notifica is an app to ease the information flow inside an institution.
+                    It consists of web interface as well as smartphone app for the users.
+                    The app is currently available only on Android platform
+                </p>
+            </div>
+            <div class="col-md-4 col-md-offset-1">
+                <p>
+                    If you are a student or a teacher looking for a good routine app with a beautiful and easy-to-use interface,
+                    Notifica is the perfect solution for you!
+                </p>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="section" id="body-section">
     <div class="container">
         <div class="row">
             <div class="col-md-4 feature">
@@ -43,7 +63,7 @@ Notifica: Home
                     class about the projects and assignments directly.
                 </p>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4 feature">
                 <a>Time is important, save it</a>
                 <p>
                     No time is wasted, you get instantly notified of what the next class and who is

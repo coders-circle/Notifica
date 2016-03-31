@@ -99,7 +99,7 @@ $(document).ready(function(){
         if(result.length > 0){
              Array.prototype.push.apply(posts, result);
              renderPosts();
-             if(result.length > 5 && result.length%5 == 0){
+             if(result.length >= 5){
                  $('#more-post-btn').show();
              } else {
                  $('#more-post-btn').hide();

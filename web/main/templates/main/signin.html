@@ -10,19 +10,19 @@ Notifica: Sign in
 {% endblock %}
 
 {% block body %}
-<div class="block" id="title-block">
+<div class="section" id="header-section">
     <div class="container">
-        <div class="links">
+        <div class="menu">
             <a href="{% url 'home' %}"><i class="fa fa-home"></i>Home</a>
         </div>
         <div class="app-info">
             <img class="logo" src="{% static 'img/logo.png' %}">
-            <a class="title">Notifica</a>
+            <div class="title">Notifica</div>
             <p class="extra">Sign in with your account</p>
         </div>
     </div>
 </div>
-<div class="block" id="signin-block">
+<div class="section" id="body">
     <div class="container">
         <div class="row">
             <div class="col-md-6 col-md-offset-3">

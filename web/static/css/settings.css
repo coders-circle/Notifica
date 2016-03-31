@@ -47,7 +47,7 @@ body{
 
 }
 .headers .active{
-    border-bottom: 1px solid #c0392b;
+    border-bottom: 1px solid #e09680;
     color: #717171;
 }
 
@@ -63,14 +63,15 @@ body{
     padding: 20px 30px;
     background-color: #fff;
     line-height: 1.5;
+    border-radius: 6px;
+    margin-bottom: 10px;
 }
 .list-item a{
+    color: #e09680;
     display: block;
     margin-bottom: 10px;
 }
 .list-item .info{
-    color: #aaa;
-    font-weight: bold;
 }
 
 input[type="text"]{
@@ -88,6 +89,8 @@ input[type="text"]{
     color: #aaa;
     display: block;
     margin-bottom: 10px;
+    font-size: 0.88em;
+    color: #e09680;
 }
 .expandable-menu .fa{
     margin-right: 0px;
@@ -97,6 +100,13 @@ input[type="text"]{
     padding: 24px;
     padding-top: 10px;
     margin-bottom: 6px;
+    border-radius: 6px;
+}
+.expandable-menu .action{
+    text-align: right;
+}
+.expandable-menu .action input{
+    margin-left: 10px;
 }
 .expandable-menu .summary{
     color: #303030;

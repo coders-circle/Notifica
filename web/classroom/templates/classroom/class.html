@@ -16,20 +16,19 @@
 {% endblock %}
 
 {% block body %}
-<div class="block" id="title-block">
+<div class="section" id="header-section">
     <div class="container">
-        <div class="app-info">
-            <img class="logo" src="{% static 'img/logo.png' %}">
-            <a href="{% url 'home' %}" class="title">Notifica</a>
+        <div class="menu">
+            <a href="{% url 'home' %}"><i class="fa fa-home"></i>Home</a>
         </div>
         <div id="class-info">
-            <img class="avatar" src="/media/{{class.profile.avatar}}">
+            <img class="logo avatar" src="/media/{{class.profile.avatar}}">
             <div class="title">{{class.class_id}}</div>
             <div class="extra">{{class.description}}</div>
         </div>
     </div>
 </div>
-<div class="block" id="body-block">
+<div class="section" id="body-section">
     {# if user|class.profile.pk #}
     {% if user_in_class %}
         {% include 'classroom/card-teacher-template.html' %}

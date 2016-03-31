@@ -19,20 +19,24 @@ Notifica: {{ post.title }}
 
 {% block body %}
 {% include 'posts/comment-template.html' %}
-<div class="block" id="title-block">
+<div class="section" id="header-section">
     <div class="container">
+        <div class="menu">
+            <a href="{% url 'home' %}"><i class="fa fa-long-arrow-left"></i>Back to feeds</a>
+        </div>
         <div class="app-info">
             <img class="logo" src="{% static 'img/logo.png' %}">
-            <a href="{% url 'home' %}" class="title">Notifica</a>
+            <div class="title">Notifica</div>
+            <div class="extra">A must have routine app</div>
         </div>
     </div>
 </div>
-<div class="block" id="content-block">
+<div class="section" id="body-section">
     <div class="container">
         <div class="row">
             <div class="col-md-8">
                 <div class="card card-post">
-                    <a class="title">{{post.title}}</a>
+                    <div class="title">{{post.title}}</div>
                     <div class="extra">
                         <span id="user-info">
                             <i class="fa fa-user"></i>

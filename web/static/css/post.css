@@ -1,37 +1,28 @@
 body{
     background-color: #f5f5f5!important;
 }
-#title-block .avatar{
-    width: 50px;
-    height: 50px;
-    padding:4px;
-    margin-bottom: 10px;
-}
 
-#content-block{
-    padding-top: 30px;
-}
-
-#content-block .title{
-    color: #aaa;
-    font-size: 2em;
-    font-weight: 300;
-}
 
 .card{
     background-color: #fff;
     padding: 24px;
     margin-bottom: 4px;
+    border-radius: 6px;
 }
 .card-post{
     padding: 24px 36px;
     line-height:1.5;
     margin-bottom: 20px;
 }
+.card-post .title{
+    font-size: 3em;
+    color: #e09680;
+}
 .card-post .extra{
     font-size: 0.88em;
     margin-top: 10px;
     font-weight: bold;
+    color: #aaa;
 }
 .card-post .extra span{
     margin-right: 80px;
@@ -60,16 +51,25 @@ body{
     margin-top: 30px;
 }
 .card-comment{
+    background-color: transparent!important;
+    position: relative;
 }
-.card-comment .container-avatar{
-    text-align: center;
+
+.card-comment .info *{
+    margin-bottom: 2px;
+}
+.card-comment .info{
+    display: flex;
+    align-items: flex-end;;
+    flex-flow: column;
 }
 .card-comment .avatar{
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
-    background-color: #eee;
+    background-color: #fff;
     padding: 10px;
+    margin-bottom: 10px;
 }
 .card-comment .user-name{
     color: #aaa;
@@ -81,22 +81,43 @@ body{
 }
 
 .card-comment .content{
-    margin-top: 6px;
+    padding: 24px;
+    background-color: #fff;
     text-align: justify;
+    border-radius: 5px;
+}
+
+.card-comment .pointer{
+    position: absolute;
+    width: 0;
+	height: 0;
+	border-top: 1px solid #fff;
+	border-bottom: 10px solid transparent;
+	border-right:15px solid #fff;
+    top: 16px;
+    left: 0;
 }
 
 .card-quick-tasks .card-title{
-    margin-bottom: 15px;
-    margin-left: 4px;
+    margin-bottom: 20px;
+    font-weight: bold;
+    margin-left: 6px;
     font-size: 0.88em;
+    color: #e09680;
 }
 .card-quick-tasks a{
     display: block;
 }
 .card-quick-tasks .menu-item{
+    margin-left: -24px;
+    margin-right: -24px;
     color: #717171;
-    text-transform: none;
-    line-height: 2;
+    line-height: 2.5;
+    padding-left: 24px;
+    padding-right: 24px;
+}
+.card-quick-tasks .menu-item:hover{
+    background-color: rgba(0, 0, 0, 0.02);
 }
 .card-quick-tasks i{
     width: 24px;

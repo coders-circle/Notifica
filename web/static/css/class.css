@@ -17,30 +17,17 @@ body{
 #join-request form{
     margin-bottom: 80px;
 }
+
 #class-info .avatar{
     width: 50px;
     height: 50px;
-    padding:4px;
-    margin-bottom: 10px;
     margin-right: 20px;
-}
-#class-info {
-    text-align: center;
-}
-#class-info .title{
-    display: inline-block;
-    color: #aaa;
-    font-weight: bold;
-    font-size: 2em;
-    margin-bottom: 10px;
+    vertical-align: middle;
 }
 #class-info .extra{
-    font-weight: bold;
-    color: #aaa;
+    margin-left: 70px!important;
 }
-#body-block{
-    padding-top: 10px;
-}
+
 #content-block #tabs{
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
@@ -56,7 +43,7 @@ body{
 }
 #content-block #tabs .active{
     color: rgba(100, 100, 100, 1);
-    border-bottom: 2px solid #cf605f;
+    border-bottom: 2px solid #e09680;
 }
 #content-block #content{
     padding: 0px 10px;
@@ -64,25 +51,34 @@ body{
 
 #quick-task-block{
     margin-top: 40px;
+
 }
 
 #quick-task-block .title{
     display: block;
-    margin-bottom: 10px;
     font-size: 0.88em;
-    margin: 10px 4px;
+    margin: 10px 6px;
+    color: #e09680;
 }
 
 #quick-task-block #tasks{
     background-color: #fff;
-    padding: 10px 30px;
+    border-radius: 4px;
+    padding: 10px 24px;
 }
 
+#quick-task-block #tasks .task:hover{
+    background-color: rgba(0,0,0, 0.02);
+}
 #quick-task-block #tasks .task{
     text-transform: none;
+    margin-left: -24px;
+    margin-right: -24px;
+    padding-left: 24px;
+    padding-right: 24px;
     color: #717171;
     display: block;
-    padding:8px 0px;
+    line-height: 2.5;
 }
 #quick-task-block #tasks .task i{
     width: 24px;
@@ -97,6 +93,7 @@ body{
     text-align: right;
     padding: 0px;
     margin-top: 10px;
+    border-radius: 6px;
 }
 #add-post-form-container i{
     margin-left: 10px;
@@ -124,7 +121,7 @@ body{
     position: relative;
 }
 .expanded .header-label{
-    color: #cf605f;
+    color: #e09680;
 }
 .expanded{
     background-color: #fff;

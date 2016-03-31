@@ -4,7 +4,7 @@
 *******************************/
 
 body{
-    background-color: #fafafa !important;
+    background-color: #f5f5f5 !important;
 }
 hr {
     margin: 6px;
@@ -22,35 +22,40 @@ hr {
  Navigation Bar
 ***********************/
 #search-post-input{
+    color: #fff;
     padding-left: 30px;
     width: 100%;
     outline-style: none;
+    font-weight: bold;
+}
+#search-post-input::-webkit-input-placeholder {
+   color: #fdd;
+   font-weight: normal;
 }
 .search-input-container{
     position: relative;
-    font-size: 1.11em;
     padding: 6px 0px;
 }
 .search-input-container i{
     position: absolute;
     bottom: 9px;
-    color: #aaa;
+    color: #fff;
 }
 
 /***********************
- Content Block
+ Body section
 ***********************/
-#content-block{
+#body-section{
     padding-top: 10px;
     padding-bottom: 10px;
-    margin-top: 80px;
+    margin-top: 90px;
     min-height: 300px;
 }
 #post-block hr{
-    margin: 1px 0px;
+    margin: 2px 0px;
     border-color: transparent;
 }
-#post-block .bottom-control-container{
+#body-section .bottom-control-container{
     position: relative;
     padding: 12px 20px;
     text-align: center;
@@ -60,6 +65,7 @@ hr {
 .userpost{
     background-color: #fff;
     padding: 24px;
+    border-radius: 6px;
 }
 .userpost .user-avatar{
     width: 48px;
@@ -73,6 +79,8 @@ hr {
 }
 .userpost .title{
     font-size: 1.5em;
+    color: #717171;
+    text-transform: none;
 }
 .userpost .info{
     font-size: 0.88em;
@@ -85,7 +93,7 @@ hr {
 .userpost .content{
     padding-top: 20px;
     text-align: justify;
-    color: #303030;
+    color: #000;
 }
 .userpost .tags{
     display: block;
@@ -133,10 +141,13 @@ hr {
     color: #646464;
     padding: 16px 20px;
     margin-bottom: 4px;
+    border-radius: 6px;
 }
 .card .title{
     display: block;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
+    margin-left: 4px;
+    color: #e09680;
 }
 
 .card-class-list hr, .card-department-list hr{
@@ -165,7 +176,7 @@ hr {
 }
 
 .item-empty{
-    color: #aaa;   
+    color: #aaa;
 }
 
 #classless button{

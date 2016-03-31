@@ -12,6 +12,7 @@
     background-color: #fff;
 }
 .navigation-drawer .header{
+    background-color: #e09680;
     background-image: url('/static/img/drawer-header-bg.jpg');
     background-position: center;
     height: 200px;
@@ -51,7 +52,6 @@
     padding-top: 8px;
 }
 .navigation-drawer .menu .item{
-    font-family: "Open Sans";
     display: block;
     width: 100%;
     padding: 8px 16px;
@@ -66,8 +66,8 @@
     background-color: rgba(0, 0, 0, 0.05);
 }
 .active{
-    font-weight: bold;
-    background-color: rgba(0, 0, 0, 0.08);
+    background-color: rgba(0, 0, 0, 0.06);
+    color: #e09680!important;
 }
 .navigation-drawer .menu hr{
     margin: 8px;

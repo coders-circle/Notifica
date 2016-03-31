@@ -8,13 +8,13 @@ $(document).ready(function(){
     });
 
     $('body').on('click', '.expandable-menu .edit-btn', function(e){
-        var container = $(this).parent().parent().parent();
+        var container = $(this).parent().parent().parent().parent();
         container.find('.visible-content').slideUp();
         container.find('.hidden-content').slideDown();
     });
     $('body').on('click', '.expandable-menu input[type=button]', function(e){
         e.preventDefault();
-        var container = $(this).parent().parent().parent();
+        var container = $(this).parent().parent().parent().parent();
         container.find('.visible-content').slideDown();
         container.find('.hidden-content').slideUp();
     });

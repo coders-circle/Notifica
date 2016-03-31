@@ -11,14 +11,15 @@ Notifica: Add Class
 {% endblock %}
 
 {% block body %}
-<div class="block" id="title-block">
+<div class="section" id="header-section">
     <div class="container">
-        <div class="app-info">
-            <img class="logo" src="{% static 'img/logo.png' %}">
-            <a href="{% url 'home' %}" class="app-name">Notifica</a>
+        <div class="menu">
+            <a href="{% url 'home' %}"><i class="fa fa-home"></i>Home</a>
         </div>
+        <img class="logo" src="{% static 'img/logo.png' %}">
+        <div href="{% url 'home' %}" class="title">Notifica</div>
+        <div class="extra">Create new class</div>
     </div>
-    <div class="title">Add Class</div>
 </div>
 <div class="block" id="body-block">
     <div class="container">

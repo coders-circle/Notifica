@@ -1,40 +1,36 @@
-.feature{
-    margin-bottom: 50px;
+#header-section{
+    background-color: #fff!important;
 }
 
-.container-download-btn{
-    margin-top: 50px;
-    display: block;
+#header-section .title{
+    font-size: 3em!important;
+}
+#app-download-link{
     text-align: center;
+    margin: 10px auto;
 }
-.app-download-link i{
-    margin-right: 10px;
-    background-color: #e0e0e0;
-    color: #646464;
-    padding:10px;
-    border-radius: 50%;
-}
-.app-download-link{
-    border-radius: 6px;
-    padding: 16px 50px;
-}
-.app-download-link:hover i{
-    color: #646464;
-}
-#feature-block a{
-    font-size: 1.5em;
-}
-#feature-block p{
-    margin-top: 20px;
-    font-size: 1.11em;
-    line-height: 1.6em;
+
+#info-section{
+    background-color: #e09680;
+    color: #fff;
     text-align: justify;
+    font-weight: bold;
+    padding: 80px 0px;
 }
-#feature-block{
+
+#body-section{
+    padding-top: 60px;
+}
+
+.feature{
+    margin-bottom: 20px;
+}
+.feature a{
+    display: block;
+    margin-bottom: 20px;
     text-align: center;
-    padding-top: 40px;
-    padding-bottom: 20px;
+    color: #e09680;
 }
-#feature-block .app-download-link{
-    font-size: 1.23em;
+.feature p{
+    text-align: justify;
 }
