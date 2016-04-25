@@ -4,7 +4,6 @@
 *******************************/
 
 body{
-    background-color: #f5f5f5 !important;
 }
 hr {
     margin: 6px;
@@ -22,14 +21,14 @@ hr {
  Navigation Bar
 ***********************/
 #search-post-input{
-    color: #fff;
+    color: #717171;
     padding-left: 30px;
     width: 100%;
     outline-style: none;
     font-weight: bold;
 }
 #search-post-input::-webkit-input-placeholder {
-   color: #fdd;
+   color: #bbb;
    font-weight: normal;
 }
 .search-input-container{
@@ -39,7 +38,7 @@ hr {
 .search-input-container i{
     position: absolute;
     bottom: 9px;
-    color: #fff;
+    color: #bbb;
 }
 
 /***********************
@@ -52,8 +51,8 @@ hr {
     min-height: 300px;
 }
 #post-block hr{
-    margin: 2px 0px;
-    border-color: transparent;
+    margin: 0px 0px;
+    border-color: #eee;
 }
 #body-section .bottom-control-container{
     position: relative;
@@ -63,7 +62,8 @@ hr {
     margin-bottom: 20px;
 }
 .userpost{
-    background-color: #fff;
+    box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.1);
+    background-color: #fafafa;
     padding: 24px;
     border-radius: 6px;
 }
@@ -137,11 +137,12 @@ hr {
     font-size: 0.88em;
 }
 .card{
-    background-color: #fff;
+    background-color: #fafafa;
     color: #646464;
     padding: 16px 20px;
-    margin-bottom: 4px;
+    margin-bottom: 12px;
     border-radius: 6px;
+    box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.1);
 }
 .card .title{
     display: block;
@@ -187,4 +188,18 @@ hr {
     font-size: 2em;
     color: #aaa;
     text-align: center;
+}
+
+#accept-dialog input{
+    width: 100%;
+    margin: 10px 0px;
+    padding: 10px 6px;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+}
+#accept-dialog .title{
+    font-size: 1.5em;
+}
+#accept-dialog button{
+    min-width: 100px;
 }

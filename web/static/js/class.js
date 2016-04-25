@@ -170,7 +170,7 @@ $(document).ready(function(){
             container.find('form').slideDown();
             var label =  $(this).find('.header-label');
             label.animate({
-                right: $(this).width() - label.width() - 30,
+                right: $(this).width() - label.width() - 24,
                 fontSize: '0.88em',
             });
         }

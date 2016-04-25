@@ -1,19 +1,20 @@
 function acceptRequest(id){
-    $.ajax({
-        url: '/request-response/'+id+'/1/',
-        type: 'POST',
-        data: {
-            // "group" : xx,
-            // "roll" : yy,
-        },
-        success: function(e){
-            alert("successful!");
-            $("#request-"+id).remove();
-        },
-        error: function(e){
-            alert(e.responseText);
-        }
-    });
+    $('#accept-dialog').modal('show');
+    // $.ajax({
+    //     url: '/request-response/'+id+'/1/',
+    //     type: 'POST',
+    //     data: {
+    //         // "group" : xx,
+    //         // "roll" : yy,
+    //     },
+    //     success: function(e){
+    //         alert("successful!");
+    //         $("#request-"+id).remove();
+    //     },
+    //     error: function(e){
+    //         alert(e.responseText);
+    //     }
+    // });
 }
 
 function rejectRequest(id){

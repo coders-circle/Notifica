@@ -27,6 +27,25 @@ classless = false;
 {% include 'posts/userpost-template.html' %}
 <div class="msg hidden" id="empty-msg">Sorry, no result found</div>
 <div class="msg hidden" id="error-msg">Oops! Something went wrong</div>
+<div id="accept-dialog" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a class="title">Accept student</a>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <label>Roll No:</label>
+                    <input type="text" name="roll">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-default">Cancel</button>
+                <button class="btn btn-default">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="navigation-bar">
     <div class="container">
         <div class="row">

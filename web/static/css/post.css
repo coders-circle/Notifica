@@ -1,13 +1,14 @@
 body{
-    background-color: #f5f5f5!important;
+
 }
 
-
 .card{
-    background-color: #fff;
-    padding: 24px;
-    margin-bottom: 4px;
+    background-color: #fafafa;
+    color: #646464;
+    padding: 16px 20px;
+    margin-bottom: 12px;
     border-radius: 6px;
+    box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.1);
 }
 .card-post{
     padding: 24px 36px;
@@ -15,7 +16,8 @@ body{
     margin-bottom: 20px;
 }
 .card-post .title{
-    font-size: 3em;
+    font-weight: 200;
+    font-size: 2.5em;
     color: #e09680;
 }
 .card-post .extra{
@@ -52,6 +54,7 @@ body{
 }
 .card-comment{
     background-color: transparent!important;
+    box-shadow: none;
     position: relative;
 }
 
@@ -67,7 +70,7 @@ body{
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    background-color: #fff;
+    background-color: #fafafa;
     padding: 10px;
     margin-bottom: 10px;
 }
@@ -82,7 +85,7 @@ body{
 
 .card-comment .content{
     padding: 24px;
-    background-color: #fff;
+    background-color: #f5f5f5;
     text-align: justify;
     border-radius: 5px;
 }
@@ -91,30 +94,31 @@ body{
     position: absolute;
     width: 0;
 	height: 0;
-	border-top: 1px solid #fff;
+	border-top: 1px solid #f5f5f5;
 	border-bottom: 10px solid transparent;
-	border-right:15px solid #fff;
+	border-right:15px solid #f5f5f5;
     top: 16px;
     left: 0;
 }
 
 .card-quick-tasks .card-title{
-    margin-bottom: 20px;
-    font-weight: bold;
-    margin-left: 6px;
+    display: block;
     font-size: 0.88em;
+    margin: 10px 6px;
     color: #e09680;
 }
 .card-quick-tasks a{
     display: block;
 }
 .card-quick-tasks .menu-item{
+    text-transform: none;
     margin-left: -24px;
     margin-right: -24px;
-    color: #717171;
-    line-height: 2.5;
     padding-left: 24px;
     padding-right: 24px;
+    color: #717171;
+    display: block;
+    line-height: 2.5;
 }
 .card-quick-tasks .menu-item:hover{
     background-color: rgba(0, 0, 0, 0.02);

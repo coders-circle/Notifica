@@ -1,5 +1,4 @@
 body{
-    background-color: #f5f5f5!important;
 }
 
 #join-request{
@@ -22,10 +21,10 @@ body{
     width: 50px;
     height: 50px;
     margin-right: 20px;
-    vertical-align: middle;
+    margin-top: 20px;
 }
 #class-info .extra{
-    margin-left: 70px!important;
+    margin-left: 72px!important;
 }
 
 #content-block #tabs{
@@ -62,9 +61,12 @@ body{
 }
 
 #quick-task-block #tasks{
-    background-color: #fff;
-    border-radius: 4px;
-    padding: 10px 24px;
+    background-color: #fafafa;
+    color: #646464;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+    border-radius: 6px;
+    box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.1);
 }
 
 #quick-task-block #tasks .task:hover{
@@ -124,7 +126,7 @@ body{
     color: #e09680;
 }
 .expanded{
-    background-color: #fff;
+    
 }
 #add-post-form{
     margin-top: 30px;
@@ -152,16 +154,17 @@ body{
 
 
 .tab-content{
-    padding-top:10px;
+    padding-top:24px;
     display: block;
 }
 
 .card{
-    background: #fff;
-    padding: 10px 12px;
-    margin:10px 0px;
-    border-radius: 3px;
-    color: #717171;
+    background-color: #fafafa;
+    color: #646464;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+    border-radius: 6px;
+    box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.1);
 }
 
 .card-teacher .avatar{

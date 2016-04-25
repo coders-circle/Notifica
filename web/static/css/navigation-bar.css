@@ -4,7 +4,7 @@
     top: 0px;
     right: 0px;
     z-index: 1;
-    background-color: #e09680;
+    background-color: #fafafa;
     padding: 16px;
     box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.2);
 }
@@ -13,16 +13,16 @@
     font-size: 1.5em;
     margin-right: 10px;
     padding: 0px;
-    color: #f0f0f0;
+    color: #717171;
     outline: none;
 }
 
 #drawer-open-btn:hover{
-    color: #fff;
+    color: #646464;
 }
 
 .navigation-bar .title{
-    font-weight: bold;
+    
     font-size: 1.5em;
-    color: #fff;
+    color: #717171;
 }

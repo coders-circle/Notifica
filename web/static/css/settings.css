@@ -1,5 +1,4 @@
 body{
-    background-color: #f5f5f5 !important;
 }
 
 #title-block{
@@ -60,8 +59,8 @@ body{
 
 .list-item{
     margin-bottom: 4px;
-    padding: 20px 30px;
-    background-color: #fff;
+    padding: 24px;
+    background-color: #fafafa;
     line-height: 1.5;
     border-radius: 6px;
     margin-bottom: 10px;
@@ -69,7 +68,7 @@ body{
 .list-item a{
     color: #e09680;
     display: block;
-    margin-bottom: 10px;
+    margin-bottom: 6px;
 }
 .list-item .info{
 }
@@ -96,7 +95,7 @@ input[type="text"]{
     margin-right: 0px;
 }
 .expandable-menu{
-    background-color: #fff;
+    background-color: #fafafa;
     padding: 24px;
     padding-top: 10px;
     margin-bottom: 6px;
