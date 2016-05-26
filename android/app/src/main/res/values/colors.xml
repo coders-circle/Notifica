@@ -1,19 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!-- The Dark One
-<resources>
-    <color name="colorPrimary">#303030</color>
-    <color name="colorPrimaryDark">#212121</color>
-    <color name="colorPrimaryLight">#484848</color>
-    <color name="colorAccent">#da4453</color>
-    <color name="textPrimaryHeading">#ffffff</color>
-    <color name="tabsPressed">#ffffffff</color>
-    <color name="tabsScrollColor">#e0e0e0</color>
-    <color name="tabUnpressed">#99ffffff</color>
-    <color name="listDivider">#d2ffffff</color>
-</resources>
--->
-
 <!-- The Orange One
 <resources>
     <color name="colorPrimary">#F4511E</color>
@@ -30,6 +16,7 @@
     <color name="postDivider">@color/periodDivider</color>
 </resources>
 -->
+<!--
 <resources>
     <color name="colorPrimary">#242424</color>
     <color name="primaryText">#212121</color>
@@ -48,6 +35,28 @@
 
     <color name="colorPrimaryText">#ffffff</color>
     <color name="colorSecondaryText">#99ffffff</color>
+
+    <color name="colorSelection">#5FFF</color>
+</resources>
+-->
+<resources>
+    <color name="colorPrimary">#242424</color>
+    <color name="colorPrimaryDark">#161616</color>
+    <color name="colorPrimaryLight">#323232</color>
+    <color name="colorHome">#ececec</color>
+    <color name="colorAccent">#ec323e</color>
+    <color name="primaryText">#313131</color>
+    <color name="primaryTextLight">#727272</color>
+    <color name="secondaryText">#ececec</color>
+    <color name="secondaryTextDark">#dcdcdc</color>
+    <color name="listDivider">#d5d4d4d4</color>
+
+    <color name="navigationPressed">#ffffffff</color>
+    <color name="navigationUnpressed">#99ffffff</color>
+
+    <color name="tabsPressed">#ffffffff</color>
+    <color name="tabsScrollColor">@color/colorAccent</color>
+    <color name="tabUnpressed">#99ffffff</color>
 
     <color name="colorSelection">#5FFF</color>
 </resources>

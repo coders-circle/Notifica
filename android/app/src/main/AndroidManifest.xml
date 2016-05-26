@@ -32,7 +32,7 @@
         <activity android:name="com.toggle.notifica.ClassActivity" />
         <activity android:name="com.toggle.notifica.SubjectDetailsActivity"/>
         <activity android:name="com.toggle.notifica.SettingsActivity" android:theme="@style/ForSettings"/>
-        <activity android:name="com.toggle.notifica.PostDetailActivity" android:theme="@style/AppTheme"/>
+        <activity android:name="com.toggle.notifica.PostDetailActivity" android:theme="@style/PostDetails"/>
 
         <!-- Widget providers -->
 

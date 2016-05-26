@@ -6,16 +6,26 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:textColor">#FFF</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:colorAccent">@color/colorAccent</item>
+        <item name="android:textColor">@color/primaryText</item>
+        <item name="android:windowTranslucentStatus">true</item>
         <item name="android:listDivider">@color/listDivider</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
     </style>
 
-    <style name="ForSettings" parent="Theme.AppCompat.NoActionBar">
+    <style name="PostDetails" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="android:textColor">@color/primaryText</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:listDivider">@color/listDivider</item>
+    </style>
+
+    <style name="ForSettings" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="android:textColor">@color/primaryText</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:listDivider">@color/listDivider</item>
     </style>

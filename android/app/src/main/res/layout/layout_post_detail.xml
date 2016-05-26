@@ -12,7 +12,7 @@
         android:id="@+id/poster_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/colorSecondaryText"
+        android:textColor="@color/primaryTextLight"
         android:text="by Mr. Absolute Zero, few minutes ago"/>
     <TextView
         android:id="@+id/content"

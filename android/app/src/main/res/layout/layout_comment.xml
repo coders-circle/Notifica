@@ -33,8 +33,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
-        android:textColor="@color/colorSecondaryText"
-        android:layout_toRightOf="@id/text_user"
+        android:textColor="@color/primaryTextLight"
+        android:layout_alignParentRight="true"
         android:text="few minutes ago"/>
     <TextView
         android:id="@+id/text_comment"
@@ -52,6 +52,6 @@
         android:layout_marginRight="10dp"
         android:layout_toRightOf="@id/img_avatar"
         android:layout_below="@id/text_comment"
-        android:background="@color/postDivider"/>
+        android:background="@color/listDivider"/>
 
 </RelativeLayout>

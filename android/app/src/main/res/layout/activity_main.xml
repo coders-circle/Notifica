@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:background="@color/colorPrimaryDark">
+    android:background="@color/colorHome">
 
     <android.support.design.widget.CoordinatorLayout
         android:id="@+id/coordinator_layout"
@@ -72,7 +72,6 @@
         android:layout_height="match_parent"
         android:layout_width="wrap_content"
         android:layout_gravity="start"
-        android:background="@color/colorPrimaryDark"
         app:itemTextColor="@color/selector_navbar"
         app:headerLayout="@layout/layout_nav_header"
         app:itemIconTint="@color/selector_navbar"

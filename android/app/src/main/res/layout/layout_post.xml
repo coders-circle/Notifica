@@ -35,7 +35,7 @@
             <TextView
                 android:id="@+id/info"
                 android:text="by Mr. Absolute Zero a few seconds ago"
-                android:textColor="@color/colorSecondaryText"
+                android:textColor="@color/primaryTextLight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>

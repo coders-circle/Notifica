@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:theme="@style/ForSettings"
-        android:background="@color/colorPrimaryDark">
+        android:background="@color/colorHome">
 
         <include
             android:id="@+id/tool_bar"

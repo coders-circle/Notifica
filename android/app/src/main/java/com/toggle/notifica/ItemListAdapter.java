@@ -45,7 +45,7 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ViewHo
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(
-                R.layout.layout_profile_item, parent, false
+                R.layout.layout_profile_item_light, parent, false
         ));
     }
 

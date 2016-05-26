@@ -54,7 +54,7 @@ public class GroupItemListAdapter extends RecyclerView.Adapter<RecyclerView.View
             ));
         else
             return new ItemViewHolder(LayoutInflater.from(parent.getContext()).inflate(
-                    R.layout.layout_profile_item, parent, false
+                    R.layout.layout_profile_item_light, parent, false
             ));
     }
 

@@ -54,7 +54,7 @@
                     android:text="title"/>
                 <TextView
                     android:id="@+id/subtitleNow"
-                    android:textColor="@color/colorSecondaryText"
+                    android:textColor="@color/secondaryTextDark"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="subtitle"/>
@@ -111,7 +111,7 @@
                 android:text="title"/>
             <TextView
                 android:id="@+id/subtitleNext"
-                android:textColor="@color/colorSecondaryText"
+                android:textColor="@color/secondaryTextDark"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="subtitle"/>

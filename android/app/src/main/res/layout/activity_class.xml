@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:background="@color/colorPrimaryDark">
+    android:background="@color/colorHome">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -62,7 +62,7 @@
 
         <android.support.v4.view.ViewPager
             android:id="@+id/class_pager"
-            android:background="@color/colorPrimaryDark"
+            android:background="@color/colorHome"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 

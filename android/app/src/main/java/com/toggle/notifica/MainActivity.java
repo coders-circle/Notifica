@@ -419,11 +419,11 @@ public class MainActivity extends AppCompatActivity {
             Utilities.fillProfileView(
                     view1, Color.parseColor(sub.color), null, "Current class",
                     sub.name, finder.current.getPeriodString(),
-                    null, sub.getShortName()
+                    finder.current.period_type == 1 ? "Practical" : null, sub.getShortName()
             );
             view1.setVisibility(View.VISIBLE);
-            findViewById(R.id.now_practical).setVisibility(
-                    finder.current.period_type == 1 ? View.VISIBLE : View.GONE);
+            /*findViewById(R.id.now_practical).setVisibility(
+                    finder.current.period_type == 1 ? View.VISIBLE : View.GONE);*/
         } else
             view1.setVisibility(View.GONE);
 
@@ -431,11 +431,12 @@ public class MainActivity extends AppCompatActivity {
             Subject sub = finder.nextSubject;
             Utilities.fillProfileView(
                     view2, Color.parseColor(sub.color), null, "Next class", sub.name,
-                    finder.nextDay + finder.next.getPeriodString(), null, sub.getShortName()
+                    finder.nextDay + finder.next.getPeriodString(),
+                    finder.next.period_type == 1 ? "Practical":null, sub.getShortName()
             );
             view2.setVisibility(View.VISIBLE);
-            findViewById(R.id.next_practical).setVisibility(
-                    finder.next.period_type == 1 ? View.VISIBLE : View.GONE);
+            /*findViewById(R.id.next_practical).setVisibility(
+                    finder.next.period_type == 1 ? View.VISIBLE : View.GONE);*/
         } else
             view2.setVisibility(View.GONE);
 

@@ -30,6 +30,7 @@
         android:textSize="18sp"
         android:layout_marginTop="15dp"
         android:layout_gravity="center"
+        android:textColor="@color/secondaryText"
         android:gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
@@ -37,7 +38,7 @@
     <TextView
         android:id="@+id/subtitle"
         android:text="Department of Electronics and Computer Engineering"
-        android:textColor="@color/colorSecondaryText"
+        android:textColor="@color/secondaryTextDark"
         android:layout_marginTop="15dp"
         android:layout_gravity="center"
         android:gravity="center"
