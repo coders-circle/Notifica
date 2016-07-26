@@ -10,69 +10,90 @@ Notifica: Home
 {% endblock %}
 
 {% block body %}
-<div class="section" id="header-section">
+<section id="header">
     <div class="container">
-        <div class="menu">
-            <a href="{% url 'signin' %}"><i class="fa fa-sign-in"></i>Sign in</a>
-        </div>
-        <div class="app-info">
-            <img class="logo" src="{% static 'img/logo.png' %}">
-            <div class="title">Notifica</div>
-            <div class="extra">A must have routine app</div>
-        </div>
-        <div id="app-download-link">
-            <a href="#"><i class="fa fa-download"></i> Download android app</a>
-        </div>
-    </div>
-</div>
-<div class="section" id="info-section">
-    <div class="container">
+        <nav>
+            <div>
+                <img class="logo" src="{% static 'img/logo-small-teal.png' %}">
+                <h1>Notifica</h1>
+            </div>
+            <div id="promo-text">
+                A must have routine app
+            </div>
+        </nav>
         <div class="row">
-            <div class="col-md-4 col-md-offset-1">
-                <p>
-                    Notifica is an app to ease the information flow inside an institution.
-                    It consists of web interface as well as smartphone app for the users.
-                    The app is currently available only on Android platform
-                </p>
+            <div class="col-md-3 col-md-offset-2 hidden-xs col-sm-4 col-sm-offset-1">
+                <img id="brand-img" src="{% static 'img/notifica-oneplus.png' %}">
             </div>
-            <div class="col-md-4 col-md-offset-1">
-                <p>
-                    If you are a student or a teacher looking for a good routine app with a beautiful and easy-to-use interface,
-                    Notifica is the perfect solution for you!
-                </p>
+            <div class="col-md-5 col-sm-7">
+                <div class="form-wrapper" id="signin-form">
+                    <div class="form-header">
+                        <h4>Sign in to get started</h4>
+                    </div>
+                    <form >
+                        <div class="form-group">
+                            <input type="text" class="form-input" name="username" placeholder="Username">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-input" name="password" placeholder="Password">
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" class="btn-outline">
+                        </div>
+                    </form>
+                    <div class="form-footer">
+                        <p>Don't have notifica account? <a href="#" id="show-register-btn">Register</a></p>
+                    </div>
+                </div>
+                <div class="form-wrapper" id="register-form" hidden>
+                    <div class="form-header">
+                        <h4>Create new account</h4>
+                    </div>
+                    <form >
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-input" name="firstname" placeholder="First Name">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-input" name="lastname" placeholder="Last Name">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-input" name="email" placeholder="Email Address">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-input" name="username" placeholder="Username">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-input" name="password" placeholder="Password">
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" class="btn-outline">
+                        </div>
+                    </form>
+                    <div class="form-footer">
+                        <p>Already have notifica account? <a href="#" id="show-signin-btn">Sign in</a></p>
+                    </div>
+                </div>
             </div>
         </div>
-
     </div>
-</div>
-<div class="section" id="body-section">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4 feature">
-                <a>Always get notified, never miss a thing</a>
-                <p>
-                    Through the help of this app teachers can notify their students about
-                    what topics will be covered in the upcoming lectures.
-                </p>
-            </div>
-            <div class="col-md-4 feature">
-                <a>Easily get and submit your Assignments</a>
-                <p>
-                    Notifica is designed to help teachers create and collect assignments paperlessly,
-                    including other time-saving features such as the ability to directly notify the
-                    class about the projects and assignments directly.
-                </p>
-            </div>
-            <div class="col-md-4 feature">
-                <a>Time is important, save it</a>
-                <p>
-                    No time is wasted, you get instantly notified of what the next class and who is
-                    going to take the class, and if by any reasons the class is delayed or the class
-                    is off then you will be simply notified.
-                </p>
-            </div>
-        </div>
-    </div>
-</div>
+</section>
 {% include 'footer.html' %}
+<script>
+$('#show-register-btn').click(function(e){
+    e.preventDefault();
+    $('#signin-form').hide();
+    $('#register-form').slideDown();
+});
+$('#show-signin-btn').click(function(e){
+    e.preventDefault();
+    $('#register-form').hide();
+    $('#signin-form').slideDown();
+});
+</script>
 {% endblock %}

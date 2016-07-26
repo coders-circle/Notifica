@@ -1,0 +1,110 @@
+@import "base";
+
+nav {
+    padding-top: 16px;
+    padding-bottom: 16px;
+    background-color: #fff;
+    box-shadow: 2px 0 5px 2px rgba(0, 0, 0, 0.2);
+
+    #drawer-open-btn{
+        float: left;
+        margin-right: 24px;
+        font-size: 2em;
+        padding-top: 4px;
+        cursor: pointer;
+    }
+    h2 {
+        margin: 0px;
+    }
+
+    margin-bottom: 32px;
+}
+
+#body {
+    .block{
+        padding: 24px;
+
+        h4{
+            text-transform: uppercase;
+        }
+    }
+
+    #post-block{
+        h3{
+            text-transform: uppercase;
+            margin-bottom: 24px;
+            margin-top: 0;
+        }
+        .msg{
+            color: #d6d6d6;
+            font-size: 2em;
+            padding-top: 24px;
+            padding-bottom: 24px;
+            text-transform: uppercase;
+        }
+        #loading-animation{
+            text-align: center;
+            padding: 24px;
+        }
+        #load-more-wrapper{
+            padding: 24px;
+            text-align: center;
+        }
+
+        article{
+            padding: 24px;
+            background-color: #fff;
+            box-shadow: 0 2px 5px 3px rgba(0, 0, 0, 0.2);
+            margin-bottom: 10px;
+            h3{
+                color: $primary-color;
+                margin-top: 0;
+                margin-bottom: 8px;
+            }
+            author, time{
+                font-weight: bold;
+            }
+            p{
+                padding-top: 24px;
+                line-height: 1.5;
+            }
+        }
+    }
+
+    #class-list-block{
+        .class{
+            padding-top: 10px;
+            padding-bottom: 10px;
+
+            .extra{
+                color: #808080;
+            }
+
+        }
+
+        .fa{
+            margin-right: 10px;
+        }
+
+        footer {
+            margin-top: 24px;
+            padding: 10px 0;
+        }
+    }
+
+    #notification-block{
+        .notification{
+            padding-top: 10px;
+            padding-bottom: 10px;
+            .fa{
+                margin-right: 10px;
+            }
+            footer{
+                padding-top: 10px;
+                a{
+                    margin-right: 16px;
+                }
+            }
+        }
+    }
+}

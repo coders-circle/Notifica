@@ -1,0 +1,41 @@
+@import "base";
+
+#header{
+    padding-bottom: 24px;
+    nav{
+        padding-top: 24px;
+        padding-bottom: 32px;
+        margin-bottom: 24px;
+    }
+    .logo{
+        float: left;
+        margin-right: 10px;
+    }
+    h1{
+        font-weight: 300;
+        text-transform: lowercase;
+        color: $primary-color;
+        font-size: 3em;
+    }
+}
+
+#brand-img{
+    width: 200px;
+}
+
+.form-header{
+    text-transform: uppercase;
+    color: $primary-color;
+    margin-bottom: 32px;
+}
+.form-input{
+    width: 100%;
+    padding: 10px 16px;
+}
+.form-group{
+    margin-bottom: 24px;
+}
+.form-group:last-child{
+    margin-top: 32px;
+    text-align: right;
+}

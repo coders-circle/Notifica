@@ -1,16 +1,11 @@
 {% load staticfiles %}
 
-<div class="section" id="footer-section">
+<section id="footer">
     <div class="container">
-        <hr>
         <div class="row">
             <div class="col-sm-6">
-                <div id="about">
-                    <div class="logo-container">
-                        <img class="logo" src="{% static 'img/logo.png' %}">
-                    </div>
-                    <a href="{% url 'home' %}" class="app-name">Notifica</a>
-                </div>
+                <img class="logo" src="{% static 'img/logo-small-teal.png' %}">
+                <a href="{% url 'home' %}" id="app-name">Notifica</a>
             </div>
             <div class="col-sm-6" id="links">
                 <a href="#">Terms &amp; Conditions</a>
@@ -19,5 +14,6 @@
                 <a href="#">Send feedback</a>
             </div>
         </div>
+        <footer>Copyright (c) 2016 Toggle Corp. All Rights Reserved.</footer>
     </div>
-</div>
+</section>

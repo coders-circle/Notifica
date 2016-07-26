@@ -1,0 +1,162 @@
+{% extends 'base.html' %}
+{% load classroom_tags %}
+{% load staticfiles %}
+
+{% block title %}
+Notifica: News feed
+{% endblock %}
+
+{% block head %}
+<link href="{% static 'css/navigation-drawer.css' %}" type="text/css" rel="stylesheet">
+<link href="{% static 'css/feed.css' %}" type="text/css" rel="stylesheet">
+<link href="{% static 'css/navigation-bar.css' %}" type="text/css" rel="stylesheet">
+<script src="{% static 'js/jquery.timeago.js' %}"></script>
+<script src="{% static 'js/jquery.typewatch.js' %}"></script>
+<script src="{% static 'js/feed.js' %}"></script>
+<script src="{% static 'js/navigation-drawer.js' %}"></script>
+<script>
+var classless = true;
+{% if classes %}
+classless = false;
+{% endif %}
+</script>
+{% endblock %}
+
+{% block body %}
+{% include 'navigation-drawer.html' %}
+{% include 'posts/userpost-template.html' %}
+<div class="msg hidden" id="empty-msg">Sorry, no result found</div>
+<div class="msg hidden" id="error-msg">Oops! Something went wrong</div>
+<div id="accept-dialog" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a class="title">Accept student</a>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <label>Roll No:</label>
+                    <input type="text" name="roll">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-default">Cancel</button>
+                <button class="btn btn-default">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="navigation-bar">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <button class="input-neat" id="drawer-open-btn">
+                    <i class="fa fa-bars"></i>
+                </button>
+                <span class="title">News feed</span>
+            </div>
+            {% if classes %}
+            <div class="col-sm-6">
+                <div class="search-input-container">
+                    <i class="fa fa-search"></i>
+                    <input class="input-neat" id="search-post-input" type="text" placeholder="search for posts by title, content, tag">
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<div class="section" id="body-section">
+    {% csrf_token %}
+    <div class="container">
+        <div class="row">
+            <div id="post-block" class="col-md-8">
+                {% if classes %}
+                <div class="posts">
+                </div>
+                <div class="bottom-control-container">
+                    <div id="posts-loading-animation"></div>
+                    <button class="btn btn-default" id="more-post-btn"><i class="fa fa-refresh"></i> Load more posts</button>
+                </div>
+                {% else %}
+                <div id="classless">
+                    <div>Your are not assigned to any class. Join a class to view news feed</div>
+                    <button class="btn btn-default">Join a class</button>
+                </div>
+                {% endif %}
+            </div>
+            <div id="quick-links-block" class="col-md-4">
+                <div class="row">
+                    <div class="col-md-12 col-sm-6">
+                        <div class="card " id="notification-list">
+                            <a class="title">Notifications</a>
+                            {% for notification in notifications %}
+                                {% if notification.type == "request" and notification.request.request_type == 0 %}
+                                <div class="class" id="request-{{ notification.class.pk }}">
+                                    <a href="{% url 'classroom:class' notification.class.pk %}" class="name">{{ notification.class.class_id }}</a>
+                                    <div class="extra">
+                                        {{ notification.sender_name }} sent a join request
+                                    </div>
+                                    <div class="bottom-link">
+                                        <a href="#" onclick="rejectRequest({{notification.request.pk}});"><i class="fa fa-times"></i> Reject</a>
+                                        <a href="#" onclick="acceptRequest({{notification.request.pk}});"><i class="fa fa-check"></i> Accept</a>
+                                    </div>
+                                </div>
+                                {% endif %}
+                            {% if not forloop.last %}<hr>{% endif %}
+                            {% empty %}
+                            <div class="item item-empty" >
+                                <p>No notifications</p>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 col-sm-6">
+                        <div class="card card-class-list" id="class-list">
+                            <a class="title">Classes</a>
+                            {% for p_class in classes %}
+                            <div class="class">
+                                <a href="{% url 'classroom:class' p_class.pk %}" class="name">{{p_class.class_id}}</a>
+                                {% if p_class.department %}
+                                    <div class="extra">{{p_class.department.name}}</div>
+                                {% else %}
+                                    <div class="extra">{{p_class.description}}</div>
+                                {% endif %}
+                            </div>
+                            {% if not forloop.last %}<hr>{% endif %}
+                            {% empty %}
+                            <div class="item item-empty" >
+                                <p>No classes</p>
+                            </div>
+                            {% endfor %}
+                            <div class="bottom-link">
+                                <a id="add-class-link" href="{% url 'classroom:add-class' %}" class="name"><i class="fa fa-plus"></i> Add class</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-sm-6">
+                        <div class="card card-department-list" id="department-list">
+                            <a class="title">Departments</a>
+                            {% for department in departments %}
+                            <div class="department">
+                                <a href="{% url 'classroom:department' department.pk %}" class="name">{{department.name}}</a>
+                                <div class="extra">{{department.organization.name}}</div>
+                            </div>
+                            <!-- <div class="bottom-link">
+                                <a id="add-department-link" href="{% url 'classroom:add-class' %}" class="name"><i class="fa fa-plus"></i> Add department</a>
+                            </div> -->
+                            {% empty %}
+                            <div class="item item-empty" >
+                                <p>No department</p>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% include 'footer.html' %}
+{% endblock %}

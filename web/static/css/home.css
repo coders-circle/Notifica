@@ -1,36 +1,69 @@
-#header-section{
-    background-color: #fff!important;
-}
+body {
+  font-family: 'Source Sans Pro'; }
 
-#header-section .title{
-    font-size: 3em!important;
-}
-#app-download-link{
-    text-align: center;
-    margin: 10px auto;
-}
+a, button, input[type="button"], input[type="submit"] {
+  text-transform: uppercase; }
 
-#info-section{
-    background-color: #e09680;
-    color: #fff;
-    text-align: justify;
-    font-weight: bold;
-    padding: 80px 0px;
-}
+.btn-outline {
+  padding: 10px 24px;
+  border: 1px solid #008080;
+  color: #008080;
+  background-color: transparent; }
 
-#body-section{
-    padding-top: 60px;
-}
+.form-input {
+  border: none;
+  border-bottom: 1px solid #d6d6d6;
+  background-color: transparent;
+  outline: none; }
 
-.feature{
-    margin-bottom: 20px;
-}
-.feature a{
-    display: block;
-    margin-bottom: 20px;
-    text-align: center;
-    color: #e09680;
-}
-.feature p{
-    text-align: justify;
-}
+.form-input:focus {
+  border-color: #008080; }
+
+#footer {
+  padding-top: 32px;
+  padding-bottom: 24px; }
+  #footer #links a {
+    padding: 10px; }
+  #footer .logo {
+    float: left;
+    margin-right: 10px; }
+  #footer #app-name {
+    font-size: 2em; }
+  #footer footer {
+    margin-top: 10px; }
+
+#header {
+  padding-bottom: 24px; }
+  #header nav {
+    padding-top: 24px;
+    padding-bottom: 32px;
+    margin-bottom: 24px; }
+  #header .logo {
+    float: left;
+    margin-right: 10px; }
+  #header h1 {
+    font-weight: 300;
+    text-transform: lowercase;
+    color: #008080;
+    font-size: 3em; }
+
+#brand-img {
+  width: 200px; }
+
+.form-header {
+  text-transform: uppercase;
+  color: #008080;
+  margin-bottom: 32px; }
+
+.form-input {
+  width: 100%;
+  padding: 10px 16px; }
+
+.form-group {
+  margin-bottom: 24px; }
+
+.form-group:last-child {
+  margin-top: 32px;
+  text-align: right; }
+
+/*# sourceMappingURL=home.css.map */

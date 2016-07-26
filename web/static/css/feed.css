@@ -1,205 +1,104 @@
-/*******************************
- feed.css
- contains styles for feed page
-*******************************/
+body {
+  font-family: 'Source Sans Pro'; }
 
-body{
-}
-hr {
-    margin: 6px;
-}
+a, button, input[type="button"], input[type="submit"] {
+  text-transform: uppercase; }
 
-.msg{
-    text-align: center;
-    text-transform: uppercase;
+.btn-outline {
+  padding: 10px 24px;
+  border: 1px solid #008080;
+  color: #008080;
+  background-color: transparent; }
+
+.form-input {
+  border: none;
+  border-bottom: 1px solid #d6d6d6;
+  background-color: transparent;
+  outline: none; }
+
+.form-input:focus {
+  border-color: #008080; }
+
+#footer {
+  padding-top: 32px;
+  padding-bottom: 24px; }
+  #footer #links a {
+    padding: 10px; }
+  #footer .logo {
+    float: left;
+    margin-right: 10px; }
+  #footer #app-name {
+    font-size: 2em; }
+  #footer footer {
+    margin-top: 10px; }
+
+nav {
+  padding-top: 16px;
+  padding-bottom: 16px;
+  background-color: #fff;
+  box-shadow: 2px 0 5px 2px rgba(0, 0, 0, 0.2);
+  margin-bottom: 32px; }
+  nav #drawer-open-btn {
+    float: left;
+    margin-right: 24px;
     font-size: 2em;
-    color: #bbb;
-    padding: 50px 0px;
-}
+    padding-top: 4px;
+    cursor: pointer; }
+  nav h2 {
+    margin: 0px; }
 
-/***********************
- Navigation Bar
-***********************/
-#search-post-input{
-    color: #717171;
-    padding-left: 30px;
-    width: 100%;
-    outline-style: none;
-    font-weight: bold;
-}
-#search-post-input::-webkit-input-placeholder {
-   color: #bbb;
-   font-weight: normal;
-}
-.search-input-container{
-    position: relative;
-    padding: 6px 0px;
-}
-.search-input-container i{
-    position: absolute;
-    bottom: 9px;
-    color: #bbb;
-}
+#body .block {
+  padding: 24px; }
+  #body .block h4 {
+    text-transform: uppercase; }
+#body #post-block h3 {
+  text-transform: uppercase;
+  margin-bottom: 24px;
+  margin-top: 0; }
+#body #post-block .msg {
+  color: #d6d6d6;
+  font-size: 2em;
+  padding-top: 24px;
+  padding-bottom: 24px;
+  text-transform: uppercase; }
+#body #post-block #loading-animation {
+  text-align: center;
+  padding: 24px; }
+#body #post-block #load-more-wrapper {
+  padding: 24px;
+  text-align: center; }
+#body #post-block article {
+  padding: 24px;
+  background-color: #fff;
+  box-shadow: 0 2px 5px 3px rgba(0, 0, 0, 0.2);
+  margin-bottom: 10px; }
+  #body #post-block article h3 {
+    color: #008080;
+    margin-top: 0;
+    margin-bottom: 8px; }
+  #body #post-block article author, #body #post-block article time {
+    font-weight: bold; }
+  #body #post-block article p {
+    padding-top: 24px;
+    line-height: 1.5; }
+#body #class-list-block .class {
+  padding-top: 10px;
+  padding-bottom: 10px; }
+  #body #class-list-block .class .extra {
+    color: #808080; }
+#body #class-list-block .fa {
+  margin-right: 10px; }
+#body #class-list-block footer {
+  margin-top: 24px;
+  padding: 10px 0; }
+#body #notification-block .notification {
+  padding-top: 10px;
+  padding-bottom: 10px; }
+  #body #notification-block .notification .fa {
+    margin-right: 10px; }
+  #body #notification-block .notification footer {
+    padding-top: 10px; }
+    #body #notification-block .notification footer a {
+      margin-right: 16px; }
 
-/***********************
- Body section
-***********************/
-#body-section{
-    padding-top: 10px;
-    padding-bottom: 10px;
-    margin-top: 90px;
-    min-height: 300px;
-}
-#post-block hr{
-    margin: 0px 0px;
-    border-color: #eee;
-}
-#body-section .bottom-control-container{
-    position: relative;
-    padding: 12px 20px;
-    text-align: center;
-    margin-top: 10px;
-    margin-bottom: 20px;
-}
-.userpost{
-    box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.1);
-    background-color: #fafafa;
-    padding: 24px;
-    border-radius: 6px;
-}
-.userpost .user-avatar{
-    width: 48px;
-    height: 48px;
-    padding: 4px;
-    border-radius: 50%;
-    background-color: #f0f0f0;
-}
-.userpost .user-avatar-container{
-    text-align: center;
-}
-.userpost .title{
-    font-size: 1.5em;
-    color: #717171;
-    text-transform: none;
-}
-.userpost .info{
-    font-size: 0.88em;
-    padding: 10px 0px;
-}
-.userpost .info a{
-    color: #aaa;
-    margin-right: 20px;
-}
-.userpost .content{
-    padding-top: 20px;
-    text-align: justify;
-    color: #000;
-}
-.userpost .tags{
-    display: block;
-    text-align: center;
-    margin-top: 10px;
-}
-.userpost .tag{
-    color: #aaa;
-    font-size: 0.88em;
-    font-weight: bold;
-    border-radius: 16px;
-    border: 1px solid #eee;
-    padding: 4px 10px;
-    margin-right: 12px;
-}
-.userpost .num-comments{
-    display: block;
-    text-align: right;
-    font-size: 0.88em;
-    color: #aaa;
-}
-
-#posts-loading-animation {
-    position: absolute;
-    left: 0px;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 100;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-image: url('/static/img/loading-posts.gif');
-    background-blend-mode: multiply;
-    background-color: #fff;
-}
-
-.block-list{
-    margin-bottom: 30px;
-}
-#quick-links-block .title{
-    font-size: 0.88em;
-}
-.card{
-    background-color: #fafafa;
-    color: #646464;
-    padding: 16px 20px;
-    margin-bottom: 12px;
-    border-radius: 6px;
-    box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.1);
-}
-.card .title{
-    display: block;
-    margin-bottom: 20px;
-    margin-left: 4px;
-    color: #e09680;
-}
-
-.card-class-list hr, .card-department-list hr{
-    margin: 10px 2px;
-}
-
-.class .name, .department .name{
-    color: #717171;
-}
-
-.class .extra, .department .extra{
-    font-size: 0.88em;
-}
-
-.card .bottom-link{
-    margin-top: 30px;
-    text-align: right;
-    font-size: 0.88em;
-}
-.card .bottom-link a{
-    margin-left: 30px;
-}
-
-#add-class-link i{
-    font-size: 0.88em;
-}
-
-.item-empty{
-    color: #aaa;
-}
-
-#classless button{
-    margin-top: 50px;
-}
-#classless{
-    padding: 50px 30px;
-    font-size: 2em;
-    color: #aaa;
-    text-align: center;
-}
-
-#accept-dialog input{
-    width: 100%;
-    margin: 10px 0px;
-    padding: 10px 6px;
-    border: 1px solid #aaa;
-    border-radius: 4px;
-}
-#accept-dialog .title{
-    font-size: 1.5em;
-}
-#accept-dialog button{
-    min-width: 100px;
-}
+/*# sourceMappingURL=feed.css.map */

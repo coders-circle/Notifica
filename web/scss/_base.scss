@@ -1,0 +1,47 @@
+$primary-color: #008080;
+
+
+body{
+    font-family: 'Source Sans Pro';
+}
+
+a, button, input[type="button"], input[type="submit"] {
+    text-transform: uppercase;
+}
+
+.btn-outline {
+    padding: 10px 24px;
+    border: 1px solid $primary-color;
+    color: $primary-color;
+    background-color: transparent;
+}
+
+.form-input{
+    border: none;
+    border-bottom: 1px solid #d6d6d6;
+    background-color: transparent;
+    outline: none;
+}
+.form-input:focus{
+    border-color: $primary-color;
+}
+
+
+#footer{
+    padding-top: 32px;
+    padding-bottom: 24px;
+
+    #links a{
+        padding: 10px;
+    }
+    .logo{
+        float: left;
+        margin-right: 10px;
+    }
+    #app-name{
+        font-size: 2em;
+    }
+    footer{
+        margin-top: 10px;
+    }
+}
