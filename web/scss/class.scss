@@ -1,0 +1,117 @@
+@import "base";
+
+#header{
+    #menu{
+        padding: 10px;
+        text-align: right;
+        .fa{
+            margin-right: 10px;
+        }
+    }
+    #class-info{
+        #avatar{
+            width: 64px;
+            float: left;
+            margin-right: 24px;
+        }
+    }
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #fff;
+    box-shadow: 2px 0 5px 2px rgba(0, 0, 0, 0.2);
+}
+
+#body{
+    padding-top: 24px;
+    padding-bottom: 24px;
+    min-height: 60vh;
+
+    #content-block{
+        #tabs{
+            padding: 10px 0px;
+            text-align: center;
+            margin-bottom: 10px;
+            a{
+                padding: 10px;
+                color: #404040;
+            }
+            .active{
+                border-bottom: 2px solid $primary-color;
+            }
+        }
+        #tab-contents{
+            padding: 24px;
+        }
+
+        .avatar{
+            width: 48px;
+        }
+
+        #add-post-container{
+            header{
+                height: 36px;
+                position: relative;
+
+                a{
+                    font-size: 1.2em;
+                    position: absolute;
+                    right: 0;
+                    top: 0;
+                }
+            }
+            form{
+                a{
+                    margin-right: 24px;
+                }
+            }
+        }
+
+        #posts{
+            article{
+                padding: 10px 0;
+                h3{
+                    margin-bottom: 0;
+                }
+                p{
+                    padding: 10px 0;
+                }
+            }
+        }
+    }
+
+
+    #tasks{
+        h4{
+            text-transform: uppercase;
+        }
+        a{
+            display: block;
+            padding: 10px 8px;
+
+            .fa{
+                margin-right: 4px;
+                width: 24px;
+            }
+        }
+    }
+
+    #join-request{
+        color: #969696;
+        font-size: 2em;
+        min-height: 50vh;
+        display: flex;
+        flex-direction: column;
+        justify-content:center;
+        align-items: center;
+    }
+}
+
+table{
+    width: 100%!important;
+    background-color: transparent;
+    thead{
+        color: $primary-color;
+    }
+
+    border: none!important;
+}

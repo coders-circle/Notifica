@@ -1,5 +1,3 @@
-
-
 $(document).ready(function(){
     $('body').on( 'click', '.tab', function(e){
         var current = $('#tabs .active');
@@ -12,145 +10,101 @@ $(document).ready(function(){
             current.removeClass('active');
             target.addClass('active');
             current_container.removeClass('active');
-            current_container.fadeOut();
-            setTimeout(current_container.addClass('hidden'), 500);
-            target_container.hide();
-            target_container.removeClass('hidden');
+            current_container.hide();
             target_container.fadeIn();
             target_container.addClass('active');
         }
     });
 
-    loadTeachers();
-    loadStudents();
-    loadSubjects();
-
-    function loadTeachers(){
-        $.ajax({
-            url: '/classroom/api/v1/teachers/?class='+class_pk,
-            type: 'GET',
-            error: function() {
-                alert('failed to fetch teachers :/');
+    var teachers_table = $('#teachers-table').DataTable({
+        paging: false,
+        info: false,
+        searching: false,
+        ajax: {
+            type: "GET",
+            dataType: "json",
+            dataSrc: '',
+            url: "/classroom/api/v1/teachers/?class="+class_pk,
+        },
+        columns: [
+            { data: "id"},
+            {
+                data: null,
+                render: function(data, type, row){
+                    if(data.user){
+                        return data.user.first_name+' '+data.user.last_name;
+                    } else{
+                        return data.username;
+                    }
+                }
             },
-            success: function(res) {
-                if(res.length > 0){
-                    var evenContainer = $('#teachers').find('.even-container');
-                    var oddContainer = $('#teachers').find('.odd-container');
-                    var teacherCardTemplate = $('.template-card-teacher');
-                    for(i=0; i<res.length; i++){
-                        var teacherCard = teacherCardTemplate.clone();
-                        if(res[i].avatar)
-                            teacherCard.find('.avatar').attr('src', res[i].avatar);
-                        if(res[i].user){
-                            teacherCard.find('.name').text(res[i].user.first_name + ' ' + res[i].user.last_name);
-                            teacherCard.find('.extra').text(res[i].user.email);
-                        } else {
-                            teacherCard.find('.name').text(res[i].username);
-                        }
-
-                        teacherCard.removeClass('card-teacher-template');
-                        teacherCard.addClass('card-teacher');
-                        if(i%2 == 0){
-                            teacherCard.appendTo(evenContainer);
-                        } else{
-                            teacherCard.appendTo(oddContainer);
-                        }
-                        teacherCard.removeClass('hidden');
+            {
+                data: null,
+                render: function(data, type, row){
+                    if(data.user){
+                        return data.user.email;
+                    }
+                    else {
+                        return '';
                     }
                 }
             }
-        });
-    }
+        ]
+    });
 
-    function loadStudents(){
-        $.ajax({
-            url: '/classroom/api/v1/students/?class='+class_pk,
-            type: 'GET',
-            error: function() {
-                alert('failed to fetch students :/');
+    var students_table = $('#students-table').DataTable({
+        paging: false,
+        info: false,
+        searching: false,
+        ajax: {
+            type: "GET",
+            dataType: "json",
+            dataSrc: '',
+            url: "/classroom/api/v1/students/?class="+class_pk,
+        },
+        columns: [
+            { data: "id"},
+            {
+                data: null,
+                render: function(data, type, row){
+                    if(data.user){
+                        return data.user.first_name+' '+data.user.last_name;
+                    } else{
+                        return data.username;
+                    }
+                }
             },
-            success: function(res) {
-                if(res.length > 0){
-                    var container = $('.table-students');
-                    var headerRow = $('<tr><th>S.N.</th><th>Name</th><th>Roll</th></tr>');
-                    var rowTemplate = $('<tr></tr>');
-                    var dataTemplate = $('<td></td>');
-                    headerRow.appendTo(container);
-                    for(i=0; i<res.length; i++){
-                        var row = rowTemplate.clone();
-                        var sn = dataTemplate.clone();
-                        var name = dataTemplate.clone();
-                        var roll = dataTemplate.clone();
-                        if(res[i].user){
-                            name.text(res[i].user.first_name + ' ' + res[i].user.last_name);
-                        } else{
-                            name.text(res[i].username);
-                        }
-                        sn.text(''+(i+1));
-                        roll.text('069-BCT-xxx');
-                        sn.appendTo(row);
-                        name.appendTo(row);
-                        roll.appendTo(row);
-                        row.appendTo(container);
+            {
+                data: null,
+                render: function(data, type, row){
+                    if(data.user){
+                        return data.user.email;
+                    }
+                    else {
+                        return '';
                     }
                 }
             }
-        });
-    }
+        ]
+    });
 
-    function loadSubjects(){
-        $.ajax({
-            url: '/classroom/api/v1/subjects/?class='+class_pk,
-            type: 'GET',
-            error: function() {
-                alert('failed to fetch subjects :/');
-            },
-            success: function(res) {
-                if(res.length > 0){
-                    var evenContainer = $('#subjects').find('.even-container');
-                    var oddContainer = $('#subjects').find('.odd-container');
-                    var subjectTemplate = $('.template-card-subject');
-                    for(i=0; i<res.length; i++){
-                        var subject = subjectTemplate.clone();
-                        subject.find('.shortname').text(res[i].short_name);
-                        subject.find('.shortname').css('background-color', res[i].color);
-                        subject.find('.name').text(res[i].name);
-                        subject.find('.extra').text("Department of Electronics & Computer Engineering");
-                        subject.removeClass('template-card-subject');
-                        subject.addClass('card-subject');
-                        if(i%2 == 0){
-                            subject.appendTo(evenContainer);
-                        } else{
-                            subject.appendTo(oddContainer);
-                        }
-                        subject.removeClass('hidden');
-                    }
-                }
-            }
-        });
-    }
+    var subjects_table = $('#subjects-table').DataTable({
+        paging: false,
+        info: false,
+        searching: false,
+        ajax: {
+            type: "GET",
+            dataType: "json",
+            dataSrc: '',
+            url: "/classroom/api/v1/subjects/?class="+class_pk,
+        },
+        columns: [
+            { data: "id"},
+            {data: 'name'},
+        ]
+    });
 
-    function addPost(){
-        $.ajax({
-            url: '/feed/api/v1/posts/',
-            type: 'POST',
-            data:{
-                title:$("#post-title").val(),
-                body: $("#post-content").val(),
-                profile: class_profile
-            },
-            success: function(e){
-                $("#post-title").val("");
-                $("#post-title").blur();
-                $("#post-content").val("");
-                $("#post-content").blur();
-                alert("successful!");
-            },
-            error: function(e){
-                alert(e.responseText);
-            }
-        });
-    }
+
 
     $("#add-post-form-container .header").click(function(e){
         var container = $(this).parent();
@@ -197,4 +151,51 @@ $(document).ready(function(){
             }
         }
     });
+
+
+
+    $('#add-post-container header').on('click', 'a', function(){
+        $(this).animate({ 'left': '0' }, function(){ $(this).css('right', 'unset');});
+        $('#add-post-container form').slideDown();
+    });
+    $('#add-post-container form').on('click', 'a', function(){
+        $('#add-post-container header a').css('left', 'unset' );
+        $('#add-post-container header a').animate({ 'right': '0'});
+        $('#add-post-container form').slideUp();
+    });
+
+
+    var posts = [];
+
+    function loadPosts(){
+        $.ajax({
+            url: '/feed/api/v1/posts/?count=5',
+            type: 'GET',
+            error: function(){ console.log(':/'); },
+            success: function(result){
+                posts = result;
+                renderPosts();
+            }
+        });
+    }
+
+    function renderPosts(){
+        var post_template = $('.post');
+        var post_container = $('#posts');
+        for( var i=0; i<posts.length; i++ ){
+            var post = post_template.clone();
+            post.find('h3').text(posts[i].title);
+            post.find('author').text(posts[i].posted_by.first_name);
+            post.find('time').attr('datetime', posts[i].posted_at);
+            post.find('time').text($.timeago(posts[i].posted_at));
+            post.find('p').text(posts[i].body);
+            post.hide();
+            post. appendTo(post_container);
+            post.slideDown('1000');
+        }
+        $("article timeago").timeago();
+    }
+
+    loadPosts();
+
 });

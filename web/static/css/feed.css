@@ -14,10 +14,19 @@ a, button, input[type="button"], input[type="submit"] {
   border: none;
   border-bottom: 1px solid #d6d6d6;
   background-color: transparent;
-  outline: none; }
+  outline: none;
+  width: 100%;
+  padding: 10px 16px; }
 
 .form-input:focus {
   border-color: #008080; }
+
+.form-group {
+  margin-bottom: 24px; }
+
+.form-group:last-child {
+  margin-top: 32px;
+  text-align: right; }
 
 #footer {
   padding-top: 32px;

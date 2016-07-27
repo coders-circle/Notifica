@@ -1,258 +1,116 @@
-body{
-}
+body {
+  font-family: 'Source Sans Pro'; }
 
-#join-request{
+a, button, input[type="button"], input[type="submit"] {
+  text-transform: uppercase; }
+
+.btn-outline {
+  padding: 10px 24px;
+  border: 1px solid #008080;
+  color: #008080;
+  background-color: transparent; }
+
+.form-input {
+  border: none;
+  border-bottom: 1px solid #d6d6d6;
+  background-color: transparent;
+  outline: none;
+  width: 100%;
+  padding: 10px 16px; }
+
+.form-input:focus {
+  border-color: #008080; }
+
+.form-group {
+  margin-bottom: 24px; }
+
+.form-group:last-child {
+  margin-top: 32px;
+  text-align: right; }
+
+#footer {
+  padding-top: 32px;
+  padding-bottom: 24px; }
+  #footer #links a {
+    padding: 10px; }
+  #footer .logo {
+    float: left;
+    margin-right: 10px; }
+  #footer #app-name {
+    font-size: 2em; }
+  #footer footer {
+    margin-top: 10px; }
+
+#header {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: #fff;
+  box-shadow: 2px 0 5px 2px rgba(0, 0, 0, 0.2); }
+  #header #menu {
+    padding: 10px;
+    text-align: right; }
+    #header #menu .fa {
+      margin-right: 10px; }
+  #header #class-info #avatar {
+    width: 64px;
+    float: left;
+    margin-right: 24px; }
+
+#body {
+  padding-top: 24px;
+  padding-bottom: 24px;
+  min-height: 60vh; }
+  #body #content-block #tabs {
+    padding: 10px 0px;
     text-align: center;
-}
-#join-request button{
-    color: #727272;
-}
-#join-request .info{
-    color: #bbb;
-    font-size: 1.5em;
-    margin-bottom: 50px;
-    margin-top: 30px;
-}
-#join-request form{
-    margin-bottom: 80px;
-}
-
-#class-info .avatar{
-    width: 50px;
-    height: 50px;
-    margin-right: 20px;
-    margin-top: 20px;
-}
-#class-info .extra{
-    margin-left: 72px!important;
-}
-
-#content-block #tabs{
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
+    margin-bottom: 10px; }
+    #body #content-block #tabs a {
+      padding: 10px;
+      color: #404040; }
+    #body #content-block #tabs .active {
+      border-bottom: 2px solid #008080; }
+  #body #content-block #tab-contents {
+    padding: 24px; }
+  #body #content-block .avatar {
+    width: 48px; }
+  #body #content-block #add-post-container header {
+    height: 36px;
+    position: relative; }
+    #body #content-block #add-post-container header a {
+      font-size: 1.2em;
+      position: absolute;
+      right: 0;
+      top: 0; }
+  #body #content-block #add-post-container form a {
+    margin-right: 24px; }
+  #body #content-block #posts article {
+    padding: 10px 0; }
+    #body #content-block #posts article h3 {
+      margin-bottom: 0; }
+    #body #content-block #posts article p {
+      padding: 10px 0; }
+  #body #tasks h4 {
+    text-transform: uppercase; }
+  #body #tasks a {
     display: block;
-    text-align: center;
-}
-#content-block #tabs .tab{
-    font-size: 0.88em;
-    transition: none;
-    padding: 0px 8px;
-    color: rgba(100, 100, 100, 0.5);
+    padding: 10px 8px; }
+    #body #tasks a .fa {
+      margin-right: 4px;
+      width: 24px; }
+  #body #join-request {
+    color: #969696;
+    font-size: 2em;
+    min-height: 50vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; }
 
-}
-#content-block #tabs .active{
-    color: rgba(100, 100, 100, 1);
-    border-bottom: 2px solid #e09680;
-}
-#content-block #content{
-    padding: 0px 10px;
-}
+table {
+  width: 100% !important;
+  background-color: transparent;
+  border: none !important; }
+  table thead {
+    color: #008080; }
 
-#quick-task-block{
-    margin-top: 40px;
-
-}
-
-#quick-task-block .title{
-    display: block;
-    font-size: 0.88em;
-    margin: 10px 6px;
-    color: #e09680;
-}
-
-#quick-task-block #tasks{
-    background-color: #fafafa;
-    color: #646464;
-    padding: 16px 20px;
-    margin-bottom: 12px;
-    border-radius: 6px;
-    box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.1);
-}
-
-#quick-task-block #tasks .task:hover{
-    background-color: rgba(0,0,0, 0.02);
-}
-#quick-task-block #tasks .task{
-    text-transform: none;
-    margin-left: -24px;
-    margin-right: -24px;
-    padding-left: 24px;
-    padding-right: 24px;
-    color: #717171;
-    display: block;
-    line-height: 2.5;
-}
-#quick-task-block #tasks .task i{
-    width: 24px;
-    margin-right: 6px;
-}
-
-/**********************
-    Add post form
-**********************/
-#add-post-form-container{
-    display: block;
-    text-align: right;
-    padding: 0px;
-    margin-top: 10px;
-    border-radius: 6px;
-}
-#add-post-form-container i{
-    margin-left: 10px;
-    margin-right: 0px;
-    transition: 0.2s;
-}
-.expanded i{
-    transition: 0.5s;
-    transform: rotate(180deg);
-}
-@keyframes fadeIn {
-  0%   { background-color: transparent}
-  100% { background-color: #fff }
-}
-.expanded{
-    animation: fadeIn 0.5s ease-in;
-}
-#add-post-form-container .header{
-    color: #717171;
-}
-.expanded .header{
-    display: block;
-}
-.header-label{
-    position: relative;
-}
-.expanded .header-label{
-    color: #e09680;
-}
-.expanded{
-    
-}
-#add-post-form{
-    margin-top: 30px;
-}
-#add-post-form .header{
-    display: block;
-    text-align: right;
-}
-#add-post-form .header-label{
-    position: relative;
-}
-
-#add-post-form-container #toggle-add-post-btn{
-    text-align: right;
-}
-.expanded #toggle-add-post-btn{
-    text-align: left;
-}
-.expanded #toggle-add-post-btn i{
-    text-align: right;
-}
-#add-post-form{
-    display: none;
-}
-
-
-.tab-content{
-    padding-top:24px;
-    display: block;
-}
-
-.card{
-    background-color: #fafafa;
-    color: #646464;
-    padding: 16px 20px;
-    margin-bottom: 12px;
-    border-radius: 6px;
-    box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.1);
-}
-
-.card-teacher .avatar{
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    padding:4px;
-    background-color: #f5f5f5;
-}
-.card-teacher .name{
-    color: #303030;
-}
-.card-teacher .extra{
-    font-weight: bold;
-    font-size: 0.88em;
-}
-#add-post-form-container{
-    padding: 20px 30px;
-}
-.form-add-post input[type="text"]{
-    width: 100%;
-    border-bottom: 1px solid #eee;
-    border-radius: 0px;
-    margin-bottom: 20px;
-    padding: 4px 10px;
-}
-.form-add-post input[type="text"]:focus{
-    border-color: #aaa;
-}
-
-.form-add-post{
-    text-align: right;
-}
-.form-add-post input[type="submit"]{
-    margin-top: 20px;
-}
-.form-add-post textarea{
-    width: 100%;
-    border-bottom: 1px solid #eee;
-    border-radius: 0px;
-    padding: 4px 10px;
-    margin-bottom: 20px;
-    resize: vertical;
-}
-.form-add-post textarea:focus{
-    border-color: #aaa;
-}
-
-.table-students{
-    width: 100%;
-    color: #646464;
-}
-.table-students th{
-    padding: 12px 18px;
-}
-.table-students td{
-    padding: 12px 18px;
-    background: #fff;
-}
-.table-students tr{
-    border-bottom: 1px solid #eee;
-}
-.table-students tr:first-child{
-    border-bottom: none;
-}
-.table-students tr:last-child{
-    border-bottom: none;
-}
-
-#subjects{
-    display:inline-block;
-}
-.card-subject .shortname{
-    padding:0px;
-    margin:0px;
-    width: 40px;
-    height: 40px;
-    color: #fff;
-    border-radius: 50%;
-    text-align: center;
-    font-size: 10px;
-    line-height: 10px;
-    padding-top: 15px;
-}
-.card-subject .name{
-    color: #303030;
-}
-.card-subject .extra{
-    font-weight: bold;
-    font-size: 0.88em;
-}
+/*# sourceMappingURL=class.css.map */

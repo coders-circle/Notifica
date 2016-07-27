@@ -9,6 +9,7 @@
 {% block head %}
 <link href="{% static 'css/class.css' %}" type="text/css" rel="stylesheet">
 <script src="{% static 'js/class.js' %}"></script>
+<script src="{% static 'js/jquery.timeago.js' %}"></script>
 <script>
     var class_profile = {{class.profile.pk}};
     var class_pk = {{class.pk}};
@@ -16,27 +17,25 @@
 {% endblock %}
 
 {% block body %}
-<div class="section" id="header-section">
+<section id="header">
     <div class="container">
-        <div class="menu">
+        <div id="menu">
             <a href="{% url 'home' %}"><i class="fa fa-home"></i>Home</a>
         </div>
         <div id="class-info">
-            <img class="logo avatar" src="/media/{{class.profile.avatar}}">
-            <div class="title">{{class.class_id}}</div>
-            <div class="extra">{{class.description}}</div>
+            <img id="avatar" src="/media/{{class.profile.avatar}}">
+            <h2>{{class.class_id}}</div>
+            <p>{{class.description}}</p>
         </div>
     </div>
-</div>
-<div class="section" id="body-section">
-    {# if user|class.profile.pk #}
+</section>
+<section id="body">
     {% if user_in_class %}
-        {% include 'classroom/card-teacher-template.html' %}
-        {% include 'classroom/card-subject-template.html' %}
+        {% include 'classroom/userpost-template.html' %}
         <div class="container">
             <div class="row">
-                <div class="col-md-8">
-                    <div id="content-block">
+                <div class="col-md-7">
+                    <div id="content-block" role=-"main">
                         <div id="tabs">
                             <a href="#" class="tab active" data-target="news-feed">News feed</a>
                             <a href="#" class="tab" data-target="teachers">Teachers</a>
@@ -44,52 +43,80 @@
                             <a href="#" class="tab" data-target="subjects">Subjects</a>
                         </div>
                         <div id="tab-contents">
+
                             <div class="tab-content active" id="news-feed">
-                                <div id="add-post-form-container">
-                                    <a class="header" href="#">
-                                        <span class="header-label">Add new post</span><i class="fa fa-chevron-down"></i>
-                                    </a>
-                                    <form id="add-post-form" class="form-add-post">
+                                <div id="add-post-container">
+                                    <header>
+                                        <a href="#">Add new post</a>
+                                    </header>
+                                    <form id="add-post-form" hidden>
                                         {% csrf_token %}
-                                        <input type="text" class="input-neat" id="post-title" placeholder="Title">
-                                        <textarea class="input-neat" id="post-content" rows="3" placeholder="Content"></textarea>
-                                        <input type="submit" class="btn btn-default">
+                                        <div class="form-group">
+                                            <input type="text" class="form-input" id="post-title" placeholder="Title">
+                                        </div>
+                                        <div class="form-group">
+                                            <textarea class="form-input" id="post-content" rows="3" placeholder="Content"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <a href="#" >Cancel</a>
+                                            <input type="submit" class="btn-outline">
+                                        </div>
                                     </form>
                                 </div>
-                            </div>
-                            <div class="tab-content hidden" id="teachers">
-                                <div class="row">
-                                    <div class="animation-loading" id="teachers-loading-animation"></div>
-                                    <div class="col-sm-6 even-container">
-                                    </div>
-                                    <div class="col-sm-6 odd-container">
-                                    </div>
+                                <div id="posts">
                                 </div>
                             </div>
 
-                            <div class="tab-content hidden" id="students">
-                                <table class="table-students">
+                            <div class="tab-content" id="teachers" hidden>
+                                <table class="table-striped" id="teachers-table">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                        </tr>
+                                    </thead>
                                 </table>
                             </div>
-                            <div class="tab-content hidden" id="subjects">
-                                <div class="col-sm-6 even-container">
-                                </div>
-                                <div class="col-sm-6 odd-container">
-                                </div>
+
+                            <div class="tab-content" id="students" hidden>
+                                <table class="table-striped" id="students-table">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                        </tr>
+                                    </thead>
+                                </table>
                             </div>
+
+                            <div class="tab-content" id="subjects" hidden>
+                                <table class="table-striped" id="subjects-table">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Name</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
+
+                <div class="col-md-4 col-md-offset-1">
                     <div id="quick-task-block">
                         <div id="tasks">
-                            <a class="title">Quick Tasks</a>
+                            <h4>Quick Tasks</h4>
                             <a href="#" class="task"><i class="fa fa-calendar-check-o"></i> Take Attendence</a>
                             <a href="#" class="task"><i class="fa fa-plus"></i> Add an Assignment</a>
                             <a href="#" class="task"><i class="fa fa-user-plus"></i> Add a Student</a>
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     {% else %}
@@ -112,6 +139,8 @@
             </div>
         </div>
     {% endif %}
-</div>
+</section>
 {% include 'footer.html' %}
+<script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+<link href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" type="text/css" rel="stylesheet">
 {% endblock %}
