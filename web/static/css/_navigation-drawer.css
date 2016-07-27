@@ -1,0 +1,103 @@
+.navigation-drawer{
+    position: fixed;
+    z-index: 99;
+    left: 0px;
+    top:0px;
+    width: 300px;
+    height: 100%;
+    margin-left: -350px;
+    transition: 0.5s;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    color: #fff;
+    background-color: #fff;
+}
+.navigation-drawer .header{
+    background-color: #e09680;
+    background-image: url('/static/img/drawer-header-bg.jpg');
+    background-position: center;
+    height: 200px;
+    background-size: cover;
+}
+.backdrop{
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 98;
+    background-color: rgba(255, 255, 255, 0.6);
+    transition: 0.5s
+}
+.navigation-drawer .header{
+    padding: 10px;
+}
+.navigation-drawer .header button{
+    font-size: 1.5em;
+    float:right;
+}
+.drawer-shown{
+    margin-left: 0px;
+}
+.navigation-drawer .header .app-title{
+    font-size: 2em;
+}
+.navigation-drawer .header button{
+    background-color: transparent;
+    border: none;
+    outline: none;
+}
+
+.navigation-drawer .menu{
+    padding-top: 8px;
+}
+.navigation-drawer .menu .item{
+    display: block;
+    width: 100%;
+    padding: 8px 16px;
+    text-transform: none;
+    color: #717171;
+}
+.navigation-drawer .menu .item > i{
+    width: 24px;
+    margin-right: 4px;
+}
+.navigation-drawer .menu .item:hover{
+    background-color: rgba(0, 0, 0, 0.05);
+}
+.active{
+    background-color: rgba(0, 0, 0, 0.06);
+    color: #e09680!important;
+}
+.navigation-drawer .menu hr{
+    margin: 8px;
+}
+
+.user-info{
+    margin-top: 40px;
+    font-size: 0.88em;
+    color: #eee;
+    font-weight: bold;
+}
+.user-info .name{
+    margin-top: 6px;
+}
+.user-info .avatar{
+    width: 50px;
+    height: 50px;
+    padding: 6px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.6);
+}
+
+.app-info .logo{
+    width: 22px;
+    margin-right: 10px;
+}
+
+.app-info .app-name{
+    font-size: 2em;
+    vertical-align: middle;
+    color: #eee;
+    letter-spacing: 0.1em;
+}

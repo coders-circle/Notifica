@@ -1,26 +1,10 @@
 @import "base";
-
-nav {
-    padding-top: 16px;
-    padding-bottom: 16px;
-    background-color: #fff;
-    box-shadow: 2px 0 5px 2px rgba(0, 0, 0, 0.2);
-
-    #drawer-open-btn{
-        float: left;
-        margin-right: 24px;
-        font-size: 2em;
-        padding-top: 4px;
-        cursor: pointer;
-    }
-    h2 {
-        margin: 0px;
-    }
-
-    margin-bottom: 32px;
-}
+@import "navigation-drawer";
+@import "navigation-bar";
 
 #body {
+    padding-top: 80px;
+
     .block{
         padding: 24px;
 

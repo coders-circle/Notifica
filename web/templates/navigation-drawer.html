@@ -1,27 +1,18 @@
 {% load staticfiles %}
 
-<div class="backdrop"></div>
-<div class="navigation-drawer color-bg shadow">
-    <div class="header color-bg-dark">
-        <!-- <button id="drawer-close-btn">
-            <i class="fa fa-chevron-left"></i>
-        </button> -->
-        <!-- <div class="app-info">
-            <img class="logo" src="{% static 'img/logo.png' %}">
-            <a class="app-name">Notifica</a>
-        </div> -->
-        <div class="user-info">
-            <img class="avatar" src="/media/{{user.profile.avatar}}">
-            <div class="name">{{ user.first_name }} {{user.last_name}}</div>
-            <div class="extra">{{ user.email }}</div>
-        </div>
-    </div>
+<div class="backdrop" hidden></div>
+<section id="navigation-drawer">
+    <header>
+        <img class="avatar" src="/media/{{user.profile.avatar}}">
+        <div class="name">{{ user.first_name }} {{user.last_name}}</div>
+        <div class="extra">{{ user.email }}</div>
+    </header>
     <div class="menu">
         <a class="item {% if current_page == 'News feed' %}active{% endif %}" href="{% url 'posts:feed' %}"><i class="fa fa-newspaper-o"></i> News feed</a>
         <a class="item {% if current_page == 'Routine' %}active{% endif %}" href="{% url 'routine:routine' %}"><i class="fa fa-clock-o"></i> Routine</a>
         <a class="item {% if current_page == 'Assignments' %}active{% endif %}" href="#"><i class="fa fa-edit"></i> Assignments</a>
         <hr>
-        <a class="item" {% if current_page == 'Settings' %}active{% endif %}" href="{% url 'settings' %}"><i class="fa fa-cog"></i> Settings</a>
+        <a class="item" {% if current_page == 'Settings' %} active {% endif %}  href="{% url 'settings' %}"><i class="fa fa-cog"></i> Settings</a>
         <a class="item" href="{% url 'signout' %}"><i class="fa fa-sign-out"></i> Sign out</a>
     </div>
-</div>
+</section>
