@@ -5,8 +5,6 @@
 
 {% block head %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/routine.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'css/navigation-bar.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'css/navigation-drawer.css' %}">
 <script src="{% static 'js/routine.js' %}"></script>
 <script src="{% static 'js/navigation-drawer.js' %}"></script>
 {% include 'routine/routine-vars.html' %}
@@ -15,19 +13,20 @@
 {% block body %}
 {% include 'navigation-drawer.html' %}
 {% include 'routine/period-template.html' %}
-<div class="navigation-bar">
+<nav id="navbar">
     <div class="container">
-        <button class="input-neat" id="drawer-open-btn">
-            <i class="fa fa-bars"></i>
-        </button>
-        <span class="title">Weekly routine</span>
+        <i class="fa fa-bars" id="drawer-open-btn"></i>
+        <h2>Routine</h2>
     </div>
-</div>
-<div id="time-line-wrapper">
+</nav>
+<section id="mobile-view" class="hidden-md hidden-lg">
+    <p>Only supported in large layout</p>
+</section>
+<section id="time-line-wrapper" class="hidden-xs hidden-sm">
     <div id="time-line">
     </div>
-</div>
-<div class="block" id="routine-block">
+</section>
+<section id="routine" class="hidden-xs hidden-sm">
     <div class="container">
         {% for day in days_short %}
         <div class="row row-day row-day-{{ forloop.counter0 }}" data-index-day="{{ forloop.counter0 }}" >
@@ -39,6 +38,6 @@
         </div>
         {% endfor %}
     </div>
-</div>
+</section>
 {% include 'footer.html' %}
 {% endblock %}

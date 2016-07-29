@@ -41,12 +41,17 @@ a, button, input[type="button"], input[type="submit"] {
     padding-top: 32px;
     padding-bottom: 24px;
 
+    #links{
+        margin-top: 16px;
+    }
     #links a{
-        padding: 10px;
+        padding: 16px;
+        display: inline-block;
     }
     .logo{
         float: left;
         margin-right: 10px;
+        padding-left: 24px;
     }
     #app-name{
         font-size: 2em;

@@ -1,0 +1,78 @@
+@import "base";
+@import "navigation-drawer";
+@import "navigation-bar";
+
+#time-line-wrapper{
+    margin-top: 80px;
+    #time-line{
+        position: relative;
+        min-height: 24px;
+
+        .time-stop{
+            position: absolute;
+            bottom: 0px;
+            width: 50px;
+            border: none;
+            outline: none;
+            background-color: transparent;
+        }
+    }
+}
+
+#routine{
+    margin-top: 8px;
+    padding-top: 8px;
+    background-color: #f0f0f0;
+
+    .col-days{
+        margin-top: 1%;
+    }
+    .day-name{
+        text-transform: uppercase;
+        font-size: 1.5em;
+    }
+
+    .row{
+        min-height: 50px;
+    }
+
+    .periods{
+        display: flex;
+        padding-top: 2px;
+        padding-bottom: 2px;
+        .period{
+            background-color: #fff;
+            padding: 8px 16px;
+            border: 2px solid #f0f0f0;
+            .type{
+                float: right;
+                margin-top: -4px;
+                margin-right: -8px;
+                font-size: smaller;
+                font-weight: 600;
+            }
+            .subject{
+                text-transform: uppercase;
+                font-weight: 600;
+            }
+        }
+    }
+    .row:nth-child(even){
+        background-color: #e0e0e0;
+        .period{
+            border: 2px solid #e0e0e0;
+        }
+    }
+}
+
+#mobile-view{
+    margin-top: 100px;
+
+    p{
+        font-size: 2em;
+        text-align: center;
+        min-height: 50vh;
+        padding-top: 24px;
+        color: #969696;
+    }
+}
